@@ -1,0 +1,29 @@
+@charset "EUC-KR";
+
+/*폰트 종류 설정*/
+@font-face{
+	/*외부에서 불러올때 사용*/
+	font-family:"Dohyeon";
+	src: url("../font/BMDOHYEON_ttf.ttf");
+}
+
+* {
+	font-family:"Dohyeon";
+	font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

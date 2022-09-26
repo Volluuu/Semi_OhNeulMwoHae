@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+   	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- layout1 -->
+	<definition name="layout1" template="/WEB-INF/layout/layout1.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/layout/menu.jsp"/>
+		<put-attribute name="info" value="/WEB-INF/layout/info.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/layout/main.jsp"/>		
+	</definition>
+	<!-- macro -->
+	<definition name="/bit/*/*" extends="layout1">
+		<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- layout2 -->
+	<definition name="layout2" template="/WEB-INF/layout2/layout2.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
+		<put-attribute name="menu" value="/WEB-INF/layout2/menu.jsp"/>
+		<put-attribute name="info" value="/WEB-INF/layout2/info.jsp"/>
+		<put-attribute name="main" value="/WEB-INF/layout2/main.jsp"/>		
+	</definition>
+	<!-- macro -->
+	<definition name="/bit2/*/*" extends="layout2">
+		<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
+	</definition>
+</tiles-definitions>
