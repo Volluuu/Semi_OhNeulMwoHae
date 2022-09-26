@@ -54,7 +54,7 @@
 
 	<!-- 로그인한 상태에서는 로그인한 멤버의 사진이 나오도록한다 -->
 	
-	<h1 style="font-family:Abril Fatface; text-align: center; background-color: white; font-style: italic;">Info</h1>
+	<h1 style="font-family:Abril Fatface; text-align: center; background-color: white; font-style: italic;">Info222</h1>
 	<c:if test="${sessionScope.loginok==null}">
 		<img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg">
 	</c:if>
