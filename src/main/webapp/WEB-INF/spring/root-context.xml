@@ -7,12 +7,15 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-      <property name="url" value="jdbc:mysql://localhost:3306/bitcamp?serverTimezone=Asia/Seoul"></property>
-	  <property name="username" value="angel"></property>
-      <property name="password" value="1234"></property>
-     <!--  <property name="url" value="jdbc:mysql://sproject.c91gwm0gkyg8.ap-northeast-2.rds.amazonaws.com:3306/SProject?serverTimezone=Asia/Seoul"></property>
+<!-- 로컬 호스트용 데이터베이스 연결 -->
+<!--      <property name="url" value="jdbc:mysql://localhost:3306/bitcamp?serverTimezone=Asia/Seoul"></property>  -->
+<!--	  <property name="username" value="angel"></property>-->
+<!--      <property name="password" value="1234"></property>-->
+
+<!--      아마존 AWS용 데이터베이스 연결  -->
+        <property name="url" value="jdbc:mysql://sproject.c91gwm0gkyg8.ap-northeast-2.rds.amazonaws.com:3306/SProject?serverTimezone=Asia/Seoul"></property>
       <property name="username" value="admin"></property>
-      <property name="password" value="gudwns96"></property> -->
+      <property name="password" value="gudwns96"></property>
    </bean>
    
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
