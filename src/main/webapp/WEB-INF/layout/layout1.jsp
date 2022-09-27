@@ -47,8 +47,6 @@
     	height: 150px;
     	text-align: center;
     	line-height: 130px;
-
-    	
     }
     
     /*#menu{

@@ -36,13 +36,13 @@
   <!-- The slideshow/carousel -->
   <div class="carousel-inner slideimg">
     <div class="carousel-item active">
-      <img src="${root}/image/wallpaper1.jpg" alt="Los Angeles" class="d-block">
+      <img src="${root}/image/banner11.jpg" alt="banner1" class="d-block">
     </div>
     <div class="carousel-item">
-      <img src="${root}/image/wallpaper2.jpg" alt="Chicago" class="d-block">
+      <img src="${root}/image/banner12.jpg" alt="banner2" class="d-block">
     </div>
     <div class="carousel-item">
-      <img src="${root}/image/wallpaper3.jpg" alt="New York" class="d-block">
+      <img src="${root}/image/banner13.jpg" alt="banner3" class="d-block">
     </div>
   </div>
   

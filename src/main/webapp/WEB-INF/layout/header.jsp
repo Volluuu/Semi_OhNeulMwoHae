@@ -25,10 +25,13 @@
 		width: 100%;
 		text-align: center;
 		display: flex;
+		position: fixed;
+		background-color: white;
+		/*background-color: #38B6FF;*/
 	}
 
 	.logo {
-		width: 5%;
+		width: 150px;
 		height: 150px;
 		margin-left: 50px;
 	}
@@ -39,12 +42,15 @@
 	}
 
 	.menu{
-		margin-left: 100px;
+		width: 40%;
+		margin: 0 auto;
+		text-align: center;
+		font-weight: bold;
+		text-align: center;
 	}
 
 	.menu1{
-		width: 35%;
-		text-align: center;
+
 	}
 	.menu a{
 		margin-left: 20px;
@@ -55,14 +61,13 @@
 	}
 
 	.menu a:hover{
-		background-color: black;
-		color: white;
+		text-shadow: 10px 10px 10px black;
+		color: black;
 		cursor: pointer;
 	}
 
 	.search_bar{
 		width: 450px;
-		margin-left: 100px;
 	}
 
 	.search1{
@@ -72,41 +77,42 @@
 	}
 
 	div.search1 .sel1{
-		width: 120px;
+		width: 90px;
 		font-size: 13px;
 		color: gray;
 	}
 
 	div.search1 .op1{
-		width: 120px;
+		width: 90px;
 		font-size: 15px;
 		color: black;
 	}
 
 	div.search1 .in1{
 		width: 250px;
-		font-size: 15px;
+		font-size: 12px;
 	}
 	div.search1 .btn1{
-		width: 50px;
+		width: 40px;
 	}
 
 	.myinfo{
-		margin-left: 100px;
+		margin-left: 20px;
+		font-weight: bold;
 	}
 
 	.myinfo a{
 		text-decoration: none;
 		margin-left: 20px;
 		margin-right: 20px;
-		color: gray;
-		font-size: 15px;
+		color: black;
+		font-size: 12px;
 	}
 
 	.myinfo a:hover{
-		background-color: black;
-		color: white;
+		color: black;
 		cursor: pointer;
+		text-shadow: 10px 10px 10px black;
 	}
 
 	.my1{
@@ -145,16 +151,16 @@
 <c:set var="root" value="<%=request.getContextPath()%>" />
 <div class="title">
 		<div class="logo">
-			<a href="${root}/"><img src="${root}/image/logo1.jpg"> </a>
+			<a href="${root}/"><img src="${root}/image/logo1.jpg"></a>
 		</div>
 		<div class="menu">
 			<div class="input-group menu1">
-				<a href="${root}/">Home</a>
-				<a href="${root}/board/list">Board</a>
-				<a href="${root}/board/form">Board form</a>
-				<a href="${root}/member/list">Memberlist</a>
-				<a href="${root}/member/form">Sign</a>
-				<a href="${root}/help/map">GoogleMap</a>
+				<a href="${root}/">공지사항</a>
+				<a href="${root}/board/list">추천 코스</a>
+				<a href="${root}/board/list">친구 찾기</a>
+				<a href="${root}/board/list">게시판</a>
+				<a href="${root}/board/form">후기</a>
+				<a href="${root}/help/map">경로 설정</a>
 			</div>
 		</div>
 		<div class="search_bar">
@@ -171,8 +177,8 @@
 		<div class="myinfo">
 			<div class="input-group my1">
 				<a href="#">마이페이지</a>
-				<a href="#">몰라</a>
-				<a href="#">몰라 2</a>
+				<a href="${root}/member/list">회원목록</a>
+				<a href="${root}/member/form">회원가입</a>
 			</div>
 		</div>
 

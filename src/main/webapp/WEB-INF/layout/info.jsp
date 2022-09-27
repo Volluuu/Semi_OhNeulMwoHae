@@ -18,14 +18,15 @@
 <style type="text/css">
 
 	.infomain{
-		/*position:fixed;*/
+		margin: 0 auto;
+		position:absolute;
 		width: 100px;
-		height: 200px;
+		height: 250px;
 		display: inline-block;
-		/*top:20%;*/
 		background-color: transparent;
 		right: 100px;
-		bottom: 0;
+		bottom: 10%;
+		text-align: center;
 	}
 /*
     div.infotb table.table-bordered {
@@ -37,11 +38,50 @@
     }*/
 
     #proimg {
-    	width: 80px;
-    	height: 80px;
+    	width: 100%;
+    	height: 90px;
     	text-align: center;
+		margin: 0 auto;
     }
-    </style>
+
+
+	a.up1{
+		width: 100%;
+	}
+
+	i.top{
+		font-size: 50px;
+		color: black;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		text-shadow: 5px 5px 8px gray;
+	}
+
+	.gohome{
+		font-size: 50px;
+		color: black;
+		text-shadow: 5px 5px 8px gray;
+	}
+
+</style>
+	<script>
+	$(function (){
+
+		$(document).on("click",".top",function(){
+			$( 'html, body' ).animate( { scrollTop : 0 }, 50 );
+			return false;
+		});
+
+		$(document).ready(function(){
+			var currentPosition = parseInt($(".infomain").css("top"));
+
+			$(window).scroll(function() {
+				var position = $(window).scrollTop();
+				$(".infomain").stop().animate({"top":position+currentPosition+"px"},200);
+			});
+		});
+	});
+	</script>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
@@ -50,11 +90,13 @@
 	<!-- 로그인한 상태에서는 로그인한 멤버의 사진이 나오도록한다 -->
 
 	<c:if test="${sessionScope.loginok==null}">
-		<img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg">
+		<a href="#"><img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg" onerror="this.src='${root}/image/noimage.jpg';"></a>
 	</c:if>
 	<c:if test="${sessionScope.loginok!=null}">
-		<img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg">
+	<a href="#"><img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg"></a>
 	</c:if>
+	<a href="#" class="up1"><i class='far fa-arrow-alt-circle-up top'></i></a>
+	<a href="${root}/"><i class='fas fa-home gohome'></i></a>
 <br><br>
 <%--
 	<div class="infotb">
