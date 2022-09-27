@@ -15,13 +15,16 @@
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <style type="text/css">
-  
+  .slideimg img{
+    width: 100%;
+    height: 300px;
+  }
 </style>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 
-<div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 80%;">
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
 
   <!-- Indicators/dots -->
   <div class="carousel-indicators">
@@ -31,15 +34,15 @@
   </div>
   
   <!-- The slideshow/carousel -->
-  <div class="carousel-inner">
+  <div class="carousel-inner slideimg">
     <div class="carousel-item active">
-      <img src="${root}/image/wallpaper1.jpg" alt="Los Angeles" class="d-block" style="width:100%; height: 500px;">
+      <img src="${root}/image/wallpaper1.jpg" alt="Los Angeles" class="d-block">
     </div>
     <div class="carousel-item">
-      <img src="${root}/image/wallpaper2.jpg" alt="Chicago" class="d-block" style="width:100%;height: 500px;">
+      <img src="${root}/image/wallpaper2.jpg" alt="Chicago" class="d-block">
     </div>
     <div class="carousel-item">
-      <img src="${root}/image/wallpaper3.jpg" alt="New York" class="d-block" style="width:100%;height: 500px;">
+      <img src="${root}/image/wallpaper3.jpg" alt="New York" class="d-block">
     </div>
   </div>
   
@@ -56,15 +59,6 @@
   <h3>Carousel Example</h3>
   <p>The following example shows how to create a basic carousel with indicators and controls.</p>
 </div> -->
-<h1>소태호 커밋 테스트</h1>
-<h2>소태호 커밋 테스트 2번째</h2>
-<h3>소태호 커밋 테스트 3번째</h3>
-<h4> 박재우 테스트 4 </h4>
-<h3>소태호 커밋 1번</h3>
-<h3>소태호 커밋 2 번</h3>
-
-<h3> 박재우 5 </h3>
-
 
 </body>
 </html>

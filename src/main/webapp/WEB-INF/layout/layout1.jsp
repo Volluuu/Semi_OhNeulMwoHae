@@ -23,49 +23,47 @@
     * {
 		font-family:"Dohyeon";
 		font-size: 20px;
+
 	}
-    div.mainlayout1 div.main{
-    	border: 0px solid gray;
+    div.mainlayout1 {
+    	width: 100%;
+		height: 100vh;
+
     }
     
     
-    div.mainlayout1 #info{
-    	float: left;
+  /*  div.mainlayout1 #info{
+    	float: right;
     	width: 20%;
     }
     
     div.mainlayout1 #main{
-    	float: right;
-    	width: 80%;
-    }
+    	width: 100%;
+		margin: 0 auto;
+    }*/
     
     #header{
     	width: 100%;
     	height: 150px;
     	text-align: center;
     	line-height: 130px;
+
     	
     }
     
-    #menu{
+    /*#menu{
     	width: 100%;
     	height: 140px;
     	text-align: center;
     	margin: 0 auto;
-    }
+    }*/
     
-    #info{
-    	float: left;
-    	width: 20%;
-    	height: 500px;
-    	padding-top: 30px;
-    	margin: 0 auto;
+   #info{
+
     }
     
     #main{
-    	width: 80%;
-    	height: 500px;
-    	margin: 0 auto;
+
     }
 </style>
 </head>
@@ -74,14 +72,15 @@
 	<div class="main" id="header">
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="main" id="menu">
+	<%--<div class="main" id="menu">
 		<tiles:insertAttribute name="menu"/>
-	</div>
-	<div class="main" id="info">
-		<tiles:insertAttribute name="info"/>
-	</div>
+	</div>--%>
 	<div class="main" id="main">
 		<tiles:insertAttribute name="main"/>
+	</div>
+	<br>
+	<div class="main" id="info">
+		<tiles:insertAttribute name="info"/>
 	</div>
 </div>
 </body>

@@ -16,45 +16,39 @@
     />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <style type="text/css">
-	
-    
-    div.infotext{
-    	width: 200px;
-    	height: 350px;
-    	margin: 0 auto;
-    }
-    
+
+	.infomain{
+		/*position:fixed;*/
+		width: 100px;
+		height: 200px;
+		display: inline-block;
+		/*top:20%;*/
+		background-color: transparent;
+		right: 100px;
+		bottom: 0;
+	}
+/*
     div.infotb table.table-bordered {
-    	width: 300px;
-    	height: 300px;
-    	margin: 0 auto;
-    	border: 1px solid white;
-    	
-    }
-    
-    div.infotb table tr th i{
-    	font-size: 30px;
-    }
-    
-    div.infotb table tr td{
-    	font-size: 25px;
-    	text-align: center;
-    }
-    
-    #proimg {
-    	width: 200px;
+    	width: 100px;
     	height: 200px;
+    	margin: 0 auto;
+    	border: 0px solid white;
+    	
+    }*/
+
+    #proimg {
+    	width: 80px;
+    	height: 80px;
     	text-align: center;
     }
     </style>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<div class="infomain" style="margin: 0 auto; text-align: center;">
+<div class="infomain">
 
 	<!-- 로그인한 상태에서는 로그인한 멤버의 사진이 나오도록한다 -->
-	
-	<h1 style="font-family:Abril Fatface; text-align: center; background-color: white; font-style: italic;">Info222</h1>
+
 	<c:if test="${sessionScope.loginok==null}">
 		<img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg">
 	</c:if>
@@ -62,7 +56,7 @@
 		<img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg">
 	</c:if>
 <br><br>
-
+<%--
 	<div class="infotb">
 		<table class="table table-bordered">
 			<tr>
@@ -105,7 +99,7 @@
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div>--%>
 </div>
 </body>
 </html>
