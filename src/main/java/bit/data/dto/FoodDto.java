@@ -8,7 +8,8 @@ public class FoodDto {
 	private String title;
 	private String addr;
 	private String photo;
-	private String content;
+	private String category;
+	private String menu;
 	private String tel;
 	private String lat;
 	private String lon;
