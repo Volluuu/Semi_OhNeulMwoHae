@@ -35,20 +35,16 @@
 <body>
 <h1>찾아오시는길</h1>
 
-<div id="map" style="width:750px;height:350px;"></div>
+<div id="map" style="width:500px;height:400px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=975192c3e707d21a2b0a6dda745636ec"></script>
+<script>
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(33.450701, 126.570667),
+		level: 3
+	};
 
-	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=3c99d40dad86de4214250c8c0278dc6f"></script>
-	<script>
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    mapOption = {
-		        center: new kakao.maps.LatLng(37.56682, 126.97865), // 지도의 중심좌표
-		        level: 3, // 지도의 확대 레벨
-		        mapTypeId : kakao.maps.MapTypeId.ROADMAP // 지도종류
-		    }; 
-
-		// 지도를 생성한다 
-		var map = new kakao.maps.Map(mapContainer, mapOption); 
-
+	var map = new kakao.maps.Map(container, options);
 </script>
 	<table>
 		<tr>
