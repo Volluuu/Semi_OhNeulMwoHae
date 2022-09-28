@@ -6,14 +6,19 @@ import lombok.Data;
 
 @Data
 public class MemberDto {
-	private int num;
+	private int user_num;
 	private String loginid;
-	private String pass;
+	private String password;
 	private String name;
-	private String photo;
-	private String hp;
+	private String nickname;
 	private String email;
-	private String address;
+	private String hp;
+	private String profile;
+	private String interest;
+	private String mycourse;
+	private String profilephoto;
+	private String alarm;
+	private String isadmin;
 	private Timestamp gaipday;
 
 	
