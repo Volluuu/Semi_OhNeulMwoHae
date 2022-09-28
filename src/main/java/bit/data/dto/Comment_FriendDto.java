@@ -11,4 +11,7 @@ public class Comment_FriendDto {
 	private int user_num;
 	private String content;
 	private Timestamp writeday;
+	private int regroup;
+	private int restep;
+	private int relevel;
 }
