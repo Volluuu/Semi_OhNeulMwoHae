@@ -81,7 +81,7 @@
         $.ajax({
             type:"get",
             url:root+"/findboard/login",
-            dataType:"json",
+            dataType:"text",
             data:{"user_num":"1","loginid":"admin","password":"gudwns96",
                 "name":"관리자","nickname":"관리자닉네임","email":"donggeonlee95@naver.com",
                 "hp":"010-4154-8185","profile":"나는 관리자다","interest":"intp","profilephoto":"admin.png",
