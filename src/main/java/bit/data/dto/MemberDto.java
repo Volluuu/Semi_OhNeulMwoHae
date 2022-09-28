@@ -13,13 +13,11 @@ public class MemberDto {
 	private String nickname;
 	private String email;
 	private String hp;
-	private String profile;
+	private String profilephoto;
 	private String interest;
 	private String mycourse;
-	private String photo;
 	private String alarm;
 	private String isadmin;
 	private Timestamp gaipday;
 
-	
 }

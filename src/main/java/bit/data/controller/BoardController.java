@@ -189,7 +189,7 @@ public class BoardController {
 		//이때 글쓴사람이 탈퇴했을 경우 널포인터 에러 발생
 		String memphoto="";
 		try {
-			memphoto=memberService.getDataById(dto.getId()).getPhoto();
+			memphoto=memberService.getDataById(dto.getId()).getProfilephoto();
 		} catch (NullPointerException e) {
 			// TODO: handle exception
 			memphoto="no";

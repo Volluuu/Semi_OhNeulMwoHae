@@ -55,6 +55,7 @@
         <input type="text" name="findword" class="dg_inputtext" placeholder="검색 단어" value="${param.findword}">
 
         <button type="submit" class="dg_searchbtn">검색</button>
+
     </form>
 
     <a href="list?findcolumn=nickname&searchword=${sessionScope.nickname}" class="dg_a">내가 쓴 글</a>
