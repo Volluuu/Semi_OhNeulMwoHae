@@ -2,6 +2,8 @@ package bit.data.dto;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 public class FindDto {
 	private int find_num;
@@ -10,4 +12,5 @@ public class FindDto {
 	private String content;
 	private String photo;
 	private int readcount;
+	private Timestamp writeday;
 }

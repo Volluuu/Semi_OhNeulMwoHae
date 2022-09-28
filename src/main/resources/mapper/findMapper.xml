@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="bit.data.dao.FindDao">
+	<!--검색된 게시글이 몇 개인지 구하는 mapper-->
+	<select id="selectTotalCount" parameterType="Map" resultType="int">
+		select count(*) from find
+		<if test="findcolumn!=null and findword!=null">
+			where ${findcolumn} like concat('%',#{findword},'%')
+		</if>
+	</select>
+	<!--검색 했을 때 조회순으로 나오게-->
+	<select id="findPagingList" parameterType="Map" resultType="finddto">
+		select * from find
+		<if test="findcolumn!=null and findword!=null">
+			where ${findcolumn} like concat('%',#{findword},'%')
+		</if>
+		order by readcount desc
+	</select>
+	<!--게시글 상세보기 눌렀을 때 게시판의 PK를 얻기 위함-->
+	<select id="selectByFindNum" parameterType="int" resultType="finddto">
+		select * from find where find_num=#{find_num}
+	</select>
+	<!--게시글 작성-->
+	<insert id="insertFindBoard" parameterType="finddto">
+		insert into find values (null,#{user_num},#{subject},#{content},#{photo},#{readcount},now())
+	</insert>
+
+</mapper>

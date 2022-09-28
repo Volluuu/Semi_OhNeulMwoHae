@@ -17,46 +17,52 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+	<c:set var="root" value="<%=request.getContextPath()%>"/>
+	<link rel="stylesheet" href="../css/style.css">
 <style type="text/css">
-  
-    
-    div.mainlayout2 div.main{
-    	border: 0px solid gray;
-    }
-    
-    
-   /*  div.mainlayout2 #info{
-    	float: left;
-    	width: 20%;
-    } */
-    
-    div.mainlayout2 #main{
-    	width: 50%;
-    }
-    
-    #header{
-    	width: 100%;
-    	height: 150px;
-    	text-align: center;
-    	line-height: 130px;
-    	/* background-color: #EBE9E1; */
-    }
-    
-    #menu{
-    	width: 100%;
-    	height: 140px;
-    	text-align: center;
-    	margin: 0 auto;
-    	/* background-color: #EBE9E1; */
-    }
-    
-    
-    #main{
-    	margin:0 auto;
-    	width: 60%;
-    	height: 500px;
-    	/* background-color: #EBE9E1; */
-    }
+	* {
+		font-family:"Dohyeon";
+		font-size: 20px;
+
+	}
+	div.mainlayout1 {
+		width: 100%;
+		height: 100vh;
+
+	}
+
+
+	/*  div.mainlayout1 #info{
+          float: right;
+          width: 20%;
+      }
+
+      div.mainlayout1 #main{
+          width: 100%;
+          margin: 0 auto;
+      }*/
+
+	#header{
+		width: 100%;
+		height: 150px;
+		text-align: center;
+		line-height: 130px;
+	}
+
+	/*#menu{
+        width: 100%;
+        height: 140px;
+        text-align: center;
+        margin: 0 auto;
+    }*/
+
+	#info{
+
+	}
+
+	#main{
+
+	}
     </style>
     <c:set var="root" value="<%=request.getContextPath()%>"/>
 </head>
