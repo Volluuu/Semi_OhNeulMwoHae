@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="bit.data.dao.">
-    <!-- cafe Data-->
+<mapper namespace="bit.data.dao.MemberDao">
+   <!-- &lt;!&ndash; cafe Data&ndash;&gt;
     <select id="getCafeMaxNum" resultType="int">
         select ifnull(max(cafe_num),0) from cafe
     </select>
@@ -16,7 +16,7 @@
     <select id="selectCafeByNum" parameterType="int" resultType="">
         select * from cafe where num=#{num}
     </select>
-    <!-- trip Data-->
+    &lt;!&ndash; trip Data&ndash;&gt;
     <select id="getTripMaxNum" resultType="int">
         select ifnull(max(trip_num),0) from trip
     </select>
@@ -29,7 +29,7 @@
     <select id="selectTripByNum" parameterType="int" resultType="">
         select * from trip where num=#{num}
     </select>
-    <!-- food Data-->
+    &lt;!&ndash; food Data&ndash;&gt;
     <select id="getFoodMaxNum" resultType="int">
         select ifnull(max(food_num),0) from cafe
     </select>
@@ -41,5 +41,5 @@
     </select>
     <select id="selectFoodByNum" parameterType="int" resultType="">
         select * from food where num=#{num}
-    </select>
+    </select>-->
 </mapper>
