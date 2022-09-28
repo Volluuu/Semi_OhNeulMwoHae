@@ -60,7 +60,7 @@ public class MemberController {
 		//저장할 파일명 구하기
 		String fileName=ChangeName.getChangeFileName(myphoto.getOriginalFilename());
 		//dto에 photo에 저장
-		dto.setPhoto(fileName);
+		dto.setProfilephoto(fileName);
 
 		//upload try/catch
 		

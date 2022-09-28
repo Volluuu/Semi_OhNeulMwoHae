@@ -42,7 +42,7 @@ public class LoginController {
 			session.setAttribute("loginok", "yes");
 			session.setAttribute("loginid", id);
 			session.setAttribute("loginname", mdto.getName());
-			session.setAttribute("loginphoto", mdto.getPhoto());
+			session.setAttribute("loginphoto", mdto.getProfilephoto());
 			session.setAttribute("loginhp", mdto.getHp());
 			session.setAttribute("loginemail", mdto.getEmail());
 			
