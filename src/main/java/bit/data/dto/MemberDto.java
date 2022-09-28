@@ -16,7 +16,7 @@ public class MemberDto {
 	private String profile;
 	private String interest;
 	private String mycourse;
-	private String profilephoto;
+	private String photo;
 	private String alarm;
 	private String isadmin;
 	private Timestamp gaipday;
