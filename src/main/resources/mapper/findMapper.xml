@@ -10,13 +10,13 @@
 			where ${findcolumn} like concat('%',#{findword},'%')
 		</if>
 	</select>
-	<!--검색 했을 때 조회순으로 나오게-->
+	<!--검색 했을 때 최신순으로 나오게-->
 	<select id="findPagingList" parameterType="Map" resultType="finddto">
 		select * from find
 		<if test="findcolumn!=null and findword!=null">
 			where ${findcolumn} like concat('%',#{findword},'%')
 		</if>
-		order by readcount desc
+		order by writeday desc
 	</select>
 	<!--게시글 상세보기 눌렀을 때 게시판의 PK를 얻기 위함-->
 	<select id="selectByNum" parameterType="int" resultType="finddto">

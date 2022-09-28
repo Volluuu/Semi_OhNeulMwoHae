@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class Comment_CourseDto {
+public class CommentCourseDto {
 	private int course_num;
 	private int user_num;
 	private int food_num;
