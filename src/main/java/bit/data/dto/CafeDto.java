@@ -4,11 +4,12 @@ import lombok.Data;
 
 @Data
 public class CafeDto {
-	private int food_num;
+	private int cafe_num;
 	private String title;
 	private String addr;
+	private String menu;
+	private String cafe;
 	private String photo;
-	private String content;
 	private String tel;
 	private String lat;
 	private String lon;

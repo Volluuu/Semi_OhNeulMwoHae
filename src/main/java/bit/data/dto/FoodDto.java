@@ -7,9 +7,9 @@ public class FoodDto {
 	private int food_num;
 	private String title;
 	private String addr;
-	private String photo;
 	private String category;
 	private String menu;
+	private String photo;
 	private String tel;
 	private String lat;
 	private String lon;
