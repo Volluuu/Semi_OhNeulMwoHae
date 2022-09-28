@@ -159,7 +159,7 @@
 				<a href="${root}/board/list">추천 코스</a>
 				<a href="${root}/board/list">친구 찾기</a>
 				<a href="${root}/board/list">게시판</a>
-				<a href="${root}/board/form">후기</a>
+				<a href="${root}/board/form">장소 목록</a>
 				<a href="${root}/help/map">경로 설정</a>
 			</div>
 		</div>
@@ -177,8 +177,8 @@
 		<div class="myinfo">
 			<div class="input-group my1">
 				<a href="#">마이페이지</a>
-				<a href="${root}/member/list">회원목록</a>
-				<a href="${root}/member/form">회원가입</a>
+				<a href="${root}/user/userlist">회원목록</a>
+				<a href="${root}/user/userform">회원가입</a>
 			</div>
 		</div>
 
