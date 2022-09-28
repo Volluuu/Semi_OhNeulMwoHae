@@ -8,8 +8,13 @@
 		<typeAlias type="bit.data.dto.MemberDto" alias="mdto"/>
 		<typeAlias type="bit.data.dto.BoardDto" alias="bdto"/>
 		<typeAlias type="bit.data.dto.BoardAnswerDto" alias="badto"/>
-		<typeAlias type="bit.data.dto.CafeDto" alias="mapdto"/>
+
+		<typeAlias type="bit.data.dto.CafeDto" alias="cafedto"/>
+		<typeAlias type="bit.data.dto.TripDto" alias="tripdto"/>
+		<typeAlias type="bit.data.dto.FoodDto" alias="fooddto"/>
+
 		<typeAlias type="bit.data.dto.FindDto" alias="finddto"/>
 		<typeAlias type="bit.data.dto.UserDto" alias="udto"/>
+
 	</typeAliases>
 </configuration>

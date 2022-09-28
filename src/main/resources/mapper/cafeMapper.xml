@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.CafeDao">
+	<select id="selectTotalCount" parameterType="String" resultType="int">
+		select count(*) from cafe
+	</select>
+
+	<insert id="insertCafe" parameterType="cafedto">
+		insert into cafe values (null,#{title},#{addr},#{menu},#{photo},#{tel},
+		0,0,#{gu},0)
+	</insert>
+
+	<update id="updateReadCount" parameterType="int">
+		update cafe set readcount=readcount+1 where num=#{num}
+	</update>
+
+	<select id="selectByNum" parameterType="int" resultType="cafedto">
+		select * from cafe where cafe_num=#{cafe_num}
+	</select>
+
+	<delete id="deleteCafe" parameterType="int">
+		delete from cafe where cafe_num=#{cafe_num}
+	</delete>
+
+	<update id="updateCafe" parameterType="cafedto">
+		update cafe set title=#{title},addr=#{addr},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon}
+		            <if test="photo!=null">
+						photo=#{photo}
+					</if>
+		  where cafe_num=#{cafe_num}
+	</update>
+
+	<insert id="likesInsert" parameterType="int">
+		update likes set likes=likes+1 where cafe_num=#{cafe_num}
+	</insert>
+
+	<update id="likesUpdate" parameterType="int">
+		update likes set likes=likes-1 where cafe_num=#{cafe_num}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
