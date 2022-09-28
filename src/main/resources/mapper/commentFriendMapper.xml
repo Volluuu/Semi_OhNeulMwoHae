@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="bit.data.dao.CommentFriendDao">
+	<!--최근 댓글이 밑으로 나오게-->
+	<select id="selectAllComments" parameterType="int" resultType="cfdto">
+		select * from comment_friend where friend_num=#{friend_num} order by friend_num asc
+	</select>
+	<!--계층형 댓글 입력-->
+	<insert id="insertComment" parameterType="cfdto">
+		insert into comment_friend values (null,#{find_num},#{user_num},#{content},now(),#{regroup},#{restep},#{relevel})
+	</insert>
+	<!--계층형 댓글 Restep-->
+	<update id="updateRestep" parameterType="Map">
+		update comment_friend set restep=restep+1 where regroup=#{regroup} and restep>#{restep}
+	</update>
+	<!--댓글 수정하기 위한 정보 받아오기-->
+	<select id="selectCommentByNum" parameterType="int" resultType="cfdto">
+		select * from comment_friend where friend_num=#{friend_num}
+	</select>
+	<!--댓글 삭제-->
+	<delete id="deleteByNum" parameterType="int">
+		delete from comment_friend where friend_num=#{friend_num}
+	</delete>
+</mapper>
