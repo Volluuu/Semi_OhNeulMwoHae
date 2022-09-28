@@ -67,6 +67,7 @@
 </head>
 <body>
 <div class="mainlayout1">
+
 	<div class="main" id="header">
 		<tiles:insertAttribute name="header"/>
 	</div>
@@ -76,7 +77,6 @@
 	<div class="main" id="main">
 		<tiles:insertAttribute name="main"/>
 	</div>
-	<br>
 	<div class="main" id="info">
 		<tiles:insertAttribute name="info"/>
 	</div>

@@ -27,6 +27,7 @@
 		right: 100px;
 		bottom: 10%;
 		text-align: center;
+		z-index: 1;
 	}
 /*
     div.infotb table.table-bordered {
