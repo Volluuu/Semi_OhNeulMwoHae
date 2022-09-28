@@ -34,12 +34,12 @@ public class CommentFriendService implements  CommentFriendServiceInter{
     }
 
     @Override
-    public CommentFriendDto selectCommentByNum(int num) {
-        return commentFriendDao.selectCommentByNum(num);
+    public CommentFriendDto selectCommentByNum(int friend_num) {
+        return commentFriendDao.selectCommentByNum(friend_num);
     }
 
     @Override
-    public void deleteByNum(int num) {
-        commentFriendDao.deleteByNum(num);
+    public void deleteByNum(int friend_num) {
+        commentFriendDao.deleteByNum(friend_num);
     }
 }

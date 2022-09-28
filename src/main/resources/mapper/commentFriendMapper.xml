@@ -17,10 +17,10 @@
 	</update>
 	<!--댓글 수정하기 위한 정보 받아오기-->
 	<select id="selectCommentByNum" parameterType="int" resultType="cfdto">
-		select * from comment_friend where friend_num=#{num}
+		select * from comment_friend where friend_num=#{friend_num}
 	</select>
 	<!--댓글 삭제-->
 	<delete id="deleteByNum" parameterType="int">
-		delete from comment_friend where friend_num=#{num}
+		delete from comment_friend where friend_num=#{friend_num}
 	</delete>
 </mapper>
