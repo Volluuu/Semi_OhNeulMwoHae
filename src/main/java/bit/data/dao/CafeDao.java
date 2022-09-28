@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public class CafeDao implements CafeDaoInter{
     @Autowired
@@ -13,8 +15,8 @@ public class CafeDao implements CafeDaoInter{
     String ns="bit.data.dao.Cafe.";
 
     @Override
-    public int selectTotalCount() {
-        return session.selectOne(ns+"selectTotalCount");
+    public int selectTotalCount(Map<String, String> map) {
+        return session.selectOne(ns+"selectTotalCount", map);
     }
 
     @Override
