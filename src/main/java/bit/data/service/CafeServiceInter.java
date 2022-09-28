@@ -2,8 +2,10 @@ package bit.data.service;
 
 import bit.data.dto.CafeDto;
 
+import java.util.Map;
+
 public interface CafeServiceInter {
-    public int selectTotalCount();
+    public int selectTotalCount(String cafecolumn, String cafeword);
     public void insertCafe(CafeDto dto);
     public void updateReadCount(int cafe_num);
     public void deleteCafe(int cafe_num);

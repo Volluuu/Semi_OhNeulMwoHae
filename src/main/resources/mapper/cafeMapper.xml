@@ -3,8 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bit.data.dao.CafeDao">
-	<select id="selectTotalCount" parameterType="String" resultType="int">
+	<select id="selectTotalCount" parameterType="Map" resultType="int">
 		select count(*) from cafe
+		<if test="cafecolumn!=null and cafehword!=null">
+			where ${cafecolumn} like concat('%',#{cafeword},'%')
+		</if>
+	</select>
+
+	<select id="selectPagingList" parameterType="Map" resultType="bdto">
+		select * from cafe
+		<if test="cafecolumn!=null and cafehword!=null">
+			where ${cafecolumn} like concat('%',#{cafeword},'%')
+		</if>
 	</select>
 
 	<insert id="insertCafe" parameterType="cafedto">
