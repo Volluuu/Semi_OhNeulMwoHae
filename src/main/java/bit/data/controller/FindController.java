@@ -8,8 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FindController {
@@ -61,5 +65,47 @@ public class FindController {
         model.addAttribute("totalPage", totalPage);
 
         return "/bit/find/findboard";
+    }
+
+    @GetMapping("/findboard/login")
+    @ResponseBody
+    public void loginprocess(String user_num, String loginid, String password, String name,
+                                            String nickname, String email, String hp, String profile,
+                                            String interest, String profilephoto, String alarm,
+                                            String isadmin, String gaipday, HttpSession session){
+        session.setAttribute("loginok", "yes");
+        session.setAttribute("user_num", user_num);
+        session.setAttribute("loginid", loginid);
+        session.setAttribute("password", password);
+        session.setAttribute("name", name);
+        session.setAttribute("nickname", nickname);
+        session.setAttribute("email", email);
+        session.setAttribute("hp", hp);
+        session.setAttribute("profile", profile);
+        session.setAttribute("interest", interest);
+        session.setAttribute("profilephoto", profilephoto);
+        session.setAttribute("alarm", alarm);
+        session.setAttribute("isadmin", isadmin);
+        session.setAttribute("gaipday", gaipday);
+    }
+
+    @GetMapping("/findboard/logout")
+    @ResponseBody
+    public void logoutprocess(HttpSession session){
+        //로그아웃하면 제거할 옵션
+        session.removeAttribute("loginok");
+        session.removeAttribute("user_num");
+        session.removeAttribute("loginid");
+        session.removeAttribute("password");
+        session.removeAttribute("name");
+        session.removeAttribute("nickname");
+        session.removeAttribute("email");
+        session.removeAttribute("hp");
+        session.removeAttribute("profile");
+        session.removeAttribute("interest");
+        session.removeAttribute("profilephoto");
+        session.removeAttribute("alarm");
+        session.removeAttribute("isadmin");
+        session.removeAttribute("gaipday");
     }
 }
