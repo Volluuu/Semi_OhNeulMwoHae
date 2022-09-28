@@ -48,7 +48,7 @@ public class MemberController {
 	@GetMapping("/userform")
 	public String mform()
 	{
-		return "/bit/member/memberform";
+		return "/bit/member/userform";
 	}
 	
 	@PostMapping("/insert")
