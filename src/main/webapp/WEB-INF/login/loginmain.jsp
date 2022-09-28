@@ -17,10 +17,8 @@
       rel="stylesheet"
     />
 <style type="text/css">
-    *{
-    	font-family: 'Jua';
-    }
-    </style>
+
+</style>
 </head>
 <body>
 <h1 class="alert alert-info">loginmain</h1>
