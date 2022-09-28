@@ -115,66 +115,84 @@
 </head>
 <body>
 <form action="insert" method="post" enctype="multipart/form-data" onsubmit="return check()">
-	<table class="table table-bordered" style="width: 700px; margin-left: 300px;">
-		<caption align="top"><h1 class="alert alert-dark"><b>회원가입</b></h1></caption>
-		<tr>
-			<td style="width: 250px;" rowspan="4" align="center">
-				<input type="file" id="myphoto" name="myphoto" style="display: none;">
-				
-				<button type="button" id="btnphoto" class="btn btn-dark">사진선택</button>
-				<br>
-				<img id="showimg">
-			</td>
-			<td>
-				<div class="input-group">
-				<input type="text" placeholder="아이디 입력" id="loginid2" name="loginid" class="form-control"
-				style="width: 120px;" required="required">
-				<button type="button" class="btn btn-dark btn-sm" id="btnidcheck">중복체크</button>
-				&nbsp;
-				<div class="idsuccess">id check</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="input-group">
-					<input type="password" style="width: 120px;" class="form-control" 
-					name="pass" id="pass" placeholder="숫자4자리 입력" maxlength="4" pattern="[0-9]{4,}" required="required">
-					
-					<input type="password" style="width: 120px;" class="form-control" 
-					id="pass2" placeholder="숫자4자리 확인" maxlength="4" pattern="[0-9]{4,}" required="required">
-					&nbsp;
-					<div class="passsuccess">pass check</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="text" name="name" class="form-control" placeholder="이름을 입력해주세요" required="required">
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요" required="required">
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<div class="input-group">
-					<input type="text" name="hp" placeholder="(-)없이 Hp번호만 입력해주세요" class="form-control"
-					style="width: 200px;" required="required">
-					
-					<input type="text" name="address" placeholder="주소를 입력해주세요" class="form-control"
-					style="width: 300px;" required="required">
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2" align="center">
-				<button type="submit" class="btn btn-dark" style="width: 180px;">회원가입</button>
-			</td>
-		</tr>
-	</table>
+    <table class="table table-bordered" style="width: 600px">
+        <caption align="top">
+            <h4 class="alert alert-danger">
+                <b>회원가입</b>
+            </h4>
+        </caption>
+        <tr>
+
+            <td>
+                <div class="input-group">
+                    <input type="text" placeholder="아이디입력" id="loginid2" name="loginid"
+                           class="form-control" style="width: 120px;" required="required">
+                    <button type="button" class="btn btn-danger btn-sm"
+                            id="btnidcheck">중복체크</button>
+                    &nbsp;
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="input-group">
+                    <input type="password" style="width: 120px;" class="form-control"
+                           name="pass" id="pass" placeholder="영문, 숫자 8-20자" maxlength="20"
+                           required="required">
+
+                    <input type="password" style="width: 120px;" class="form-control"
+                           id="pass2" placeholder="영문, 숫자 8-20자" maxlength="20"
+                           required="required">
+                    &nbsp;
+                    <div class="passsuccess" style="width:60px;"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="text" name="name" class="form-control"
+                       style="width: 150px;" placeholder="이름을 입력하세요" required="required">
+            </td>
+        </tr>
+
+        <tr>
+            <td><input type="email" name="email" class="form-control"
+                       placeholder="이메일을 입력하세요" required="required"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="input-group">
+                    <input type="text" name="hp" placeholder="(-)없이 HP번호만 입력"
+                           class="form-control" style="width: 200px;" required="required">
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                성별
+                <select>
+                    <option>여자</option>
+                    <option>남자</option>
+                </select>
+
+                연령대
+                <select>
+                    <option>10대</option>
+                    <option>20대</option>
+                    <option>30대</option>
+                    <option>40대</option>
+                </select>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submit" class="btn btn-info" style="width: 180px;">회원가입</button>
+            </td>
+        </tr>
+    </table>
 </form>
 </body>
 </html>
