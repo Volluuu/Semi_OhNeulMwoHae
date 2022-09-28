@@ -17,7 +17,7 @@ public class HomeController {
 	@GetMapping("/help/map")
 	public String help()
 	{
-		return "/bit2/help/googlemap";
+		return "/bit/help/googlemap";
 	}
 	
 	
