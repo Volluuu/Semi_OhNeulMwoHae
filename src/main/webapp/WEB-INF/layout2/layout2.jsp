@@ -25,7 +25,7 @@
 		font-size: 20px;
 
 	}
-	div.mainlayout1 {
+	div.mainlayout2 {
 		width: 100%;
 		height: 100vh;
 
@@ -71,8 +71,8 @@
 	<div class="main" id="header">
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<div class="main" id="menu">
-		<tiles:insertAttribute name="menu"/>
+	<div class="main" id="info">
+		<tiles:insertAttribute name="info"/>
 	</div>
 	<div class="main" id="main">
 		<tiles:insertAttribute name="main"/>
