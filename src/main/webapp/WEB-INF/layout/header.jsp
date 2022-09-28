@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -25,7 +25,7 @@
 		width: 100%;
 		text-align: center;
 		display: flex;
-		position: fixed;
+		/*position: fixed;*/
 		background-color: white;
 		/*background-color: #38B6FF;*/
 	}

@@ -3,6 +3,7 @@ package bit.data.dao;
 import java.util.List;
 import java.util.Map;
 
+import bit.data.dto.FoodDto;
 import bit.data.dto.MemberDto;
 
 public interface MemberDaoInter {
@@ -19,4 +20,5 @@ public interface MemberDaoInter {
 	public void updatePhoto(Map<String, Object> map);
 	public void updateMember(MemberDto dto);
 	public void deleteMember(int num);
+
 }
