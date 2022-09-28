@@ -23,7 +23,7 @@ import bit.data.service.MemberServiceInter;
 import util.ChangeName;
 
 @Controller
-@RequestMapping("/member")//앞의 공통적으로 들어가는 매핑을 설정하는 annotation
+@RequestMapping("/user")//앞의 공통적으로 들어가는 매핑을 설정하는 annotation
 public class MemberController {
 	
 	@Autowired
@@ -45,7 +45,7 @@ public class MemberController {
 		return "/bit/member/memberlist";
 	}
 	
-	@GetMapping("/form")
+	@GetMapping("/userform")
 	public String mform()
 	{
 		return "/bit/member/memberform";
