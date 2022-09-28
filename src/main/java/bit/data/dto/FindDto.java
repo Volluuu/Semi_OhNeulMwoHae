@@ -13,4 +13,5 @@ public class FindDto {
 	private String photo;
 	private int readcount;
 	private Timestamp writeday;
+	private int answercount;
 }

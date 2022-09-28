@@ -1,30 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-        
-<mapper namespace="bit.data.dao.FindDao">
-	<!--검색된 게시글이 몇 개인지 구하는 mapper-->
-	<select id="selectTotalCount" parameterType="Map" resultType="int">
-		select count(*) from find
-		<if test="findcolumn!=null and findword!=null">
-			where ${findcolumn} like concat('%',#{findword},'%')
-		</if>
-	</select>
-	<!--검색 했을 때 조회순으로 나오게-->
-	<select id="findPagingList" parameterType="Map" resultType="finddto">
-		select * from find
-		<if test="findcolumn!=null and findword!=null">
-			where ${findcolumn} like concat('%',#{findword},'%')
-		</if>
-		order by readcount desc
-	</select>
-	<!--게시글 상세보기 눌렀을 때 게시판의 PK를 얻기 위함-->
-	<select id="selectByFindNum" parameterType="int" resultType="finddto">
-		select * from find where find_num=#{find_num}
-	</select>
-	<!--게시글 작성-->
-	<insert id="insertFindBoard" parameterType="finddto">
-		insert into find values (null,#{user_num},#{subject},#{content},#{photo},#{readcount},now())
-	</insert>
 
+<mapper namespace="bit.data.dao.FindDao">
+    <!--검색된 게시글이 몇 개인지 구하는 mapper-->
+    <select id="selectTotalCount" parameterType="Map" resultType="int">
+        select count(*) from find
+        <if test="findcolumn!=null and findword!=null">
+            where ${findcolumn} like concat('%',#{findword},'%')
+        </if>
+    </select>
+    <!--검색 했을 때 최신순으로 나오게-->
+    <select id="findPagingList" parameterType="Map" resultType="finddto">
+        select * from find
+        <if test="findcolumn!=null and findword!=null">
+            <choose>
+                <when test="findcolumn=='subcon'">
+                    where subject like concat('%',#{findword},'%') or context like concat('%',#{findword},'%')
+                </when>
+                <when test="findcolumn=='nickname'">
+                    where user_num=(select user_num from user where nickname like concat('%',#{findword},'%'))
+                </when>
+                <otherwise>
+                    where ${findcolumn} like concat('%',#{findword},'%')
+                </otherwise>
+            </choose>
+        </if>
+        order by writeday desc
+    </select>
+    <!--게시글 상세보기 눌렀을 때 게시판의 PK를 얻기 위함-->
+    <select id="selectByNum" parameterType="int" resultType="finddto">
+        select *
+        from find
+        where find_num = #{num}
+    </select>
+    <!--게시글 작성-->
+    <insert id="insertFindBoard" parameterType="finddto">
+        insert into find
+        values (null, #{user_num}, #{subject}, #{content}, #{photo}, #{readcount}, now())
+    </insert>
+    <!--조회수 업데이트-->
+    <update id="updateReadCount" parameterType="int">
+        update find
+        set readcount=readcount + 1
+        where find_num = #{num}
+    </update>
+    <!--게시글 수정-->
+    <update id="updateFindBoard" parameterType="finddto">
+        update find set subject=#{subject},content=#{content},
+        <if test="photo!=null">
+            photo=#{photo}
+        </if>
+        where find_num=#{num}
+    </update>
+    <delete id="deleteFindBoard" parameterType="int">
+        delete
+        from find
+        where find_num = #{num}
+    </delete>
 </mapper>
