@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.">
+    <!-- cafe Data-->
+    <select id="getCafeMaxNum" resultType="int">
+        select ifnull(max(cafe_num),0) from cafe
+    </select>
+    <select id="getCafeTotCnt" parameterType="Map" resultType="int">
+        select count(*) from cafe
+        <if test="searchcolumn!=null and searchword!=null">
+            where title like concat('%',#{searchword},'%')
+        </if>
+    </select>
+    <select id="selectCafeByNum" parameterType="int" resultType="">
+        select * from cafe where num=#{num}
+    </select>
+    <!-- trip Data-->
+    <select id="getTripMaxNum" resultType="int">
+        select ifnull(max(trip_num),0) from trip
+    </select>
+    <select id="getTripTotCnt" parameterType="Map" resultType="int">
+        select count(*) from trip
+        <if test="searchcolumn!=null and searchword!=null">
+            where title like concat('%',#{searchword},'%')
+        </if>
+    </select>
+    <select id="selectTripByNum" parameterType="int" resultType="">
+        select * from trip where num=#{num}
+    </select>
+    <!-- food Data-->
+    <select id="getFoodMaxNum" resultType="int">
+        select ifnull(max(food_num),0) from cafe
+    </select>
+    <select id="getFoodTotCnt" parameterType="Map" resultType="int">
+        select count(*) from food
+        <if test="searchcolumn!=null and searchword!=null">
+            where title like concat('%',#{searchword},'%')
+        </if>
+    </select>
+    <select id="selectFoodByNum" parameterType="int" resultType="">
+        select * from food where num=#{num}
+    </select>
+</mapper>
