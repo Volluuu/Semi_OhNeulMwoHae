@@ -81,6 +81,7 @@
 
     footer {
         font-size: 5px;
+        background-color:darkslateblue;
     }
 
 </style>
@@ -96,14 +97,15 @@
                 <option value="subcon">제목+내용</option>
                 <option value="nickname">닉네임</option>
             </select>
-            &nbsp;&nbsp;&nbsp;
+
             <input type="text" name="findword" class="dg_inputtext" placeholder="검색 단어" value="${param.findword}">
 
             <button type="submit" class="dg_searchbtn">검색</button>
-
+            <c:if test="${sessionScope.loginok!=null}">
+                <a href="list?findcolumn=nickname&searchword=${sessionScope.nickname}" class="dg_a">내가 쓴 글</a>
+            </c:if>
         </form>
 
-        <a href="list?findcolumn=nickname&searchword=${sessionScope.nickname}" class="dg_a">내가 쓴 글</a>
     </div>
     <div class="dg_session">
         <c:if test="${sessionScope.loginok==null}">

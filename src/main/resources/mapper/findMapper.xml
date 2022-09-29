@@ -16,7 +16,7 @@
         <if test="findcolumn!=null and findword!=null">
             <choose>
                 <when test="findcolumn=='subcon'">
-                    where subject like concat('%',#{findword},'%') or context like concat('%',#{findword},'%')
+                    where subject like concat('%',#{findword},'%') or content like concat('%',#{findword},'%')
                 </when>
                 <when test="findcolumn=='nickname'">
                     where user_num=(select user_num from user where nickname like concat('%',#{findword},'%'))
