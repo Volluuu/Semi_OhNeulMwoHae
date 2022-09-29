@@ -1,14 +1,12 @@
 package bit.data.controller;
 
-import bit.data.dto.CafeDto;
-import bit.data.service.CafeService;
-import bit.data.service.CafeServiceInter;
+import bit.data.dto.FoodDto;
+import bit.data.service.FoodServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import util.ChangeName;
@@ -19,22 +17,21 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-
-public class CafeController {
+public class FoodController {
 
     @Autowired
-    CafeServiceInter cafeService;
+    FoodServiceInter foodService;
 
-    @GetMapping("/courseboard/list")
-    public String cafeBoard(
+    @GetMapping("courseboard/list")
+    public String foodBoard(
             @RequestParam(defaultValue = "1") int currentPage,
-            @RequestParam(value = "cafecolumn", required = false) String sc,
-            @RequestParam(value = "cafeword", required = false) String sw,
+            @RequestParam(value = "foodcolumn", required = false) String sc,
+            @RequestParam(value = "foodword", required = false) String sw,
             Model model)
     {
         //페이징 처리에 필요한 변수들
         //전체 갯수
-        int totalCount=cafeService.selectTotalCount(sc, sw);
+        int totalCount=foodService.selectTotalCount(sc, sw);
         int perPage=10;//한페이지당 보여질 글의 갯수
         int perBlock=4;//한블럭당 보여질 페이지의 갯수
         int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
@@ -66,7 +63,7 @@ public class CafeController {
         no=totalCount-(currentPage-1)*perPage;
 
         //페이지에서 보여질 글만 가져오기
-        List<CafeDto> list=cafeService.selectPagingList(sc, sw, startNum, perPage);
+        List<FoodDto> list=foodService.selectPagingList(sc, sw, startNum, perPage);
 
         model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
@@ -78,9 +75,10 @@ public class CafeController {
 
         return "/bit/course/courseboard";
     }
+
     //업로드
     @GetMapping("/admin/insert")//관리자 페이지 생성후 mapping~!~!~!!~
-    public String insert(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+    public String insert(FoodDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("/resources/upload");//관리자 페이지 생성후 mapping~!~!~!!~
         System.out.println(path);//값이 정상적으로 올라가면 삭제필요~!~!
         System.out.println(upload.size());//값이 정상적으로 올라가면 삭제필요~!~!
@@ -97,33 +95,32 @@ public class CafeController {
                 String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
                 photo += newName + ",";
                 try {
-                    multi.transferTo(new File(path + "/" + newName));
+                    multi.transferTo(new File(path+"/"+newName));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                } catch (IllegalStateException e) {
-                    throw new RuntimeException(e);
                 }
-
             }
             //마지막 컴마제거
             photo = photo.substring(0, photo.length() - 1);
             //dto에 저장
             dto.setPhoto(photo);
         }
-        cafeService.insertCafe(dto);
-        //삭제후 보던 페이지로 이동
+        foodService.insertFood(dto);
+        //삭제 후 보던 페이지로 이동
         return "redirect:list?currentPage=" + currentPage;
     }
 
+    //삭제
     @GetMapping("/admin/delete")//관리자 페이지 생성후 mapping~!~!~!!~
     public String delete(int cafe_num, int currentPage) {
-        cafeService.deleteCafe(cafe_num);
+        foodService.deleteFood(cafe_num);
         //삭제후 보던 페이지로 이동
         return "redirect:list?currentPage=" + currentPage;
     }
 
+    //업데이트
     @PostMapping("/admin/update")//관리자 페이지 생성후 mapping~!~!~!!~
-    public String update(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+    public String update(FoodDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
         //업로드 경로
         String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);//정상 빌드 확인 후 삭제~!
@@ -153,7 +150,7 @@ public class CafeController {
             //dto에 저장
             dto.setPhoto(photo);
         }
-        cafeService.updateCafe(dto);
-        return "redirect:detail?currentPage="+currentPage+"&cafe_num="+dto.getCafe_num();
+        foodService.updateFood(dto);
+        return "redirect:detail?currentPage="+currentPage+"&food_num="+dto.getFood_num();
     }
 }

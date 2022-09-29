@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -12,7 +13,7 @@ public class CafeDao implements CafeDaoInter{
     @Autowired
     SqlSession session;
 
-    String ns="bit.data.dao.Cafe.";
+    String ns="bit.data.dao.CafeDao.";
 
     @Override
     public int selectTotalCount(Map<String, String> map) {
@@ -22,6 +23,11 @@ public class CafeDao implements CafeDaoInter{
     @Override
     public void insertCafe(CafeDto dto) {
         session.insert(ns+"insertCafe",dto);
+    }
+
+    @Override
+    public List<CafeDto> selectPagingList(Map<String, Object> map) {
+        return session.selectList(ns+"selectPagingList", map);
     }
 
     @Override

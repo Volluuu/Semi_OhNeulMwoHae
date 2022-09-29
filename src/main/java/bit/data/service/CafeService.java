@@ -1,11 +1,13 @@
 package bit.data.service;
 
 import bit.data.dao.CafeDaoInter;
+import bit.data.dao.FoodDao;
 import bit.data.dto.CafeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -22,21 +24,22 @@ public class CafeService implements CafeServiceInter {
 
     @Override
     public void insertCafe(CafeDto dto) {
-        int num= dto.getCafe_num();
-        String title= dto.getTitle();
-        String addr= dto.getAddr();
-        String menu= dto.getMenu();
-        String photo= dto.getPhoto();
-        String tel= dto.getTel();
-        String lat = dto.getLat();
-        String lon = dto.getLon();
-        int gu = dto.getGu();
-        int readcount = dto.getReadcount();
+        cafedao.insertCafe(dto);
     }
 
     @Override
     public void updateReadCount(int cafe_num) {
         cafedao.updateReadCount(cafe_num);
+    }
+
+    @Override
+    public List<CafeDto> selectPagingList(String cafecolumn, String cafeword, int startnum, int perpage) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("cafecolumn", cafecolumn);
+        map.put("cafesword", cafeword);
+        map.put("startnum", startnum);
+        map.put("perpage", perpage);
+        return cafedao.selectPagingList(map);
     }
 
     @Override

@@ -86,6 +86,7 @@
 </style>
 <body>
 <%-- 검색창 --%>
+
 <div class="dg_container">
     <div class="dg_searcharea">
         <form action="list">
