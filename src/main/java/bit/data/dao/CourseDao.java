@@ -17,8 +17,8 @@ public class CourseDao implements CourseDaoInter{
 	String ns = "bit.data.dao.CourseDao.";
 
 	@Override
-	public List<CourseDto> getAllCourses(Map<String, Object> map) {
-		return session.selectList(ns+"getAllCourses", map);
+	public List<CourseDto> getAllCourses(int user_num) {
+		return session.selectList(ns+"getAllCourses", user_num);
 	}
 
 

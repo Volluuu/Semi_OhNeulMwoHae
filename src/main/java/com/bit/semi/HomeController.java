@@ -14,11 +14,5 @@ public class HomeController {
 	}
 	
 	
-	@GetMapping("/help/map")
-	public String help()
-	{
-		return "/bit/help/googlemap";
-	}
-	
-	
+
 }
