@@ -89,20 +89,38 @@
         var s="";
         $(function (){
             $(document).on("click",".cosselectadd",function (){
-
                 if($("div.cosselect_main").length==5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
                     return;
                 };
                 cnt++;
                 cosSelectAdd();
-                $("div.cos2").html(s);
+                $("div.cos2").append(s);
+                s="";
+
+                for(var i=0;i<$(".cosselect_main").length;i++){
+                    $(".cosselect_main").eq(i).find(".coscnt").text("경로 "+(i+1));
+                }
+            });
+
+            $(document).on("click",".cosselectsubstract",function (){
+                if($("div.cosselect_main").length<2) {
+                    alert("첫 경로는 삭제 할 수 없습니다.");
+                    return;
+                };
+
+                $(this).parents(".cosselect_main").remove();
+                cnt--;
+
+                for(var i=0;i<$(".cosselect_main").length;i++){
+                    $(".cosselect_main").eq(i).find(".coscnt").text("경로 "+(i+1));
+                }
             });
         });
 
         function cosSelectAdd(){
-            s+="<div class='cosselect_main'>";
-            s+="<span class='coscnt'>경로"+cnt+"</span>";
+            s+="<div class='cosselect_main' id='delSearchKey'>";
+            s+="<span class='coscnt'>경로 "+cnt+"</span>";
             s+="<br>";
             s+="<div class='cosselect_thema'>";
             s+="<select class='form-control sel1' id='type'>";

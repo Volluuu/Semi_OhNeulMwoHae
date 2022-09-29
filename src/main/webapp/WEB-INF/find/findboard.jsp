@@ -128,10 +128,10 @@
                 url: root + "/findboard/login",
                 dataType: "text",
                 data: {
-                    "user_num": "1", "loginid": "admin", "password": "gudwns96",
-                    "name": "관리자", "nickname": "관리자닉네임", "email": "donggeonlee95@naver.com",
-                    "hp": "010-4154-8185", "profile": "나는 관리자다", "interest": "intp", "profilephoto": "admin.png",
-                    "alarm": "없음", "isadmin": "admin", "gaipday": "2022-09-26 07:18:34"
+                    "user_num": "2", "loginid": "angel", "password": "1234",
+                    "name": "천사", "nickname": "악마", "email": "gotothehell@naver.com",
+                    "hp": "010-7272-9573", "profile": "나는 정지훈이다", "interest": "infp", "profilephoto": "user.png",
+                    "alarm": "없음", "isadmin": "user", "gaipday": "2022-09-29 09:42:44"
                 },
                 success: function (res) {
                     location.reload();
@@ -184,7 +184,7 @@
                             <p>${dto.subject}</p>
                             <p style="color: gray">${dto.content}&nbsp;</p>
                             <p>
-                                    ${dto.user_num}
+                                    ${dto.name}/${dto.nickname}/(${dto.loginid})
                                 <span style="color: darkgray;"
                                       class="floatright">${dto.readcount}&nbsp;${dto.answercount}&nbsp;</span>
                             </p>

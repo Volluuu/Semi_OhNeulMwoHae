@@ -1,6 +1,7 @@
 package bit.data.controller;
 
 import bit.data.dto.FindDto;
+import bit.data.dto.UserDto;
 import bit.data.service.CommentFriendServiceInter;
 import bit.data.service.FindServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +125,7 @@ public class FindController {
 
     }
 
-    @PostMapping("/find/insertfind")
+    @PostMapping("/findboard/insertfind")
     public String insertfind(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
         //업로드 경로
         String path=request.getSession().getServletContext().getRealPath("/resources/upload");

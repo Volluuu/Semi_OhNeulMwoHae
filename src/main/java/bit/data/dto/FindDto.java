@@ -14,4 +14,7 @@ public class FindDto {
 	private int readcount;
 	private Timestamp writeday;
 	private int answercount;
+	private String name;
+	private String nickname;
+	private String loginid;
 }
