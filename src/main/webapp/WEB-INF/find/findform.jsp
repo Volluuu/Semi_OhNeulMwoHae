@@ -48,15 +48,17 @@
         <tr align="center" valign="middle">
             <th style="width:20%;">제목</th>
             <td align="left">
-                <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"
+                <input type="text" name="subject" required="required" placeholder="제목을 입력하세요" class="form-control"
                        id="dg_subject" width="500">
             </td>
         </tr>
         <tr align="center" valign="middle">
             <th style="width:20%;">사진</th>
             <td>
-                <input type="file" name="findupload" multiple="multiple" id="btnAtt">
+                <div class="input-group">
+                <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
                 <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+                </div>
             </td>
         </tr>
         <tr>

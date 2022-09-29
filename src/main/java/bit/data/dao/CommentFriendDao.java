@@ -16,8 +16,8 @@ public class CommentFriendDao implements CommentFriendDaoInter {
 
     String ns="bit.data.dao.CommentFriendDao.";
     @Override
-    public List<CommentFriendDto> selectAllComments(int friend_num) {
-        return session.selectList(ns+"selectAllComments", friend_num);
+    public List<CommentFriendDto> selectAllComments(int find_num) {
+        return session.selectList(ns+"selectAllComments", find_num);
     }
 
     @Override

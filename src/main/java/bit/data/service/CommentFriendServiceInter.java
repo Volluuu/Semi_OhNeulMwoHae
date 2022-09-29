@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface CommentFriendServiceInter {
 
-    public List<CommentFriendDto> selectAllComments(int friend_num);
+    public List<CommentFriendDto> selectAllComments(int find_num);
     public void insertComment(CommentFriendDto dto);
     public void updateRestep(int regroup, int restep);
     public CommentFriendDto selectCommentByNum(int friend_num);

@@ -5,7 +5,8 @@
 <mapper namespace="bit.data.dao.CommentFriendDao">
 	<!--최근 댓글이 밑으로 나오게-->
 	<select id="selectAllComments" parameterType="int" resultType="cfdto">
-		select * from comment_friend where friend_num=#{friend_num} order by friend_num asc
+		select CF.friend_num, CF.find_num, CF.user_num, CF.content, CF.writeday, CF.regroup, CF.restep, CF.relevel, U.name, U.nickname,
+			   U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by writeday asc
 	</select>
 	<!--계층형 댓글 입력-->
 	<insert id="insertComment" parameterType="cfdto">
