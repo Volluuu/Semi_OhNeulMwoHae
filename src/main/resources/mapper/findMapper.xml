@@ -11,12 +11,15 @@
         </if>
     </select>
     <!--검색 했을 때 최신순으로 나오게-->
+
+
     <select id="findPagingList" parameterType="Map" resultType="finddto">
-        select * from find
+        select F.find_num, F.user_num, F.subject, F.content, F.photo, F.readcount, F.writeday, U.name, U.nickname,
+        U.loginid from find F INNER JOIN user U ON F.user_num = U.user_num
         <if test="findcolumn!=null and findword!=null">
             <choose>
                 <when test="findcolumn=='subcon'">
-                    where subject like concat('%',#{findword},'%') or context like concat('%',#{findword},'%')
+                    where subject like concat('%',#{findword},'%') or content like concat('%',#{findword},'%')
                 </when>
                 <when test="findcolumn=='nickname'">
                     where user_num=(select user_num from user where nickname like concat('%',#{findword},'%'))
@@ -27,6 +30,12 @@
             </choose>
         </if>
         order by writeday desc
+    </select>
+    <!--글 쓴 사람 정보 구하기-->
+    <select id="selectUserByfindNum" parameterType="int" resultType="udto">
+        select *
+        from user
+        where user_num = (select user_num from find where find_num = #{find_num})
     </select>
     <!--게시글 상세보기 눌렀을 때 게시판의 PK를 얻기 위함-->
     <select id="selectByNum" parameterType="int" resultType="finddto">

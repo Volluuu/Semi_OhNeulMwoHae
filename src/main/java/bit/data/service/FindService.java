@@ -2,6 +2,7 @@ package bit.data.service;
 
 import bit.data.dao.FindDaoInter;
 import bit.data.dto.FindDto;
+import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,11 @@ public class FindService implements FindServiceInter{
         map.put("startnum", startnum);
         map.put("perpage", perpage);
         return findDao.findPagingList(map);
+    }
+
+    @Override
+    public UserDto selectUserByfindNum(int find_num) {
+        return findDao.selectUserByfindNum(find_num);
     }
 
     @Override

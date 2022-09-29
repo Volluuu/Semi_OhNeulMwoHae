@@ -1,6 +1,7 @@
 package bit.data.dao;
 
 import bit.data.dto.FindDto;
+import bit.data.dto.UserDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,11 @@ public class FindDao implements FindDaoInter{
     @Override
     public List<FindDto> findPagingList(Map<String, Object> map) {
         return session.selectList(ns+"findPagingList", map);
+    }
+
+    @Override
+    public UserDto selectUserByfindNum(int find_num) {
+        return session.selectOne(ns+"selectUserByfindNum", find_num);
     }
 
     @Override
