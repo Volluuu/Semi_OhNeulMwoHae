@@ -10,6 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <html>
 <head>
     <title>Title</title>
@@ -26,18 +27,6 @@
         text-align: center;
     }
 
-    div.dg_findlist {
-        margin-top: 10px;
-    }
-
-    button.dg_searchbtn {
-        margin-left: 10px;
-    }
-
-    input.dg_inputtext {
-
-    }
-
     a.dg_a {
         color: gray;
         text-decoration: none;
@@ -51,10 +40,6 @@
     a.dg_a:hover, a.dg_a:active {
         color: black;
         text-decoration: underline;
-    }
-
-    span.floatright {
-        float: right;
     }
 
     table.findtable {
@@ -94,6 +79,12 @@
         float:left;
         padding: 3px 3px 3px 3px;
     }
+    div.dg_searcharea{
+        justify-content: center;
+    }
+    div.dg_session{
+        float: right;
+    }
 </style>
 <body>
 <%-- 검색창 --%>
@@ -101,34 +92,37 @@
 <div class="dg_container">
     <div class="dg_searcharea">
         <form action="list">
-            <select name="findcolumn" class="dg_select">
+            <div class="input-group">
+            <select name="findcolumn" class="form-control" style="text-align: center;">
                 <option value="subject" selected>제목</option>
                 <option value="content">내용</option>
                 <option value="subcon">제목+내용</option>
                 <option value="nickname">닉네임</option>
             </select>
 
-            <input type="text" name="findword" class="dg_inputtext" placeholder="검색 단어" value="${param.findword}">
+            <input type="text" name="findword" class="form-control" placeholder="검색 단어" value="${param.findword}">
 
-            <button type="submit" class="dg_searchbtn">검색</button>
+            <button type="submit" class="btn btn-outline-dark">검색</button>
             <c:if test="${sessionScope.loginok!=null}">
                 <a href="list?findcolumn=nickname&searchword=${sessionScope.nickname}" class="dg_a">내가 쓴 글</a>
             </c:if>
+                <div class="dg_session">
+                    <c:if test="${sessionScope.loginok==null}">
+                        <b>로그인이 안 되어 있습니다</b>
+                        <button type="button" class="btn btn-outline-dark" id="dg_loginbtn">세션 주기</button>
+                    </c:if>
+
+                    <c:if test="${sessionScope.loginok!=null}">
+                        <b>${sessionScope.name}님 로그인 중</b>
+                        &nbsp;&nbsp;
+                        <button type="button" class="btn btn-outline-dark" id="dg_logoutbtn">세션 없애기</button>
+                    </c:if>
+                </div>
+            </div>
         </form>
 
     </div>
-    <div class="dg_session">
-        <c:if test="${sessionScope.loginok==null}">
-            <b>로그인이 안 되어 있습니다</b>
-            <button type="button" id="dg_loginbtn">세션 주기</button>
-        </c:if>
 
-        <c:if test="${sessionScope.loginok!=null}">
-            <b>${sessionScope.name}님 로그인 중</b>
-            &nbsp;&nbsp;
-            <button type="button" id="dg_logoutbtn">세션 없애기</button>
-        </c:if>
-    </div>
     <script>
         $(document).on("click", "#dg_loginbtn", function () {
             var root = "${root}";
@@ -162,17 +156,17 @@
             });
         })
     </script>
-    <div class="dg_findlist">
+    <div class="alert alert-light">
         <h4>총 ${totalCount}개의 글이 있습니다</h4>
         <br>
         <c:if test="${sessionScope.loginok!=null}">
-            <button type="button" class="btn btn-outline-success"
+            <button type="button" class="btn btn-outline-dark"
                     onclick="location.href='${root}/findboard/findform'">글쓰기
             </button>
         </c:if>
 
         <br>
-        <table style="width:100%;" class="findtable">
+        <table style="width:100%;" class="table table-bordered findtable">
             <c:if test="${totalCount==0}">
                 <tr>
                     <td colspan="4" align="center" valign="middle">
@@ -188,46 +182,65 @@
                            style="color:black;text-decoration:none;">
                             <c:set var="photo" value="${dto.photo}"/>
                             <div style="text-align: center;height:75%">
-                                <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}"
+                                <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
                                      style="margin-bottom:7px;width:100%;aspect-ratio: 1/1;max-height:250px;max-width:250px; ">
                             </div>
                             <p>${dto.subject}</p>
                             <p style="color: gray">${dto.content}&nbsp;</p>
                             <p>
                                     ${dto.name}/${dto.nickname}/(${dto.loginid})
-                                <span style="color: darkgray;"
-                                      class="floatright">${dto.readcount}&nbsp;${dto.answercount}&nbsp;</span>
+                                <span style="color: darkgray;float:right;"><i class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span>
                             </p>
                             <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
                                                                         pattern="yyyy-MM-dd"/></p>
                         </a>
                     </td>
+
                     <c:if test="${i.count==4}">
                         </tr><tr>
                     </c:if>
+
                 </c:forEach>
+                <c:if test="${fn:length(list)==1}">
+                    <td></td><td></td><td></td>
+                </c:if>
+                <c:if test="${fn:length(list)==2 }">
+                    <td></td><td></td>
+                </c:if>
+                <c:if test="${fn:length(list)==3 }">
+                    <td></td>
+                </c:if>
+                <c:if test="${fn:length(list)==5}">
+                    <td></td><td></td><td></td>
+                </c:if>
+                <c:if test="${fn:length(list)==6 }">
+                    <td></td><td></td>
+                </c:if>
+                <c:if test="${fn:length(list)==7 }">
+                    <td></td>
+                </c:if>
                 </tr>
             </c:if>
         </table>
     </div>
     <div class="paging">
-        <ul>
+        <ul class="pagination">
             <c:if test="${startPage>1}">
-                <li><a href="${root}/findboard/list?currentPage=${startPage-1}">이전</a></li>
+                <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${startPage-1}">이전</a></li>
             </c:if>
             <!-- 페이지 번호 -->
             <c:forEach var="pp" begin="${startPage}" end="${endPage}">
                 <c:if test="${pp==currentPage}">
-                    <li><a href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
+                    <li class="page-item active"><a class="page-link" href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
                 </c:if>
                 <c:if test="${pp!=currentPage}">
-                    <li><a href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
+                    <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
                 </c:if>
 
             </c:forEach>
 
             <c:if test="${totalPage>endPage}">
-                <li><a href="${root}/findboard/list?currentPage=${endPage+1}">다음</a></li>
+                <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${endPage+1}">다음</a></li>
             </c:if>
         </ul>
     </div>
@@ -236,7 +249,7 @@
         <p>
             <img src="${root}/image/logo1.jpg" alt="logo" style="width: 60px;">
             <em> 고객센터 </em>010-4154-8185
-            <button>1:1 채팅상담</button>
+            <button class="btn btn-outline-light text-dark">1:1 채팅상담</button>
             <em>채팅상담</em> 9:00 ~ 24:00
             <em>유선상담</em> 10:00 ~ 19:00
         </p>
@@ -258,6 +271,7 @@
         <p class="copyright">자사는 서울특별시관광협회 공제영업보증보험에 가입되어 있지 않습니다.</p>
         <p class="copyright">오늘 뭐해?!는 여행중개자이며 여행판매 당사자가 아닙니다. 여행에 관한 책임은 고객에게 있습니다.</p>
         <p class="copyright">Copyright © What are you doing today!? Inc. All Rights Didn't Reserved.</p>
+        <br><br>
     </footer>
 </div>
 

@@ -52,7 +52,7 @@
                         <br>
 						<textarea name="message" id="message" style="width:400px;height:60px;"
                                   ></textarea>
-                            <button type="button" id="btnasave">등록</button>
+                            <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
                     </form>
                 </div>
             </c:if>
@@ -60,16 +60,16 @@
     </tr>
     <tr>
         <td>
-            <button type="button"  onclick="location.href='${root}/findboard/findform'">새글</button>
+            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/findform'">새글</button>
 
-            <button type="button" onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록</button>
+            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록</button>
 
             <!-- 로그인 중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
             <c:if test="${sessionScope.loginok!=null && sessionScope.loginid==dto.id}">
-                <button type="button"
+                <button type="button" class="btn btn-outline-dark"
                         onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'">수정</button>
 
-                <button type="button"
+                <button type="button" class="btn btn-outline-dark"
                         onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'">삭제</button>
             </c:if>
         </td>

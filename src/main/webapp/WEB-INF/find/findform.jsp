@@ -67,7 +67,7 @@
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button type="submit">게시글 저장</button>
+                <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
             </td>
         </tr>
     </table>
