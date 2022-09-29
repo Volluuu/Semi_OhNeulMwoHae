@@ -6,11 +6,27 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="<%=request.getContextPath()%>"/>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<div class="dg_searcharea">
+    <form action="list">
+        <select name="findcolumn" class="dg_select">
+            <option value="subject" selected>제목</option>
+            <option value="content">내용</option>
+            <option value="subcon">제목+내용</option>
+            <option value="nickname">닉네임</option>
+        </select>
+        &nbsp;&nbsp;&nbsp;
+        <input type="text" name="findword" class="dg_inputtext" placeholder="검색 단어" value="${param.findword}">
+
+        <button type="submit" class="dg_searchbtn">검색</button>
+
+    </form>
 <h1>여기는 추천경로입니다~!</h1>
 <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
      y="0px" viewBox="0 0 2551.2 1236" style="enable-background:new 0 0 2551.2 1236;" xml:space="preserve">

@@ -5,14 +5,14 @@
 <mapper namespace="bit.data.dao.CafeDao">
 	<select id="selectTotalCount" parameterType="Map" resultType="int">
 		select count(*) from cafe
-		<if test="cafecolumn!=null and cafehword!=null">
+		<if test="cafecolumn!=null and cafeword!=null">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
 		</if>
 	</select>
 
-	<select id="selectPagingList" parameterType="Map" resultType="bdto">
+	<select id="selectPagingList" parameterType="Map" resultType="cafedto">
 		select * from cafe
-		<if test="cafecolumn!=null and cafehword!=null">
+		<if test="cafecolumn!=null and cafeword!=null">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
 		</if>
 	</select>

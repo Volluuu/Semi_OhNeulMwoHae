@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.FoodDao">
+	<select id="selectTotalCount" parameterType="Map" resultType="int">
+		select count(*) from cafe
+		<if test="foodcolumn!=null and foodword!=null">
+			where ${foodcolumn} like concat('%',#{foodword},'%')
+		</if>
+	</select>
+
+	<select id="selectPagingList" parameterType="Map" resultType="fooddto">
+		select * from cafe
+		<if test="foodcolumn!=null and foodword!=null">
+			where ${foodcolumn} like concat('%',#{foodword},'%')
+		</if>
+	</select>
+
+	<insert id="insertFood" parameterType="fooddto">
+		insert into cafe values (null,#{title},#{addr},#{category},#{menu},#{photo},#{tel},
+		0,0,#{gu},0)
+	</insert>
+
+	<update id="updateReadCount" parameterType="int">
+		update food set readcount=readcount+1 where food_num=#{food_num}
+	</update>
+
+	<select id="selectByNum" parameterType="int" resultType="fooddto">
+		select * from food where food_num=#{food_num}
+	</select>
+
+	<delete id="deleteFood" parameterType="int">
+		delete from food where food_num=#{food_num}
+	</delete>
+
+	<update id="updateFood" parameterType="fooddto">
+		update cafe set title=#{title},addr=#{addr},category=#{category},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon}
+		            <if test="photo!=null">
+						photo=#{photo}
+					</if>
+		  where food_num=#{food_num}
+	</update>
+
+	<insert id="likesInsert" parameterType="int">
+		update likes set likes=likes+1 where food_num=#{food_num}
+	</insert>
+
+	<update id="likesUpdate" parameterType="int">
+		update likes set likes=likes-1 where food_num=#{food_num}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

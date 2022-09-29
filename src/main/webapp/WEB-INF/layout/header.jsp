@@ -156,7 +156,7 @@
 		<div class="menu">
 			<div class="input-group menu1">
 				<a href="${root}/">공지사항</a>
-				<a href="${root}/board/list">추천 코스</a>
+				<a href="${root}/courseboard/list">추천 코스</a>
 				<a href="${root}/findboard/list">친구 찾기</a>
 				<a href="${root}/board/list">게시판</a>
 				<a href="${root}/board/form">장소 목록</a>
