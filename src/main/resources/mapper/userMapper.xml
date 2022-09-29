@@ -41,8 +41,12 @@
         select * from user where user_num=#{user_num}
     </select>
 
+    <update id="updateProfilePhoto" parameterType="Map">
+        update member set profilephoto=#{profilephoto} where user_num=#{user_num}
+    </update>
+
     <update id="updateUser" parameterType="udto">
-        update user set nickname=#{nickname},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse},profilephoto=#{profilephoto} where user_num=#{user_num}
+        update user set nickname=#{nickname},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
     </update>
 
     <delete id="deleteUser" parameterType="int">
