@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import bit.data.dto.MemberDto;
@@ -23,34 +20,34 @@ import bit.data.service.MemberServiceInter;
 import util.ChangeName;
 
 @Controller
-@RequestMapping("/member")//앞의 공통적으로 들어가는 매핑을 설정하는 annotation
+@RequestMapping("/user")//앞의 공통적으로 들어가는 매핑을 설정하는 annotation
 public class MemberController {
-	
+
 	@Autowired
 	MemberServiceInter memService;
-	
+
 	@GetMapping("/list")
 	public String mlist(Model model)
 	{
 		//총 멤버 인원수를 db에서 얻는다
 		int totalCount=memService.getTotalCount();
-		
+
 		//전체 멤버 데이터를 가져온다
 		List<MemberDto> list=memService.getAllMembers();
-		
+
 		//model에 저장
 		model.addAttribute("totalCount",totalCount);
 		model.addAttribute("list",list);
-		
-		return "/bit/member/memberlist";
+
+		return "/bit/user/userlist";
 	}
-	
-	@GetMapping("/form")
+
+	@GetMapping("/userform")
 	public String mform()
 	{
-		return "/bit/member/memberform";
+		return "/bit/user/userform";
 	}
-	
+
 	@PostMapping("/insert")
 	public String insert(HttpServletRequest request,MemberDto dto,MultipartFile myphoto)// MemberDto dto은 모델앤뷰 생략
 	{
@@ -63,25 +60,25 @@ public class MemberController {
 		dto.setProfilephoto(fileName);
 
 		//upload try/catch
-		
-			try {
-				myphoto.transferTo(new File(path+"/"+fileName));
-				
-				//db insert (성공했을때만 업로드되도록 try에 배치)
-				memService.insertMember(dto);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		
+
+		try {
+			myphoto.transferTo(new File(path+"/"+fileName));
+
+			//db insert (성공했을때만 업로드되도록 try에 배치)
+			memService.insertMember(dto);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
 		return "redirect:list"; // /member/list 맵핑주소 호출 - controller메서드 호출.redirect라 url주소도 바뀜
 	}
-	
+
 	//아이디 체크하는 메서드
 	@GetMapping("/idcheck")
 	@ResponseBody //json 반환 annotation
@@ -89,12 +86,12 @@ public class MemberController {
 	{
 		Map<String, Integer> map=new HashMap<String, Integer>();
 		int count=memService.getSearchId(id);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
-		
+
 		map.put("count", count);//조회된 id에 값을 저장
-		
+
 		return map;
 	}
-	
+
 	//수정
 	@PostMapping("/updatephoto")
 	@ResponseBody
@@ -105,28 +102,28 @@ public class MemberController {
 		System.out.println(path);
 		//저장할 파일명 구하기
 		String fileName=ChangeName.getChangeFileName(photo.getOriginalFilename());
-		
+
 		//upload
-		
-			try {
-				photo.transferTo(new File(path+"/"+fileName));
-				
-				//db에 사진 수정
-				memService.updatePhoto(num, fileName);
-				//세션에 사진 변경
-				session.setAttribute("loginphoto", fileName);
-			
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		
+
+		try {
+			photo.transferTo(new File(path+"/"+fileName));
+
+			//db에 사진 수정
+			memService.updatePhoto(num, fileName);
+			//세션에 사진 변경
+			session.setAttribute("loginphoto", fileName);
+
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
 	}
-	
+
 	//삭제
 	@GetMapping("/delete")
 	@ResponseBody
@@ -141,7 +138,7 @@ public class MemberController {
 		session.removeAttribute("loginhp");
 		session.removeAttribute("loginemail");
 	}
-	
+
 	//수정폼에 출력할 데이터 반환
 	@GetMapping("/updateform")
 	@ResponseBody
@@ -149,46 +146,20 @@ public class MemberController {
 	{
 		return memService.getDataByNum(num);
 	}
-	
+
 	//수정
 	@PostMapping("/update")
 	@ResponseBody
 	public void update(MemberDto dto,HttpSession session)
 	{
 		memService.updateMember(dto);
-		
+
 		//세션에 저장된 이름도 변경하기
 		session.setAttribute("loginname", dto.getName());
 		session.setAttribute("loginhp", dto.getHp());
 		session.setAttribute("loginemail", dto.getEmail());
-		
-		
+
+
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
