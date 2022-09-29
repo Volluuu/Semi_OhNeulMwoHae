@@ -119,7 +119,7 @@
         });
 
         function cosSelectAdd(){
-            s+="<div class='cosselect_main' id='delSearchKey'>";
+            s+="<div class='cosselect_main'>";
             s+="<span class='coscnt'>경로 "+cnt+"</span>";
             s+="<br>";
             s+="<div class='cosselect_thema'>";

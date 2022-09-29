@@ -22,11 +22,13 @@
 	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <style type="text/css">
 	.title{
-		width: 100%;
+		width: 1900px;
 		text-align: center;
 		display: flex;
 		/*position: fixed;*/
 		background-color: white;
+		margin: 0 auto;
+		vertical-align: middle;
 		/*background-color: #38B6FF;*/
 	}
 
@@ -46,7 +48,6 @@
 		margin: 0 auto;
 		text-align: center;
 		font-weight: bold;
-		text-align: center;
 	}
 
 	.menu1{
