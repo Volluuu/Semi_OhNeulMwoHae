@@ -16,6 +16,7 @@
 		<typeAlias type="bit.data.dto.FindDto" alias="finddto"/>
 		<typeAlias type="bit.data.dto.UserDto" alias="udto"/>
 		<typeAlias type="bit.data.dto.CommentFriendDto" alias="cfdto"/>
+		<typeAlias type="bit.data.dto.CourseDto" alias="coursedto"/>
 
 	</typeAliases>
 </configuration>
