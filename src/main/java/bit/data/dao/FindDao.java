@@ -13,7 +13,6 @@ public class FindDao implements FindDaoInter{
 
     @Autowired
     SqlSession session;
-
     String ns="bit.data.dao.FindDao.";
 
     @Override
