@@ -24,7 +24,7 @@
 		height: 250px;
 		display: inline-block;
 		background-color: transparent;
-		right: 100px;
+		right: 50px;
 		bottom: 10%;
 		text-align: center;
 		z-index: 1;
