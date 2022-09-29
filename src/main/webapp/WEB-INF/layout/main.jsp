@@ -20,15 +20,16 @@
 <style type="text/css">
   /* 배너 */
   .slideimg img{
-    width: 100%;
+    width: 1900px;
     height: 300px;
+    margin: 0 auto;
   }
 
   /* 추천 코스 */
     /* Title 영역*/
   .cosSection{
     position: relative;
-    width: 80%;
+    width: 1520px;
     padding-top: 65px;
     margin:0 auto;
   }
@@ -85,8 +86,8 @@
       /* slide 이미지 */
   .swiper-slide img {
     /*box-shadow:0 0 5px #555;*/
-    max-width:80%;
-    height: 60%/* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
+    max-width:400px;
+    height: 250px;/* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
     /* 이 예제에서 필요해서 설정했습니다. 상황에따라 다를 수 있습니다. */
   }
       /* slide content */

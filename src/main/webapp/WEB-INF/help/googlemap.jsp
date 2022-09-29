@@ -102,7 +102,7 @@
 
         function cosSelectAdd(){
             s+="<div class='cosselect_main'>";
-            s+="<span class='coscnt'>경로"+cnt+"</span>";
+            s+="<span class='coscnt'>경로 "+cnt+"</span>";
             s+="<br>";
             s+="<div class='cosselect_thema'>";
             s+="<select class='form-control sel1' id='type'>";
