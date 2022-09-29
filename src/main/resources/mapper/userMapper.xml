@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.UserDao">
+
+    <select id="getTotalCount" resultType="int">
+        select count(*) from user
+    </select>
+
+    <select id="getIdSearch" parameterType="String" resultType="int">
+        select count(*) from user where loginid=#{loginid}
+    </select>
+
+    <insert id="insertMember" parameterType="udto">
+        insert into member (loginid,password,name,email,hp,gaipday)
+        values (#{loginid},#{password},#{name},#{email},#{hp},now())
+    </insert>
+
+    <select id="getAllUsers" resultType="udto">
+        select * from user order by loginid asc
+    </select>
+
+    <select id="getDataByNum" parameterType="int" resultType="udto">
+        select * from user where user_num=#{user_num}
+    </select>
+
+    <select id="getName" parameterType="String" resultType="String">
+        select name from user where loginid=#{loginid}
+    </select>
+
+    <select id="loginIdPassCheck" parameterType="Map" resultType="int">
+        select count(*) from user where loginid=#{loginid} and password=#{password}
+    </select>
+
+    <select id="getDataById" parameterType="String" resultType="udto">
+        select * from user where loginid=#{loginid}
+    </select>
+
+    <select id="getDataByNum" parameterType="int" resultType="udto">
+        select * from user where user_num=#{user_num}
+    </select>
+
+    <update id="updateUser" parameterType="udto">
+        update user set nickname=#{nickname},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse},profilephoto=#{profilephoto} where user_num=#{user_num}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from user where user_num=#{user_num}
+    </delete>
+
+
+
+
+
+
+</mapper>
