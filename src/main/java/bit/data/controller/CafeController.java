@@ -68,7 +68,7 @@ public class CafeController {
         //페이지에서 보여질 글만 가져오기
         List<CafeDto> list=cafeService.selectPagingList(sc, sw, startNum, perPage);
 
-      model.addAttribute("list", list);
+        model.addAttribute("list", list);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("startPage", startPage);
