@@ -1,3 +1,4 @@
+/*
 package bit.data.controller;
 
 import bit.data.dto.FoodDto;
@@ -154,3 +155,4 @@ public class FoodController {
         return "redirect:detail?currentPage="+currentPage+"&food_num="+dto.getFood_num();
     }
 }
+*/
