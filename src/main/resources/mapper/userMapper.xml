@@ -8,12 +8,12 @@
         select count(*) from user
     </select>
 
-    <select id="getIdSearch" parameterType="String" resultType="int">
+    <select id="getLoginIdSearch" parameterType="String" resultType="int">
         select count(*) from user where loginid=#{loginid}
     </select>
 
-    <insert id="insertMember" parameterType="udto">
-        insert into member (loginid,password,name,email,hp,gaipday)
+    <insert id="insertUser" parameterType="udto">
+        insert into user (loginid,password,name,email,hp,gaipday)
         values (#{loginid},#{password},#{name},#{email},#{hp},now())
     </insert>
 
@@ -21,7 +21,7 @@
         select * from user order by loginid asc
     </select>
 
-    <select id="getDataByNum" parameterType="int" resultType="udto">
+    <select id="getDataByUserNum" parameterType="int" resultType="udto">
         select * from user where user_num=#{user_num}
     </select>
 
@@ -29,16 +29,12 @@
         select name from user where loginid=#{loginid}
     </select>
 
-    <select id="loginIdPassCheck" parameterType="Map" resultType="int">
+    <select id="getLoginIdPasswordCheck" parameterType="Map" resultType="int">
         select count(*) from user where loginid=#{loginid} and password=#{password}
     </select>
 
-    <select id="getDataById" parameterType="String" resultType="udto">
+    <select id="getDataByLoginId" parameterType="String" resultType="udto">
         select * from user where loginid=#{loginid}
-    </select>
-
-    <select id="getDataByNum" parameterType="int" resultType="udto">
-        select * from user where user_num=#{user_num}
     </select>
 
     <update id="updateProfilePhoto" parameterType="Map">
