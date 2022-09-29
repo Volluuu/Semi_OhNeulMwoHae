@@ -34,8 +34,8 @@ public class FindService implements FindServiceInter{
     }
 
     @Override
-    public FindDto selectByNum(int num) {
-        return findDao.selectByNum(num);
+    public FindDto selectByNum(int find_num) {
+        return findDao.selectByNum(find_num);
     }
 
     @Override
@@ -44,8 +44,8 @@ public class FindService implements FindServiceInter{
     }
 
     @Override
-    public void updateReadCount(int num) {
-        findDao.updateReadCount(num);
+    public void updateReadCount(int find_num) {
+        findDao.updateReadCount(find_num);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FindService implements FindServiceInter{
     }
 
     @Override
-    public void deleteFindBoard(int num) {
-        findDao.deleteFindBoard(num);
+    public void deleteFindBoard(int find_num) {
+        findDao.deleteFindBoard(find_num);
     }
 }

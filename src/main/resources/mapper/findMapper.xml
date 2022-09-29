@@ -32,18 +32,18 @@
     <select id="selectByNum" parameterType="int" resultType="finddto">
         select *
         from find
-        where find_num = #{num}
+        where find_num = #{find_num}
     </select>
     <!--게시글 작성-->
     <insert id="insertFindBoard" parameterType="finddto">
         insert into find
-        values (null, #{user_num}, #{subject}, #{content}, #{photo}, #{readcount}, now())
+        values (null, #{user_num}, #{subject}, #{content}, #{photo}, 0, now())
     </insert>
     <!--조회수 업데이트-->
     <update id="updateReadCount" parameterType="int">
         update find
         set readcount=readcount + 1
-        where find_num = #{num}
+        where find_num = #{find_num}
     </update>
     <!--게시글 수정-->
     <update id="updateFindBoard" parameterType="finddto">
@@ -51,11 +51,11 @@
         <if test="photo!=null">
             photo=#{photo}
         </if>
-        where find_num=#{num}
+        where find_num=#{find_num}
     </update>
     <delete id="deleteFindBoard" parameterType="int">
         delete
         from find
-        where find_num = #{num}
+        where find_num = #{find_num}
     </delete>
 </mapper>
