@@ -160,7 +160,7 @@
 				<a href="${root}/findboard/list">친구 찾기</a>
 				<a href="${root}/board/list">게시판</a>
 				<a href="${root}/board/form">장소 목록</a>
-				<a href="${root}/help/map">경로 설정</a>
+				<a href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
 			</div>
 		</div>
 		<div class="search_bar">
