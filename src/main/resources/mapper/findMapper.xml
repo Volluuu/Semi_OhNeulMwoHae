@@ -29,7 +29,7 @@
                 </otherwise>
             </choose>
         </if>
-        order by writeday desc
+        order by writeday desc limit #{startNum},#{perPage}
     </select>
     <!--글 쓴 사람 정보 구하기-->
     <select id="selectUserByfindNum" parameterType="int" resultType="udto">

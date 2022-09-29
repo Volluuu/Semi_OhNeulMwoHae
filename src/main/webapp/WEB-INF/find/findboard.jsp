@@ -83,7 +83,17 @@
         font-size: 5px;
         background-color:darkslateblue;
     }
-
+    .paging{
+        display:flex;
+        justify-content:center;
+    }
+    ul{
+        list-style:none;
+    }
+    li{
+        float:left;
+        padding: 3px 3px 3px 3px;
+    }
 </style>
 <body>
 <%-- 검색창 --%>
@@ -199,6 +209,27 @@
                 </tr>
             </c:if>
         </table>
+    </div>
+    <div class="paging">
+        <ul>
+            <c:if test="${startPage>1}">
+                <li><a href="${root}/findboard/list?currentPage=${startPage-1}">이전</a></li>
+            </c:if>
+            <!-- 페이지 번호 -->
+            <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+                <c:if test="${pp==currentPage}">
+                    <li><a href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
+                </c:if>
+                <c:if test="${pp!=currentPage}">
+                    <li><a href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
+                </c:if>
+
+            </c:forEach>
+
+            <c:if test="${totalPage>endPage}">
+                <li><a href="${root}/findboard/list?currentPage=${endPage+1}">다음</a></li>
+            </c:if>
+        </ul>
     </div>
     <footer>
 
