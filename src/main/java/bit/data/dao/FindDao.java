@@ -27,8 +27,8 @@ public class FindDao implements FindDaoInter{
     }
 
     @Override
-    public FindDto selectByNum(int num) {
-        return session.selectOne(ns+"selectByNum", num);
+    public FindDto selectByNum(int find_num) {
+        return session.selectOne(ns+"selectByNum", find_num);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class FindDao implements FindDaoInter{
     }
 
     @Override
-    public void updateReadCount(int num) {
-        session.update(ns+"updateReadCount", num);
+    public void updateReadCount(int find_num) {
+        session.update(ns+"updateReadCount", find_num);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FindDao implements FindDaoInter{
     }
 
     @Override
-    public void deleteFindBoard(int num) {
-        session.delete(ns+"deleteFindBoard", num);
+    public void deleteFindBoard(int find_num) {
+        session.delete(ns+"deleteFindBoard", find_num);
     }
 }
