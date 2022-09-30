@@ -17,18 +17,21 @@
     table.dg_table {
         width: 50%;
     }
-    #att_zone{
-        width:660px;
+
+    #att_zone {
+        width: 660px;
         min-height: 150px;
         padding: 10px;
         border: 1px solid black;
     }
-    #att_zone:empty:before{
+
+    #att_zone:empty:before {
         content: attr(date-placeholder);
-        color:#999999;
-        font-size:.9em;
+        color: #999999;
+        font-size: .9em;
     }
-    table.dg_table{
+
+    table.dg_table {
         border: 1px solid black;
     }
 </style>
@@ -40,47 +43,60 @@
 </c:if>
 <body>
 <div>
-<form action="insertfind" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-    <input type="hidden" name="currentPage" value="${currentPage}">
+    <form action="insertfind" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+        <input type="hidden" name="currentPage" value="${currentPage}">
 
-    <table class="dg_table">
-        <tr align="center" valign="middle">
-            <th style="width:20%;">제목</th>
-            <td align="left">
-                <input type="text" name="subject" required="required" placeholder="제목을 입력하세요" class="form-control"
-                       id="dg_subject" width="500">
-            </td>
-        </tr>
-        <tr align="center" valign="middle">
-            <th style="width:20%;">사진</th>
-            <td>
-                <div class="input-group">
-                <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
+        <table class="dg_table">
+            <tr align="center" valign="middle">
+                <th style="width:20%;">제목</th>
+                <td align="left">
+                    <input type="text" name="subject" required="required" placeholder="제목을 입력하세요" class="form-control"
+                           id="dg_subject" width="500">
+                </td>
+            </tr>
+            <tr align="center" valign="middle">
+                <th style="width:20%;">사진</th>
+                <td>
+                    <div class="input-group">
+                        <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
+                        <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
 					<textarea name="content" required="required"
                               style="width:100%;aspect-ratio: 10 / 3;" id="dg_content"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<form action="insertlist">
+    <div class="input-group">
+        <select class="form-control" name="ccolumn">
+            <option hidden selected disabled>테마 선택</option>
+            <option value="trip">여행</option>
+            <option value="cafe">카페</option>
+            <option value="food">식당</option>
+        </select>
+        <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword" value="${param.cword}">
+        <button type="submit" class="btn btn-outline-dark">검색</button>
 </form>
 </div>
+
 <div id="image_preview">
 
 </div>
 <script>
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
-        imageView = function imageView(att_zone, btn){
+        imageView = function imageView(att_zone, btn) {
 
             var attZone = document.getElementById(att_zone);
             var btnAtt = document.getElementById(btn)
@@ -95,45 +111,44 @@
             var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
                 + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
 
-            btnAtt.onchange = function(e){
+            btnAtt.onchange = function (e) {
                 var files = e.target.files;
                 var fileArr = Array.prototype.slice.call(files)
-                for(f of fileArr){
+                for (f of fileArr) {
                     imageLoader(f);
                 }
             }
 
             // 탐색기에서 드래그앤 드롭 사용
-            attZone.addEventListener('dragenter', function(e){
+            attZone.addEventListener('dragenter', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }, false)
 
-            attZone.addEventListener('dragover', function(e){
+            attZone.addEventListener('dragover', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
 
             }, false)
 
-            attZone.addEventListener('drop', function(e){
+            attZone.addEventListener('drop', function (e) {
                 var files = {};
                 e.preventDefault();
                 e.stopPropagation();
                 var dt = e.dataTransfer;
                 files = dt.files;
-                for(f of files){
+                for (f of files) {
                     imageLoader(f);
                 }
 
             }, false)
 
 
-
             /*첨부된 이미리즐을 배열에 넣고 미리보기 */
-            imageLoader = function(file){
+            imageLoader = function (file) {
                 sel_files.push(file);
                 var reader = new FileReader();
-                reader.onload = function(ee){
+                reader.onload = function (ee) {
                     let img = document.createElement('img')
                     img.setAttribute('style', img_style)
                     img.src = ee.target.result;
@@ -144,7 +159,7 @@
             }
 
             /*첨부된 파일이 있는 경우 checkbox와 함께 attZone에 추가할 div를 만들어 반환 */
-            makeDiv = function(img, file){
+            makeDiv = function (img, file) {
                 var div = document.createElement('div')
                 div.setAttribute('style', div_style)
 
@@ -153,17 +168,17 @@
                 btn.setAttribute('value', 'x')
                 btn.setAttribute('delFile', file.name);
                 btn.setAttribute('style', chk_style);
-                btn.onclick = function(ev){
+                btn.onclick = function (ev) {
                     var ele = ev.srcElement;
                     var delFile = ele.getAttribute('delFile');
-                    for(var i=0 ;i<sel_files.length; i++){
-                        if(delFile== sel_files[i].name){
+                    for (var i = 0; i < sel_files.length; i++) {
+                        if (delFile == sel_files[i].name) {
                             sel_files.splice(i, 1);
                         }
                     }
 
                     dt = new DataTransfer();
-                    for(f in sel_files) {
+                    for (f in sel_files) {
                         var file = sel_files[f];
                         dt.items.add(file);
                     }

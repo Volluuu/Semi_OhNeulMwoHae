@@ -1,7 +1,6 @@
 package bit.data.service;
 
-import bit.data.dto.FindDto;
-import bit.data.dto.UserDto;
+import bit.data.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -15,4 +14,8 @@ public interface FindServiceInter {
     public void updateReadCount(int find_num);
     public void updateFindBoard(FindDto dto);
     public void deleteFindBoard(int find_num);
+
+    public List<CafeDto> selectCafeData(String cword);
+    public List<TripDto> selectTripData(String cword);
+    public List<FoodDto> selectFoodData(String cword);
 }

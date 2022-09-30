@@ -1,8 +1,6 @@
 package bit.data.controller;
 
-import bit.data.dto.CommentFriendDto;
-import bit.data.dto.FindDto;
-import bit.data.dto.UserDto;
+import bit.data.dto.*;
 import bit.data.service.CommentFriendServiceInter;
 import bit.data.service.FindServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,6 +161,45 @@ public class FindController {
         return "redirect:../findboard/list?currentPage="+currentPage;
     }
 
+    @PostMapping("/findboard/updatefindaction")
+    public String updatefindaction(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
+        //업로드 경로
+        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+        System.out.println(path);
+        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
+        //업로드 안해도 upload.size가 1이 된다
+        System.out.println(findupload.size());
+
+        if(findupload.get(0).getOriginalFilename().equals("")) {
+            dto.setPhoto(dto.getPhoto());
+        }else {
+            String photo="";
+            int idx=1;
+            for(MultipartFile multi:findupload) {
+                //파일명을 현재 날짜로 변경 후 ,로 연결
+                String newName=idx++ +"_"+ ChangeName.getChangeFileName(multi.getOriginalFilename());
+                photo+=newName+",";
+
+                //업로드
+                try {
+                    multi.transferTo(new File(path+"/"+newName));
+                } catch (IOException | IllegalStateException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            //마지막 컴마 제거
+            photo=photo.substring(0,photo.length()-1);
+            //dto에 저장
+            dto.setPhoto(photo);
+        }
+        findService.updateFindBoard(dto);
+        return "redirect:../findboard/list?currentPage="+currentPage;
+    }
+
+
+
+
     @GetMapping("/findboard/finddetail")
     public ModelAndView finddetail(int find_num, int currentPage) {
         ModelAndView mview=new ModelAndView();
@@ -196,6 +234,24 @@ public class FindController {
 
         return "/bit/find/updatefind";
     }
+
+    @GetMapping("/findboard/insertlist")
+    @ResponseBody
+    public List<?> insertlist(String ccolumn, String cword){
+        List<?> list=new ArrayList<>();
+        if(ccolumn=="cafe"){
+            list=findService.selectCafeData(cword);
+
+        }
+        if(ccolumn=="trip"){
+            list=findService.selectTripData(cword);
+        }
+        if(ccolumn=="food"){
+            list=findService.selectFoodData(cword);
+        }
+        return list;
+    }
+
     @GetMapping("/findboard/deletefind")
     public String delete(int find_num,int currentPage,HttpServletRequest request) {
         String path=request.getSession().getServletContext().getRealPath("/resources/upload");
@@ -233,14 +289,12 @@ public class FindController {
     @GetMapping("/commentfriend/insert")
     @ResponseBody
     public void insertcommentfriend(CommentFriendDto dto,
-                                    @RequestParam(defaultValue = "0") int friend_num,
                                     @RequestParam(defaultValue = "0") int regroup,
                                     @RequestParam(defaultValue = "0") int restep,
-                                    @RequestParam(defaultValue = "0") int relevel,
-                                    Model model
+                                    @RequestParam(defaultValue = "0") int relevel
     ) {
-        dto.setFriend_num(friend_num);
-        if(friend_num==0){
+
+        if(dto.getFriend_num()==0){
             regroup=commentFriendService.selectMaxNum(dto.getFind_num())+1;
             restep=0;
             relevel=0;

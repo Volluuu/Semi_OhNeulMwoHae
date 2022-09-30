@@ -1,7 +1,6 @@
 package bit.data.dao;
 
-import bit.data.dto.FindDto;
-import bit.data.dto.UserDto;
+import bit.data.dto.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,5 +53,20 @@ public class FindDao implements FindDaoInter{
     @Override
     public void deleteFindBoard(int find_num) {
         session.delete(ns+"deleteFindBoard", find_num);
+    }
+
+    @Override
+    public List<CafeDto> selectCafeData(String cword) {
+        return session.selectOne(ns+"selectCafeData", cword);
+    }
+
+    @Override
+    public List<TripDto> selectTripData(String cword) {
+        return session.selectList(ns+"selectTripData", cword);
+    }
+
+    @Override
+    public List<FoodDto> selectFoodData(String cword) {
+        return session.selectList(ns+"selectFoodData", cword);
     }
 }

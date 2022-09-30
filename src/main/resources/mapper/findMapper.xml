@@ -66,9 +66,9 @@
     </update>
     <!--게시글 수정-->
     <update id="updateFindBoard" parameterType="finddto">
-        update find set subject=#{subject},content=#{content},
+        update find set subject=#{subject},content=#{content}
         <if test="photo!=null">
-            photo=#{photo}
+            , photo=#{photo}
         </if>
         where find_num=#{find_num}
     </update>
@@ -77,4 +77,20 @@
         from find
         where find_num = #{find_num}
     </delete>
+
+    <select id="selectCafeData" parameterType="String" resultType="cafedto">
+        select * from cafe where title like concat('%',#{cword},'%')
+    </select>
+
+    <select id="selectTripData" parameterType="String" resultType="tripdto">
+        select * from trip where title like concat('%',#{cword},'%')
+    </select>
+
+    <select id="selectFoodData" parameterType="String" resultType="cafedto">
+        select * from food where title like concat('%',#{cword},'%')
+    </select>
+
+
+
+
 </mapper>
