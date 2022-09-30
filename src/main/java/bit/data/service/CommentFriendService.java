@@ -16,12 +16,18 @@ public class CommentFriendService implements  CommentFriendServiceInter{
     CommentFriendDaoInter commentFriendDao;
 
     @Override
+    public int selectMaxNum(int find_num) {
+        return commentFriendDao.selectMaxNum(find_num);
+    }
+
+    @Override
     public List<CommentFriendDto> selectAllComments(int find_num) {
         return commentFriendDao.selectAllComments(find_num);
     }
 
     @Override
     public void insertComment(CommentFriendDto dto) {
+
         commentFriendDao.insertComment(dto);
     }
 

@@ -8,6 +8,8 @@ import java.util.Map;
 
 public interface CommentFriendServiceInter {
 
+    public int selectMaxNum(int find_num);
+
     public List<CommentFriendDto> selectAllComments(int find_num);
     public void insertComment(CommentFriendDto dto);
     public void updateCommentFriend(CommentFriendDto dto);

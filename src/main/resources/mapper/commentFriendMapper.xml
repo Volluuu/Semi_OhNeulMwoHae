@@ -3,10 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="bit.data.dao.CommentFriendDao">
+	<select id="selectMaxNum" parameterType="int" resultType="int">
+		select ifnull(max(find_num),0) from comment_friend where find_num=#{find_num}
+	</select>
+
 	<!--최근 댓글이 밑으로 나오게-->
 	<select id="selectAllComments" parameterType="int" resultType="cfdto">
 		select CF.friend_num, CF.find_num, CF.user_num, CF.content, CF.writeday, CF.regroup, CF.restep, CF.relevel, U.name, U.nickname,
-			   U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by writeday asc
+			   U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by CF.writeday asc,CF.regroup asc,CF.restep desc
 	</select>
 	<!--계층형 댓글 입력-->
 	<insert id="insertComment" parameterType="cfdto">

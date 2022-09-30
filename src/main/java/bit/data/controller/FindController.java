@@ -232,8 +232,28 @@ public class FindController {
     }
     @GetMapping("/commentfriend/insert")
     @ResponseBody
-    public void insertcommentfriend(CommentFriendDto dto) {
+    public void insertcommentfriend(CommentFriendDto dto,
+                                    @RequestParam(defaultValue = "0") int friend_num,
+                                    @RequestParam(defaultValue = "0") int regroup,
+                                    @RequestParam(defaultValue = "0") int restep,
+                                    @RequestParam(defaultValue = "0") int relevel,
+                                    Model model
+    ) {
+        dto.setFriend_num(friend_num);
+        if(friend_num==0){
+            regroup=commentFriendService.selectMaxNum(dto.getFind_num())+1;
+            restep=0;
+            relevel=0;
+        }else{
+            commentFriendService.updateRestep(regroup, restep);
+            restep++;
+            relevel++;
+        }
+        dto.setRegroup(regroup);
+        dto.setRestep(restep);
+        dto.setRelevel(relevel);
         commentFriendService.insertComment(dto);
+
     }
 
     @GetMapping("/commentfriend/delete")

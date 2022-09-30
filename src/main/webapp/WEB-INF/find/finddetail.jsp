@@ -60,23 +60,24 @@
         });
 
         $(document).on("click", ".adap", function () {
-            var ti= $(this);
+            var ti = $(this);
             var friend_num = ti.attr("friend_num");
-            var user_num='${sessionScope.user_num}';
-            $.ajax({
-                type: "get",
-                url: root + "/commentfriend/adap",
-                dataType: "text",
-                data: {"friend_num": friend_num,"user_num":user_num},
-                success: function (res) {
-                    $("#content").remove();
-                    $("#btnasave").remove();
-                    ti.next().append('<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>');
+            var user_num = '${sessionScope.user_num}';
+            var regroup = ti.attr("regroup");
+            var restep = ti.attr("restep");
+            var relevel = ti.attr("relevel");
 
+            $(".aform").remove();
+            ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
+                '<input type="hidden" name="friend_num" value="' + friend_num + '">' +
+                '<input type="hidden" name="find_num" value="' + find_num + '">' +
+                '<input type="hidden" name="user_num" value="' + user_num + '">' +
+                '<input type="hidden" name="regroup" value="' + regroup + '">' +
+                '<input type="hidden" name="restep" value="' + restep + '">' +
+                '<input type="hidden" name="relevel" value="' + relevel + '">' +
+                '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
+                '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
 
-                    list();
-                }
-            });
         });
 
         $(document).on("click", ".aupd", function () {
@@ -89,7 +90,7 @@
                 data: {"friend_num": friend_num},
                 success: function (res) {
                     ti.parent().siblings("pre.precontent").remove();
-                    ti.parent().siblings(".eltcontent").html("<textarea class='textarea' name='content' class='form-control' " +
+                    ti.parent().siblings(".eltcontent").html("<textarea class='form-control' name='content'" +
                         "required='required'  style='width:400px;height:60px;'>" + res.content +
                         "</textarea><button class='btn btn-outline-dark aupdok' friend_num='" + res.friend_num + "'>확인</button>");
                 }
@@ -107,6 +108,23 @@
                 data: {"friend_num": friend_num, "content": aupdtxt},
                 success: function (res) {
                     list();
+                }
+            });
+        });
+
+        $(document).on("click", "#btnasave", function () {
+            var root = "${root}";
+            var fdata = $("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
+            $.ajax({
+                type: "get",
+                url: root + "/commentfriend/insert",
+                dataType: "text",
+                data: fdata,
+                success: function (res) {
+                    list();//댓글 목록을 다시 db에서 가져와서 출력
+
+                    //입력값이랑 사진 안보이게 처리
+                    $("#content").val("");
                 }
             });
         });
@@ -129,7 +147,15 @@
             success: function (res) {
                 $("b.banswer").html("<i class='bi bi-chat'> " + res.length);
                 $.each(res, function (i, elt) {
-                    s += "<div><p>" + elt.nickname;
+                    s += "<div class='eltnickname'><p>";
+                    if(elt.relevel>0){
+                        for(var a=0;a<elt.relevel;a++){
+                            s+="&emsp;";
+                        }
+                        s+="<i class='bi bi-arrow-return-right'></i>";
+                    }
+
+                    s+=elt.nickname;
                     if (user_num == elt.user_num) {
                         s += "<span class='writer'>&nbsp;작성자&nbsp;</span>";
                     }
@@ -138,12 +164,25 @@
                         s += '<button class="btn btn-outline-dark aupd fr" friend_num="' + elt.friend_num + '">수정</button>';
 
                     }
-                    s += '<button class="btn btn-outline-dark adap fr" friend_num="' + elt.friend_num + '">답글</button>'
+                    s += ' <c:if test="${sessionScope.loginok!=null}">';
+                    s += '<button class="btn btn-outline-dark adap fr" ' +
+                        'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
+                        ' friend_num="' + elt.friend_num + '">답글</button>'
                     s += '</p>';
-                    s += "<p class='eltcontent'><pre class='precontent'>" + elt.content + "</p>";
+                    s += '</c:if>';
+
+                    s += "<p class='eltcontent'><pre class='precontent'>";
+                    if(elt.relevel>0){
+                        for(var a=0;a<elt.relevel;a++){
+                            s+="&emsp;&nbsp;&nbsp;";
+                        }
+                    }
+                    s+=elt.content;
+                    s+="</p>";
                     s += "<span class='day'>" + elt.writeday + "</span>";
                     s += "</pre>";
                     s += "</div>";
+
                 });
                 $("div.alist").html(s);
             }
@@ -190,7 +229,7 @@
                     <form id="aform">
                         <input type="hidden" name="find_num" value="${dto.find_num}">
                         <br>
-                        <textarea name="content" id="content" style="width:400px;height:60px;"></textarea>
+                        <textarea class="form-control" name="content" id="content" style="width:400px;height:60px;"></textarea>
                         <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
                     </form>
                 </div>
@@ -222,22 +261,7 @@
     </tr>
 </table>
 <script>
-    $(document).on("click","#btnasave",function (){
-        var root = "${root}";
-        var fdata = $("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
-        $.ajax({
-            type: "get",
-            url: root + "/commentfriend/insert",
-            dataType: "text",
-            data: fdata,
-            success: function (res) {
-                list();//댓글 목록을 다시 db에서 가져와서 출력
 
-                //입력값이랑 사진 안보이게 처리
-                $("#content").val("");
-            }
-        });
-    });
 </script>
 </body>
 </html>
