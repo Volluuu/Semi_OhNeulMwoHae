@@ -224,10 +224,15 @@
             <div class="alist">
                 댓글목록
             </div>
+
             <c:if test="${sessionScope.loginok!=null}">
                 <div class="aform">
                     <form id="aform">
                         <input type="hidden" name="find_num" value="${dto.find_num}">
+                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+                        <input type="hidden" name="regroup" value="0">
+                        <input type="hidden" name="restep" value="0">
+                        <input type="hidden" name="relevel" value="0">
                         <br>
                         <textarea class="form-control" name="content" id="content" style="width:400px;height:60px;"></textarea>
                         <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
