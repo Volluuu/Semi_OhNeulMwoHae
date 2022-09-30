@@ -15,4 +15,5 @@
 	<delete id="deleteByIdx" parameterType="int">
 		delete from reboardanswer where idx=#{idx}
 	</delete>
+
 </mapper>

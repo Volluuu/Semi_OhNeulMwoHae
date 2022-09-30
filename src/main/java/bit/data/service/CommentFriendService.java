@@ -16,13 +16,24 @@ public class CommentFriendService implements  CommentFriendServiceInter{
     CommentFriendDaoInter commentFriendDao;
 
     @Override
-    public List<CommentFriendDto> selectAllComments(int friend_num) {
-        return commentFriendDao.selectAllComments(friend_num);
+    public int selectMaxNum(int find_num) {
+        return commentFriendDao.selectMaxNum(find_num);
+    }
+
+    @Override
+    public List<CommentFriendDto> selectAllComments(int find_num) {
+        return commentFriendDao.selectAllComments(find_num);
     }
 
     @Override
     public void insertComment(CommentFriendDto dto) {
+
         commentFriendDao.insertComment(dto);
+    }
+
+    @Override
+    public void updateCommentFriend(CommentFriendDto dto) {
+        commentFriendDao.updateCommentFriend(dto);
     }
 
     @Override

@@ -5,9 +5,19 @@
 <mapper namespace="bit.data.dao.FindDao">
     <!--검색된 게시글이 몇 개인지 구하는 mapper-->
     <select id="selectTotalCount" parameterType="Map" resultType="int">
-        select count(*) from find
+        select count(*) from find F INNER JOIN user U ON F.user_num = U.user_num
         <if test="findcolumn!=null and findword!=null">
-            where ${findcolumn} like concat('%',#{findword},'%')
+            <choose>
+                <when test="findcolumn=='subcon'">
+                    where subject like concat('%',#{findword},'%') or content like concat('%',#{findword},'%')
+                </when>
+                <when test="findcolumn=='nickname'">
+                    where nickname like concat('%',#{findword},'%')
+                </when>
+                <otherwise>
+                    where ${findcolumn} like concat('%',#{findword},'%')
+                </otherwise>
+            </choose>
         </if>
     </select>
     <!--검색 했을 때 최신순으로 나오게-->
@@ -22,14 +32,14 @@
                     where subject like concat('%',#{findword},'%') or content like concat('%',#{findword},'%')
                 </when>
                 <when test="findcolumn=='nickname'">
-                    where user_num=(select user_num from user where nickname like concat('%',#{findword},'%'))
+                    where nickname like concat('%',#{findword},'%')
                 </when>
                 <otherwise>
                     where ${findcolumn} like concat('%',#{findword},'%')
                 </otherwise>
             </choose>
         </if>
-        order by writeday desc
+        order by writeday desc limit #{startNum},#{perPage}
     </select>
     <!--글 쓴 사람 정보 구하기-->
     <select id="selectUserByfindNum" parameterType="int" resultType="udto">

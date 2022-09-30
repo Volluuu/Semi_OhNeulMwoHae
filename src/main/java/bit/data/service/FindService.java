@@ -25,12 +25,12 @@ public class FindService implements FindServiceInter{
     }
 
     @Override
-    public List<FindDto> findPagingList(String findcolumn, String findword, int startnum, int perpage) {
+    public List<FindDto> findPagingList(String findcolumn, String findword, int startNum, int perPage) {
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("findcolumn", findcolumn);
         map.put("findword", findword);
-        map.put("startnum", startnum);
-        map.put("perpage", perpage);
+        map.put("startNum", startNum);
+        map.put("perPage", perPage);
         return findDao.findPagingList(map);
     }
 

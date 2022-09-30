@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface FindServiceInter {
     public int selectTotalCount(String findcolumn, String findword);
-    public List<FindDto> findPagingList(String findcolumn, String findword, int startnum, int perpage);
+    public List<FindDto> findPagingList(String findcolumn, String findword, int startNum, int perPage);
     public UserDto selectUserByfindNum(int find_num);
     public FindDto selectByNum(int find_num);
     public void insertFindBoard(FindDto dto);

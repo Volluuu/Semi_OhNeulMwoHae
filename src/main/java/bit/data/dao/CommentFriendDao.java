@@ -15,14 +15,25 @@ public class CommentFriendDao implements CommentFriendDaoInter {
     SqlSession session;
 
     String ns="bit.data.dao.CommentFriendDao.";
+
     @Override
-    public List<CommentFriendDto> selectAllComments(int friend_num) {
-        return session.selectList(ns+"selectAllComments", friend_num);
+    public int selectMaxNum(int find_num) {
+        return session.selectOne(ns+"selectMaxNum",find_num);
+    }
+
+    @Override
+    public List<CommentFriendDto> selectAllComments(int find_num) {
+        return session.selectList(ns+"selectAllComments", find_num);
     }
 
     @Override
     public void insertComment(CommentFriendDto dto) {
         session.insert(ns+"insertComment", dto);
+    }
+
+    @Override
+    public void updateCommentFriend(CommentFriendDto dto) {
+        session.update(ns+"updateCommentFriend", dto);
     }
 
     @Override

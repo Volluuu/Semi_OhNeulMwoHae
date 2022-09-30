@@ -1,5 +1,6 @@
 package bit.data.controller;
 
+import bit.data.dto.CommentFriendDto;
 import bit.data.dto.FindDto;
 import bit.data.dto.UserDto;
 import bit.data.service.CommentFriendServiceInter;
@@ -161,8 +162,8 @@ public class FindController {
         return "redirect:../findboard/list?currentPage="+currentPage;
     }
 
-    @GetMapping("/find/finddetail")
-    public ModelAndView detail(int find_num, int currentPage) {
+    @GetMapping("/findboard/finddetail")
+    public ModelAndView finddetail(int find_num, int currentPage) {
         ModelAndView mview=new ModelAndView();
         //조회수 증가
         findService.updateReadCount(find_num);
@@ -196,12 +197,103 @@ public class FindController {
         return "/bit/find/updatefind";
     }
     @GetMapping("/findboard/deletefind")
-    public String delete(int find_num,int currentPage) {
+    public String delete(int find_num,int currentPage,HttpServletRequest request) {
+        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+        System.out.println(path);
+
+        String photo=findService.selectByNum(find_num).getPhoto();
+
+        if(photo.indexOf(",")>=0){
+            String sphoto[]=photo.split(",");
+            for(int i=0;i< sphoto.length;i++){
+                File file=new File(path+"/"+sphoto[i]);
+                if(file.exists()){
+                System.out.println("파일이 존재하므로 삭제합니다");
+                file.delete();
+                }
+            }
+        }else {
+            File file=new File(path+"/"+photo);
+            if(file.exists()){
+                System.out.println("파일이 존재하므로 삭제합니다");
+                file.delete();
+            }
+        }
+
         findService.deleteFindBoard(find_num);
         //삭제 후 보던 페이지로 이동
         return "redirect:../findboard/list?currentPage="+currentPage;
     }
 
+    @GetMapping("/commentfriend/list")
+    @ResponseBody
+    public List<CommentFriendDto> commentfriendlist(int find_num){
+        return commentFriendService.selectAllComments(find_num);
+    }
+    @GetMapping("/commentfriend/insert")
+    @ResponseBody
+    public void insertcommentfriend(CommentFriendDto dto,
+                                    @RequestParam(defaultValue = "0") int friend_num,
+                                    @RequestParam(defaultValue = "0") int regroup,
+                                    @RequestParam(defaultValue = "0") int restep,
+                                    @RequestParam(defaultValue = "0") int relevel,
+                                    Model model
+    ) {
+        dto.setFriend_num(friend_num);
+        if(friend_num==0){
+            regroup=commentFriendService.selectMaxNum(dto.getFind_num())+1;
+            restep=0;
+            relevel=0;
+        }else{
+            commentFriendService.updateRestep(regroup, restep);
+            restep++;
+            relevel++;
+        }
+        dto.setRegroup(regroup);
+        dto.setRestep(restep);
+        dto.setRelevel(relevel);
+        commentFriendService.insertComment(dto);
 
+    }
+
+    @GetMapping("/commentfriend/delete")
+    @ResponseBody
+    public void deletecommentfriend(int friend_num) {
+//        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+//        System.out.println(path);
+
+        //데이터 삭제 전에 사진 지우기
+        //사진명을 얻기
+//        String photo=answerService.getAnswer(idx).getPhoto();
+        //File 객체 생성
+//        File file=new File(path+"/"+photo);
+//        if(file.exists()) {//파일이 존재하면 true, 없으면 false
+//            System.out.println("파일이 존재하므로 삭제합니다");
+//            file.delete();
+//        }
+
+        commentFriendService.deleteByNum(friend_num);
+    }
+
+    @GetMapping("/commentfriend/update")
+    @ResponseBody
+    public void updatecommentfriend(CommentFriendDto dto){
+        commentFriendService.updateCommentFriend(dto);
+    }
+
+//    댓글 수정 버튼 눌렀을 때 dto 받아오기
+    @GetMapping("/commentfriend/updateform")
+    @ResponseBody
+    public CommentFriendDto updateform(int friend_num){
+        CommentFriendDto dto=commentFriendService.selectCommentByNum(friend_num);
+        return dto;
+
+    }
+
+    @GetMapping("/commentfriend/updateok")
+    @ResponseBody
+    public void updateok(CommentFriendDto dto){
+        commentFriendService.updateCommentFriend(dto);
+    }
 
 }
