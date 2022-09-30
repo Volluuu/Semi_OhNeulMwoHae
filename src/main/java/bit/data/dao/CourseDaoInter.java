@@ -11,4 +11,5 @@ public interface CourseDaoInter {
 	public void insertCourse(CourseDto dto);
 	public void deleteCourse(int num);
 	public void updateStep(Map<String, String> map);
+	public List<CourseDto> getSearchList(Map<String, String> map);
 }

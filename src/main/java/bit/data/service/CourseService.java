@@ -44,4 +44,14 @@ public class CourseService implements CourseServiceInter{
 		map.put("newStep", newStep);
 		daoInter.updateStep(map);
 	}
+
+	@Override
+	public List<CourseDto> getSearchList(String searchthema, String searchword) {
+		Map<String, String> map=new HashMap<String, String>();
+
+		map.put("searchthema", searchthema);
+		map.put("searchword", searchword);
+
+		return daoInter.getSearchList(map);
+	}
 }

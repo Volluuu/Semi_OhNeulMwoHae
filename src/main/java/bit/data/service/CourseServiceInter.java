@@ -11,4 +11,5 @@ public interface CourseServiceInter {
 	public void insertCourse(CourseDto dto);
 	public void deleteCourse(int num);
 	public void updateStep(String num, String newStep);
+	public List<CourseDto> getSearchList(String searchcolumn,String searchword);
 }

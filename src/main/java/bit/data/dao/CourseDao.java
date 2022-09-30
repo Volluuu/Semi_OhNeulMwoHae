@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,4 +41,8 @@ public class CourseDao implements CourseDaoInter{
 		session.update(ns+"updateStep", map);
 	}
 
+	@Override
+	public List<CourseDto> getSearchList(Map<String, String> map) {
+		return session.selectList(ns+"getSearchList", map);
+	}
 }

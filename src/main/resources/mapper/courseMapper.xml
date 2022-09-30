@@ -24,6 +24,10 @@
         update course set step${num} = #{newStep}
     </update>
 
+    <!-- 경로 설정 시, food 정보 가져오기 -->
+    <select id="getSearchCourse" parameterType="Map" resultType="coursedto">
+        SELECT * FROM ${searchthema} where title like concat('%',#{searchword},'%')
+    </select>
 
 
 </mapper>
