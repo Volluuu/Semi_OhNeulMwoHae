@@ -234,14 +234,17 @@
 		$("#btnloginok").click(function(){
 			//아이디와 비번 읽기
 			var id=$("#loginid").val();
+			// console.log(id);
 			var pass=$("#loginpass").val();
+			// console.log(pass);
 			var root='${root}';
+
 				console.log("root"+root);
 				$.ajax({
 					type:"get",
 					url:root+"/user/login",
 					dataType:"json",
-					data:{"id":id,"pass":pass},
+					data:{"loginid":id,"password":pass},
 					success:function(res){			
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");

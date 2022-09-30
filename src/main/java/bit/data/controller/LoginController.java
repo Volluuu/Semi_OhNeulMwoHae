@@ -30,6 +30,8 @@ public class LoginController {
 	public Map<String , String> loginprocess(String loginid, String password,HttpSession session)
 	{
 		//System.out.println(id);
+
+
 		Map<String, String> map=new HashMap<String, String>();
 		int result=userService.getLoginIdPasswordCheck(loginid, password);
 		if(result==1)//아이디,패스 맞는 경우
