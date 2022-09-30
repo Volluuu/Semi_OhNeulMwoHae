@@ -180,10 +180,11 @@
 				<a href="#">마이페이지</a>
 				<a href="${root}/user/userlist">회원목록</a>
 				<a href="${root}/user/userform">회원가입</a>
+				<a href="${root}/user/userlogin">로그인</a>
 			</div>
 		</div>
 
-	<span id="loginstate">
+	<%--<span id="loginstate">
 		<c:if test="${sessionScope.loginok==null}">
 			<button type="button" class="btn btn-outline-secondary btn-sm" id="btnlogin"
 					data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
@@ -224,7 +225,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>--%>
 </div>
 
 
@@ -249,6 +250,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
+							alert("로그인 되었습니다.");
 							location.reload();
 						}
 					}//success
@@ -263,7 +265,8 @@
 				type:"get",
 				url:root+"/user/logout",
 				dataType:"text",
-				success:function(res){			
+				success:function(res){
+					alert("로그아웃 되었습니다.")
 					location.reload();
 					
 				}//success
