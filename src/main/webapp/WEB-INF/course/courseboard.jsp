@@ -1,13 +1,65 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hyeongjoon
-  Date: 2022/09/28
-  Time: 12:23 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
+<link rel="stylesheet" href="../css/coursecss.css">
+<style>
+
+    .container {
+        /*justify-content: flex-start;*/
+        /* justify-content: flex-end; */
+        /* justify-content: center;*/
+        /* justify-content: space-between;*/
+        /*justify-content: space-around;*/
+
+    }
+
+    .item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        /*justify-content: flex-start;*/
+
+    }
+
+
+    .jgfRlo {
+        position: relative;
+        float: right;
+
+    }
+
+    div {
+        display: block;
+    }
+
+    .fotqhs {
+        font-weight: 350;
+        font-size: 14px;
+        line-height: 21px;
+        color: rgb(37, 37, 37);
+        padding: 8px 33px 8px 33px;
+        border: unset;
+        background-color: unset;
+        appearance: none;
+
+    }
+
+
+    option {
+        font-weight: normal;
+        display: block;
+        white-space: nowrap;
+        min-height: 1.2em;
+        padding: 0px 2px 1px;
+    }
+
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
+
+
+</style>
 <html>
 <head>
     <title>Title</title>
@@ -15,82 +67,225 @@
 <body>
 
 
+<div class="jgfRlo" style="width: 82px; height: 37px; padding:0px 7px;
+        margin: 0px 10px 0px 0px;">
+    <select class="fotqhs">
+        <option value="cafe" class="gEkCOT">카페</option>
+        <option value="food" class="gEkCOT">맛집</option>
+        <option value="trip" class="gEkCOT">여행</option>
+    </select>
+    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L6 6L11 1" stroke="#6a6a6a" stroke-width="1" stroke-linecap="square"></path>
+    </svg>
+    <select class="fotqhs">
+        <option value="cafe" class="gEkCOT">최신순</option>
+        <option value="food" class="gEkCOT">인기순</option>
+    </select>
+    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L6 6L11 1" stroke="#6a6a6a" stroke-width="1" stroke-linecap="square"></path>
+    </svg>
+</div>
+</div>
 
-        &nbsp;&nbsp;&nbsp;
-        <input type="text" name="foodword" class="dg_inputtext" placeholder="검색 단어" value="${param.foodword}">
 
-        <button type="submit" class="dg_searchbtn">검색</button>
-
-
-<h1>여기는 추천코스입니다~!</h1>
-
-        <div class="boardlist">
-            <h3 class="alert alert-warning">총 ${totalCount}개의 글이 있습니다</h3>
-            <br>
-            <table class="table table-bordered">
-                <tr style="background-color: #ddd">
-                    <th style="width: 50px;">번호</th>
-                    <th style="width: 350px;">제목</th>
-                    <th style="width: 80px;">작성자</th>
-                    <th style="width: 120px;">작성일</th>
-                    <th style="width: 50px;">조회</th>
-                    <th style="width: 50px;">좋아요</th>
-                </tr>
-                <c:if test="${totalCount==0}">
-                    <tr>
-                        <td colspan="6" align="center">
-                            <h4>등록된 글이 없습니다</h4>
-                        </td>
-                    </tr>
-
-                </c:if>
-                <c:if test="${totalCount>0}">
-                    <c:forEach var="dto" items="${list}">
-                        <tr>
-                            <td align="center">${no}</td>
-                            <c:set var="no" value="${no-1}"/>
-                            <td>
-                                <!-- 답글일 경우 level 1당 2칸 띄우기 -->
-                                <c:forEach begin="1" end="${dto.relevel}">
-                                    &nbsp;&nbsp;
-                                </c:forEach>
-                                <!-- 답글일 경우 답글 이미지 넣기 -->
-                                <c:if test="${dto.relevel>0}">
-                                    <img src="../image/re.png">
-                                </c:if>
-
-                                <c:if test="${dto.photo!='no'}">
-                                    <img src="../image/123123.jpeg" style="width: 30px;">
-                                </c:if>
-
-                                <a href="detail?num=${fooddto.food_num}&currentPage=${currentPage}" style="color: black;">
-                                        ${dto.content}</a>
-                            </td>
-                            <td align="center">${dto.name}</td>
-                            <td align="center">
-                                <fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/>
-                            </td>
-                            <td align="center">${dto.readcount}</td>
-                            <td align="center">${dto.likes}</td>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                <c:if test="${sessionScope.loginok!=null }">
-                    <tr>
-                        <td colspan="6" align="right">
-                            <button type="button" class="btn btn-outline-success"
-                                    onclick="location.href='form'">글쓰기</button>
-                        </td>
-                    </tr>
-                </c:if>
-            </table>
+<%--카드~!~!~!~!~!~--%>
+<div class="container" style="width:100%; height: 100%; padding-bottom: 30px;">
+    <div class="item">
+        <div class="blog-card spring-fever">
+            <div class="title-content">
+                <h3>SPRING FEVER</h3>
+                <hr/>
+                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+            </div><!-- /.title-content -->
+            <div class="card-info">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim.
+            </div><!-- /.card-info -->
+            <div class="utility-info">
+                <ul class="utility-list">
+                    <li class="comments">12</li>
+                    <li class="date">03.12.2015</li>
+                </ul>
+            </div><!-- /.utility-info -->
+            <!-- overlays -->
+            <div class="gradient-overlay"></div>
+            <div class="color-overlay"></div>
         </div>
 
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+        <!-g-card =========================================================================================-->
+
+        <div class="blog-card spring-fever">
+            <div class="title-content">
+                <h3>SPRING FEVER</h3>
+                <hr/>
+                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+            </div><!-- /.title-content -->
+            <div class="card-info">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim.
+            </div><!-- /.card-info -->
+            <div class="utility-info">
+                <ul class="utility-list">
+                    <li class="comments">12</li>
+                    <li class="date">03.12.2015</li>
+                </ul>
+            </div><!-- /.utility-info -->
+            <!-- overlays -->
+            <div class="gradient-overlay"></div>
+            <div class="color-overlay"></div>
+        </div>
+
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+        <!-g-card =========================================================================================-->
+
+
+        <div class="blog-card spring-fever">
+            <div class="title-content">
+                <h3>SPRING FEVER</h3>
+                <hr/>
+                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+            </div><!-- /.title-content -->
+            <div class="card-info">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim.
+            </div><!-- /.card-info -->
+            <div class="utility-info">
+                <ul class="utility-list">
+                    <li class="comments">12</li>
+                    <li class="date">03.12.2015</li>
+                </ul>
+            </div><!-- /.utility-info -->
+            <!-- overlays -->
+            <div class="gradient-overlay"></div>
+            <div class="color-overlay"></div>
+        </div>
+
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+        <!-g-card=========================================================================================-->
 
 
 
+    <div class="blog-card spring-fever">
+        <div class="title-content">
+            <h3>SPRING FEVER</h3>
+            <hr/>
+            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+        </div><!-- /.title-content -->
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="comments">12</li>
+                <li class="date">03.12.2015</li>
+            </ul>
+        </div><!-- /.utility-info -->
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+    </div>
+
+    <div class="card-info">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim.
+    </div><!-- /.card-info -->
+
+    <!-- overlays -->
+    <div class="gradient-overlay"></div>
+    <div class="color-overlay"></div>
+
+    <!-g-card =========================================================================================-->
+
+    <div class="blog-card spring-fever">
+        <div class="title-content">
+            <h3>SPRING FEVER</h3>
+            <hr/>
+            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+        </div><!-- /.title-content -->
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="comments">12</li>
+                <li class="date">03.12.2015</li>
+            </ul>
+        </div><!-- /.utility-info -->
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+    </div>
+
+    <div class="card-info">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim.
+    </div><!-- /.card-info -->
+
+    <!-- overlays -->
+    <div class="gradient-overlay"></div>
+    <div class="color-overlay"></div>
+    <!-g-card =========================================================================================-->
 
 
+    <div class="blog-card spring-fever">
+        <div class="title-content">
+            <h3>SPRING FEVER</h3>
+            <hr/>
+            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+        </div><!-- /.title-content -->
+        <div class="card-info">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim.
+        </div><!-- /.card-info -->
+        <div class="utility-info">
+            <ul class="utility-list">
+                <li class="comments">12</li>
+                <li class="date">03.12.2015</li>
+            </ul>
+        </div><!-- /.utility-info -->
+        <!-- overlays -->
+        <div class="gradient-overlay"></div>
+        <div class="color-overlay"></div>
+    </div>
+
+    <div class="card-info">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+        dolore magna aliqua. Ut enim ad minim.
+    </div><!-- /.card-info -->
+
+    <!-- overlays -->
+    <div class="gradient-overlay"></div>
+    <div class="color-overlay"></div>
+    <!-g-card =========================================================================================-->
+</div>
+</div>
+
+</body>
+</html>
 
 
 <%--<svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"--%>
@@ -917,5 +1112,4 @@
 <%--    <path class="st6" d="M1610.3,622.2"/>--%>
 <%--</svg>--%>
 
-</body>
-</html>
+
