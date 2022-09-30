@@ -1,6 +1,9 @@
 package bit.data.dao;
 
 import bit.data.dto.CourseDto;
+import bit.data.dto.CafeDto;
+import bit.data.dto.TripDto;
+import bit.data.dto.FoodDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -44,5 +47,20 @@ public class CourseDao implements CourseDaoInter{
 	@Override
 	public List<CourseDto> getSearchList(Map<String, String> map) {
 		return session.selectList(ns+"getSearchList", map);
+	}
+
+	@Override
+	public List<CafeDto> getSearchCafe(Map<String, String> map) {
+		return session.selectList(ns+"getSearchCafe",map);
+	}
+
+	@Override
+	public List<TripDto> getSearchTrip(Map<String, String> map) {
+		return session.selectList(ns+"getSearchTrip",map);
+	}
+
+	@Override
+	public List<FoodDto> getSearchFood(Map<String, String> map) {
+		return session.selectList(ns+"getSearchFood",map);
 	}
 }

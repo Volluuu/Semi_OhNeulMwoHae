@@ -1,7 +1,10 @@
 package bit.data.service;
 
 import bit.data.dao.CourseDaoInter;
+import bit.data.dto.CafeDto;
 import bit.data.dto.CourseDto;
+import bit.data.dto.FoodDto;
+import bit.data.dto.TripDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,4 +57,33 @@ public class CourseService implements CourseServiceInter{
 
 		return daoInter.getSearchList(map);
 	}
+
+	@Override
+	public List<CafeDto> getSearchCafe(String searchword) {
+		Map<String,String> map=new HashMap<String, String>();
+
+
+		map.put("searchword",searchword);
+
+		return daoInter.getSearchCafe(map);
+	}
+
+	@Override
+	public List<TripDto> getSearchTrip(String searchword) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("searchword", searchword);
+
+		return daoInter.getSearchTrip(map);
+	}
+
+	@Override
+	public List<FoodDto> getSearchFood(String searchword){
+		Map<String, String> map = new HashMap<String, String>();
+
+		map.put("searchword", searchword);
+
+		return daoInter.getSearchFood(map);
+	}
 }
+

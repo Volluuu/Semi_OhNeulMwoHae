@@ -71,14 +71,14 @@
     .searchlist{
         border: 1px solid crimson;
         width: 370px;
-        height: 300px;
-        display: flex;
+        max-height: 300px;
+        display: none;
         position: absolute;
         z-index: 1;
         background-color: white;
         overflow: scroll;
     }
-    #keyword{
+    #searchword{
         width: 300px;
         display: flex;
         display: inline-block;
@@ -89,6 +89,13 @@
         width: 50px;
         display: inline-block;
         vertical-align: top;
+    }
+    .searchwordlist{
+        list-style: none;
+    }
+    .searchwordlist:hover{
+        background-color: gray;
+        cursor: pointer;
     }
     .cosadd_btn{
     }
@@ -111,11 +118,25 @@
     <script>
         var cnt="1";
         var s="";
+        var c="";
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function (){
-
-            searchbarhide();
-
+            /* 검색 시, 검색화면 보여주기 */
+            $(document).on("keyup","#searchword",function () {
+                var searchcheck="";
+                searchcheck+=$("#searchword").text();
+                if ($("#searchword").text() == '') {
+                    searchcheck += $(".searchlist").css("display", "none");
+                }
+                if ($("#searchword").text() != '') {
+                    searchcheck += $(".searchlist").css("display", "flex");
+                    $(document).on("click",".searchwordlist",function (){
+                       var steplist=$("li.searchwordlist").attr().text();
+                        searchcheck += $(".searchlist").css("display", "none");
+                    });
+                }
+                $("#searchword").html(searchcheck);
+            });
 
             $(document).on("click",".cosselectadd",function (){
                 if($("div.cosselect_main").length==5) {
@@ -147,6 +168,26 @@
                 }
             });
 
+            /* 검색 이벤트 */
+            $(document).on("click","#getlist",function () {
+
+                $.ajax({
+                    type:"get",
+                    url:"../course/searchlist",
+                    dataType:"json",
+                    data:{"searchthema":$("#searchthema").val(),"searchword":$("#searchword").val()},
+                    success:function (res) {
+                        alert("안녕");
+                        c+="<ul>";
+                        $.each(res, function(i, elt){
+                            c+="<li class='searchwordlist'>"+elt.title+"</li>";
+                        });
+                        c+="</ul>";
+                        $(".searchlist").html(c);
+                    }//sucess
+                });//ajax
+            }); // getlist click end
+
             /* 입력 이벤트 */
             /*$(document).on("click",".cosbtnsave",function (){
                 //alert($(".coscnt").text());
@@ -172,7 +213,7 @@
             s+="<span class='coscnt'></span>";
             s+="<br>";
             s+="<div class='cosselect_thema'>";
-            s+="<select class='form-control sel1' id='type' name='searchthema'>";
+            s+="<select class='form-control sel1' id='searchthema' name='searchthema'>";
             s+="<option selected='' disabled='' hidden='' class=op1'>테마 선택</option>";
             s+="<option class='op1' value='cafe'>카페</option>";
             s+="<option class='op1' value='food'>음식점</option>";
@@ -180,7 +221,7 @@
             s+="</select>";
             s+="</div>";
             s+="<div class='i' id='cossearch_insert'>";
-            s+="<input type='text' class='form-control in1' placeholder='검색어를 입력' id='keyword' name='searchword'>";
+            s+="<input type='text' class='form-control in1' placeholder='검색어를 입력' id='searchword' name='searchword'>";
             s+="<button class='form-control' id='getlist'><i class='fas fa-search' aria-hidden='true'></i></button>";
             s+="</div>";
             s+="<div class='cosadd_btn'>";
@@ -190,28 +231,6 @@
             s+="</div>";
         }
 
-        function searchbarhide(){
-            if($(".searchlist").text()==null){
-                $(".searchlist").css("display","none");
-            }
-        }
-
-
-      function list() {
-            var c="";
-            $.ajax({
-                type:"get",
-                url:"../course/searchlist",
-                dataType:"json",
-                data:{"searchthema":searchthema,"searchword":searchword},
-                success:function(res){
-                    $.each(res, function(i, elt){
-                        c+="<li>"+elt.title+"</li>";
-                    });
-                    $(".searchlist").html(c);
-                }//success
-            }); //ajax
-        };//function*/
     </script>
 </head>
 <body>
@@ -246,7 +265,7 @@
                     <span class="coscnt">경로 1</span>
                     <br>
                     <div class="cosselect_thema">
-                        <select class="form-control sel1" id="type" required="required" name="searchthema">
+                        <select class="form-control sel1" id="searchthema" required="required" name="searchthema">
                             <option selected="" disabled="" hidden="" class="op1">테마 선택</option>
                             <option class="op1" value="cafe">카페</option>
                             <option class="op1" value="food">음식점</option>
@@ -254,7 +273,7 @@
                         </select>
                     </div>
                     <div class="i" id="cossearch_insert">
-                        <input type="text" class="form-control in1" placeholder="검색어를 입력" id="keyword" required="required" name="searchword">
+                        <input type="text" class="form-control in1" placeholder="검색어를 입력" id="searchword" required="required" name="searchword">
                         <div class="searchlist"></div>
                         <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
                     </div>
@@ -283,8 +302,9 @@
 
 <script>
 
-    var type_of_course = "";
-    var user_keyword = "";
+    /*var type_of_course = "";
+    var user_keyword = "";*/
+/*
     $("#type").change(function () {
         type_of_course = $("#type").val();
         alert(type_of_course);
@@ -295,21 +315,27 @@
         alert("hi");
         user_keyword = $(this).val();
     }); // keyword change end
+*/
 
-    $("#getlist").click(function () {
+
+
+   /* function list() {
+        var c="";
         $.ajax({
-            type    : "get",
-            url     : "../help/getlist",
-            dataType: "text",
-            data    : {
-                "title": user_keyword,
-                "type": type_of_course
-            },
-            success : function (res) {
-                (".toorlist").html("hi");
-            }//sucess
-        });//ajax
-    }); // getlist click end
+            type:"get",
+            url:"../course/searchlist",
+            dataType:"json",
+            data:{"type":type,"keyword":keyword},
+            success:function(res){
+                c+="<ul>";
+                $.each(res, function(i, elt){
+                    c+="<li>"+elt.title+"</li>";
+                });
+                c+="</ul>";
+                $(".searchlist").html(c);
+            }//success
+        }); //ajax
+    };//function*!/*/
 </script>
 </body>
 </html>
