@@ -184,16 +184,15 @@
 			</div>
 		</div>
 
-	<%--<span id="loginstate">
+<%--	<span id="loginstate">
 		<c:if test="${sessionScope.loginok==null}">
-			<button type="button" class="btn btn-outline-secondary btn-sm" id="btnlogin"
-					data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
+			<a href="${root}/user/userlogin">로그인</a>
 		</c:if>
 		<c:if test="${sessionScope.loginok!=null}">
 			<b>${sessionScope.loginname}님</b>
-			<button type="button" class="btn btn-danger btn-sm" id="btnlogout">로그아웃</button>
+			<a href="${root}/user/userlogin">로그아웃</a>
 		</c:if>
-	</span>
+	</span>--%>
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal">
 		<div class="modal-dialog modal-sm">
@@ -225,7 +224,7 @@
 				</div>
 			</div>
 		</div>
-	</div>--%>
+	</div>
 </div>
 
 
