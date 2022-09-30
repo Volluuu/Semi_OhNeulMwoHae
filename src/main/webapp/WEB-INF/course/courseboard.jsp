@@ -93,18 +93,17 @@
     <div class="item">
         <div class="blog-card spring-fever">
             <div class="title-content">
-                <h3>SPRING FEVER</h3>
+                <h3>S.O.S.S.O.S.S.O.S.S.O.S.S.O.S.S.O.S.</h3>
                 <hr/>
-                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
+                <div class="intro">하 기 싫ㄷ ㅏ ~!~!!~!~!~!~!</div>
             </div><!-- /.title-content -->
             <div class="card-info">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim.
+                그만하고 싶어요 살려주세요
             </div><!-- /.card-info -->
             <div class="utility-info">
                 <ul class="utility-list">
                     <li class="comments">12</li>
-                    <li class="date">03.12.2015</li>
+                    <li class="date">22.09.30</li>
                 </ul>
             </div><!-- /.utility-info -->
             <!-- overlays -->
@@ -113,8 +112,7 @@
         </div>
 
         <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
+                집에 가고싶당
         </div><!-- /.card-info -->
 
         <!-- overlays -->
