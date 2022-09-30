@@ -207,20 +207,20 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">LoginId</span>
+						<span class="input-group-text">아이디</span>
 						<input type="text" class="form-control" id="loginid">
 					</div>
 
-					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">LoginPass</span>
+					<div class="input-group mb-3 input-group-sm" style="font-family: Jua;">
+						<span class="input-group-text">비밀번호</span>
 						<input type="password" class="form-control" id="loginpass">
 					</div>
 				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok">Login</button>
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok">로그인</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -239,7 +239,7 @@
 				console.log("root"+root);
 				$.ajax({
 					type:"get",
-					url:root+"/member/login",
+					url:root+"/user/login",
 					dataType:"json",
 					data:{"id":id,"pass":pass},
 					success:function(res){			
@@ -258,7 +258,7 @@
 			var root='${root}';
 			$.ajax({
 				type:"get",
-				url:root+"/member/logout",
+				url:root+"/user/logout",
 				dataType:"text",
 				success:function(res){			
 					location.reload();
