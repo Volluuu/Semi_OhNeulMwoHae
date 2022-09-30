@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insertUser" parameterType="udto">
-        insert into user (loginid,password,name,age,gender,email,hp,gaipday)
-        values (#{loginid},#{password},#{name},#{age},#{gender},#{email},#{hp},now())
+        insert into user (loginid,password,name,nickname,age,gender,email,hp,gaipday)
+        values (#{loginid},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
     </insert>
 
     <select id="getAllUsers" resultType="udto">
