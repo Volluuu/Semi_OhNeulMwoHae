@@ -1,6 +1,10 @@
 package bit.data.dao;
 
 import bit.data.dto.CourseDto;
+import bit.data.dto.CafeDto;
+import bit.data.dto.TripDto;
+import bit.data.dto.FoodDto;
+
 
 import java.util.List;
 import java.util.Map;
@@ -11,4 +15,8 @@ public interface CourseDaoInter {
 	public void insertCourse(CourseDto dto);
 	public void deleteCourse(int num);
 	public void updateStep(Map<String, String> map);
+	public List<CourseDto> getSearchList(Map<String, String> map);
+	public List<CafeDto> getSearchCafe(Map<String, String> map);
+	public List<TripDto> getSearchTrip(Map<String, String> map);
+	public List<FoodDto> getSearchFood(Map<String, String> map);
 }

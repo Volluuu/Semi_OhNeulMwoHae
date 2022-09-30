@@ -50,25 +50,35 @@
     }
 
     .cosselect_main{
-       border: 1px solid red;
+       /*border: 1px solid red;*/
         width: 500px;
         margin: 0 auto;
         font-size: 10px;
     }
     .cosselect_thema{
-        border: 1px solid blue;
+        /*border: 1px solid blue;*/
         width: 120px;
         display: inline-block;
         vertical-align: top;
     }
     #cossearch_insert{
-        border: 1px solid magenta;
+        /*border: 1px solid magenta;*/
         width: 370px;
         display: inline-block;
         vertical-align: top;
     }
 
-    #keyword{
+    .searchlist{
+        border: 1px solid crimson;
+        width: 370px;
+        max-height: 300px;
+        display: none;
+        position: absolute;
+        z-index: 1;
+        background-color: white;
+        overflow: scroll;
+    }
+    #searchword{
         width: 300px;
         display: flex;
         display: inline-block;
@@ -80,14 +90,54 @@
         display: inline-block;
         vertical-align: top;
     }
+    .searchwordlist{
+        list-style: none;
+    }
+    .searchwordlist:hover{
+        background-color: gray;
+        cursor: pointer;
+    }
     .cosadd_btn{
+    }
+
+    /* 버튼 */
+    .cosselectbtn{
+        bottom: 0%;
+    }
+    .cosbtnupdate{
+
+    }
+    .cosbtndelete{
+
+    }
+    .cosbtnsave{
+
     }
 
 </style>
     <script>
         var cnt="1";
         var s="";
+        var c="";
+        /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function (){
+            /* 검색 시, 검색화면 보여주기 */
+            $(document).on("keyup","#searchword",function () {
+                var searchcheck="";
+                searchcheck+=$("#searchword").text();
+                if ($("#searchword").text() == '') {
+                    searchcheck += $(".searchlist").css("display", "none");
+                }
+                if ($("#searchword").text() != '') {
+                    searchcheck += $(".searchlist").css("display", "flex");
+                    $(document).on("click",".searchwordlist",function (){
+                       var steplist=$("li.searchwordlist").attr().text();
+                        searchcheck += $(".searchlist").css("display", "none");
+                    });
+                }
+                $("#searchword").html(searchcheck);
+            });
+
             $(document).on("click",".cosselectadd",function (){
                 if($("div.cosselect_main").length==5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
@@ -103,6 +153,7 @@
                 }
             });
 
+            /* 빼기 버튼 추가 시, 입력창 삭제 이벤트 */
             $(document).on("click",".cosselectsubstract",function (){
                 if($("div.cosselect_main").length<2) {
                     alert("첫 경로는 삭제 할 수 없습니다.");
@@ -116,14 +167,53 @@
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 "+(i+1));
                 }
             });
+
+            /* 검색 이벤트 */
+            $(document).on("click","#getlist",function () {
+
+                $.ajax({
+                    type:"get",
+                    url:"../course/searchlist",
+                    dataType:"json",
+                    data:{"searchthema":$("#searchthema").val(),"searchword":$("#searchword").val()},
+                    success:function (res) {
+                        alert("안녕");
+                        c+="<ul>";
+                        $.each(res, function(i, elt){
+                            c+="<li class='searchwordlist'>"+elt.title+"</li>";
+                        });
+                        c+="</ul>";
+                        $(".searchlist").html(c);
+                    }//sucess
+                });//ajax
+            }); // getlist click end
+
+            /* 입력 이벤트 */
+            /*$(document).on("click",".cosbtnsave",function (){
+                //alert($(".coscnt").text());
+                var step={"user_num":user_num,}
+                if($(".coscnt").text()=="경로 1"){
+                    $.ajax({
+                        type:"post",
+                        url:"../course/insert",
+                        dataType:"json",
+                        data:{"user_num":user_num},
+                        success:function(res){
+                            alert("안녕");
+                        }
+            });*/
+
+
+
         });
 
+        /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd(){
             s+="<div class='cosselect_main'>";
-            s+="<span class='coscnt'>경로 "+cnt+"</span>";
+            s+="<span class='coscnt'></span>";
             s+="<br>";
             s+="<div class='cosselect_thema'>";
-            s+="<select class='form-control sel1' id='type'>";
+            s+="<select class='form-control sel1' id='searchthema' name='searchthema'>";
             s+="<option selected='' disabled='' hidden='' class=op1'>테마 선택</option>";
             s+="<option class='op1' value='cafe'>카페</option>";
             s+="<option class='op1' value='food'>음식점</option>";
@@ -131,7 +221,7 @@
             s+="</select>";
             s+="</div>";
             s+="<div class='i' id='cossearch_insert'>";
-            s+="<input type='text' class='form-control in1' placeholder='검색어를 입력' id='keyword'>";
+            s+="<input type='text' class='form-control in1' placeholder='검색어를 입력' id='searchword' name='searchword'>";
             s+="<button class='form-control' id='getlist'><i class='fas fa-search' aria-hidden='true'></i></button>";
             s+="</div>";
             s+="<div class='cosadd_btn'>";
@@ -141,37 +231,6 @@
             s+="</div>";
         }
 
-      /*  function list() {
-           /!* var loginok='${sessionScope.loginok}';
-            var loginid='${sessionScope.loginid}';
-            var writerid='${dto.id}';
-            //alert(loginok+","+loginid);
-            //alert(writerid);
-*!/
-            var s="";
-            $.ajax({
-                type:"get",
-                url:"../course/list",
-                dataType:"json",
-                data:{"user_num":num},
-                success:function(res){
-                    $.each(res, function(i, elt){
-                        if(writerid==elt.id){
-                        s+="<div>"+elt.title;
-                            s+="<span class='writer'>작성자</span>";
-                        }
-                        s+="<br>";
-                        s+="<pre>"+elt.message;
-                        s+="<span class='day'>"+elt.writeday;
-                        if(loginok=='yes' && loginid==elt.id){
-                            s+="<i class='material-icons adel' style='font-size:17px;' id='adel' idx="+elt.idx+">close</i>"
-                        }
-                        s+="</span></pre></div>";
-                    });
-                    $("div.alist").html(s);
-                }//success
-            }); //ajax
-        };//function*/
     </script>
 </head>
 <body>
@@ -199,48 +258,53 @@
 
         <!-- 경로설정 -->
         <div class="cosselect">
-        <h2>경로설정</h2>
-            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력">
-            <div class="cosselect_main">
-                <span class="coscnt">경로 1</span>
-                <br>
-                <div class="cosselect_thema">
-                    <select class="form-control sel1" id="type">
-                        <option selected="" disabled="" hidden="" class="op1">테마 선택</option>
-                        <option class="op1" value="cafe">카페</option>
-                        <option class="op1" value="food">음식점</option>
-                        <option class="op1" value="trip">놀거리</option>
-                    </select>
+           <%-- <form action="cosInsert" method="post">--%>
+                <h2>경로설정</h2>
+                <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title" required="required">
+                <div class="cosselect_main">
+                    <span class="coscnt">경로 1</span>
+                    <br>
+                    <div class="cosselect_thema">
+                        <select class="form-control sel1" id="searchthema" required="required" name="searchthema">
+                            <option selected="" disabled="" hidden="" class="op1">테마 선택</option>
+                            <option class="op1" value="cafe">카페</option>
+                            <option class="op1" value="food">음식점</option>
+                            <option class="op1" value="trip">놀거리</option>
+                        </select>
+                    </div>
+                    <div class="i" id="cossearch_insert">
+                        <input type="text" class="form-control in1" placeholder="검색어를 입력" id="searchword" required="required" name="searchword">
+                        <div class="searchlist"></div>
+                        <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
+                    </div>
+
+                    <div class="cosadd_btn">
+                        <button type="button" class="cosselectsubstract"><i class='fas fa-minus'></i></button>
+                        <button type="button" class="cosselectadd"><i class='fas fa-plus'></i></button>
+                    </div>
                 </div>
-                <div class="i" id="cossearch_insert">
-                    <input type="text" class="form-control in1" placeholder="검색어를 입력" id="keyword">
-                    <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
+                <div class="cos2">
+
                 </div>
 
-                <div class="cosadd_btn">
-                    <button type="button" class="cosselectsubstract"><i class='fas fa-minus'></i></button>
-                    <button type="button" class="cosselectadd"><i class='fas fa-plus'></i></button>
+
+            <!-- 경로설정 버튼 -->
+                <div class="toorlist"></div>
+                <div class="cosselectbtn">
+                    <button type="button" class="cosbtnupdate">경로수정</button>
+                    <button type="button" class="cosbtndelete">경로삭제</button>
+                    <button type="button" class="cosbtnsave">경로저장</button>
                 </div>
-            </div>
-            <div class="cos2">
-
-            </div>
-
-
-        <!-- 경로설정 버튼 -->
-        <div class="toorlist"></div>
-        <button style="position:absolute; bottom:0%; left:50px; font-weight: bold">경로수정</button>
-        <button style="position:absolute; bottom:0%; left:200px; font-weight: bold">경로삭제</button>
-        <button style="position:absolute; bottom:0%; left:350px; font-weight: bold">경로저장</button>
+           <%-- </form>--%>
         </div>
-
     </div>
 </div>
 
 <script>
 
-    var type_of_course = "";
-    var user_keyword = "";
+    /*var type_of_course = "";
+    var user_keyword = "";*/
+/*
     $("#type").change(function () {
         type_of_course = $("#type").val();
         alert(type_of_course);
@@ -251,21 +315,27 @@
         alert("hi");
         user_keyword = $(this).val();
     }); // keyword change end
+*/
 
-    $("#getlist").click(function () {
+
+
+   /* function list() {
+        var c="";
         $.ajax({
-            type    : "get",
-            url     : "../help/getlist",
-            dataType: "text",
-            data    : {
-                "title": user_keyword,
-                "type": type_of_course
-            },
-            success : function (res) {
-                (".toorlist").html("hi");
-            }//sucess
-        });//ajax
-    }); // getlist click end
+            type:"get",
+            url:"../course/searchlist",
+            dataType:"json",
+            data:{"type":type,"keyword":keyword},
+            success:function(res){
+                c+="<ul>";
+                $.each(res, function(i, elt){
+                    c+="<li>"+elt.title+"</li>";
+                });
+                c+="</ul>";
+                $(".searchlist").html(c);
+            }//success
+        }); //ajax
+    };//function*!/*/
 </script>
 </body>
 </html>

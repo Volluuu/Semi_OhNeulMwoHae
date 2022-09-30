@@ -24,6 +24,15 @@
         update course set step${num} = #{newStep}
     </update>
 
-
+    <!-- 경로 설정 시, 정보 가져오기 -->
+    <select id="getSearchCafe" parameterType="String" resultType="CafeDto">
+        SELECT * FROM cafe where title like concat('%',#{searchword},'%')
+    </select>
+    <select id="getSearchTrip" parameterType="String" resultType="TripDto">
+        SELECT * FROM trip where title like concat('%',#{searchword},'%')
+    </select>
+    <select id="getSearchFood" parameterType="String" resultType="FoodDto">
+        SELECT * FROM food where title like concat('%',#{searchword},'%')
+    </select>
 
 </mapper>
