@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insertUser" parameterType="udto">
-        insert into user (loginid,password,name,email,hp,gaipday)
-        values (#{loginid},#{password},#{name},#{email},#{hp},now())
+        insert into user (loginid,password,name,nickname,age,gender,email,hp,gaipday)
+        values (#{loginid},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
     </insert>
 
     <select id="getAllUsers" resultType="udto">
@@ -42,7 +42,7 @@
     </update>
 
     <update id="updateUser" parameterType="udto">
-        update user set nickname=#{nickname},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
+        update user set nickname=#{nickname},age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
     </update>
 
     <delete id="deleteUser" parameterType="int">

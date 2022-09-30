@@ -180,19 +180,19 @@
 				<a href="#">마이페이지</a>
 				<a href="${root}/user/userlist">회원목록</a>
 				<a href="${root}/user/userform">회원가입</a>
+				<a href="${root}/user/userlogin">로그인</a>
 			</div>
 		</div>
 
-	<span id="loginstate">
+<%--	<span id="loginstate">
 		<c:if test="${sessionScope.loginok==null}">
-			<button type="button" class="btn btn-outline-secondary btn-sm" id="btnlogin"
-					data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
+			<a href="${root}/user/userlogin">로그인</a>
 		</c:if>
 		<c:if test="${sessionScope.loginok!=null}">
 			<b>${sessionScope.loginname}님</b>
-			<button type="button" class="btn btn-danger btn-sm" id="btnlogout">로그아웃</button>
+			<a href="${root}/user/userlogin">로그아웃</a>
 		</c:if>
-	</span>
+	</span>--%>
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal">
 		<div class="modal-dialog modal-sm">
@@ -207,20 +207,20 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">LoginId</span>
+						<span class="input-group-text">아이디</span>
 						<input type="text" class="form-control" id="loginid">
 					</div>
 
-					<div class="input-group mb-3 input-group-sm">
-						<span class="input-group-text">LoginPass</span>
+					<div class="input-group mb-3 input-group-sm" style="font-family: Jua;">
+						<span class="input-group-text">비밀번호</span>
 						<input type="password" class="form-control" id="loginpass">
 					</div>
 				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok">Login</button>
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok">로그인</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
@@ -234,18 +234,22 @@
 		$("#btnloginok").click(function(){
 			//아이디와 비번 읽기
 			var id=$("#loginid").val();
+			// console.log(id);
 			var pass=$("#loginpass").val();
+			// console.log(pass);
 			var root='${root}';
+
 				console.log("root"+root);
 				$.ajax({
 					type:"get",
-					url:root+"/member/login",
+					url:root+"/user/login",
 					dataType:"json",
-					data:{"id":id,"pass":pass},
+					data:{"loginid":id,"password":pass},
 					success:function(res){			
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
+							alert("로그인 되었습니다.");
 							location.reload();
 						}
 					}//success
@@ -258,9 +262,10 @@
 			var root='${root}';
 			$.ajax({
 				type:"get",
-				url:root+"/member/logout",
+				url:root+"/user/logout",
 				dataType:"text",
-				success:function(res){			
+				success:function(res){
+					alert("로그아웃 되었습니다.")
 					location.reload();
 					
 				}//success
