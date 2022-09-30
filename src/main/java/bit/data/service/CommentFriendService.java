@@ -26,6 +26,11 @@ public class CommentFriendService implements  CommentFriendServiceInter{
     }
 
     @Override
+    public void updateCommentFriend(CommentFriendDto dto) {
+        commentFriendDao.updateCommentFriend(dto);
+    }
+
+    @Override
     public void updateRestep(int regroup, int restep) {
         Map<String, Integer> map=new HashMap<String, Integer>();
         map.put("regroup", regroup);

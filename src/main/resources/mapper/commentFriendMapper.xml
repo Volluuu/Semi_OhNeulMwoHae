@@ -16,6 +16,10 @@
 	<update id="updateRestep" parameterType="Map">
 		update comment_friend set restep=restep+1 where regroup=#{regroup} and restep>#{restep}
 	</update>
+	<!--댓글 수정-->
+	<update id="updateCommentFriend" parameterType="cfdto">
+		update comment_friend set content=#{content} where friend_num=#{friend_num}
+	</update>
 	<!--댓글 수정하기 위한 정보 받아오기-->
 	<select id="selectCommentByNum" parameterType="int" resultType="cfdto">
 		select * from comment_friend where friend_num=#{friend_num}

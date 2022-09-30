@@ -26,6 +26,11 @@ public class CommentFriendDao implements CommentFriendDaoInter {
     }
 
     @Override
+    public void updateCommentFriend(CommentFriendDto dto) {
+        session.update(ns+"updateCommentFriend", dto);
+    }
+
+    @Override
     public void updateRestep(Map<String, Integer> map) {
         session.update(ns+"updateRestep", map);
     }

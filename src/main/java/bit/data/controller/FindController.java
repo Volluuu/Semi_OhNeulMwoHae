@@ -255,4 +255,25 @@ public class FindController {
         commentFriendService.deleteByNum(friend_num);
     }
 
+    @GetMapping("/commentfriend/update")
+    @ResponseBody
+    public void updatecommentfriend(CommentFriendDto dto){
+        commentFriendService.updateCommentFriend(dto);
+    }
+
+//    댓글 수정 버튼 눌렀을 때 dto 받아오기
+    @GetMapping("/commentfriend/updateform")
+    @ResponseBody
+    public CommentFriendDto updateform(int friend_num){
+        CommentFriendDto dto=commentFriendService.selectCommentByNum(friend_num);
+        return dto;
+
+    }
+
+    @GetMapping("/commentfriend/updateok")
+    @ResponseBody
+    public void updateok(CommentFriendDto dto){
+        commentFriendService.updateCommentFriend(dto);
+    }
+
 }

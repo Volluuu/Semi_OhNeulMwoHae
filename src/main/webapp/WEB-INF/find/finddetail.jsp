@@ -15,69 +15,135 @@
     <title>Title</title>
 </head>
 <style>
-    span.day{
-        float:right;
-        color:gray;
+    span.day {
+        float: right;
+        color: gray;
     }
-    span.writer{
-        color:red;
-        border:1px solid red;
-        border-radius:40px;
-        margin-left:5px;
-        font-size:0.8em;
-        padding:3px;
+
+    span.writer {
+        color: red;
+        border: 1px solid red;
+        border-radius: 40px;
+        margin-left: 5px;
+        font-size: 0.8em;
+        padding: 3px;
+    }
+
+    button.fr {
+        float: right;
+        margin-left: 3px;
+        margin-right: 3px;
     }
 </style>
 <script type="text/javascript">
-    var find_num=${dto.find_num};
-    var root="${root}";
-    $(function(){
-        console.log("find_num="+find_num);
+    var find_num =${dto.find_num};
+    var root = "${root}";
+    $(function () {
+        console.log("find_num=" + find_num);
 
         list();//처음 시작시 댓글 출력
 
-        $(document).on("click",".adel",function(){
-            var yes=confirm("삭제하시겠습니까?");
-            if(yes){
+        $(document).on("click", ".adel", function () {
+            var friend_num = $(this).attr("friend_num");
+            var yes = confirm("삭제하시겠습니까?");
+            if (yes) {
                 $.ajax({
-                    type:"get",
-                    url:root+"/commentfriend/delete",
-                    dataType:"text",
-                    data:{"friend_num":$(".adel").attr("friend_num")},
-                    success:function(res){
+                    type: "get",
+                    url: root + "/commentfriend/delete",
+                    dataType: "text",
+                    data: {"friend_num": friend_num},
+                    success: function (res) {
                         list();
                     }
                 });
             }
         });
+
+        $(document).on("click", ".adap", function () {
+            var ti= $(this);
+            var friend_num = ti.attr("friend_num");
+            var user_num='${sessionScope.user_num}';
+            $.ajax({
+                type: "get",
+                url: root + "/commentfriend/adap",
+                dataType: "text",
+                data: {"friend_num": friend_num,"user_num":user_num},
+                success: function (res) {
+                    $("#content").remove();
+                    $("#btnasave").remove();
+                    ti.next().append('<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>');
+
+
+                    list();
+                }
+            });
+        });
+
+        $(document).on("click", ".aupd", function () {
+            var ti = $(this);
+            var friend_num = ti.attr("friend_num");
+            $.ajax({
+                type: "get",
+                url: root + "/commentfriend/updateform",
+                dataType: "json",
+                data: {"friend_num": friend_num},
+                success: function (res) {
+                    ti.parent().siblings("pre.precontent").remove();
+                    ti.parent().siblings(".eltcontent").html("<textarea class='textarea' name='content' class='form-control' " +
+                        "required='required'  style='width:400px;height:60px;'>" + res.content +
+                        "</textarea><button class='btn btn-outline-dark aupdok' friend_num='" + res.friend_num + "'>확인</button>");
+                }
+            });
+        });
+
+        $(document).on("click", ".aupdok", function () {
+            var friend_num = $(this).attr("friend_num");
+            var aupdtxt = $(this).prev().val();
+            console.log(aupdtxt);
+            $.ajax({
+                type: "get",
+                url: root + "/commentfriend/updateok",
+                dataType: "text",
+                data: {"friend_num": friend_num, "content": aupdtxt},
+                success: function (res) {
+                    list();
+                }
+            });
+        });
+
     });
 
-    function list(){
-        var loginok='${sessionScope.loginok}';
-        var loginid='${sessionScope.loginid}';
-        var user_num='${dto.user_num}';
+    function list() {
+        var loginok = '${sessionScope.loginok}';
+        var loginid = '${sessionScope.loginid}';
+        var loginnum = '${sessionScope.user_num}';
+        var user_num = '${dto.user_num}';
 // 		console.log(loginok);
 // 		console.log(loginid);
-        var s="";
+        var s = "";
         $.ajax({
-            type:"get",
-            url:root+"/commentfriend/list",
-            dataType:"json",
-            data:{"find_num":find_num},
-            success:function(res){
-                $("b.banswer").text("댓글 수 "+res.length);
-                $.each(res, function(i,elt){
-                    s+="<div>"+elt.nickname;
-                    if(user_num==elt.user_num){
-                        s+="<span class='writer'>&nbsp;작성자&nbsp;</button>";
+            type: "get",
+            url: root + "/commentfriend/list",
+            dataType: "json",
+            data: {"find_num": find_num},
+            success: function (res) {
+                $("b.banswer").html("<i class='bi bi-chat'> " + res.length);
+                $.each(res, function (i, elt) {
+                    s += "<div><p>" + elt.nickname;
+                    if (user_num == elt.user_num) {
+                        s += "<span class='writer'>&nbsp;작성자&nbsp;</span>";
                     }
-                    if(loginok=='yes' && loginid==elt.user_num){
-                        s+='<i class="bi bi-x-lg adel" friend_num='+elt.friend_num+'></i>';
+                    if (loginok == 'yes' && loginnum == elt.user_num) {
+                        s += '<button class="btn btn-outline-dark adel fr" friend_num="' + elt.friend_num + '">삭제</button>';
+                        s += '<button class="btn btn-outline-dark aupd fr" friend_num="' + elt.friend_num + '">수정</button>';
+
                     }
-                    s+="<pre>"+elt.content;
-                    s+="<span class='day'>"+elt.writeday+"</span>";
-                    s+="</pre>";
-                    s+="</div>";
+                    s += '<button class="btn btn-outline-dark adap fr" friend_num="' + elt.friend_num + '">답글</button>'
+                    s += '</p>';
+                    s += "<p class='eltcontent'><pre class='precontent'>" + elt.content + "</p>";
+                    s += "<span class='day'>" + elt.writeday + "</span>";
+                    s += "</pre>";
+                    s += "</div>";
                 });
                 $("div.alist").html(s);
             }
@@ -91,11 +157,11 @@
     <tr>
         <td>
             <h4><b>${dto.subject}</b></h4>
-<%--            <c:if test="${memphoto!='no'}">--%>
-<%--                <img alt="" src="../upload/${memphoto}" width="60" height="60" class="rounded-circle"--%>
-<%--                     align="left" onerror="this.src='../image/noimage.png'" hspace="15">--%>
-<%--            </c:if>--%>
-<%--            <b>${dto.name}(${dto.id})</b><br>--%>
+            <%--            <c:if test="${memphoto!='no'}">--%>
+            <%--                <img alt="" src="../upload/${memphoto}" width="60" height="60" class="rounded-circle"--%>
+            <%--                     align="left" onerror="this.src='../image/noimage.png'" hspace="15">--%>
+            <%--            </c:if>--%>
+            <%--            <b>${dto.name}(${dto.id})</b><br>--%>
             <span style="color:#ccc;font-size:13px;">
 					<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
 					&nbsp;&nbsp;
@@ -109,7 +175,8 @@
             <br><br>
             <c:if test="${dto.photo!='noimage.png'}">
                 <c:forTokens var="photo" items="${dto.photo}" delims=",">
-                    <img alt="" src="${root}/upload/${photo}" width="250" onerror="this.style.display='none'"><!-- 해당 폴더에 없는 사진은 안보이게 처리 -->
+                    <img alt="" src="${root}/upload/${photo}" width="250"
+                         onerror="this.style.display='none'"><!-- 해당 폴더에 없는 사진은 안보이게 처리 -->
                 </c:forTokens>
             </c:if>
             <br><br>
@@ -122,11 +189,9 @@
                 <div class="aform">
                     <form id="aform">
                         <input type="hidden" name="find_num" value="${dto.find_num}">
-                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
                         <br>
-						<textarea name="content" id="content" style="width:400px;height:60px;"
-                                  ></textarea>
-                            <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
+                        <textarea name="content" id="content" style="width:400px;height:60px;"></textarea>
+                        <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
                     </form>
                 </div>
             </c:if>
@@ -134,31 +199,38 @@
     </tr>
     <tr>
         <td>
-            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/findform'">새글</button>
+            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/findform'">새글
+            </button>
 
-            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록</button>
+            <button type="button" class="btn btn-outline-dark"
+                    onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록
+            </button>
 
             <!-- 로그인 중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
             <c:if test="${sessionScope.loginok!=null && sessionScope.user_num==dto.user_num}">
                 <button type="button" class="btn btn-outline-dark"
-                        onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'">수정</button>
+                        onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
+                    수정
+                </button>
 
                 <button type="button" class="btn btn-outline-dark"
-                        onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'">삭제</button>
+                        onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
+                    삭제
+                </button>
             </c:if>
         </td>
     </tr>
 </table>
 <script>
-    $("#btnasave").click(function(){
-        var root="${root}";
-        var fdata=$("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
+    $(document).on("click","#btnasave",function (){
+        var root = "${root}";
+        var fdata = $("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
         $.ajax({
-            type:"get",
-            url:root+"/commentfriend/insert",
-            dataType:"text",
-            data:fdata,
-            success:function(res){
+            type: "get",
+            url: root + "/commentfriend/insert",
+            dataType: "text",
+            data: fdata,
+            success: function (res) {
                 list();//댓글 목록을 다시 db에서 가져와서 출력
 
                 //입력값이랑 사진 안보이게 처리
