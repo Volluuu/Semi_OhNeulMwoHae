@@ -17,38 +17,43 @@
             rel="stylesheet"
     />
     <style type="text/css">
-    div.usermain{
-        position: absolute;
-        margin: -100px 0px 0px -200px;
-        top: 50%;
-        left: 50%;
-        padding: 5px;
+        div.usermain{
+            position: absolute;
+            margin: -100px 0px 0px -200px;
+            top: 50%;
+            left: 50%;
+            padding: 5px;
 
 
-    }
+        }
     </style>
     <script type="text/javascript">
         $(function(){
             //아이디 입력 시, .idsuccess 값 지움
-            $("#loginid").keyup(function(e) {
-                $("div.idsuccess").text("");
+            $("#loginid2").keyup(function() {
+                var id = $("#loginid2").val();
+                if(!id.match(/^[a-zA-Z0-9]{1,10}$/)) {
+                    $("#idSuccess").text("조건에 맞게 입력해주세요");
+                }
             });//아이디 지움 event
 
             //ajax함수는 url에서 안보임(back에서만 처리한느 함수라서)
             //중복체크 버튼 시 아이디 체크
             $("#btnidcheck").click(function() {
-                $("div.idsuccess").text("ok");
+                $("#idSuccess").text("");
                 $.ajax({
-                    type:"get",
-                    dataType:"json",
-                    url:"idcheck",
-                    data:{"id":$("#loginid2").val()},
+                    type:"GET",
+                    dataType:"text",
+                    url:"loginidcheck?loginid="+$("#loginid2").val(),
                     success:function(res){
-                        if(res.count==0){
-                            $("div.idsuccess").text("ok");
+                        console.log(res);
+                        let json = JSON.parse(res);
+                        console.log(json);
+                        if(json.count==0){
+                            $("#idSuccess").text("사용가능한 아이디입니다");
                         }else{
-                            $("div.idsuccess").text("fail");
-                            alert("중복된 아이디입니다.");
+                            $("#idSuccess").text("이미 사용중인 아이디입니다");
+                            alert("중복 아이디");
                         }
                     }//success
                 });//ajax
@@ -60,17 +65,15 @@
             //1번째 비밀번호 입력 시 체크
             $("#pass").keyup(function(){
                 var p1=$("#pass").val();
-                var p2=$(this).val();
+                var p2=$("#pass2").val();
                 if(p1==p2){
                     if(!p1.match(/^[a-zA-Z0-9]{8,20}$/)) {
-                        $("div.passsuccess").text("pass 1 충족 x");
-                    }else if(!p1.match(/^[a-zA-Z0-9]{8,20}$/)) {
-                        $("div.passsuccess").text("비밀번호가 일치하지 않습니다");
+                        $("#passwordSuccess").text("조건에 맞게 입력해주세요");
                     } else{
-                        $("div.passsuccess").text("");
+                        $("#passwordSuccess").text("사용가능한 비밀번호입니다");
                     }
                 }else{
-                    $("div.passsuccess").text("비밀번호가 일치하지 않습니다");
+                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
                 }
             });//pass2
 
@@ -79,15 +82,13 @@
                 var p1=$("#pass").val();
                 var p2=$(this).val();
                 if(p1==p2){
-                    if(!p1.match(/^[a-zA-Z0-9]{8,20}$/)) {
-                        $("div.passsuccess").text("pass 1 충족 x");
-                    }else if(!p1.match(/^[a-zA-Z0-9]{8,20}$/)) {
-                        $("div.passsuccess").text("pass 2 충족 x");
+                    if(!p2.match(/^[a-zA-Z0-9]{8,20}$/)) {
+                        $("#passwordSuccess").text("조건에 맞게 입력해주세요");
                     } else{
-                        $("div.passsuccess").text("ok");
+                        $("#passwordSuccess").text("사용가능한 비밀번호입니다");
                     }
                 }else{
-                    $("div.passsuccess").text("비밀번호가 일치하지 않습니다");
+                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
                 }
             });//pass2
 
@@ -95,15 +96,40 @@
                 let emailSelect = $('#emailSelect option:selected').val();
                 $('#emailDomain').val(emailSelect);
             });
+
+            //2번째 비밀번호 입력 시 체크
+            $("#nickname").keyup(function(){
+                const regex = /^[ㄱ-ㅎ|가-힣]{1,8}$/;
+                var nickname = $('#nickname').val();
+                if(regex.test(nickname)){
+                    $('#nicknameSuccess').text("사용가능한 닉네임입니다");
+                }else{
+                    $('#nicknameSuccess').text("조건에 맞지 않습니다.");
+                }
+
+
+            });
         });//$function
 
         //submit 전에 호출
         function check() {
+            //
+            if($("#idSuccess").text()!='사용가능한 아이디입니다'){
+                alert("아이디 오류");
+                return false;
+            }
+
             //비밀번호 체크 여부
-            if($("div.passsuccess").text()!='ok'){
+            if($("#passwordSuccess").text()!='사용가능한 비밀번호입니다'){
                 alert("비밀번호가 서로 다릅니다");
                 return false;
             }
+
+            if($("#nicknameSuccess").text()!='사용가능한 닉네임입니다'){
+                alert("닉네임 오류");
+                return false;
+            }
+
             let email = $('#email').val();
             let emailDomain = $('#emailDomain').val();
             $('#email').val(email + emailDomain);
@@ -114,96 +140,110 @@
 </head>
 <body>
 <div class="usermain">
-<form action="insert" method="post" enctype="multipart/form-data" onsubmit="return check()">
-    <table class="table table-bordered" style="width: 600px">
-        <caption align="top">
-            <h1 style="text-align: center;"><b>회원가입</b></h1>
-        </caption>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input type="text" placeholder="아이디" id="loginid2" name="loginid"
-                           class="form-control" style="width: 120px;" required="required">
+    <form action="insert" method="post" enctype="multipart/form-data" onsubmit="return check()">
+        <table class="table table-bordered" style="width: 600px">
+            <caption align="top">
+                <h1 style="text-align: center;"><b>회원가입</b></h1>
+            </caption>
+            <tr>
+                <td>
+                    <div>아이디</div>
+                    <div class="input-group">
+                        <input placeholder="영문소문자, 숫자 10자 이내" id="loginid2" name="loginid"
+                               class="form-control" style="width: 120px;" required="required">
+                        <button type="button" class="btn btn-danger btn-sm"
+                                id="btnidcheck">중복체크</button>
+                    </div>
+                    <div id="idSuccess"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>비밀번호</div>
+                    <div class="input-group">
+                        <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
+                               name="password" id="pass" placeholder="비밀번호 영문, 숫자 8-20자" maxlength="20"
+                               required="required">
 
-                    &nbsp;
+                        <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
+                               id="pass2" placeholder="비밀번호 확인" maxlength="20"
+                               required="required">
+                    </div>
+                    <div id="passwordSuccess"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>이름</div>
+                    <input type="text" name="name" class="form-control"
+                           style="width: 180px;" placeholder="이름" required="required">
+                </td>
+            </tr>
 
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input type="password" style="width: 10px; font-family: 'Jua';" class="form-control"
-                           name="pass" id="pass" placeholder="비밀번호 영문, 숫자 8-20자" maxlength="20"
-                           required="required">
+            <tr>
+                <td>
+                    <div>이메일</div>
+                    <div class="input-group">
+                        <input  id="email" name="email" class="form-control"
+                                style="width: 150px;" placeholder="이메일" required="required">
+                        <input  id="emailDomain" name="emailDomain" class="form-control"
+                                style="width: 150px;" required="required">
+                        <select id="emailSelect">
+                            <option value="">직접입력</option>
+                            <option value="@naver.com">@naver.com</option>
+                            <option value="@daum.net">@daum.net</option>
+                            <option value="@google.com">@google.com</option>
+                            <option value="@nate.com">@nate.com</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div>휴대폰 번호</div>
+                    <div class="input-group">
+                        <input type="text" name="hp" placeholder="(-) 포함해서 입력"
+                               class="form-control" style="width: 200px;" required="required">
 
-                    <input type="password" style="width: 100px; font-family: 'Jua';" class="form-control"
-                           id="pass2" placeholder="비밀번호 확인" maxlength="20"
-                           required="required">
-                    &nbsp;
-
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="text" name="name" class="form-control"
-                       style="width: 150px;" placeholder="이름" required="required">
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input  id="email" name="email" class="form-control"
-                            style="width: 150px;" placeholder="이메일" required="required">
-                    <input  id="emailDomain" name="emailDomain" class="form-control"
-                            style="width: 150px;" required="required">
-                    <select id="emailSelect">
-                        <option value="">직접입력</option>
-                        <option value="@naver.com">@naver.com</option>
-                        <option value="@daum.net">@daum.net</option>
-                        <option value="@google.com">@google.com</option>
-                        <option value="@nate.com">@nate.com</option>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div>닉네임</div>
+                    <div class="input-group">
+                        <input type="text" id="nickname" name="nickname" placeholder="닉네임"
+                               class="form-control" style="width: 200px;" required="required">
+                    </div>
+                    <div id="nicknameSuccess"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    성별
+                    <select type="">
+                        <option>여자</option>
+                        <option>남자</option>
                     </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="input-group">
-                    <input type="text" name="hp" placeholder="(-)없이 휴대폰 번호만 입력"
-                           class="form-control" style="width: 200px;" required="required">
 
-                </div>
-            </td>
-        </tr>
+                    연령대
+                    <select>
+                        <option>10대</option>
+                        <option>20대</option>
+                        <option>30대</option>
+                        <option>40대</option>
+                    </select>
+                </td>
 
-        <tr>
-            <td>
-                성별
-                <select>
-                    <option>여자</option>
-                    <option>남자</option>
-                </select>
+            </tr>
 
-                연령대
-                <select>
-                    <option>10대</option>
-                    <option>20대</option>
-                    <option>30대</option>
-                    <option>40대</option>
-                </select>
-            </td>
-
-        </tr>
-
-        <tr>
-            <td colspan="2" align="center">
-                <button type="submit" class="btn btn-info" style="width: 180px;">회원가입</button>
-            </td>
-        </tr>
-    </table>
-</form>
+            <tr>
+                <td colspan="2" align="center">
+                    <button type="submit" class="btn btn-info" style="width: 180px;">회원가입</button>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>
