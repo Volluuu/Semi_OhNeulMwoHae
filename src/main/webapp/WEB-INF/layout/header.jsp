@@ -180,7 +180,13 @@
 				<a href="#">마이페이지</a>
 				<a href="${root}/user/userlist">회원목록</a>
 				<a href="${root}/user/userform">회원가입</a>
+				<c:if test="${sessionScope.loginok==null}">
 				<a href="${root}/user/userlogin">로그인</a>
+				</c:if>
+				<c:if test="${sessionScope.loginok!=null}">
+					<b>${sessionScope.loginname}님</b>
+					<a id="logout">로그아웃</a>
+				</c:if>
 			</div>
 		</div>
 
@@ -258,7 +264,7 @@
 		});
 		
 		//로그아웃
-		$("#btnlogout").click(function(){
+		$("#logout").click(function(){
 			var root='${root}';
 			$.ajax({
 				type:"get",
