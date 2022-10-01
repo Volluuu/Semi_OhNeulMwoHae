@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <html>
 <head>
     <title>Title</title>
@@ -15,19 +16,41 @@
 
 <style>
 
-    div.dg_container{
+    div.dg_container {
         display: flex;
-        justify-content: space-evenly;
 
     }
-    table.dg_table {
-        width: 50%;
+
+    .findlist {
+        background-color: ghostwhite;
     }
-    .findlist{
-        background-color:ghostwhite;
+
+    .cinsertlist:hover {
+        background-color: darkgray;
+        cursor: pointer;
     }
-    .cinsertlist:hover{
-        background-color: gray;
+
+    #selectcword {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+        align-content: center;
+    }
+
+    .radio_select {
+        cursor: pointer;
+    }
+
+
+    .cancel {
+        float: right;
+        color: darkred;
+        margin-top: 5px;
+    }
+
+    .cancel:hover {
         cursor: pointer;
     }
 
@@ -47,6 +70,18 @@
     table.dg_table {
         border: 1px solid black;
     }
+
+    .radio_search {
+        display: none;
+    }
+
+    .radio_myplace {
+        display: none;
+    }
+
+    .radio_mycourse {
+        display: none;
+    }
 </style>
 <c:if test="${sessionScope.loginok==null}">
     <script>
@@ -57,34 +92,73 @@
 <body>
 <script>
 
-    $(function(){
-        $(document).on("click","#cfind",function () {
+    $(function () {
+        $(document).on("click", "#cfind", function () {
             var root = "${root}";
-            var s="";
+            var s = "";
             $.ajax({
-                type:"get",
-                url:root+"/findboard/insertlist",
-                dataType:"json",
-                data:{"ccolumn":$("#ccolumn").val(),"cword":$("#cword").val()},
-                success:function (res) {
-                    s+="<ul><br>";
-                    $.each(res, function(i, elt){
-                        s+="<li class='cinsertlist' photo='"+elt.photo+"'>"+elt.title+"</li>";
+                type: "get",
+                url: root + "/findboard/insertlist",
+                dataType: "json",
+                data: {"ccolumn": $("#ccolumn").val(), "cword": $("#cword").val()},
+                success: function (res) {
+                    s += "<ul><br>";
+                    $.each(res, function (i, elt) {
+                        s += "<li class='cinsertlist' photo='" + elt.photo + "'>" + elt.title + "</li>";
                     });
-                    s+="</ul>";
+                    s += "</ul>";
                     $(".findlist").html(s);
                 }
             });
         });
 
-        $(document).on("click",".cinsertlist",function(){
-            var ti=$(this);
-            var txt=ti.text();
-            var photo=ti.attr("photo");
+        $(document).on("click", ".cinsertlist", function () {
+            var ti = $(this);
+            var txt = ti.text();
+            var photo = ti.attr("photo");
 
-            $("#selectcword").append(txt+"<img src='"+photo+"' style='max-width:200;max-height:200;'>")
+            if ($(".fig").length == 2) {
+                alert("장소는 2개만 추가 가능합니다");
+                return;
+            }
+            ;
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+
         });
-    });
+
+        $(document).on("click", ".cancel", function () {
+            var ti = $(this);
+            ti.parents(".fig").remove();
+        });
+
+        $(document).on("click", "#radio_search", function () {
+            $(".radio_myplace").hide();
+            $(".radio_mycourse").hide();
+
+
+            $(".radio_search").show();
+        });
+
+        $(document).on("click", "#radio_myplace", function () {
+            $(".radio_search").hide();
+            $(".radio_mycourse").hide();
+
+
+            $(".radio_myplace").show();
+        });
+
+        $(document).on("click", "#radio_mycourse", function () {
+            $(".radio_search").hide();
+            $(".radio_myplace").hide();
+
+
+            $(".radio_mycourse").show();
+
+
+        });
+
+
+    });//$(function)
 
 </script>
 <div class="dg_container">
@@ -93,25 +167,27 @@
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="currentPage" value="${currentPage}">
 
-            <table class="dg_table">
+            <table class="table table-bordered">
                 <tr align="center" valign="middle">
-                    <th style="width:20%;">제목</th>
-                    <td align="left">
+                    <th style="width:80px;">제목</th>
+                    <td style="width:900px;">
                         <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"
                                class="form-control"
                                id="dg_subject" width="500">
                     </td>
                 </tr>
-                <tr>
+                <tr align="center" valign="middle">
                     <th>장소</th>
-                    <td id="selectcword"></td>
+                    <td>
+                        <div id="selectcword"></div>
+                    </td>
                 </tr>
                 <tr align="center" valign="middle">
-                    <th style="width:20%;">사진</th>
+                    <th style="width:20%;">사진<br>첨부</th>
                     <td>
                         <div class="input-group">
                             <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                            <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+                            <div id='att_zone' placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
                         </div>
                     </td>
                 </tr>
@@ -130,6 +206,18 @@
         </form>
     </div>
     <div class="insertlist">
+        <div class="dg_radio">
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
+            </label>
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;내 장소&nbsp;
+            </label>
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
+            </label>
+        </div>
+        <div class="radio_search">
             <div class="input-group">
                 <select class="form-control" name="ccolumn" id="ccolumn">
                     <option hidden selected disabled>테마 선택</option>
@@ -141,6 +229,14 @@
                        value="${param.cword}">
                 <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
             </div>
+        </div>
+        <div class="radio_myplace">
+            <p>즐겨찾기 한 장소</p>
+
+        </div>
+        <div class="radio_mycourse">
+            <p>경로 저장한 곳</p>
+        </div>
         <div class="findlist"></div>
     </div>
 </div>
