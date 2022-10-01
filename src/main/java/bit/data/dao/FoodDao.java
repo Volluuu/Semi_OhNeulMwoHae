@@ -23,7 +23,7 @@ public class FoodDao implements FoodDaoInter{
 
     @Override
     public List<FoodDto> selectPagingList(Map<String, Object> map) {
-        return session.selectList(ns+"selectPagingList", map);
+        return session.selectList(ns+"selectPagingList",map);
     }
 
     @Override

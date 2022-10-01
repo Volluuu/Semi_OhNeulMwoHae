@@ -66,6 +66,7 @@
             var regroup = ti.attr("regroup");
             var restep = ti.attr("restep");
             var relevel = ti.attr("relevel");
+            var rev = ti.attr("rev");
 
             $(".aform").remove();
             ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
@@ -75,6 +76,7 @@
                 '<input type="hidden" name="regroup" value="' + regroup + '">' +
                 '<input type="hidden" name="restep" value="' + restep + '">' +
                 '<input type="hidden" name="relevel" value="' + relevel + '">' +
+                '<input type="hidden" name="rev" value="' + rev + '">' +
                 '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
                 '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
 
@@ -167,7 +169,7 @@
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
                     s += '<button class="btn btn-outline-dark adap fr" ' +
                         'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '">답글</button>'
+                        ' friend_num="' + elt.friend_num + '" rev="'+elt.rev+'">답글</button>';
                     s += '</p>';
                     s += '</c:if>';
 
