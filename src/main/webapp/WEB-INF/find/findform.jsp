@@ -17,10 +17,18 @@
 
     div.dg_container{
         display: flex;
+        justify-content: space-evenly;
 
     }
     table.dg_table {
         width: 50%;
+    }
+    .findlist{
+        background-color:ghostwhite;
+    }
+    .cinsertlist:hover{
+        background-color: gray;
+        cursor: pointer;
     }
 
     #att_zone {
@@ -61,12 +69,20 @@
                 success:function (res) {
                     s+="<ul><br>";
                     $.each(res, function(i, elt){
-                        s+="<li class='cinsertlist'>"+elt.title+"</li>";
+                        s+="<li class='cinsertlist' photo='"+elt.photo+"'>"+elt.title+"</li>";
                     });
                     s+="</ul>";
                     $(".findlist").html(s);
                 }
             });
+        });
+
+        $(document).on("click",".cinsertlist",function(){
+            var ti=$(this);
+            var txt=ti.text();
+            var photo=ti.attr("photo");
+
+            $("#selectcword").append(txt+"<img src='"+photo+"' style='max-width:200;max-height:200;'>")
         });
     });
 
@@ -85,6 +101,10 @@
                                class="form-control"
                                id="dg_subject" width="500">
                     </td>
+                </tr>
+                <tr>
+                    <th>장소</th>
+                    <td id="selectcword"></td>
                 </tr>
                 <tr align="center" valign="middle">
                     <th style="width:20%;">사진</th>
@@ -121,7 +141,7 @@
                        value="${param.cword}">
                 <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
             </div>
-        <div class="findlist">ㅎㅇ</div>
+        <div class="findlist"></div>
     </div>
 </div>
 

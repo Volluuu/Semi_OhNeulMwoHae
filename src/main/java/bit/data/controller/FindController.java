@@ -240,7 +240,6 @@ public class FindController {
     public List<? extends Object> insertlist(
             @RequestParam(value = "ccolumn", required = false) String ccolumn,
             @RequestParam(value = "cword", required = false) String cword){
-        System.out.println("1:"+ccolumn+":"+cword);
         if(ccolumn.equals("cafe")){
             List<CafeDto> list=findService.selectCafeData(cword);
             return list;
