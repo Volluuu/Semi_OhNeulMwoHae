@@ -66,11 +66,11 @@ public class CafeController {
         no=totalCount-(currentPage-1)*perPage;
 
         //페이지에서 보여질 글만 가져오기
-        List<CafeDto> list=cafeService.selectPagingList(sc, sw, startNum, perPage);
+        List<CafeDto> Cafelist=cafeService.selectPagingList(sc, sw, startNum, perPage);
 
-        model.addAttribute("list", list);
-        model.addAttribute("totalCount", totalCount);
-        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("Cafelist", Cafelist);
+        model.addAttribute("CafetotalCount", totalCount);
+        model.addAttribute("CafecurrentPage", currentPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("no", no);
@@ -78,82 +78,82 @@ public class CafeController {
 
         return "/bit/course/courseboard";
     }
-    //업로드
-    @GetMapping("/admin/insert")//관리자 페이지 생성후 mapping~!~!~!!~
-    public String insert(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
-        String path = request.getSession().getServletContext().getRealPath("/resources/upload");//관리자 페이지 생성후 mapping~!~!~!!~
-        System.out.println(path);//값이 정상적으로 올라가면 삭제필요~!~!
-        System.out.println(upload.size());//값이 정상적으로 올라가면 삭제필요~!~!
+//    //업로드
+////    @GetMapping("/admin/insert")//관리자 페이지 생성후 mapping~!~!~!!~
+//    public String insert(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+//        String path = request.getSession().getServletContext().getRealPath("/resources/upload");//관리자 페이지 생성후 mapping~!~!~!!~
+//        System.out.println(path);//값이 정상적으로 올라가면 삭제필요~!~!
+//        System.out.println(upload.size());//값이 정상적으로 올라가면 삭제필요~!~!
+//
+//        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
+//        //업로드 안해도 upload.size가 1이 된다
+//        if (upload.get(0).getOriginalFilename().equals("")) {
+//            dto.setPhoto("no");
+//        } else {
+//            String photo = "";
+//            int idx = 1;
+//            for (MultipartFile multi : upload) {
+//                //파일명이 현재 날짜로 변경 후 ,로 연결
+//                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+//                photo += newName + ",";
+//                try {
+//                    multi.transferTo(new File(path + "/" + newName));
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                } catch (IllegalStateException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//            }
+//            //마지막 컴마제거
+//            photo = photo.substring(0, photo.length() - 1);
+//            //dto에 저장
+//            dto.setPhoto(photo);
+//        }
+//        cafeService.insertCafe(dto);
+//        //삭제후 보던 페이지로 이동
+//        return "redirect:list?currentPage=" + currentPage;
+//    }
 
-        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
-        //업로드 안해도 upload.size가 1이 된다
-        if (upload.get(0).getOriginalFilename().equals("")) {
-            dto.setPhoto("no");
-        } else {
-            String photo = "";
-            int idx = 1;
-            for (MultipartFile multi : upload) {
-                //파일명이 현재 날짜로 변경 후 ,로 연결
-                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo += newName + ",";
-                try {
-                    multi.transferTo(new File(path + "/" + newName));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalStateException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-            //마지막 컴마제거
-            photo = photo.substring(0, photo.length() - 1);
-            //dto에 저장
-            dto.setPhoto(photo);
-        }
-        cafeService.insertCafe(dto);
-        //삭제후 보던 페이지로 이동
-        return "redirect:list?currentPage=" + currentPage;
-    }
-
-    @GetMapping("/admin/delete")//관리자 페이지 생성후 mapping~!~!~!!~
-    public String delete(int cafe_num, int currentPage) {
-        cafeService.deleteCafe(cafe_num);
-        //삭제후 보던 페이지로 이동
-        return "redirect:list?currentPage=" + currentPage;
-    }
-
-    @PostMapping("/admin/update")//관리자 페이지 생성후 mapping~!~!~!!~
-    public String update(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
-        //업로드 경로
-        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-        System.out.println(path);//정상 빌드 확인 후 삭제~!
-
-        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
-        //업로드 안해도 upload.size가 1이 된다
-        if (upload.get(0).getOriginalFilename().equals("")) {
-            dto.setPhoto("no");
-        } else {
-            String photo = "";
-            int idx = 1;
-            for (MultipartFile multi : upload) {
-                //파일명이 현재 날짜로 변경 후 ,로 연결
-                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo += newName + ",";
-                try {
-                    multi.transferTo(new File(path + "/" + newName));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalStateException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-            //마지막 컴마제거
-            photo = photo.substring(0, photo.length() - 1);
-            //dto에 저장
-            dto.setPhoto(photo);
-        }
-        cafeService.updateCafe(dto);
-        return "redirect:detail?currentPage="+currentPage+"&cafe_num="+dto.getCafe_num();
-    }
+////    @GetMapping("/admin/delete")//관리자 페이지 생성후 mapping~!~!~!!~
+//    public String delete(int cafe_num, int currentPage) {
+//        cafeService.deleteCafe(cafe_num);
+//        //삭제후 보던 페이지로 이동
+//        return "redirect:list?currentPage=" + currentPage;
+//    }
+//
+////    @PostMapping("/admin/update")//관리자 페이지 생성후 mapping~!~!~!!~
+//    public String update(CafeDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+//        //업로드 경로
+//        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+//        System.out.println(path);//정상 빌드 확인 후 삭제~!
+//
+//        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
+//        //업로드 안해도 upload.size가 1이 된다
+//        if (upload.get(0).getOriginalFilename().equals("")) {
+//            dto.setPhoto("no");
+//        } else {
+//            String photo = "";
+//            int idx = 1;
+//            for (MultipartFile multi : upload) {
+//                //파일명이 현재 날짜로 변경 후 ,로 연결
+//                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+//                photo += newName + ",";
+//                try {
+//                    multi.transferTo(new File(path + "/" + newName));
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                } catch (IllegalStateException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//            }
+//            //마지막 컴마제거
+//            photo = photo.substring(0, photo.length() - 1);
+//            //dto에 저장
+//            dto.setPhoto(photo);
+//        }
+//        cafeService.updateCafe(dto);
+//        return "redirect:detail?currentPage="+currentPage+"&cafe_num="+dto.getCafe_num();
+//    }
 }
