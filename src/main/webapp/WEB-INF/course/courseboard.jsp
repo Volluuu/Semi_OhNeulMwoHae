@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
 <style>
@@ -10,15 +11,14 @@
         /* justify-content: center;*/
         /* justify-content: space-between;*/
         /*justify-content: space-around;*/
-
-    }
-
-    .item {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        /*justify-content: flex-start;*/
+    }
 
+    .item {
+
+        /*justify-content: flex-start;*/
     }
 
 
@@ -54,20 +54,64 @@
     }
 
 
+    .jgfRlo > svg:last-child {
+        position: absolute;
+        top: 40%;
+        right: 10px;
+    }
+
     svg:not(:root) {
         overflow: hidden;
     }
 
+    .blog-card{
+        margin-bottom: 50px;
+    }
 
+    div.hj_search
+    {
+        height: 40px;
+        width: 400px;
+        border: 1px solid #1b5ac2;
+        background: #ffffff;
+    }
+
+    input.hj_input
+    {
+        font-size: 16px;
+        width: 99%px;
+        height: 99%;
+        padding: 10px;
+        border: 0px;
+        outline: none;
+        float: left;
+    }
+
+    button.hj_button
+    {
+        width: 50px;
+        height: 100%;
+        border: 0px;
+        background: #1b5ac2;
+        outline: none;
+        float: right;
+        color: #ffffff;
+    }
 </style>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<div class="hj_search">
+    <input type="text" placeholder="검색어를 입력해주세요" class="hj_input">
+    <button class="hj_button">검색</button>위치수정필요
+</div>
+<br>
+<br>
+<br>
 
-
-<div class="jgfRlo" style="width: 82px; height: 37px; padding:0px 7px;
+<div class="jgfRlo" style=" height: 37px; padding:0px 7px;
         margin: 0px 10px 0px 0px;">
     <select class="fotqhs">
         <option value="cafe" class="gEkCOT">카페</option>
@@ -84,26 +128,37 @@
     <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 1L6 6L11 1" stroke="#6a6a6a" stroke-width="1" stroke-linecap="square"></path>
     </svg>
+    위치수정필요
 </div>
 </div>
-
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <%--카드~!~!~!~!~!~--%>
-<div class="container" style="width:100%; height: 100%; padding-bottom: 30px;">
+<div class="container" style="width:100%; height: 60%;">
+<%--글 갯수가 0이 아닐시--%>
+    <c:if test="${CafetotalCount>0}">
+    <c:forEach var="dto" items="${Cafelist}" varStatus="i">
     <div class="item">
-        <div class="blog-card spring-fever">
+        <div class="blog-card spring-fever" >
+        <c:set var="photo" value="${dto.photo}"/>
+        <img src="${dto.photo}" style="width:100%; height: 100%;">
             <div class="title-content">
-                <h3>S.O.S.S.O.S.S.O.S.S.O.S.S.O.S.S.O.S.</h3>
+                <h3>${dto.title}</h3>
                 <hr/>
-                <div class="intro">하 기 싫ㄷ ㅏ ~!~!!~!~!~!~!</div>
+                <div class="intro">${dto.addr}</div>
             </div><!-- /.title-content -->
             <div class="card-info">
-                그만하고 싶어요 살려주세요
+                대표메뉴: ${dto.menu}<br>
+                전화번호: ${dto.tel}
             </div><!-- /.card-info -->
             <div class="utility-info">
                 <ul class="utility-list">
-                    <li class="comments">12</li>
-                    <li class="date">22.09.30</li>
+                    <li class="comments"></li>
+                    <li class="date">${dto.readcount}</li>
                 </ul>
             </div><!-- /.utility-info -->
             <!-- overlays -->
@@ -112,174 +167,16 @@
         </div>
 
         <div class="card-info">
-                집에 가고싶당
+
         </div><!-- /.card-info -->
 
         <!-- overlays -->
         <div class="gradient-overlay"></div>
         <div class="color-overlay"></div>
         <!-g-card =========================================================================================-->
-
-        <div class="blog-card spring-fever">
-            <div class="title-content">
-                <h3>SPRING FEVER</h3>
-                <hr/>
-                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
-            </div><!-- /.title-content -->
-            <div class="card-info">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim.
-            </div><!-- /.card-info -->
-            <div class="utility-info">
-                <ul class="utility-list">
-                    <li class="comments">12</li>
-                    <li class="date">03.12.2015</li>
-                </ul>
-            </div><!-- /.utility-info -->
-            <!-- overlays -->
-            <div class="gradient-overlay"></div>
-            <div class="color-overlay"></div>
-        </div>
-
-        <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
-        </div><!-- /.card-info -->
-
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-        <!-g-card =========================================================================================-->
-
-
-        <div class="blog-card spring-fever">
-            <div class="title-content">
-                <h3>SPRING FEVER</h3>
-                <hr/>
-                <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
-            </div><!-- /.title-content -->
-            <div class="card-info">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim.
-            </div><!-- /.card-info -->
-            <div class="utility-info">
-                <ul class="utility-list">
-                    <li class="comments">12</li>
-                    <li class="date">03.12.2015</li>
-                </ul>
-            </div><!-- /.utility-info -->
-            <!-- overlays -->
-            <div class="gradient-overlay"></div>
-            <div class="color-overlay"></div>
-        </div>
-
-        <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
-        </div><!-- /.card-info -->
-
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-        <!-g-card=========================================================================================-->
-
-
-
-    <div class="blog-card spring-fever">
-        <div class="title-content">
-            <h3>SPRING FEVER</h3>
-            <hr/>
-            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
-        </div><!-- /.title-content -->
-        <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
-        </div><!-- /.card-info -->
-        <div class="utility-info">
-            <ul class="utility-list">
-                <li class="comments">12</li>
-                <li class="date">03.12.2015</li>
-            </ul>
-        </div><!-- /.utility-info -->
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-    </div>
-
-    <div class="card-info">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim.
-    </div><!-- /.card-info -->
-
-    <!-- overlays -->
-    <div class="gradient-overlay"></div>
-    <div class="color-overlay"></div>
-
-    <!-g-card =========================================================================================-->
-
-    <div class="blog-card spring-fever">
-        <div class="title-content">
-            <h3>SPRING FEVER</h3>
-            <hr/>
-            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
-        </div><!-- /.title-content -->
-        <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
-        </div><!-- /.card-info -->
-        <div class="utility-info">
-            <ul class="utility-list">
-                <li class="comments">12</li>
-                <li class="date">03.12.2015</li>
-            </ul>
-        </div><!-- /.utility-info -->
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-    </div>
-
-    <div class="card-info">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim.
-    </div><!-- /.card-info -->
-
-    <!-- overlays -->
-    <div class="gradient-overlay"></div>
-    <div class="color-overlay"></div>
-    <!-g-card =========================================================================================-->
-
-
-    <div class="blog-card spring-fever">
-        <div class="title-content">
-            <h3>SPRING FEVER</h3>
-            <hr/>
-            <div class="intro">Yllamco laboris nisi ut aliquip ex ea commodo.</div>
-        </div><!-- /.title-content -->
-        <div class="card-info">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
-        </div><!-- /.card-info -->
-        <div class="utility-info">
-            <ul class="utility-list">
-                <li class="comments">12</li>
-                <li class="date">03.12.2015</li>
-            </ul>
-        </div><!-- /.utility-info -->
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-    </div>
-
-    <div class="card-info">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim.
-    </div><!-- /.card-info -->
-
-    <!-- overlays -->
-    <div class="gradient-overlay"></div>
-    <div class="color-overlay"></div>
-    <!-g-card =========================================================================================-->
 </div>
+    </c:forEach>
+    </c:if>
 </div>
 
 </body>
