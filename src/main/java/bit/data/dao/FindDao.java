@@ -57,7 +57,7 @@ public class FindDao implements FindDaoInter{
 
     @Override
     public List<CafeDto> selectCafeData(String cword) {
-        return session.selectOne(ns+"selectCafeData", cword);
+        return session.selectList(ns+"selectCafeData", cword);
     }
 
     @Override

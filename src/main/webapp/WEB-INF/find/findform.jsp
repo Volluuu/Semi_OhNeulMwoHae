@@ -14,6 +14,11 @@
 </head>
 
 <style>
+
+    div.dg_container{
+        display: flex;
+
+    }
     table.dg_table {
         width: 50%;
     }
@@ -42,55 +47,82 @@
     </script>
 </c:if>
 <body>
-<div class="insertfind">
-    <form action="insertfind" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-        <input type="hidden" name="currentPage" value="${currentPage}">
+<script>
 
-        <table class="dg_table">
-            <tr align="center" valign="middle">
-                <th style="width:20%;">제목</th>
-                <td align="left">
-                    <input type="text" name="subject" required="required" placeholder="제목을 입력하세요" class="form-control"
-                           id="dg_subject" width="500">
-                </td>
-            </tr>
-            <tr align="center" valign="middle">
-                <th style="width:20%;">사진</th>
-                <td>
-                    <div class="input-group">
-                        <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                        <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
+    $(function(){
+        $(document).on("click","#cfind",function () {
+            var root = "${root}";
+            var s="";
+            $.ajax({
+                type:"get",
+                url:root+"/findboard/insertlist",
+                dataType:"json",
+                data:{"ccolumn":$("#ccolumn").val(),"cword":$("#cword").val()},
+                success:function (res) {
+                    s+="<ul><br>";
+                    $.each(res, function(i, elt){
+                        s+="<li class='cinsertlist'>"+elt.title+"</li>";
+                    });
+                    s+="</ul>";
+                    $(".findlist").html(s);
+                }
+            });
+        });
+    });
+
+</script>
+<div class="dg_container">
+    <div class="insertfind">
+        <form action="insertfind" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+            <input type="hidden" name="currentPage" value="${currentPage}">
+
+            <table class="dg_table">
+                <tr align="center" valign="middle">
+                    <th style="width:20%;">제목</th>
+                    <td align="left">
+                        <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"
+                               class="form-control"
+                               id="dg_subject" width="500">
+                    </td>
+                </tr>
+                <tr align="center" valign="middle">
+                    <th style="width:20%;">사진</th>
+                    <td>
+                        <div class="input-group">
+                            <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
+                            <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
 					<textarea name="content" required="required"
                               style="width:100%;aspect-ratio: 10 / 3;" id="dg_content"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-<div class="insertlist">
-    <form action="insertlist">
-        <div class="input-group">
-            <select class="form-control" name="ccolumn">
-                <option hidden selected disabled>테마 선택</option>
-                <option value="trip">여행</option>
-                <option value="cafe">카페</option>
-                <option value="food">식당</option>
-            </select>
-            <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword" value="${param.cword}">
-            <button type="submit" class="btn btn-outline-dark">검색</button>
-    </form>
-</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="insertlist">
+            <div class="input-group">
+                <select class="form-control" name="ccolumn" id="ccolumn">
+                    <option hidden selected disabled>테마 선택</option>
+                    <option value="trip">여행</option>
+                    <option value="cafe">카페</option>
+                    <option value="food">식당</option>
+                </select>
+                <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"
+                       value="${param.cword}">
+                <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
+            </div>
+        <div class="findlist">ㅎㅇ</div>
+    </div>
 </div>
 
 <script>

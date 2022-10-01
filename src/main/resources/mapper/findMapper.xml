@@ -79,18 +79,15 @@
     </delete>
 
     <select id="selectCafeData" parameterType="String" resultType="cafedto">
-        select * from cafe where title like concat('%',#{cword},'%')
+        select * from cafe where title like concat('%',#{cword},'%') order by readcount
     </select>
 
     <select id="selectTripData" parameterType="String" resultType="tripdto">
-        select * from trip where title like concat('%',#{cword},'%')
+        select * from trip where title like concat('%',#{cword},'%') order by readcount
     </select>
 
     <select id="selectFoodData" parameterType="String" resultType="cafedto">
-        select * from food where title like concat('%',#{cword},'%')
+        select * from food where title like concat('%',#{cword},'%') order by readcount
     </select>
-
-
-
 
 </mapper>

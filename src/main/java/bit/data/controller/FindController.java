@@ -237,19 +237,23 @@ public class FindController {
 
     @GetMapping("/findboard/insertlist")
     @ResponseBody
-    public List<?> insertlist(String ccolumn, String cword){
-        List<?> list=new ArrayList<>();
-        if(ccolumn=="cafe"){
-            list=findService.selectCafeData(cword);
-
+    public List<? extends Object> insertlist(
+            @RequestParam(value = "ccolumn", required = false) String ccolumn,
+            @RequestParam(value = "cword", required = false) String cword){
+        System.out.println("1:"+ccolumn+":"+cword);
+        if(ccolumn.equals("cafe")){
+            List<CafeDto> list=findService.selectCafeData(cword);
+            return list;
         }
-        if(ccolumn=="trip"){
-            list=findService.selectTripData(cword);
+        if(ccolumn.equals("trip")){
+            List<TripDto> list=findService.selectTripData(cword);
+            return list;
         }
-        if(ccolumn=="food"){
-            list=findService.selectFoodData(cword);
+        if(ccolumn.equals("food")){
+            List<FoodDto> list=findService.selectFoodData(cword);
+            return  list;
         }
-        return list;
+        return null;
     }
 
     @GetMapping("/findboard/deletefind")
