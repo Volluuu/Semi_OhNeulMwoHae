@@ -1,8 +1,7 @@
 package bit.data.service;
 
 import bit.data.dao.FindDaoInter;
-import bit.data.dto.FindDto;
-import bit.data.dto.UserDto;
+import bit.data.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +61,20 @@ public class FindService implements FindServiceInter{
     @Override
     public void deleteFindBoard(int find_num) {
         findDao.deleteFindBoard(find_num);
+    }
+
+    @Override
+    public List<CafeDto> selectCafeData(String cword) {
+        return findDao.selectCafeData(cword);
+    }
+
+    @Override
+    public List<TripDto> selectTripData(String cword) {
+        return findDao.selectTripData(cword);
+    }
+
+    @Override
+    public List<FoodDto> selectFoodData(String cword) {
+        return findDao.selectFoodData(cword);
     }
 }

@@ -42,7 +42,7 @@
     </script>
 </c:if>
 <body>
-<div>
+<div class="insertfind">
     <form action="insertfind" method="post" enctype="multipart/form-data">
         <input type="hidden" name="user_num" value="${sessionScope.user_num}">
         <input type="hidden" name="currentPage" value="${currentPage}">
@@ -78,22 +78,21 @@
         </table>
     </form>
 </div>
-<form action="insertlist">
-    <div class="input-group">
-        <select class="form-control" name="ccolumn">
-            <option hidden selected disabled>테마 선택</option>
-            <option value="trip">여행</option>
-            <option value="cafe">카페</option>
-            <option value="food">식당</option>
-        </select>
-        <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword" value="${param.cword}">
-        <button type="submit" class="btn btn-outline-dark">검색</button>
-</form>
+<div class="insertlist">
+    <form action="insertlist">
+        <div class="input-group">
+            <select class="form-control" name="ccolumn">
+                <option hidden selected disabled>테마 선택</option>
+                <option value="trip">여행</option>
+                <option value="cafe">카페</option>
+                <option value="food">식당</option>
+            </select>
+            <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword" value="${param.cword}">
+            <button type="submit" class="btn btn-outline-dark">검색</button>
+    </form>
+</div>
 </div>
 
-<div id="image_preview">
-
-</div>
 <script>
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
         imageView = function imageView(att_zone, btn) {
