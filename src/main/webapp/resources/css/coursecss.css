@@ -18,10 +18,10 @@ body {
     border-radius: 10px;
     box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
     text-align: center;
+
 }
-.blog-card.spring-fever {
-    background: url(../image/banner11.jpg);
-}
+
+
 .blog-card .color-overlay {
     /* Rectangle 11: */
     background: rgba(84, 104, 110, 0.4);

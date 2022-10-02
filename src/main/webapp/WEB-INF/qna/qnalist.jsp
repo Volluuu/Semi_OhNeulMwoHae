@@ -13,6 +13,7 @@
   </style>
 </head>
 <body>
-<h1>qna list</h1>
+<h1>subject : ${subject}</h1>
+<h1>content : ${content}</h1>
 </body>
 </html>

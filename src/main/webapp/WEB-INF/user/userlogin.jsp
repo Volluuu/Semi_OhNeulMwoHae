@@ -72,7 +72,7 @@
 </div>
 <!-- 스크립트 이벤트 -->
 <script type="text/javascript">
-    //팝업창에 있는 로그인 버튼
+    //로그인창에 있는 로그인 버튼
     $("#btnloginok").click(function(){
         //아이디와 비번 읽기
         var id=$("#loginid").val();
@@ -81,26 +81,10 @@
         // console.log(pass);
         var root='${root}';
 
-        console.log("root"+root);
-        $.ajax({
-            type:"get",
-            url:root+"/user/login",
-            dataType:"json",
-            data:{"loginid":id,"password":pass},
-            success:function(res){
-                if(res.result=='fail'){
-                    alert("아이디나 비번이 맞지 않습니다");
-                }else{
-                    alert("로그인 되었습니다.");
-                    location.reload();
-                }
-            }//success
-
-        }); //ajax
     });
 
-    //로그아웃
-    $("#btnlogout").click(function(){
+   /* //로그아웃
+    $("#logout").click(function(){
         var root='${root}';
         $.ajax({
             type:"get",
@@ -113,7 +97,7 @@
             }//success
 
         });//ajax
-    });
+    });*/
 
 </script>
 </body>
