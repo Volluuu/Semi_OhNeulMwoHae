@@ -1,7 +1,7 @@
 package bit.data.service;
 
 import bit.data.dao.CafeDaoInter;
-import bit.data.dao.FoodDao;
+
 import bit.data.dto.CafeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +45,11 @@ public class CafeService implements CafeServiceInter {
     @Override
     public void deleteCafe(int cafe_num) {
         cafedao.deleteCafe(cafe_num);
+    }
+
+    @Override
+    public CafeDto getData(int cafe_num) {
+        return cafedao.getCafeData(cafe_num);
     }
 
     @Override

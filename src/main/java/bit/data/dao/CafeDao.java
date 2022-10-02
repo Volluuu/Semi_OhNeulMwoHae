@@ -31,6 +31,11 @@ public class CafeDao implements CafeDaoInter{
     }
 
     @Override
+    public CafeDto getCafeData(int cafe_num) {
+        return session.selectOne(ns+"getCafeData",cafe_num);
+    }
+
+    @Override
     public void updateReadCount(int cafe_num) {
         session.update(ns+"updateReadCount");
     }

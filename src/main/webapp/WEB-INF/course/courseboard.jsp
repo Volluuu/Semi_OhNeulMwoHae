@@ -4,7 +4,7 @@
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
 <style>
-
+    /*-----------------------------------------------------------------------card 감싸고있는 div태그*/
     .container {
         /*justify-content: flex-start;*/
         /* justify-content: flex-end; */
@@ -20,8 +20,9 @@
 
         /*justify-content: flex-start;*/
     }
+    /*-----------------------------------------------------------------------*/
 
-
+    /*-----------------------------------------------------------------------category,조회순 css부분*/
     .jgfRlo {
         position: relative;
         float: right;
@@ -63,11 +64,15 @@
     svg:not(:root) {
         overflow: hidden;
     }
+    /*-----------------------------------------------------------------------*/
 
+    /*-----------------------------------------------------------------------card사이 공백*/
     .blog-card{
         margin-bottom: 50px;
     }
+    /*-----------------------------------------------------------------------*/
 
+    /*-----------------------------------------------------------------------검색창 css*/
     div.hj_search
     {
         height: 40px;
@@ -79,7 +84,7 @@
     input.hj_input
     {
         font-size: 16px;
-        width: 99%px;
+        width: 99%;
         height: 99%;
         padding: 10px;
         border: 0px;
@@ -97,26 +102,30 @@
         float: right;
         color: #ffffff;
     }
+    /*-----------------------------------------------------------------------*/
 </style>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+<%-------------------------------------------------------검색창--%>
 <div class="hj_search">
-    <input type="text" placeholder="검색어를 입력해주세요" class="hj_input">
-    <button class="hj_button">검색</button>위치수정필요
+    <input type="text" placeholder="검색어를 입력해주세요" class="hj_input" value="${param.cafeword}">
+    <button type="submit" class="hj_button">검색</button>위치수정필요
 </div>
 <br>
 <br>
 <br>
+<%-----------------------------------------------------------%>
 
+<%-------------------------------------------------------------------------category,조회순--%>
 <div class="jgfRlo" style=" height: 37px; padding:0px 7px;
         margin: 0px 10px 0px 0px;">
-    <select class="fotqhs">
-        <option value="cafe" class="gEkCOT">카페</option>
-        <option value="food" class="gEkCOT">맛집</option>
-        <option value="trip" class="gEkCOT">여행</option>
+    <select class="fotqhs" id="categorysel">
+        <option value="cafe" class="gEkCOT" id="cafe-sel">카페</option>
+        <option value="food" class="gEkCOT" id="food-sel">맛집</option>
+        <option value="trip" class="gEkCOT" id="trip-sel">여행</option>
     </select>
     <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M1 1L6 6L11 1" stroke="#6a6a6a" stroke-width="1" stroke-linecap="square"></path>
@@ -129,55 +138,167 @@
         <path d="M1 1L6 6L11 1" stroke="#6a6a6a" stroke-width="1" stroke-linecap="square"></path>
     </svg>
     위치수정필요
+    <%-----------------------------------------------------------%>
 </div>
-</div>
+
 <br>
 <br>
 <br>
 <br>
 <br>
 <br>
-<%--카드~!~!~!~!~!~--%>
-<div class="container" style="width:100%; height: 60%;">
-<%--글 갯수가 0이 아닐시--%>
+<%-------------------------------------------------------------------------card시작--%>
+<%--기본 카드에 주소가 나와있으면 사진 색깔에 따라서 주소식별이 어려움 hover하면 안에 넣을지 선택하기--%>
+
+
+<%---------------------------------------------------------------------------카페list--%>
+<div class="container Cafe" style="width:100%; height: 60%;">
+    <%--글 갯수가 0이 아닐시--%>
     <c:if test="${CafetotalCount>0}">
-    <c:forEach var="dto" items="${Cafelist}" varStatus="i">
-    <div class="item">
-        <div class="blog-card spring-fever" >
-        <c:set var="photo" value="${dto.photo}"/>
-        <img src="${dto.photo}" style="width:100%; height: 100%;">
-            <div class="title-content">
-                <h3>${dto.title}</h3>
-                <hr/>
-                <div class="intro">${dto.addr}</div>
-            </div><!-- /.title-content -->
-            <div class="card-info">
-                대표메뉴: ${dto.menu}<br>
-                전화번호: ${dto.tel}
-            </div><!-- /.card-info -->
-            <div class="utility-info">
-                <ul class="utility-list">
-                    <li class="comments"></li>
-                    <li class="date">${dto.readcount}</li>
-                </ul>
-            </div><!-- /.utility-info -->
-            <!-- overlays -->
-            <div class="gradient-overlay"></div>
-            <div class="color-overlay"></div>
-        </div>
+        <c:forEach var="dto" items="${Cafelist}" varStatus="i">
+            <div class="item">
+                <div class="blog-card spring-fever" >
+                    <c:set var="photo" value="${dto.photo}"/>
+                    <img src="${dto.photo}" style="width:100%; height: 100%;">
+                    <div class="title-content">
+                        <h3>${dto.title}</h3>
+                        <hr/>
+                        <div class="intro">${dto.addr}</div>
+                    </div><!-- /.title-content -->
+                    <div class="card-info">
+                        대표메뉴: ${dto.menu}<br>
+                        전화번호: ${dto.tel}
+                    </div><!-- /.card-info -->
+                    <div class="utility-info">
+                        <ul class="utility-list">
+                            <li class="comments"></li>
+                            <li class="date">${dto.readcount}</li>
+                        </ul>
+                    </div><!-- /.utility-info -->
+                    <!-- overlays -->
+                    <div class="gradient-overlay"></div>
+                    <div class="color-overlay"></div>
+                </div>
 
-        <div class="card-info">
+                <div class="card-info">
 
-        </div><!-- /.card-info -->
+                </div><!-- /.card-info -->
 
-        <!-- overlays -->
-        <div class="gradient-overlay"></div>
-        <div class="color-overlay"></div>
-        <!-g-card =========================================================================================-->
-</div>
-    </c:forEach>
+                <!-- overlays -->
+                <div class="gradient-overlay"></div>
+                <div class="color-overlay"></div>
+                    <%--        card =========================================================================================--%>
+            </div>
+        </c:forEach>
     </c:if>
 </div>
+<%-----------------------------------------------------------------------------%>
+
+<%---------------------------------------------------------------------------triplist--%>
+<div class="container Trip" style="width:100%; height: 60%; display: none;">
+    <%--글 갯수가 0이 아닐시--%>
+    <c:if test="${TriptotalCount>0}" >
+        <c:forEach var="dto" items="${Triplist}" varStatus="i">
+            <div class="item">
+                <div class="blog-card spring-fever" >
+                    <c:set var="photo" value="${dto.photo}"/>
+                    <img src="${dto.photo}" style="width:100%; height: 100%;">
+                    <div class="title-content">
+                        <h3>${dto.title}</h3>
+                        <hr/>
+                        <div class="intro">${dto.addr}</div>
+                    </div><!-- /.title-content -->
+                    <div class="card-info">
+                        개요: ${dto.content}<br>
+                    </div><!-- /.card-info -->
+                    <div class="utility-info">
+                        <ul class="utility-list">
+                            <li class="comments"></li>
+                            <li class="date">${dto.readcount}</li>
+                        </ul>
+                    </div><!-- /.utility-info -->
+                    <!-- overlays -->
+                    <div class="gradient-overlay"></div>
+                    <div class="color-overlay"></div>
+                </div>
+
+                <div class="card-info">
+
+                </div><!-- /.card-info -->
+
+                <!-- overlays -->
+                <div class="gradient-overlay"></div>
+                <div class="color-overlay"></div>
+                    <%--card =========================================================================================--%>
+            </div>
+        </c:forEach>
+    </c:if>
+</div>
+
+<%---------------------------------------------------------------------------foodlist--%>
+<div class="container Food" style="width:100%; height: 60%; display: none;">
+    <%--글 갯수가 0이 아닐시--%>
+    <c:if test="${FoodtotalCount>0}" >
+        <c:forEach var="dto" items="${Foodlist}" varStatus="i">
+            <div class="item">
+                <div class="blog-card spring-fever" >
+                    <c:set var="photo" value="${dto.photo}"/>
+                    <img src="${dto.photo}" style="width:100%; height: 100%;">
+                    <div class="title-content">
+                        <h3>${dto.title}</h3>
+                        <hr/>
+                        <div class="intro">${dto.addr}</div>
+                    </div><!-- /.title-content -->
+                    <div class="card-info">
+                        종류: ${dto.category}<br>
+                        대표메뉴: ${dto.menu}
+                        전화번호: ${dto.tel}<br>
+
+                    </div><!-- /.card-info -->
+                    <div class="utility-info">
+                        <ul class="utility-list">
+                            <li class="comments"></li>
+                            <li class="date">${dto.readcount}</li>
+                        </ul>
+                    </div><!-- /.utility-info -->
+                    <!-- overlays -->
+                    <div class="gradient-overlay"></div>
+                    <div class="color-overlay"></div>
+                </div>
+
+                <div class="card-info">
+
+                </div><!-- /.card-info -->
+
+                <!-- overlays -->
+                <div class="gradient-overlay"></div>
+                <div class="color-overlay"></div>
+                    <%--        card =========================================================================================--%>
+            </div>
+        </c:forEach>
+    </c:if>
+</div>
+<%--card =========================================================================================--%>
+<%--Cafe:cafe정보 전체 담고있는 클래스명--%>
+<%--categorysel:Category  ID--%>
+<script>
+    $(document).on("change", "#categorysel", function () {
+        if($(this).val() == "food"){
+            $(".Cafe,.Trip").hide();
+            $(".Food").show();
+        }
+        else if($(this).val() == "trip")
+        {
+            $(".Cafe,.Food").hide();
+            $(".Trip").show();
+        }
+        else if($(this).val() == "cafe")
+        {
+            $(".Trip,.Food").hide();
+            $(".Cafe").show();
+        }
+    });
+</script>
 
 </body>
 </html>
