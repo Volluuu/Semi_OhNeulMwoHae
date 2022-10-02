@@ -94,4 +94,6 @@
         select * from course where user_num=#{user_num}
     </select>
 
+
+
 </mapper>

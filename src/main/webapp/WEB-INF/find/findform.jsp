@@ -25,17 +25,17 @@
         background-color: ghostwhite;
     }
 
-    .cinsertlist:hover {
+    .ainsertlist:hover {
         background-color: darkgray;
         cursor: pointer;
     }
 
-    .insertcourselist:hover{
+    .courseinsertlist:hover {
         background-color: darkgray;
         cursor: pointer;
     }
 
-    #selectcword {
+    #selectaword,#selectcword {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -48,9 +48,10 @@
         cursor: pointer;
     }
 
-    div.findlist{
-        width:700px;
+    div.findlist {
+        width: 700px;
     }
+
     .cancel {
         float: right;
         color: darkred;
@@ -89,6 +90,9 @@
     .radio_mycourse {
         display: none;
     }
+    label{
+        cursor:pointer;
+    }
 </style>
 <c:if test="${sessionScope.loginok==null}">
     <script>
@@ -97,179 +101,6 @@
     </script>
 </c:if>
 <body>
-<script>
-    $(function () {
-        var root = "${root}";
-        var user_num = "${sessionScope.user_num}";
-        $(document).on("change","#ccolumn",function (){
-           $("#cword").val("");
-           $("#cword").focus();
-           $(".findlist").empty();
-        });
-
-
-        $(document).on("keyup","#cword",function (e){
-            if(e.keyCode==13){
-               $("#cfind").trigger("click");
-            }
-        });
-
-        $(document).on("click", "#cfind", function () {
-
-            var s = "";
-            $.ajax({
-                type: "get",
-                url: root + "/findboard/insertlist",
-                dataType: "json",
-                data: {"ccolumn": $("#ccolumn").val(), "cword": $("#cword").val()},
-                success: function (res) {
-                    s += "<ul><br>";
-                    $.each(res, function (i, elt) {
-                        s += "<li class='cinsertlist' photo='" + elt.photo + "'>" + elt.title + "</li>";
-                    });
-                    s += "</ul>";
-                    $(".findlist").html(s);
-                }
-            });
-        });
-
-        $(document).on("click", ".cinsertlist", function () {
-            var ti = $(this);
-            var txt = ti.text();
-            var photo = ti.attr("photo");
-
-            if ($(".fig").length == 5) {
-                alert("장소는 5개만 추가 가능합니다");
-                return;
-            }
-            ;
-            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
-
-        });
-
-        $(document).on("click", ".cancel", function () {
-            var ti = $(this);
-            ti.parents(".fig").remove();
-        });
-
-        $(document).on("click", "#radio_search", function () {
-            $(".radio_myplace").hide();
-            $(".radio_mycourse").hide();
-            $(".findlist").empty();
-
-
-            $(".radio_search").show();
-        });
-
-        $(document).on("click", "#radio_myplace", function () {
-            $(".radio_search").hide();
-            $(".radio_mycourse").hide();
-            $(".findlist").empty();
-            $(".foodlist").text("");
-            $(".foodlist").text("카페 목록");
-            $(".triplist").text("");
-            $(".triplist").text("여행지 목록");
-            $(".cafelist").text("");
-            $(".cafelist").text("카페 목록");
-            $(".radio_myplace").show();
-            $.ajax({
-                type: "get",
-                url: root + "/subs/myplace",
-                dataType: "json",
-                data: {"user_num": user_num},
-                success: function (res) {
-                    if (res.length == 0) {
-                        $(".radio_myplace").empty();
-                        $(".radio_myplace").html("<p>즐겨찾기 한 장소가 없습니다</p>");
-                    } else {
-                        $.each(res, function (i, elt) {
-                            if (elt.food_num != 0) {
-                                var f = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/food",
-                                    dataType: "json",
-                                    data: {"food_num": elt.food_num},
-                                    success: function (resf) {
-                                        f += "<li class='cinsertlist' photo='" + resf.photo + "'>" + resf.title + "</li>";
-                                        $(".foodlist").append(f);
-                                    }
-                                });
-
-                            } else if (elt.trip_num != 0) {
-                                var t = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/trip",
-                                    dataType: "json",
-                                    data: {"trip_num": elt.trip_num},
-                                    success: function (rest) {
-                                        t += "<li class='cinsertlist' photo='" + rest.photo + "'>" + rest.title + "</li>";
-                                        $(".triplist").append(t);
-                                    }
-                                });
-
-                            } else {
-                                var c = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/cafe",
-                                    dataType: "json",
-                                    data: {"cafe_num": elt.cafe_num},
-                                    success: function (resc) {
-                                        c += "<li class='cinsertlist' photo='" + resc.photo + "'>" + resc.title + "</li>";
-                                        $(".cafelist").append(c);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            });
-
-
-        });
-
-        $(document).on("click", "#radio_mycourse", function () {
-            $(".radio_search").hide();
-            $(".radio_myplace").hide();
-            $(".findlist").empty();
-            $(".radio_mycourse").show();
-            $(".mycourselist").text("");
-            $(".mycourselist").text("저장한 경로");
-            var mc="";
-            $.ajax({
-                type:"get",
-                url:root+"/findboard/mycourse",
-                dataType:"json",
-                data:{"user_num":user_num},
-                success:function(res){
-                    console.dir(res);
-                    $.each(res,function (i,elt){
-                        mc+="<ul class='insertcourselist''>"+(i+1)+" "+elt.title;
-                        for(var i=1;i<=elt.cnt;i++){
-                            mc+="<li>"+i+"."+(elt.step+i)+"</li>";
-                        }
-                        mc+="</ul>";
-                        $(".mycourselist").append(mc);
-                    })
-                }
-            });
-
-
-
-
-
-
-
-        });
-
-
-
-
-    });//$(function)
-
-</script>
 <div class="dg_container">
     <div class="insertfind">
         <form action="insertfind" method="post" enctype="multipart/form-data">
@@ -287,7 +118,8 @@
                 </tr>
                 <tr align="center" valign="middle">
                     <th>장소</th>
-                    <td>
+                    <td id="selectword">
+                        <div id="selectaword"></div>
                         <div id="selectcword"></div>
                     </td>
                 </tr>
@@ -351,7 +183,8 @@
 
         </div>
         <div class="radio_mycourse">
-            <ul class='mycourselist'>저장한 경로
+            <p>저장한 경로</p>
+            <ul class='mycourselist'>
             </ul>
         </div>
         <div class="findlist"></div>
@@ -359,6 +192,297 @@
 </div>
 
 <script>
+
+    var root = "${root}";
+    var user_num = "${sessionScope.user_num}";
+    $(document).on("change", "#ccolumn", function () {
+        $("#cword").val("");
+        $("#cword").focus();
+        $(".findlist").empty();
+    });
+
+
+    $(document).on("keyup", "#cword", function (e) {
+        if (e.keyCode == 13) {
+            $("#cfind").trigger("click");
+        }
+    });
+
+    $(document).on("click", "#cfind", function () {
+
+        var s = "";
+        $.ajax({
+            type: "get",
+            url: root + "/findboard/insertlist",
+            dataType: "json",
+            data: {"ccolumn": $("#ccolumn").val(), "cword": $("#cword").val()},
+            success: function (res) {
+                s += "<ul><br>";
+                $.each(res, function (i, elt) {
+                    s += "<li class='ainsertlist' photo='" + elt.photo + "'>" + elt.title + "</li>";
+                });
+                s += "</ul>";
+                $(".findlist").html(s);
+            }
+        });
+    });
+
+    $(document).on("click", ".ainsertlist", function () {
+        var ti = $(this);
+        var txt = ti.text();
+        var photo = ti.attr("photo");
+
+        if ($(".fig").length == 5) {
+            alert("장소는 5개만 추가 가능합니다");
+            return;
+        }
+        ;
+        if($("#selectaword").size==0){
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $("#selectaword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+
+    });
+
+    $(document).on("click", ".cancel", function () {
+        var ti = $(this);
+        ti.parents(".fig").remove();
+    });
+
+    $(document).on("click", "#radio_search", function () {
+        $("#selectcword").remove();
+        if($("#selectaword").size==0){
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $(".radio_myplace").hide();
+        $(".radio_mycourse").hide();
+        $(".findlist").empty();
+
+
+        $(".radio_search").show();
+    });
+
+    $(document).on("click", "#radio_myplace", function () {
+        $("#selectcword").remove();
+        if($("#selectaword").size==0){
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $(".radio_search").hide();
+        $(".radio_mycourse").hide();
+        $(".findlist").empty();
+        $(".foodlist").text("");
+        $(".foodlist").text("카페 목록");
+        $(".triplist").text("");
+        $(".triplist").text("여행지 목록");
+        $(".cafelist").text("");
+        $(".cafelist").text("카페 목록");
+        $(".radio_myplace").show();
+
+        $.ajax({
+            type: "get",
+            url: root + "/subs/myplace",
+            dataType: "json",
+            data: {"user_num": user_num},
+            success: function (res) {
+                if (res.length == 0) {
+                    $(".radio_myplace").empty();
+                    $(".radio_myplace").html("<p>즐겨찾기 한 장소가 없습니다</p>");
+                } else {
+                    $.each(res, function (i, elt) {
+                        if (elt.food_num != 0) {
+                            var f = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/food",
+                                dataType: "json",
+                                data: {"food_num": elt.food_num},
+                                success: function (resf) {
+                                    f += "<li class='ainsertlist' photo='" + resf.photo + "'>" + resf.title + "</li>";
+                                    $(".foodlist").append(f);
+                                }
+                            });
+
+                        } else if (elt.trip_num != 0) {
+                            var t = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/trip",
+                                dataType: "json",
+                                data: {"trip_num": elt.trip_num},
+                                success: function (rest) {
+                                    t += "<li class='ainsertlist' photo='" + rest.photo + "'>" + rest.title + "</li>";
+                                    $(".triplist").append(t);
+                                }
+                            });
+
+                        } else {
+                            var c = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/cafe",
+                                dataType: "json",
+                                data: {"cafe_num": elt.cafe_num},
+                                success: function (resc) {
+                                    c += "<li class='ainsertlist' photo='" + resc.photo + "'>" + resc.title + "</li>";
+                                    $(".cafelist").append(c);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
+
+    });
+
+    $(document).on("click", "#radio_mycourse", function () {
+        $("#selectaword").remove();
+        $(".radio_search").hide();
+        $(".radio_myplace").hide();
+        $(".findlist").empty();
+        $(".radio_mycourse").show();
+        $(".mycourselist").text("");
+        var mc = "";
+        var st1 = "";
+        var st2 = "";
+        var st3 = "";
+        var st4 = "";
+        var st5 = "";
+        $.ajax({
+            type: "get",
+            url: root + "/findboard/mycourse",
+            dataType: "json",
+            async: false,
+            data: {"user_num": user_num},
+            success: function (res) {
+                $.each(res, function (i, elt) {
+                    mc="";
+                    mc += "<li class='courseinsertlist''>경로" + (i + 1) + " " + elt.title+"</li>";
+                    // mc += elt.step1 + "<br>";
+                    if (elt.step1 != null) {
+                        var step1 = [];
+                        var step1 = elt.step1.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step1[0], "num": step1[1]},
+                            success: function (res) {
+                                st1="";
+                                st1 +="<span photo='"+res.photo+"' class='st1'>1."+ res.title + "</span><br>";
+                            }
+                        });
+                    }
+
+
+                    if (elt.step2 != null) {
+                        var step2 = [];
+                        var step2 = elt.step2.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step2[0], "num": step2[1]},
+                            success: function (res) {
+                                st2="";
+                                st2 +="<span photo='"+res.photo+"' class='st2'>2."+ res.title + "<br>";
+                            }
+                        });
+                    }
+                    if (elt.step3 != null) {
+                        var step3 = [];
+                        var step3 = elt.step3.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step3[0], "num": step3[1]},
+                            success: function (res) {
+                                st3="";
+                                st3 +="<span photo='"+res.photo+"' class='st3'>3."+ res.title + "<br>";
+                            }
+                        });
+                    }
+                    if (elt.step4 != null) {
+                        var step4 = [];
+                        var step4 = elt.step4.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step4[0], "num": step4[1]},
+                            success: function (res) {
+                                st4="";
+                                st4 +="<span photo='"+res.photo+"' class='st4'>4."+ res.title + "<br>";
+                            }
+                        });
+                    }
+                    if (elt.step5 != null) {
+                        var step5 = [];
+                        var step5 = elt.step5.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step5[0], "num": step5[1]},
+                            success: function (res) {
+                                st5="";
+                                st5 +="<span photo='"+res.photo+"' class='st5'>5."+ res.title + "<br>";
+
+                            }
+                        });
+                    }
+                    $(".mycourselist").append(mc);
+                    $(".mycourselist").append(st1);
+                    $(".mycourselist").append(st2);
+                    $(".mycourselist").append(st3);
+                    $(".mycourselist").append(st4);
+                    $(".mycourselist").append(st5);
+                    mc="";
+                    st1="";
+                    st2="";
+                    st3="";
+                    st4="";
+                    st5="";
+                })
+
+            }
+        });
+
+
+    });
+    $(document).on("click", ".courseinsertlist", function () {
+        $("#selectcword").remove();
+        var ti = $(this);
+
+        var st1=ti.next(".st1").text();
+        var st2=ti.next().next().next(".st2").text();
+        var st3=ti.next().next().next().next(".st3").text();
+        var st4=ti.next().next().next().next().next(".st4").text();
+        var st5=ti.next().next().next().next().next().next(".st5").text();
+
+        var photo1 = ti.next(".st1").attr("photo");
+        var photo2 = ti.next().next().next(".st2").attr("photo");
+        var photo3 = ti.next().next().next().next(".st3").attr("photo");
+        var photo4 = ti.next().next().next().next().next(".st4").attr("photo");
+        var photo5 = ti.next().next().next().next().next().next(".st5").attr("photo");
+
+        $("#selectword").append("<div id='selectcword'></div>");
+        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
+        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
+        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
+        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
+        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+
+    });
+
+
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
         imageView = function imageView(att_zone, btn) {
 
