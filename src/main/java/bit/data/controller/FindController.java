@@ -255,6 +255,13 @@ public class FindController {
         return null;
     }
 
+    @GetMapping("/findboard/myplace")
+    @ResponseBody
+    public List<? extends Object> myplace(int user_num){
+        System.out.println(user_num);
+        return null;
+    }
+
     @GetMapping("/findboard/deletefind")
     public String delete(int find_num,int currentPage,HttpServletRequest request) {
         String path=request.getSession().getServletContext().getRealPath("/resources/upload");
@@ -284,73 +291,6 @@ public class FindController {
         return "redirect:../findboard/list?currentPage="+currentPage;
     }
 
-    @GetMapping("/commentfriend/list")
-    @ResponseBody
-    public List<CommentFriendDto> commentfriendlist(int find_num){
-        return commentFriendService.selectAllComments(find_num);
-    }
-    @GetMapping("/commentfriend/insert")
-    @ResponseBody
-    public void insertcommentfriend(CommentFriendDto dto,
-                                    @RequestParam(defaultValue = "0") int regroup,
-                                    @RequestParam(defaultValue = "0") int restep,
-                                    @RequestParam(defaultValue = "0") int relevel
-    ) {
 
-        if(dto.getFriend_num()==0){
-            regroup=commentFriendService.selectMaxNum(dto.getFind_num())+1;
-            restep=0;
-            relevel=0;
-        }else{
-            commentFriendService.updateRestep(regroup, restep);
-            restep++;
-            relevel++;
-        }
-        dto.setRegroup(regroup);
-        dto.setRestep(restep);
-        dto.setRelevel(relevel);
-        commentFriendService.insertComment(dto);
-
-    }
-
-    @GetMapping("/commentfriend/delete")
-    @ResponseBody
-    public void deletecommentfriend(int friend_num) {
-//        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
-//        System.out.println(path);
-
-        //데이터 삭제 전에 사진 지우기
-        //사진명을 얻기
-//        String photo=answerService.getAnswer(idx).getPhoto();
-        //File 객체 생성
-//        File file=new File(path+"/"+photo);
-//        if(file.exists()) {//파일이 존재하면 true, 없으면 false
-//            System.out.println("파일이 존재하므로 삭제합니다");
-//            file.delete();
-//        }
-
-        commentFriendService.deleteByNum(friend_num);
-    }
-
-    @GetMapping("/commentfriend/update")
-    @ResponseBody
-    public void updatecommentfriend(CommentFriendDto dto){
-        commentFriendService.updateCommentFriend(dto);
-    }
-
-//    댓글 수정 버튼 눌렀을 때 dto 받아오기
-    @GetMapping("/commentfriend/updateform")
-    @ResponseBody
-    public CommentFriendDto updateform(int friend_num){
-        CommentFriendDto dto=commentFriendService.selectCommentByNum(friend_num);
-        return dto;
-
-    }
-
-    @GetMapping("/commentfriend/updateok")
-    @ResponseBody
-    public void updateok(CommentFriendDto dto){
-        commentFriendService.updateCommentFriend(dto);
-    }
 
 }

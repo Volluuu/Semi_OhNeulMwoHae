@@ -43,7 +43,9 @@
         cursor: pointer;
     }
 
-
+    div.findlist{
+        width:700px;
+    }
     .cancel {
         float: right;
         color: darkred;
@@ -91,8 +93,20 @@
 </c:if>
 <body>
 <script>
-
     $(function () {
+        $(document).on("change","#ccolumn",function (){
+           $("#cword").val("");
+           $("#cword").focus();
+           $(".findlist").empty();
+        });
+
+
+        $(document).on("keyup","#cword",function (e){
+            if(e.keyCode==13){
+               $("#cfind").trigger("click");
+            }
+        });
+
         $(document).on("click", "#cfind", function () {
             var root = "${root}";
             var s = "";
@@ -117,8 +131,8 @@
             var txt = ti.text();
             var photo = ti.attr("photo");
 
-            if ($(".fig").length == 2) {
-                alert("장소는 2개만 추가 가능합니다");
+            if ($(".fig").length == 5) {
+                alert("장소는 5개만 추가 가능합니다");
                 return;
             }
             ;
@@ -134,28 +148,100 @@
         $(document).on("click", "#radio_search", function () {
             $(".radio_myplace").hide();
             $(".radio_mycourse").hide();
+            $(".findlist").empty();
 
 
             $(".radio_search").show();
         });
 
         $(document).on("click", "#radio_myplace", function () {
+            var user_num = '${sessionScope.user_num}';
+            var root = '${root}';
             $(".radio_search").hide();
             $(".radio_mycourse").hide();
-
-
+            $(".findlist").empty();
+            $(".foodlist").text("");
+            $(".foodlist").text("카페 목록");
+            $(".triplist").text("");
+            $(".triplist").text("여행지 목록");
+            $(".cafelist").text("");
+            $(".cafelist").text("카페 목록");
             $(".radio_myplace").show();
+            $.ajax({
+                type: "get",
+                url: root + "/subs/myplace",
+                dataType: "json",
+                data: {"user_num": user_num},
+                success: function (res) {
+                    if (res.length == 0) {
+                        $(".radio_myplace").empty();
+                        $(".radio_myplace").html("<p>즐겨찾기 한 장소가 없습니다</p>");
+                    } else {
+                        $.each(res, function (i, elt) {
+                            if (elt.food_num != 0) {
+                                var f = "";
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/myplace/food",
+                                    dataType: "json",
+                                    data: {"food_num": elt.food_num},
+                                    success: function (resf) {
+                                        f += "<li class='cinsertlist' photo='" + resf.photo + "'>" + resf.title + "</li>";
+                                        $(".foodlist").append(f);
+                                    }
+                                });
+
+                            } else if (elt.trip_num != 0) {
+                                var t = "";
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/myplace/trip",
+                                    dataType: "json",
+                                    data: {"trip_num": elt.trip_num},
+                                    success: function (rest) {
+                                        t += "<li class='cinsertlist' photo='" + rest.photo + "'>" + rest.title + "</li>";
+                                        $(".triplist").append(t);
+                                    }
+                                });
+
+                            } else {
+                                var c = "";
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/myplace/cafe",
+                                    dataType: "json",
+                                    data: {"cafe_num": elt.cafe_num},
+                                    success: function (resc) {
+                                        c += "<li class='cinsertlist' photo='" + resc.photo + "'>" + resc.title + "</li>";
+                                        $(".cafelist").append(c);
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+
+                }
+            });
+
+
         });
 
         $(document).on("click", "#radio_mycourse", function () {
             $(".radio_search").hide();
             $(".radio_myplace").hide();
-
-
+            $(".findlist").empty();
             $(".radio_mycourse").show();
 
 
+
+
+
+
+
         });
+
+
 
 
     });//$(function)
@@ -211,7 +297,7 @@
                 <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
             </label>
             <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;내 장소&nbsp;
+                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;
             </label>
             <label>
                 <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
@@ -231,7 +317,14 @@
             </div>
         </div>
         <div class="radio_myplace">
-            <p>즐겨찾기 한 장소</p>
+            <ul class='foodlist'>식당 목록
+
+            </ul>
+            <ul class='triplist'>여행지 목록
+
+            </ul>
+            <ul class='cafelist'>카페 목록
+            </ul>
 
         </div>
         <div class="radio_mycourse">

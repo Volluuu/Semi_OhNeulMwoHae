@@ -18,6 +18,8 @@
 		<typeAlias type="bit.data.dto.CommentFriendDto" alias="cfdto"/>
 		<typeAlias type="bit.data.dto.CourseDto" alias="coursedto"/>
 		<typeAlias type="bit.data.dto.QnaDto" alias="qnadto"/>
+		<typeAlias type="bit.data.dto.SubsDto" alias="subsdto"/>
+
 
 	</typeAliases>
 </configuration>
