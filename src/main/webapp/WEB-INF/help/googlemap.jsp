@@ -264,7 +264,7 @@
         <div class="cosselect">
            <%-- <form action="cosInsert" method="post">--%>
                 <h2>경로설정</h2>
-                <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" cnt=${dto.cnt} name="title" required="required">
+                <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" cnt= name="title" required="required">
                 <div class="cosselect_main">
                     <span class="coscnt">경로 1</span>
                     <br>
