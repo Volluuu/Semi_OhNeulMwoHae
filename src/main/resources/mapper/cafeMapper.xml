@@ -11,6 +11,7 @@
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="cafedto">
+
 		select * from cafe
 		<if test="cafecolumn!=null and cafeword!=null">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
@@ -22,8 +23,20 @@
 		0,0,#{gu},0)
 	</insert>
 
+	<select id="getCafeData" parameterType="int" resultType="cafedto">
+		select * from cafe where cafe_num=#{cafe_num}
+	</select>
+
+	<select id="getFoodData" parameterType="int" resultType="fooddto">
+		select * from food where food_num=#{food_num}
+	</select>
+
+	<select id="getTripData" parameterType="int" resultType="tripdto">
+		select * from trip where trip_num=#{trip_num}
+	</select>
+
 	<update id="updateReadCount" parameterType="int">
-		update cafe set readcount=readcount+1 where num=#{num}
+		update cafe set readcount=readcount+1 where cafe_num=#{cafe_num}
 	</update>
 
 	<select id="selectByNum" parameterType="int" resultType="cafedto">
@@ -39,7 +52,7 @@
 		            <if test="photo!=null">
 						photo=#{photo}
 					</if>
-		  where cafe_num=#{cafe_num}
+		  where cafe_cafe_num=#{cafe_num}
 	</update>
 
 	<insert id="likesInsert" parameterType="int">

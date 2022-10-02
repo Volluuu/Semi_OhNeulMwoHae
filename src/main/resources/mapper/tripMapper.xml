@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.TripDao">
+	<select id="selectTotalCount" parameterType="Map" resultType="int">
+		select count(*) from trip
+		<if test="tripcolumn!=null and tripword!=null">
+			where ${tripcolumn} like concat('%',#{tripword},'%')
+		</if>
+	</select>
+
+	<select id="selectPagingList" parameterType="Map" resultType="tripdto">
+
+		select * from trip
+		<if test="tripcolumn!=null and tripword!=null">
+			where ${tripcolumn} like concat('%',#{tripword},'%')
+		</if>
+	</select>
+
+	<insert id="insertTrip" parameterType="tripdto">
+		insert into trip values (null,#{title},#{addr},#{photo},#{content},
+		0,0,#{gu},0)
+	</insert>
+
+	<select id="getCafeData" parameterType="int" resultType="cafedto">
+		select * from cafe where cafe_num=#{cafe_num}
+	</select>
+
+	<select id="getFoodData" parameterType="int" resultType="fooddto">
+		select * from food where food_num=#{food_num}
+	</select>
+
+	<select id="getTripData" parameterType="int" resultType="tripdto">
+		select * from trip where trip_num=#{trip_num}
+	</select>
+
+	<update id="updateReadCount" parameterType="int">
+		update trip set readcount=readcount+1 where trip_num=#{trip_num}
+	</update>
+
+	<select id="selectByNum" parameterType="int" resultType="tripdto">
+		select * from trip where trip_num=#{trip_num}
+	</select>
+
+	<delete id="deleteTrip" parameterType="int">
+		delete from trip where trip_num=#{trip_num}
+	</delete>
+
+	<update id="updateTrip" parameterType="tripdto">
+		update trip set title=#{title},addr=#{addr},content=#{content},lat=#{lat},lon=#{lon}
+		            <if test="photo!=null">
+						photo=#{photo}
+					</if>
+		  where trip_num=#{trip_num}
+	</update>
+
+	<insert id="likesInsert" parameterType="int">
+		update likes set likes=likes+1 where trip_num=#{trip_num}
+	</insert>
+
+	<update id="likesUpdate" parameterType="int">
+		update likes set likes=likes-1 where trip_num=#{trip_num}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -9,8 +9,7 @@ import java.util.Map;
 
 public interface FoodServiceInter {
     public int selectTotalCount(String foodcolumn, String foodword);
-
-    public List<FoodDto>  selectPagingList(String foodcolumn, String foodword, int startnum, int perpage);
+    public List<FoodDto> selectPagingList(String foodcolumn, String foodword, int startnum, int perpage);
     public void insertFood(FoodDto dto);
     public void updateReadCount(int food_num);
     public void deleteFood(int food_num);

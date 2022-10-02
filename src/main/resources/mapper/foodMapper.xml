@@ -4,21 +4,21 @@
 
 <mapper namespace="bit.data.dao.FoodDao">
 	<select id="selectTotalCount" parameterType="Map" resultType="int">
-		select count(*) from cafe
+		select count(*) from food
 		<if test="foodcolumn!=null and foodword!=null">
 			where ${foodcolumn} like concat('%',#{foodword},'%')
 		</if>
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="fooddto">
-		select * from cafe
+		select * from food
 		<if test="foodcolumn!=null and foodword!=null">
 			where ${foodcolumn} like concat('%',#{foodword},'%')
 		</if>
 	</select>
 
 	<insert id="insertFood" parameterType="fooddto">
-		insert into cafe values (null,#{title},#{addr},#{category},#{menu},#{photo},#{tel},
+		insert into food values (null,#{title},#{addr},#{category},#{menu},#{photo},#{tel},
 		0,0,#{gu},0)
 	</insert>
 
@@ -35,7 +35,7 @@
 	</delete>
 
 	<update id="updateFood" parameterType="fooddto">
-		update cafe set title=#{title},addr=#{addr},category=#{category},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon}
+		update food set title=#{title},addr=#{addr},category=#{category},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon}
 		            <if test="photo!=null">
 						photo=#{photo}
 					</if>

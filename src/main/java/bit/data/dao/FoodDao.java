@@ -27,6 +27,11 @@ public class FoodDao implements FoodDaoInter{
     }
 
     @Override
+    public FoodDto getFoodData(int food_num) {
+        return session.selectOne(ns+"getFoodData",food_num);
+    }
+
+    @Override
     public void insertFood(FoodDto dto) {
         session.insert(ns+"insertFood",dto);
     }

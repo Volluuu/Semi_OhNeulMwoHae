@@ -1,12 +1,11 @@
 //package bit.data.controller;
 //
-//import bit.data.dto.FoodDto;
-//import bit.data.service.FoodServiceInter;
+//import bit.data.dto.TripDto;
+//import bit.data.service.TripServiceInter;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.multipart.MultipartFile;
 //import util.ChangeName;
@@ -17,21 +16,21 @@
 //import java.util.List;
 //
 //@Controller
-//public class FoodController {
+//public class TripController {
 //
 //    @Autowired
-//    FoodServiceInter foodService;
+//    TripServiceInter tripService;
 //
-//    @GetMapping("adminboard/foodlist")//관리자페이지 생성하면 수정필요~!
-//    public String foodBoard(
+//    @GetMapping("")//관리자페이지 생성하면 수정필요~!
+//    public String tripBoard(
 //            @RequestParam(defaultValue = "1") int currentPage,
-//            @RequestParam(value = "foodcolumn", required = false) String sc,
-//            @RequestParam(value = "foodword", required = false) String sw,
+//            @RequestParam(value = "tripcolumn", required = false) String sc,
+//            @RequestParam(value = "tripword", required = false) String sw,
 //            Model model)
 //    {
 //        //페이징 처리에 필요한 변수들
 //        //전체 갯수
-//        int totalCount=foodService.selectTotalCount(sc, sw);
+//        int TriptotalCount=tripService.selectTotalCount(sc, sw);
 //        int perPage=10;//한페이지당 보여질 글의 갯수
 //        int perBlock=4;//한블럭당 보여질 페이지의 갯수
 //        int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
@@ -43,7 +42,7 @@
 //        //총 페이지수를 구한다
 //        //총글의갯수/한페이지당보여질갯수로 나눔(7/5=1)
 //        //나머지가 1이라도 있으면 무조건 1페이지 추가(1+1=2페이지가 필요)
-//        totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
+//        totalPage=TriptotalCount/perPage+(TriptotalCount%perPage==0?0:1);
 //
 //        //각 블럭당 보여질 시작페이지
 //        //perBlock=5 일경우 현재페이지가 1~5 일경우는 시작페이지가 1, 끝페이지가 5
@@ -60,13 +59,13 @@
 //
 //        //각페이지당 출력할 시작번호 구하기
 //        //예: 총글갯수가 23이라면  1페이지는 23,2페이지는 18,3페이지는 13...
-//        no=totalCount-(currentPage-1)*perPage;
+//        no=TriptotalCount-(currentPage-1)*perPage;
 //
 //        //페이지에서 보여질 글만 가져오기
-//        List<FoodDto> list=foodService.selectPagingList(sc, sw, startNum, perPage);
+//        List<TripDto> Triplist=tripService.selectPagingList(sc, sw, startNum, perPage);
 //
-//        model.addAttribute("list", list);
-//        model.addAttribute("totalCount", totalCount);
+//        model.addAttribute("Triplist", Triplist);
+//        model.addAttribute("TriptotalCount", TriptotalCount);
 //        model.addAttribute("currentPage", currentPage);
 //        model.addAttribute("startPage", startPage);
 //        model.addAttribute("endPage", endPage);
@@ -77,8 +76,8 @@
 //    }
 //
 //    //업로드
-////    @GetMapping("")//관리자 페이지 생성후 mapping~!~!~!!~
-//    public String insert(FoodDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+//    @GetMapping("adminboard/tripinsert")//관리자 페이지 생성후 mapping~!~!~!!~
+//    public String insert(TripDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
 //        String path = request.getSession().getServletContext().getRealPath("/resources/upload");//관리자 페이지 생성후 mapping~!~!~!!~
 //        System.out.println(path);//값이 정상적으로 올라가면 삭제필요~!~!
 //        System.out.println(upload.size());//값이 정상적으로 올라가면 삭제필요~!~!
@@ -105,22 +104,22 @@
 //            //dto에 저장
 //            dto.setPhoto(photo);
 //        }
-//        foodService.insertFood(dto);
+//        tripService.insertTrip(dto);
 //        //삭제 후 보던 페이지로 이동
 //        return "redirect:list?currentPage=" + currentPage;
 //    }
 //
 //    //삭제
 ////    @GetMapping("/admin/delete")//관리자 페이지 생성후 mapping~!~!~!!~
-//    public String delete(int food_num, int currentPage) {
-//        foodService.deleteFood(food_num);
-//        //삭제후 보던 페이지로 이동
-//        return "redirect:list?currentPage=" + currentPage;
-//    }
+////    public String delete(int trip_num, int currentPage) {
+////        tripService.deleteTrip(trip_num);
+////        //삭제후 보던 페이지로 이동
+////        return "redirect:list?currentPage=" + currentPage;
+////    }
 //
 //    //업데이트
 ////    @PostMapping("/admin/update")//관리자 페이지 생성후 mapping~!~!~!!~
-//    public String update(FoodDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
+//    public String update(TripDto dto, int currentPage, List<MultipartFile> upload, HttpServletRequest request) {
 //        //업로드 경로
 //        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 //        System.out.println(path);//정상 빌드 확인 후 삭제~!
@@ -150,7 +149,7 @@
 //            //dto에 저장
 //            dto.setPhoto(photo);
 //        }
-//        foodService.updateFood(dto);
-//        return "redirect:detail?currentPage="+currentPage+"&food_num="+dto.getFood_num();
+//        tripService.updateTrip(dto);
+//        return "redirect:detail?currentPage="+currentPage+"&food_num="+dto.getTrip_num();
 //    }
 //}
