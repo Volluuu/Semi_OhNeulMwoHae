@@ -69,4 +69,9 @@ public class FindDao implements FindDaoInter{
     public List<FoodDto> selectFoodData(String cword) {
         return session.selectList(ns+"selectFoodData", cword);
     }
+
+    @Override
+    public List<CourseDto> selectMyCourse(int user_num) {
+        return session.selectList(ns+"selectMyCourse",user_num);
+    }
 }

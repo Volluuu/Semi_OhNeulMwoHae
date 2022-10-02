@@ -18,4 +18,6 @@ public interface FindServiceInter {
     public List<CafeDto> selectCafeData(String cword);
     public List<TripDto> selectTripData(String cword);
     public List<FoodDto> selectFoodData(String cword);
+
+    public List<CourseDto> selectMyCourse(int user_num);
 }

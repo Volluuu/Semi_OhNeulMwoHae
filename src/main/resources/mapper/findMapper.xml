@@ -90,4 +90,8 @@
         select * from food where title like concat('%',#{cword},'%') order by readcount
     </select>
 
+    <select id="selectMyCourse" parameterType="int" resultType="coursedto">
+        select * from course where user_num=#{user_num}
+    </select>
+
 </mapper>

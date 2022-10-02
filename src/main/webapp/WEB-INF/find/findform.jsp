@@ -30,6 +30,11 @@
         cursor: pointer;
     }
 
+    .insertcourselist:hover{
+        background-color: darkgray;
+        cursor: pointer;
+    }
+
     #selectcword {
         display: flex;
         flex-direction: row;
@@ -94,6 +99,8 @@
 <body>
 <script>
     $(function () {
+        var root = "${root}";
+        var user_num = "${sessionScope.user_num}";
         $(document).on("change","#ccolumn",function (){
            $("#cword").val("");
            $("#cword").focus();
@@ -108,7 +115,7 @@
         });
 
         $(document).on("click", "#cfind", function () {
-            var root = "${root}";
+
             var s = "";
             $.ajax({
                 type: "get",
@@ -155,8 +162,6 @@
         });
 
         $(document).on("click", "#radio_myplace", function () {
-            var user_num = '${sessionScope.user_num}';
-            var root = '${root}';
             $(".radio_search").hide();
             $(".radio_mycourse").hide();
             $(".findlist").empty();
@@ -218,9 +223,7 @@
                                 });
                             }
                         });
-
                     }
-
                 }
             });
 
@@ -232,6 +235,26 @@
             $(".radio_myplace").hide();
             $(".findlist").empty();
             $(".radio_mycourse").show();
+            $(".mycourselist").text("");
+            $(".mycourselist").text("저장한 경로");
+            var mc="";
+            $.ajax({
+                type:"get",
+                url:root+"/findboard/mycourse",
+                dataType:"json",
+                data:{"user_num":user_num},
+                success:function(res){
+                    console.dir(res);
+                    $.each(res,function (i,elt){
+                        mc+="<ul class='insertcourselist''>"+(i+1)+" "+elt.title;
+                        for(var i=1;i<=elt.cnt;i++){
+                            mc+="<li>"+i+"."+(elt.step+i)+"</li>";
+                        }
+                        mc+="</ul>";
+                        $(".mycourselist").append(mc);
+                    })
+                }
+            });
 
 
 
@@ -328,7 +351,8 @@
 
         </div>
         <div class="radio_mycourse">
-            <p>경로 저장한 곳</p>
+            <ul class='mycourselist'>저장한 경로
+            </ul>
         </div>
         <div class="findlist"></div>
     </div>

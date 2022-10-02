@@ -77,4 +77,9 @@ public class FindService implements FindServiceInter{
     public List<FoodDto> selectFoodData(String cword) {
         return findDao.selectFoodData(cword);
     }
+
+    @Override
+    public List<CourseDto> selectMyCourse(int user_num) {
+        return findDao.selectMyCourse(user_num);
+    }
 }

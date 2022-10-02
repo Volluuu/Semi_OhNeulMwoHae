@@ -291,6 +291,12 @@ public class FindController {
         return "redirect:../findboard/list?currentPage="+currentPage;
     }
 
+    @GetMapping("/findboard/mycourse")
+    @ResponseBody
+    public List<CourseDto> selectMyCourse(int user_num){
+        List<CourseDto> list=findService.selectMyCourse(user_num);
 
+        return list;
+    }
 
 }
