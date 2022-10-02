@@ -13,7 +13,7 @@
 	</select>
 	<!--계층형 댓글 입력-->
 	<insert id="insertComment" parameterType="cfdto">
-		insert into comment_friend values (null,#{find_num},#{user_num},#{content},now(),#{regroup},#{restep},#{relevel})
+		insert into comment_friend values (null,#{user_num},#{find_num},#{content},now(),#{regroup},#{restep},#{relevel})
 	</insert>
 	<!--계층형 댓글 Restep-->
 	<update id="updateRestep" parameterType="Map">
