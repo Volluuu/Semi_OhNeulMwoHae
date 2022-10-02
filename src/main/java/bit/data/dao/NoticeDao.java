@@ -1,5 +1,6 @@
 package bit.data.dao;
 
+import bit.data.dto.NoticeDto;
 import bit.data.dto.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class QnaDao implements QnaDaoInter {
+public class NoticeDao implements NoticeDaoInter {
 	@Autowired
 	SqlSession session;
 	String ns = "bit.data.dao.QnaDao.";
 
 	@Override
-	public QnaDto getQna(int qna_num) {
-		return session.selectOne(ns + "getQna");
+	public NoticeDto getNotice(int notice_num) {
+		return session.selectOne(ns+"getNotice",notice_num);
 	}
 
 	@Override
@@ -30,37 +31,27 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
-	public List<QnaDto> getPagingList(Map<String, Object> map) {
+	public List<NoticeDto> getPagingList(Map<String, Object> map) {
 		return session.selectList(ns+"getPagingList",map);
 	}
 
 	@Override
-	public void insertQna(QnaDto dto) {
-		session.insert(ns+"insertQna",dto);
-	}
-
-/*	@Override
-	public void updateRestep(Map<String, Integer> map) {
-		session.update(ns+"updateRestep",map);
+	public void insertNotice(NoticeDto dto) {
+		session.insert(ns+"insertNotice",dto);
 	}
 
 	@Override
-	public void updateReadCount(int num) {
-		session.update(ns+"updateReadCount",num);
-	}*/
-
-	@Override
-	public QnaDto getData(int num) {
+	public NoticeDto getData(int num) {
 		return session.selectOne(ns+"getData",num);
 	}
 
 	@Override
-	public void updateQna(QnaDto dto) {
-		session.update(ns+"updateQna",dto);
+	public void updateNotice(NoticeDto dto) {
+		session.update(ns+"updateNotice",dto);
 	}
 
 	@Override
-	public void deleteQna(int num) {
-		session.delete(ns+"deleteQna",num);
+	public void deleteNotice(int num) {
+		session.delete(ns+"deleteNotice",num);
 	}
 }
