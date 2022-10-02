@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bit.data.dao.SubsDao">
+   <select id="selectAllSubs" parameterType="int" resultType="subsdto">
+       select * from subs where user_num=#{user_num}
+   </select>
+
+    <select id="selectFoodData" parameterType="int" resultType="fooddto">
+        select * from food where food_num=#{food_num}
+    </select>
+
+    <select id="selectTripData" parameterType="int" resultType="tripdto">
+        select * from trip where trip_num=#{trip_num}
+    </select>
+
+    <select id="selectCafeData" parameterType="int" resultType="cafedto">
+        select * from cafe where cafe_num=#{cafe_num}
+    </select>
+</mapper>

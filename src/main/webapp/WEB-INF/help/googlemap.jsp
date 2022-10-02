@@ -258,6 +258,7 @@
 
         <!-- 경로설정 -->
         <div class="cosselect">
+
             <%-- <form action="cosInsert" method="post">--%>
             <h2>경로설정</h2>
             <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" cnt=${dto.cnt} name="title"
