@@ -17,4 +17,9 @@ public class FindDto {
 	private String name;
 	private String nickname;
 	private String loginid;
+	private String find1;
+	private String find2;
+	private String find3;
+	private String find4;
+	private String find5;
 }

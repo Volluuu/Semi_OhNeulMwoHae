@@ -3,6 +3,7 @@ package bit.data.controller;
 import bit.data.dto.*;
 import bit.data.service.CommentFriendServiceInter;
 import bit.data.service.FindServiceInter;
+import bit.data.service.SubsServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,9 @@ public class FindController {
 
     @Autowired
     CommentFriendServiceInter commentFriendService;
+
+    @Autowired
+    SubsServiceInter subsService;
 
     @GetMapping("/findboard/list")
     public String findBoard(
@@ -258,7 +262,6 @@ public class FindController {
     @GetMapping("/findboard/myplace")
     @ResponseBody
     public List<? extends Object> myplace(int user_num){
-        System.out.println(user_num);
         return null;
     }
 
@@ -297,6 +300,25 @@ public class FindController {
         List<CourseDto> list=findService.selectMyCourse(user_num);
 
         return list;
+    }
+
+    @GetMapping("/findboard/step")
+    @ResponseBody
+    public Object selectStep(String table, String num){
+
+        if(table.equals("cafe")){
+            CafeDto dto=subsService.selectCafeData(Integer.parseInt(num));
+            return dto;
+        }
+        if(table.equals("trip")){
+            TripDto dto=subsService.selectTripData(Integer.parseInt(num));
+            return dto;
+        }
+        if(table.equals("food")){
+            FoodDto dto=subsService.selectFoodData(Integer.parseInt(num));
+            return dto;
+        }
+        return null;
     }
 
 }

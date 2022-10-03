@@ -98,40 +98,12 @@
         float: right;
     }
 
-    .hj_wrapper {
-        position: relative;
-        width: 1200px;
-        margin: 0px auto;
-    }
 
     section {
         display: block;
     }
 
-    .IVCho {
-        position: relative;
-        display: flex;
-        flex-direction: row-reverse;
-        -webkit-box-align: center;
-        align-items: center;
-    }
 
-    .jpxFDU {
-        position: relative;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        width: auto;
-        height: fit-content;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(37, 37, 37);
-        padding: 10px 19px;
-        color: rgb(37, 37, 37);
-        font-weight: 700;
-        font-size: 16px;
-    }
 
     button {
         border: 0;
@@ -143,24 +115,12 @@
         background: unset;
     }
 
-    .jgfRlo {
-        position: relative;
-    }
 
     div {
         display: block;
     }
 
-    .fotqhs {
-        font-weight: 350;
-        font-size: 14px;
-        line-height: 21px;
-        color: rgb(37, 37, 37);
-        padding: 8px 33px 8px 10px;
-        border: unset;
-        background-color: unset;
-        appearance: none;
-    }
+
 
     option {
         font-weight: normal;

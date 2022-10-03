@@ -23,19 +23,25 @@
 
     .findlist {
         background-color: ghostwhite;
+        width:700px;
     }
 
-    .cinsertlist:hover {
+    .courseinsertdiv{
+        background-color: ghostwhite;
+    }
+
+
+    .ainsertlist:hover {
         background-color: darkgray;
         cursor: pointer;
     }
 
-    .insertcourselist:hover{
+    .courseinsertlist:hover {
         background-color: darkgray;
         cursor: pointer;
     }
 
-    #selectcword {
+    #selectaword, #selectcword {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -48,9 +54,6 @@
         cursor: pointer;
     }
 
-    div.findlist{
-        width:700px;
-    }
     .cancel {
         float: right;
         color: darkred;
@@ -89,6 +92,10 @@
     .radio_mycourse {
         display: none;
     }
+
+    label {
+        cursor: pointer;
+    }
 </style>
 <c:if test="${sessionScope.loginok==null}">
     <script>
@@ -97,184 +104,23 @@
     </script>
 </c:if>
 <body>
-<script>
-    $(function () {
-        var root = "${root}";
-        var user_num = "${sessionScope.user_num}";
-        $(document).on("change","#ccolumn",function (){
-           $("#cword").val("");
-           $("#cword").focus();
-           $(".findlist").empty();
-        });
-
-
-        $(document).on("keyup","#cword",function (e){
-            if(e.keyCode==13){
-               $("#cfind").trigger("click");
-            }
-        });
-
-        $(document).on("click", "#cfind", function () {
-
-            var s = "";
-            $.ajax({
-                type: "get",
-                url: root + "/findboard/insertlist",
-                dataType: "json",
-                data: {"ccolumn": $("#ccolumn").val(), "cword": $("#cword").val()},
-                success: function (res) {
-                    s += "<ul><br>";
-                    $.each(res, function (i, elt) {
-                        s += "<li class='cinsertlist' photo='" + elt.photo + "'>" + elt.title + "</li>";
-                    });
-                    s += "</ul>";
-                    $(".findlist").html(s);
-                }
-            });
-        });
-
-        $(document).on("click", ".cinsertlist", function () {
-            var ti = $(this);
-            var txt = ti.text();
-            var photo = ti.attr("photo");
-
-            if ($(".fig").length == 5) {
-                alert("장소는 5개만 추가 가능합니다");
-                return;
-            }
-            ;
-            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
-
-        });
-
-        $(document).on("click", ".cancel", function () {
-            var ti = $(this);
-            ti.parents(".fig").remove();
-        });
-
-        $(document).on("click", "#radio_search", function () {
-            $(".radio_myplace").hide();
-            $(".radio_mycourse").hide();
-            $(".findlist").empty();
-
-
-            $(".radio_search").show();
-        });
-
-        $(document).on("click", "#radio_myplace", function () {
-            $(".radio_search").hide();
-            $(".radio_mycourse").hide();
-            $(".findlist").empty();
-            $(".foodlist").text("");
-            $(".foodlist").text("카페 목록");
-            $(".triplist").text("");
-            $(".triplist").text("여행지 목록");
-            $(".cafelist").text("");
-            $(".cafelist").text("카페 목록");
-            $(".radio_myplace").show();
-            $.ajax({
-                type: "get",
-                url: root + "/subs/myplace",
-                dataType: "json",
-                data: {"user_num": user_num},
-                success: function (res) {
-                    if (res.length == 0) {
-                        $(".radio_myplace").empty();
-                        $(".radio_myplace").html("<p>즐겨찾기 한 장소가 없습니다</p>");
-                    } else {
-                        $.each(res, function (i, elt) {
-                            if (elt.food_num != 0) {
-                                var f = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/food",
-                                    dataType: "json",
-                                    data: {"food_num": elt.food_num},
-                                    success: function (resf) {
-                                        f += "<li class='cinsertlist' photo='" + resf.photo + "'>" + resf.title + "</li>";
-                                        $(".foodlist").append(f);
-                                    }
-                                });
-
-                            } else if (elt.trip_num != 0) {
-                                var t = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/trip",
-                                    dataType: "json",
-                                    data: {"trip_num": elt.trip_num},
-                                    success: function (rest) {
-                                        t += "<li class='cinsertlist' photo='" + rest.photo + "'>" + rest.title + "</li>";
-                                        $(".triplist").append(t);
-                                    }
-                                });
-
-                            } else {
-                                var c = "";
-                                $.ajax({
-                                    type: "get",
-                                    url: root + "/myplace/cafe",
-                                    dataType: "json",
-                                    data: {"cafe_num": elt.cafe_num},
-                                    success: function (resc) {
-                                        c += "<li class='cinsertlist' photo='" + resc.photo + "'>" + resc.title + "</li>";
-                                        $(".cafelist").append(c);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            });
-
-
-        });
-
-        $(document).on("click", "#radio_mycourse", function () {
-            $(".radio_search").hide();
-            $(".radio_myplace").hide();
-            $(".findlist").empty();
-            $(".radio_mycourse").show();
-            $(".mycourselist").text("");
-            $(".mycourselist").text("저장한 경로");
-            var mc="";
-            $.ajax({
-                type:"get",
-                url:root+"/findboard/mycourse",
-                dataType:"json",
-                data:{"user_num":user_num},
-                success:function(res){
-                    console.dir(res);
-                    $.each(res,function (i,elt){
-                        mc+="<ul class='insertcourselist''>"+(i+1)+" "+elt.title;
-                        for(var i=1;i<=elt.cnt;i++){
-                            mc+="<li>"+i+"."+(elt.step+i)+"</li>";
-                        }
-                        mc+="</ul>";
-                        $(".mycourselist").append(mc);
-                    })
-                }
-            });
-
-
-
-
-
-
-
-        });
-
-
-
-
-    });//$(function)
-
-</script>
 <div class="dg_container">
     <div class="insertfind">
         <form action="insertfind" method="post" enctype="multipart/form-data">
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="currentPage" value="${currentPage}">
+            <div id="put">
+                <div class="aput">
+                    <input type='hidden' class='inputfind' name='find1' value=''>
+                    <input type='hidden' class='inputfind' name='find2' value=''>
+                    <input type='hidden' class='inputfind' name='find3' value=''>
+                    <input type='hidden' class='inputfind' name='find4' value=''>
+                    <input type='hidden' class='inputfind' name='find5' value=''>
+
+                </div>
+                <div class="cput"></div>
+
+            </div>
 
             <table class="table table-bordered">
                 <tr align="center" valign="middle">
@@ -287,7 +133,8 @@
                 </tr>
                 <tr align="center" valign="middle">
                     <th>장소</th>
-                    <td>
+                    <td id="selectword">
+                        <div id="selectaword"></div>
                         <div id="selectcword"></div>
                     </td>
                 </tr>
@@ -351,14 +198,427 @@
 
         </div>
         <div class="radio_mycourse">
-            <ul class='mycourselist'>저장한 경로
-            </ul>
+            <p>저장한 경로</p>
+            <div class='mycourselist'>
+            </div>
         </div>
         <div class="findlist"></div>
     </div>
 </div>
 
 <script>
+    var root = "${root}";
+    var user_num = "${sessionScope.user_num}";
+    $(document).on("change", "#ccolumn", function () {
+        $("#cword").val("");
+        $("#cword").focus();
+        $(".findlist").empty();
+    });
+
+
+    $(document).on("keyup", "#cword", function (e) {
+        if (e.keyCode == 13) {
+            $("#cfind").trigger("click");
+        }
+    });
+
+    $(document).on("click", "#cfind", function () {
+
+        var s = "";
+        $.ajax({
+            type: "get",
+            url: root + "/findboard/insertlist",
+            dataType: "json",
+            data: {"ccolumn": $("#ccolumn").val(), "cword": $("#cword").val()},
+            success: function (res) {
+                s += "<ul><br>";
+                $.each(res, function (i, elt) {
+                    s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
+                    // s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
+                });
+                s += "</ul>";
+                $(".findlist").html(s);
+            }
+        });
+    });
+
+    $(document).on("click", ".ainsertlist", function () {
+        var ti = $(this);
+        var txt = ti.text();
+        var photo = ti.attr("photo");
+        var ffind=ti.attr("ffind");
+
+        if ($(".fig").length == 5) {
+            alert("장소는 5개만 추가 가능합니다");
+            return;
+        }
+        ;
+        if ($("#selectaword").size == 0) {
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $("#selectaword").append("<figure style='margin: 10px;' class='fig' ffind='"+ffind+"'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+
+        $(".inputfind").attr("value","");
+        for (var i = 0; i < $(".fig").length; i++) {
+
+            var ffind=$(".fig").eq(i).attr("ffind");
+            console.log(ffind);
+            $(".inputfind").eq(i).attr("value",ffind);
+        }
+
+
+    });
+
+    $(document).on("click", ".cancel", function () {
+        var ti = $(this);
+        ti.parents(".fig").remove();
+
+        $(".inputfind").attr("value","");
+        for (var i = 0; i < $(".fig").length; i++) {
+
+            var ffind=$(".fig").eq(i).attr("ffind");
+            console.log(ffind);
+            $(".inputfind").eq(i).attr("value",ffind);
+        }
+    });
+
+    $(document).on("click", "#radio_search", function () {
+        $("#selectcword").remove();
+        $(".cput").remove();
+        if ($(".aput").length == 0) {
+            $("#put").append("<div class='aput'></div>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find1' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find2' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find3' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find4' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find5' value=''>");
+        }
+        if ($("#selectaword").length == 0) {
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $(".radio_myplace").hide();
+        $(".radio_mycourse").hide();
+        $(".findlist").empty();
+
+
+        $(".radio_search").show();
+
+
+
+    });
+
+    $(document).on("click", "#radio_myplace", function () {
+        $("#selectcword").remove();
+        $(".cput").remove();
+        if ($(".aput").length == 0) {
+            $("#put").append("<div class='aput'></div>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find1' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find2' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find3' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find4' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find5' value=''>");
+        }
+        if ($("#selectaword").length == 0) {
+            $("#selectword").append("<div id='selectaword'></div>");
+        }
+        $(".radio_search").hide();
+        $(".radio_mycourse").hide();
+        $(".findlist").empty();
+        $(".foodlist").text("");
+        $(".foodlist").text("카페 목록");
+        $(".triplist").text("");
+        $(".triplist").text("여행지 목록");
+        $(".cafelist").text("");
+        $(".cafelist").text("카페 목록");
+        $(".radio_myplace").show();
+
+        $.ajax({
+            type: "get",
+            url: root + "/subs/myplace",
+            dataType: "json",
+            async: false,
+            data: {"user_num": user_num},
+            success: function (res) {
+                if (res.length == 0) {
+                    $(".radio_myplace").empty();
+                    $(".radio_myplace").html("<p>즐겨찾기 한 장소가 없습니다</p>");
+                } else {
+                    $.each(res, function (i, elt) {
+                        if (elt.food_num != 0) {
+                            var f = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/food",
+                                dataType: "json",
+                                async: false,
+                                data: {"food_num": elt.food_num},
+                                success: function (resf) {
+                                    f += "<li class='ainsertlist' photo='" + resf.photo + "' ffind='food,"+resf.food_num+"'>" + resf.title + "</li>";
+                                    $(".foodlist").append(f);
+
+                                }
+                            });
+
+                        } else if (elt.trip_num != 0) {
+                            var t = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/trip",
+                                dataType: "json",
+                                async: false,
+                                data: {"trip_num": elt.trip_num},
+                                success: function (rest) {
+                                    t += "<li class='ainsertlist' photo='" + rest.photo + "' ffind='trip,"+rest.trip_num+"'>" + rest.title + "</li>";
+                                    $(".triplist").append(t);
+                                }
+                            });
+
+                        } else {
+                            var c = "";
+                            $.ajax({
+                                type: "get",
+                                url: root + "/myplace/cafe",
+                                dataType: "json",
+                                async: false,
+                                data: {"cafe_num": elt.cafe_num},
+                                success: function (resc) {
+                                    c += "<li class='ainsertlist' photo='" + resc.photo + "' ffind='cafe,"+resc.cafe_num+"'>" + resc.title + "</li>";
+                                    $(".cafelist").append(c);
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
+
+    });
+
+    $(document).on("click", "#radio_mycourse", function () {
+        $("#selectaword").remove();
+        $(".aput").remove();
+        $(".cput").remove();
+        if ($(".cput").length == 0) {
+            $("#put").append("<div class='cput'></div>");
+        }
+        $(".radio_search").hide();
+        $(".radio_myplace").hide();
+        $(".findlist").empty();
+        $(".radio_mycourse").show();
+        $(".mycourselist").text("");
+        var mc = "";
+        var st1 = "";
+        var st2 = "";
+        var st3 = "";
+        var st4 = "";
+        var st5 = "";
+        $.ajax({
+            type: "get",
+            url: root + "/findboard/mycourse",
+            dataType: "json",
+            async: false,
+            data: {"user_num": user_num},
+            success: function (res) {
+                $.each(res, function (i, elt) {
+
+                    if (elt.step1 != null) {
+                        var step1 = [];
+                        var step1 = elt.step1.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step1[0], "num": step1[1]},
+                            success: function (res) {
+                                st1 = "";
+                                st1 += "<span photo='" + res.photo + "' class='st1' step1='" + elt.step1 + "'>1. " + res.title + "</span><br>";
+                            }
+                        });
+                    }
+
+
+                    if (elt.step2 != null) {
+                        var step2 = [];
+                        var step2 = elt.step2.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step2[0], "num": step2[1]},
+                            success: function (res) {
+                                st2 = "";
+                                st2 += "<span photo='" + res.photo + "' class='st2' step2='" + elt.step2 + "'>2. " + res.title + "</span><br>";
+                            }
+                        });
+                    }
+                    if (elt.step3 != null) {
+                        var step3 = [];
+                        var step3 = elt.step3.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step3[0], "num": step3[1]},
+                            success: function (res) {
+                                st3 = "";
+                                st3 += "<span photo='" + res.photo + "' class='st3' step3='" + elt.step3 + "'>3. " + res.title + "</span><br>";
+                            }
+                        });
+                    }
+                    if (elt.step4 != null) {
+                        var step4 = [];
+                        var step4 = elt.step4.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step4[0], "num": step4[1]},
+                            success: function (res) {
+                                st4 = "";
+                                st4 += "<span photo='" + res.photo + "' class='st4' step4='" + elt.step4 + "'>4. " + res.title + "</span><br>";
+                            }
+                        });
+                    }
+                    if (elt.step5 != null) {
+                        var step5 = [];
+                        var step5 = elt.step5.split(",");
+                        $.ajax({
+                            type: "get",
+                            url: root + "/findboard/step",
+                            dataType: "json",
+                            async: false,
+                            data: {"table": step5[0], "num": step5[1]},
+                            success: function (res) {
+                                st5 = "";
+                                st5 += "<span photo='" + res.photo + "' class='st5' step5='" + elt.step5 + "'>5. " + res.title + "</span><br>";
+
+                            }
+                        });
+                    }
+                    mc = "";
+                    mc+="<div class='courseinsertdiv'>";
+                    mc += "<span class='courseinsertlist'>경로" + (i + 1) + " " + elt.title + "</span><br>";
+                    mc+="</div>";
+                    $(".mycourselist").append(mc);
+                    $(".courseinsertdiv").eq(i).append(st1);
+                    $(".courseinsertdiv").eq(i).append(st2);
+                    $(".courseinsertdiv").eq(i).append(st3);
+                    $(".courseinsertdiv").eq(i).append(st4);
+                    $(".courseinsertdiv").eq(i).append(st5);
+                    $(".courseinsertdiv").eq(i).append("<br>");
+
+                    mc = "";
+                    st1 = "";
+                    st2 = "";
+                    st3 = "";
+                    st4 = "";
+                    st5 = "";
+                })
+
+            }
+        });
+
+
+    });
+    $(document).on("click", ".courseinsertlist", function () {
+        $("#selectcword").remove();
+        $("#selectword").append("<div id='selectcword'></div>");
+        $(".cput").remove();
+        $("#put").append("<div class='cput'></div>");
+
+        var ti = $(this);
+
+        // if (ti.siblings(".st1").length!=0) {
+        //     var st1 = ti.siblings(".st1").text();
+        //     var f1 = ti.siblings(".st1").attr("step1");
+        //     var photo1 = ti.siblings(".st1").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find1' value='" + f1 + "'>");
+        //
+        // }
+        //
+        // if (ti.siblings(".st2").length!=0) {
+        //     var st2 = ti.siblings(".st2").text();
+        //     var f2 = ti.siblings(".st2").attr("step2");
+        //     var photo2 = ti.siblings(".st2").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st3").length!=0) {
+        //     var st3 = ti.siblings(".st3").text();
+        //     var f3 = ti.siblings(".st3").attr("step3");
+        //     var photo3 = ti.siblings(".st3").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st4").length!=0) {
+        //     var st4 = ti.siblings(".st4").text();
+        //     var f4 = ti.siblings(".st4").attr("step4");
+        //     var photo4 = ti.siblings(".st4").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st5").length!=0) {
+        //     var st5 = ti.siblings(".st5").text();
+        //     var f5 = ti.siblings(".st5").attr("step5");
+        //     var photo5 = ti.siblings(".st5").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
+        // }
+
+        if (ti.next().next(".st1").length!=0) {
+            var st1 = ti.next().next(".st1").text();
+            var f1 = ti.next().next(".st1").attr("step1");
+            var photo1 = ti.next().next(".st1").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find1' value='" + f1 + "'>");
+
+        }
+
+        if (ti.next().next(".st1").next().next(".st2").length!=0) {
+            var st2 = ti.next().next(".st1").next().next(".st2").text();
+            var f2 = ti.next().next(".st1").next().next(".st2").attr("step2");
+            var photo2 = ti.next().next(".st1").next().next(".st2").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
+        }
+
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").length!=0) {
+            var st3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").text();
+            var f3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("step3");
+            var photo3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
+        }
+
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length!=0) {
+            var st4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").text();
+            var f4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("step4");
+            var photo4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
+        }
+
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length!=0) {
+            var st5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").text();
+            var f5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("step5");
+            var photo5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
+        }
+
+
+    });
+
+
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
         imageView = function imageView(att_zone, btn) {
 
