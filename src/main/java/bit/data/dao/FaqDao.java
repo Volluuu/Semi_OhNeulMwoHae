@@ -13,7 +13,7 @@ import java.util.Map;
 public class FaqDao implements FaqDaoInter {
 	@Autowired
 	SqlSession session;
-	String ns = "bit.data.dao.QnaDao.";
+	String ns = "bit.data.dao.FaqDao.";
 
 	@Override
 	public FaqDto getFaq(int faq_num) {

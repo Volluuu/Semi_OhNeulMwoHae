@@ -4,6 +4,10 @@
 
 <mapper namespace="bit.data.dao.QnaDao">
     <select id="getQna" resultType="qnadto">
-        select * from qna
+        select * from qna where qna_num=1
+    </select>
+
+    <select id="getAllData" resultType="QnaDto">
+        select * from qna order by qna_num desc
     </select>
 </mapper>

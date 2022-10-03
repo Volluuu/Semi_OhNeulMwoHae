@@ -7,6 +7,7 @@ import java.util.Map;
 
 public interface QnaServiceInter {
 	public QnaDto getQna(int qna_num);
+	public List<QnaDto> getAllData();
 	public int getMaxNum();
 	public int getTotalCount(String searchcolumn,String searchword);
 	public List<QnaDto> getPagingList(String searchcolumn,String searchword,int startnum,int perpage);
