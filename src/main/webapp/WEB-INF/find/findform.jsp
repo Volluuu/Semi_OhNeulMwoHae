@@ -256,7 +256,12 @@
             alert("장소는 5개만 추가 가능합니다");
             return;
         }
-        ;
+        for(var j=0;j<$(".fig").length;j++){
+            if($(".fig").eq(j).attr("ffind")==ffind){
+                alert("중복 불가");
+                return;
+            }
+        }
         if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }

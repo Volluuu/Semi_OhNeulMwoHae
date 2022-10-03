@@ -197,52 +197,50 @@
             </table>
         </form>
     </div>
-</div>
-<div class="insertlist">
-    <div class="dg_radio">
-        <label>
-            <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
-        </label>
-        <label>
-            <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;
-        </label>
-        <label>
-            <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
-        </label>
-    </div>
-    <div class="radio_search">
-        <div class="input-group">
-            <select class="form-control" name="ccolumn" id="ccolumn">
-                <option hidden selected disabled>테마 선택</option>
-                <option value="trip">여행</option>
-                <option value="cafe">카페</option>
-                <option value="food">식당</option>
-            </select>
-            <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"
-                   value="${param.cword}">
-            <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
+    <div class="insertlist">
+        <div class="dg_radio">
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
+            </label>
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;
+            </label>
+            <label>
+                <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
+            </label>
         </div>
-    </div>
-    <div class="radio_myplace">
-        <ul class='foodlist'>식당 목록
-
-        </ul>
-        <ul class='triplist'>여행지 목록
-
-        </ul>
-        <ul class='cafelist'>카페 목록
-        </ul>
-
-    </div>
-    <div class="radio_mycourse">
-        <p>저장한 경로</p>
-        <div class='mycourselist'>
+        <div class="radio_search">
+            <div class="input-group">
+                <select class="form-control" name="ccolumn" id="ccolumn">
+                    <option hidden selected disabled>테마 선택</option>
+                    <option value="trip">여행</option>
+                    <option value="cafe">카페</option>
+                    <option value="food">식당</option>
+                </select>
+                <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"
+                       value="${param.cword}">
+                <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
+            </div>
         </div>
-    </div>
-    <div class="findlist"></div>
-</div>
-</div>
+        <div class="radio_myplace">
+            <ul class='foodlist'>식당 목록
 
+            </ul>
+            <ul class='triplist'>여행지 목록
+
+            </ul>
+            <ul class='cafelist'>카페 목록
+            </ul>
+
+        </div>
+        <div class="radio_mycourse">
+            <p>저장한 경로</p>
+            <div class='mycourselist'>
+            </div>
+        </div>
+        <div class="findlist"></div>
+    </div>
+</div>
 <script>
     var root = "${root}";
     var user_num = "${sessionScope.user_num}";
@@ -296,7 +294,14 @@
             alert("장소는 5개만 추가 가능합니다");
             return;
         }
-        ;
+
+        for(var j=0;j<$(".fig").length;j++){
+            if($(".fig").eq(j).attr("ffind")==ffind){
+                alert("중복 불가");
+                return;
+            }
+        }
+
         if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
@@ -306,7 +311,6 @@
         for (var i = 0; i < $(".fig").length; i++) {
 
             var ffind = $(".fig").eq(i).attr("ffind");
-            console.log(ffind);
             $(".inputfind").eq(i).attr("value", ffind);
         }
 
