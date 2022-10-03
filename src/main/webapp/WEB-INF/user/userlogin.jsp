@@ -68,6 +68,15 @@
                 </div>
             </td>
         </tr>
+        <tr>
+            <td>
+                <div class="input-group">
+                    <button type="button" onclick="location.href='${root}/user/userid'" class="btn btn-success"  id="btnid" style="border-radius:30px; background-color: white; width:260px; color:black;">아이디 찾기</button>
+                    &nbsp;
+                    <button type="button" onclick="location.href='${root}/user/userpassword'" class="btn btn-success"  id="btnpassword" style="border-radius:30px; background-color: white; width:260px; color:black;">비밀번호 찾기</button>
+                </div>
+            </td>
+        </tr>
     </table>
 </div>
 <!-- 스크립트 이벤트 -->
@@ -81,6 +90,21 @@
         // console.log(pass);
         var root='${root}';
 
+        $.ajax({
+            type:"get",
+            url:root+"/user/login",
+            dataType:"json",
+            data:{"loginid":id,"password":pass},
+            success:function(res){
+                if(res.result=='fail'){
+                    alert("아이디나 비번이 맞지 않습니다");
+                }else{
+                    alert("로그인 되었습니다.");
+                    location.reload();
+                }
+            }//success
+
+        }); //ajax
     });
 
    /* //로그아웃
