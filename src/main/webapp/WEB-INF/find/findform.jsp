@@ -35,7 +35,7 @@
         cursor: pointer;
     }
 
-    #selectaword,#selectcword {
+    #selectaword, #selectcword {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -90,8 +90,9 @@
     .radio_mycourse {
         display: none;
     }
-    label{
-        cursor:pointer;
+
+    label {
+        cursor: pointer;
     }
 </style>
 <c:if test="${sessionScope.loginok==null}">
@@ -106,6 +107,11 @@
         <form action="insertfind" method="post" enctype="multipart/form-data">
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="currentPage" value="${currentPage}">
+            <div id="put">
+                <div class="aput"></div>
+                <div class="cput"></div>
+
+            </div>
 
             <table class="table table-bordered">
                 <tr align="center" valign="middle">
@@ -184,15 +190,14 @@
         </div>
         <div class="radio_mycourse">
             <p>저장한 경로</p>
-            <ul class='mycourselist'>
-            </ul>
+            <div class='mycourselist'>
+            </div>
         </div>
         <div class="findlist"></div>
     </div>
 </div>
 
 <script>
-
     var root = "${root}";
     var user_num = "${sessionScope.user_num}";
     $(document).on("change", "#ccolumn", function () {
@@ -237,7 +242,7 @@
             return;
         }
         ;
-        if($("#selectaword").size==0){
+        if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
         $("#selectaword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
@@ -251,7 +256,11 @@
 
     $(document).on("click", "#radio_search", function () {
         $("#selectcword").remove();
-        if($("#selectaword").size==0){
+        $(".cput").remove();
+        if ($(".aput").length == 0) {
+            $("#put").append("<div class='aput'></div>");
+        }
+        if ($("#selectaword").length == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
         $(".radio_myplace").hide();
@@ -264,7 +273,11 @@
 
     $(document).on("click", "#radio_myplace", function () {
         $("#selectcword").remove();
-        if($("#selectaword").size==0){
+        $(".cput").remove();
+        if ($(".aput").length == 0) {
+            $("#put").append("<div class='aput'></div>");
+        }
+        if ($("#selectaword").length == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
         $(".radio_search").hide();
@@ -338,6 +351,11 @@
 
     $(document).on("click", "#radio_mycourse", function () {
         $("#selectaword").remove();
+        $(".aput").remove();
+        $(".cput").remove();
+        if ($(".cput").length == 0) {
+            $("#put").append("<div class='cput'></div>");
+        }
         $(".radio_search").hide();
         $(".radio_myplace").hide();
         $(".findlist").empty();
@@ -357,9 +375,7 @@
             data: {"user_num": user_num},
             success: function (res) {
                 $.each(res, function (i, elt) {
-                    mc="";
-                    mc += "<li class='courseinsertlist''>경로" + (i + 1) + " " + elt.title+"</li>";
-                    // mc += elt.step1 + "<br>";
+
                     if (elt.step1 != null) {
                         var step1 = [];
                         var step1 = elt.step1.split(",");
@@ -370,8 +386,8 @@
                             async: false,
                             data: {"table": step1[0], "num": step1[1]},
                             success: function (res) {
-                                st1="";
-                                st1 +="<span photo='"+res.photo+"' class='st1'>1."+ res.title + "</span><br>";
+                                st1 = "";
+                                st1 += "<span photo='" + res.photo + "' class='st1' step1='" + elt.step1 + "'>1." + res.title + "</span><br>";
                             }
                         });
                     }
@@ -387,8 +403,8 @@
                             async: false,
                             data: {"table": step2[0], "num": step2[1]},
                             success: function (res) {
-                                st2="";
-                                st2 +="<span photo='"+res.photo+"' class='st2'>2."+ res.title + "<br>";
+                                st2 = "";
+                                st2 += "<span photo='" + res.photo + "' class='st2' step2='" + elt.step2 + "'>2." + res.title + "</span><br>";
                             }
                         });
                     }
@@ -402,8 +418,8 @@
                             async: false,
                             data: {"table": step3[0], "num": step3[1]},
                             success: function (res) {
-                                st3="";
-                                st3 +="<span photo='"+res.photo+"' class='st3'>3."+ res.title + "<br>";
+                                st3 = "";
+                                st3 += "<span photo='" + res.photo + "' class='st3' step3='" + elt.step3 + "'>3." + res.title + "</span><br>";
                             }
                         });
                     }
@@ -417,8 +433,8 @@
                             async: false,
                             data: {"table": step4[0], "num": step4[1]},
                             success: function (res) {
-                                st4="";
-                                st4 +="<span photo='"+res.photo+"' class='st4'>4."+ res.title + "<br>";
+                                st4 = "";
+                                st4 += "<span photo='" + res.photo + "' class='st4' step4='" + elt.step4 + "'>4." + res.title + "</span><br>";
                             }
                         });
                     }
@@ -432,24 +448,29 @@
                             async: false,
                             data: {"table": step5[0], "num": step5[1]},
                             success: function (res) {
-                                st5="";
-                                st5 +="<span photo='"+res.photo+"' class='st5'>5."+ res.title + "<br>";
+                                st5 = "";
+                                st5 += "<span photo='" + res.photo + "' class='st5' step5='" + elt.step5 + "'>5." + res.title + "</span><br>";
 
                             }
                         });
                     }
+                    mc = "";
+                    mc+="<div class='courseinsertdiv'>";
+                    mc += "<p class='courseinsertlist'>경로" + (i + 1) + " " + elt.title + "</p>";
+                    mc+="</div>";
                     $(".mycourselist").append(mc);
-                    $(".mycourselist").append(st1);
-                    $(".mycourselist").append(st2);
-                    $(".mycourselist").append(st3);
-                    $(".mycourselist").append(st4);
-                    $(".mycourselist").append(st5);
-                    mc="";
-                    st1="";
-                    st2="";
-                    st3="";
-                    st4="";
-                    st5="";
+                    $(".courseinsertdiv").append(st1);
+                    $(".courseinsertdiv").append(st2);
+                    $(".courseinsertdiv").append(st3);
+                    $(".courseinsertdiv").append(st4);
+                    $(".courseinsertdiv").append(st5);
+
+                    mc = "";
+                    st1 = "";
+                    st2 = "";
+                    st3 = "";
+                    st4 = "";
+                    st5 = "";
                 })
 
             }
@@ -459,26 +480,94 @@
     });
     $(document).on("click", ".courseinsertlist", function () {
         $("#selectcword").remove();
+        $("#selectword").append("<div id='selectcword'></div>");
+        $(".cput").remove();
+        $("#put").append("<div class='cput'></div>");
+
         var ti = $(this);
 
-        var st1=ti.next(".st1").text();
-        var st2=ti.next().next().next(".st2").text();
-        var st3=ti.next().next().next().next(".st3").text();
-        var st4=ti.next().next().next().next().next(".st4").text();
-        var st5=ti.next().next().next().next().next().next(".st5").text();
+        // if (ti.siblings(".st1").length!=0) {
+        //     var st1 = ti.siblings(".st1").text();
+        //     var f1 = ti.siblings(".st1").attr("step1");
+        //     var photo1 = ti.siblings(".st1").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find1' value='" + f1 + "'>");
+        //
+        // }
+        //
+        // if (ti.siblings(".st2").length!=0) {
+        //     var st2 = ti.siblings(".st2").text();
+        //     var f2 = ti.siblings(".st2").attr("step2");
+        //     var photo2 = ti.siblings(".st2").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st3").length!=0) {
+        //     var st3 = ti.siblings(".st3").text();
+        //     var f3 = ti.siblings(".st3").attr("step3");
+        //     var photo3 = ti.siblings(".st3").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st4").length!=0) {
+        //     var st4 = ti.siblings(".st4").text();
+        //     var f4 = ti.siblings(".st4").attr("step4");
+        //     var photo4 = ti.siblings(".st4").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
+        // }
+        //
+        // if (ti.siblings(".st5").length!=0) {
+        //     var st5 = ti.siblings(".st5").text();
+        //     var f5 = ti.siblings(".st5").attr("step5");
+        //     var photo5 = ti.siblings(".st5").attr("photo");
+        //     $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+        //     $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
+        // }
 
-        var photo1 = ti.next(".st1").attr("photo");
-        var photo2 = ti.next().next().next(".st2").attr("photo");
-        var photo3 = ti.next().next().next().next(".st3").attr("photo");
-        var photo4 = ti.next().next().next().next().next(".st4").attr("photo");
-        var photo5 = ti.next().next().next().next().next().next(".st5").attr("photo");
+        if (ti.next(".st1").length!=0) {
+            var st1 = ti.next(".st1").text();
+            var f1 = ti.next(".st1").attr("step1");
+            var photo1 = ti.next(".st1").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find1' value='" + f1 + "'>");
 
-        $("#selectword").append("<div id='selectcword'></div>");
-        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
-        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
-        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
-        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
-        $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+        }
+
+        if (ti.next(".st1").next().next(".st2").length!=0) {
+            var st2 = ti.next(".st1").next().next(".st2").text();
+            var f2 = ti.next(".st1").next().next(".st2").attr("step2");
+            var photo2 = ti.next(".st1").next().next(".st2").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
+        }
+
+        if (ti.next(".st1").next().next(".st2").next().next(".st3").length!=0) {
+            var st3 = ti.next(".st1").next().next(".st2").next().next(".st3").text();
+            var f3 = ti.next(".st1").next().next(".st2").next().next(".st3").attr("step3");
+            var photo3 = ti.next(".st1").next().next(".st2").next().next(".st3").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
+        }
+
+        if (ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length!=0) {
+            var st4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").text();
+            var f4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("step4");
+            var photo4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
+        }
+
+        if (ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length!=0) {
+            var st5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").text();
+            var f5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("step5");
+            var photo5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("photo");
+            $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
+            $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
+        }
+
 
     });
 

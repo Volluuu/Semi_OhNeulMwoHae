@@ -262,7 +262,6 @@ public class FindController {
     @GetMapping("/findboard/myplace")
     @ResponseBody
     public List<? extends Object> myplace(int user_num){
-        System.out.println(user_num);
         return null;
     }
 
@@ -306,22 +305,17 @@ public class FindController {
     @GetMapping("/findboard/step")
     @ResponseBody
     public Object selectStep(String table, String num){
-        System.out.println("table:"+table);
-        System.out.println("num:"+num);
 
         if(table.equals("cafe")){
             CafeDto dto=subsService.selectCafeData(Integer.parseInt(num));
-            System.out.println(dto);
             return dto;
         }
         if(table.equals("trip")){
             TripDto dto=subsService.selectTripData(Integer.parseInt(num));
-            System.out.println(dto);
             return dto;
         }
         if(table.equals("food")){
             FoodDto dto=subsService.selectFoodData(Integer.parseInt(num));
-            System.out.println(dto);
             return dto;
         }
         return null;

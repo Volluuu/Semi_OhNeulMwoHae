@@ -175,7 +175,6 @@
         }
     )('att_zone', 'btnAtt')
 
-
 </script>
 </body>
 </html>

@@ -56,7 +56,7 @@
     <!--게시글 작성-->
     <insert id="insertFindBoard" parameterType="finddto">
         insert into find
-        values (null, #{user_num}, #{subject}, #{content}, #{photo}, 0, now())
+        values (null, #{user_num}, #{subject}, #{content}, #{photo}, 0, now(), #{find1},#{find2},#{find3},#{find4},#{find5})
     </insert>
     <!--조회수 업데이트-->
     <update id="updateReadCount" parameterType="int">
