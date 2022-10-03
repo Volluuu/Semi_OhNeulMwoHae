@@ -37,12 +37,12 @@ public class CafeDao implements CafeDaoInter{
 
     @Override
     public void updateReadCount(int cafe_num) {
-        session.update(ns+"updateReadCount");
+        session.update(ns+"updateReadCount", cafe_num);
     }
 
     @Override
     public void deleteCafe(int cafe_num) {
-        session.delete(ns+"deleteCafe");
+        session.delete(ns+"deleteCafe",cafe_num);
     }
 
     @Override
@@ -52,11 +52,16 @@ public class CafeDao implements CafeDaoInter{
 
     @Override
     public void likesInsert(int cafe_num) {
-        session.insert(ns+"likesInsert");
+        session.insert(ns+"likesInsert",cafe_num);
     }
 
     @Override
     public void likesUpdate(int cafe_num) {
-        session.update(ns+"likesUpdate");
+        session.update(ns+"likesUpdate",cafe_num);
+    }
+
+    @Override
+    public CafeDto selectByNum(int cafe_num) {
+        return session.selectOne(ns+"selectByNum",cafe_num);
     }
 }
