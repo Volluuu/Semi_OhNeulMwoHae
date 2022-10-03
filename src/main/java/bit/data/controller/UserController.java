@@ -55,6 +55,18 @@ public class UserController {
         return "/bit/user/userlogin";
     }
 
+    @GetMapping("/userid")
+    public String uid()
+    {
+        return "/bit/user/userid";
+    }
+
+    @GetMapping("/userpassword")
+    public String upassword()
+    {
+        return "/bit/user/userpassword";
+    }
+
     @PostMapping("/insert")
     public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto)// MemberDto dto은 모델앤뷰 생략
     {
