@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
@@ -117,6 +118,30 @@ public class CafeController {
         model.addAttribute("FoodtotalPage", FoodtotalPage);
 
         return "/bit/course/courseboard";
+    }
+
+    @GetMapping("/course/cafedetail")
+    public ModelAndView cafedetail(int cafe_num, int currentPage) {
+        ModelAndView mview=new ModelAndView();
+        //조회수 증가
+        cafeService.updateReadCount(cafe_num);
+        //num에 해당하는 dto 얻기
+        CafeDto dto=cafeService.selectByNum(cafe_num);
+        //글쓴 사람의 사진을 memphoto
+        //이 때 글 쓴사람이 탈퇴했을경우 널포인터익셉션 발생
+//        String memphoto="";
+//        try {
+//            memphoto=userService.selectByNum(dto.getId()).getPhoto();
+//        }catch(NullPointerException e) {
+//            memphoto="no";
+//            dto.setName("탈퇴한 회원");
+//        }
+
+        mview.addObject("dto",dto);
+        mview.addObject("currentPage",currentPage);
+//        mview.addObject("memphoto", memphoto);
+        mview.setViewName("/bit/course/cafedetail");
+        return mview;
     }
 //    //업로드
 ////    @GetMapping("/admin/insert")//관리자 페이지 생성후 mapping~!~!~!!~

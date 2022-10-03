@@ -66,4 +66,9 @@ public class CafeService implements CafeServiceInter {
     public void likesUpdate(int cafe_num) {
         cafedao.likesUpdate(cafe_num);
     }
+
+    @Override
+    public CafeDto selectByNum(int cafe_num) {
+        return cafedao.selectByNum(cafe_num);
+    }
 }

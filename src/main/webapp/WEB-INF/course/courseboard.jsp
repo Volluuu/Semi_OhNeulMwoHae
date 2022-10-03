@@ -109,10 +109,12 @@
     <title>Title</title>
 </head>
 <body>
-<%-------------------------------------------------------검색창--%>
+<%---------------------------------------------------------------------검색창--%>
 <div class="hj_search">
+    <form action="list" method="get">
     <input type="text" placeholder="검색어를 입력해주세요" class="hj_input" value="${param.cafeword}">
     <button type="submit" class="hj_button">검색</button>위치수정필요
+    </form>
 </div>
 <br>
 <br>
@@ -152,10 +154,13 @@
 
 
 <%---------------------------------------------------------------------------카페list--%>
+
 <div class="container Cafe" style="width:100%; height: 60%;">
     <%--글 갯수가 0이 아닐시--%>
+    <c:set var="root" value="${root}"/>
     <c:if test="${CafetotalCount>0}">
         <c:forEach var="dto" items="${Cafelist}" varStatus="i">
+        <a href="../course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
             <div class="item">
                 <div class="blog-card spring-fever" >
                     <c:set var="photo" value="${dto.photo}"/>
@@ -189,6 +194,7 @@
                 <div class="color-overlay"></div>
                     <%--        card =========================================================================================--%>
             </div>
+        </a>
         </c:forEach>
     </c:if>
 </div>
@@ -251,7 +257,7 @@
                     </div><!-- /.title-content -->
                     <div class="card-info">
                         종류: ${dto.category}<br>
-                        대표메뉴: ${dto.menu}
+                        대표메뉴: ${dto.menu}<br>
                         전화번호: ${dto.tel}<br>
 
                     </div><!-- /.card-info -->
@@ -273,7 +279,6 @@
                 <!-- overlays -->
                 <div class="gradient-overlay"></div>
                 <div class="color-overlay"></div>
-                    <%--        card =========================================================================================--%>
             </div>
         </c:forEach>
     </c:if>
@@ -281,6 +286,7 @@
 <%--card =========================================================================================--%>
 <%--Cafe:cafe정보 전체 담고있는 클래스명--%>
 <%--categorysel:Category  ID--%>
+
 <script>
     $(document).on("change", "#categorysel", function () {
         if($(this).val() == "food"){
