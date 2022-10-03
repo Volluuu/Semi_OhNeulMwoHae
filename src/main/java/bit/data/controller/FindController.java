@@ -66,6 +66,21 @@ public class FindController {
         for(FindDto dto:list){
             int answercount=commentFriendService.selectAllComments(dto.getFind_num()).size();
             dto.setAnswercount(answercount);
+            if(dto.getFind1()!=null){
+                String find[]=dto.getFind1().split(",");
+                if(find[0].equals("cafe")){
+                    CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(cdto.getPhoto());
+                }
+                if(find[0].equals("trip")){
+                    TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(tdto.getPhoto());
+                }
+                if(find[0].equals("food")){
+                    FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(fdto.getPhoto());
+                }
+            }
         }
 
         model.addAttribute("list", list);
@@ -220,6 +235,118 @@ public class FindController {
 //            memphoto="no";
 //            dto.setName("탈퇴한 회원");
 //        }
+
+        if(dto.getFind1()!=null){
+            String find[]=dto.getFind1().split(",");
+            if(find[0].equals("cafe")){
+                CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(cdto.getPhoto());
+                dto.setFind1title(cdto.getTitle());
+
+            }
+            if(find[0].equals("trip")){
+                TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(tdto.getPhoto());
+                dto.setFind1title(tdto.getTitle());
+
+            }
+            if(find[0].equals("food")){
+                FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(fdto.getPhoto());
+                dto.setFind1title(fdto.getTitle());
+            }
+        }
+        if(dto.getFind2()!=null){
+            String find[]=dto.getFind2().split(",");
+            if(find[0].equals("cafe")){
+                CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(cdto.getPhoto());
+                dto.setFind2title(cdto.getTitle());
+
+            }
+            if(find[0].equals("trip")){
+                TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(tdto.getPhoto());
+                dto.setFind2title(tdto.getTitle());
+
+            }
+            if(find[0].equals("food")){
+                FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(fdto.getPhoto());
+                dto.setFind2title(fdto.getTitle());
+            }
+        }
+        if(dto.getFind3()!=null){
+            String find[]=dto.getFind3().split(",");
+            if(find[0].equals("cafe")){
+                CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(cdto.getPhoto());
+                dto.setFind3title(cdto.getTitle());
+
+            }
+            if(find[0].equals("trip")){
+                TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(tdto.getPhoto());
+                dto.setFind3title(tdto.getTitle());
+
+            }
+            if(find[0].equals("food")){
+                FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(fdto.getPhoto());
+                dto.setFind3title(fdto.getTitle());
+            }
+        }
+        if(dto.getFind4()!=null){
+            String find[]=dto.getFind4().split(",");
+            if(find[0].equals("cafe")){
+                CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(cdto.getPhoto());
+                dto.setFind4title(cdto.getTitle());
+
+            }
+            if(find[0].equals("trip")){
+                TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(tdto.getPhoto());
+                dto.setFind4title(tdto.getTitle());
+
+            }
+            if(find[0].equals("food")){
+                FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(fdto.getPhoto());
+                dto.setFind4title(fdto.getTitle());
+            }
+        }
+        if(dto.getFind5()!=null){
+            String find[]=dto.getFind5().split(",");
+            if(find[0].equals("cafe")){
+                CafeDto cdto=findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(cdto.getPhoto());
+                dto.setFind5title(cdto.getTitle());
+
+            }
+            if(find[0].equals("trip")){
+                TripDto tdto=findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(tdto.getPhoto());
+                dto.setFind5title(tdto.getTitle());
+
+            }
+            if(find[0].equals("food")){
+                FoodDto fdto=findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(fdto.getPhoto());
+                dto.setFind5title(fdto.getTitle());
+            }
+        }
+
+        System.out.println(dto.getFind1photo());
+        System.out.println(dto.getFind1title());
+        System.out.println(dto.getFind2photo());
+        System.out.println(dto.getFind2title());
+        System.out.println(dto.getFind3photo());
+        System.out.println(dto.getFind3title());
+        System.out.println(dto.getFind4photo());
+        System.out.println(dto.getFind4title());
+        System.out.println(dto.getFind5photo());
+        System.out.println(dto.getFind5title());
 
         mview.addObject("dto",dto);
         mview.addObject("currentPage",currentPage);

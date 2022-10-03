@@ -59,7 +59,7 @@
         width: 25%;
     }
 
-    .findtable p{
+    .findtable p {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -104,7 +104,6 @@
     }
 
 
-
     button {
         border: 0;
         padding: 0;
@@ -119,7 +118,6 @@
     div {
         display: block;
     }
-
 
 
     option {
@@ -141,11 +139,9 @@
     }
 
 
-
     .libvtt > :nth-child(n+2) {
         margin-top: 24px;
     }
-
 
 
     ul, ol {
@@ -222,7 +218,6 @@
     }
 
 
-
     .bVhyCq > :nth-child(n-1) {
         margin-left: 6px;
     }
@@ -238,7 +233,6 @@
         margin-left: 2px;
         font-size: 12px;
     }
-
 
 
     .bVhyCq > div > :nth-child(n+1) {
@@ -265,7 +259,8 @@
 
                 <button type="submit" class="btn btn-outline-dark">검색</button>
                 <c:if test="${sessionScope.loginok!=null}">
-                    <a href="${root}/findboard/list?findcolumn=nickname&findword=${sessionScope.nickname}" class="dg_a">내가 쓴 글</a>
+                    <a href="${root}/findboard/list?findcolumn=nickname&findword=${sessionScope.nickname}" class="dg_a">내가
+                        쓴 글</a>
                 </c:if>
                 <div class="dg_session">
                     <c:if test="${sessionScope.loginok==null}">
@@ -340,44 +335,43 @@
             </tr>
         </c:if>
 
-<%--        <c:if test="${totalCount>0}">--%>
-<%--        <ul type="portrait" class="huOMZn">--%>
-<%--            <c:forEach var="dto" items="${list}" varStatus="i">--%>
+        <%--        <c:if test="${totalCount>0}">--%>
+        <%--        <ul type="portrait" class="huOMZn">--%>
+        <%--            <c:forEach var="dto" items="${list}" varStatus="i">--%>
 
-<%--            <div type="portrait" class="accompanyItem__ItemWrapper-sc-8nv24v-0 dUcsyA">--%>
-<%--                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"--%>
-<%--                   style="color:black;text-decoration:none;">--%>
-<%--                    <div>--%>
-<%--                        <c:set var="photo" value="${dto.photo}"/>--%>
-<%--                        <img src="${root}/upload/${fn:split(photo, ',')[0]}" alt="배경사진"--%>
-<%--                             style="width:100%;aspect-ratio: 1/1;max-height:250px;max-width:250px;">--%>
-<%--                    </div>--%>
+        <%--            <div type="portrait" class="accompanyItem__ItemWrapper-sc-8nv24v-0 dUcsyA">--%>
+        <%--                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"--%>
+        <%--                   style="color:black;text-decoration:none;">--%>
+        <%--                    <div>--%>
+        <%--                        <c:set var="photo" value="${dto.photo}"/>--%>
+        <%--                        <img src="${root}/upload/${fn:split(photo, ',')[0]}" alt="배경사진"--%>
+        <%--                             style="width:100%;aspect-ratio: 1/1;max-height:250px;max-width:250px;">--%>
+        <%--                    </div>--%>
 
-<%--                    <div type="portrait" class="accompanyItem__ContentWrapper-sc-8nv24v-1 kZxQCp">--%>
-<%--                        <div class="accompanyItem__TitleWrapper-sc-8nv24v-2 QJbqF" id="subject">--%>
-<%--                            <p class="Pgqux">모집중 ${dto.subject}</p>--%>
+        <%--                    <div type="portrait" class="accompanyItem__ContentWrapper-sc-8nv24v-1 kZxQCp">--%>
+        <%--                        <div class="accompanyItem__TitleWrapper-sc-8nv24v-2 QJbqF" id="subject">--%>
+        <%--                            <p class="Pgqux">모집중 ${dto.subject}</p>--%>
 
-<%--                        </div>--%>
-<%--                        <p type="portrait" class="accompanyItem__DescWrapper-sc-8nv24v-3 ewCfNG"--%>
-<%--                           id="pcontent">${dto.content}</p>--%>
+        <%--                        </div>--%>
+        <%--                        <p type="portrait" class="accompanyItem__DescWrapper-sc-8nv24v-3 ewCfNG"--%>
+        <%--                           id="pcontent">${dto.content}</p>--%>
 
-<%--                    </div>--%>
-<%--                    <div class="accompanyItem__ViewAndMsgWrapper-sc-8nv24v-6 bVhyCq">--%>
-<%--                        <div>--%>
-<%--                            <span style="color: darkgray;float:right;"></span>--%>
-<%--                        </div>--%>
-<%--                        <div>--%>
-<%--                            <p>${dto.name}/${dto.nickname}/(${dto.loginid})</p>--%>
-<%--                            <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"--%>
-<%--                                                                        pattern="yyyy-MM-dd"/><span class="fr"><i--%>
-<%--                                    class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i--%>
-<%--                                    class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>--%>
+        <%--                    </div>--%>
+        <%--                    <div class="accompanyItem__ViewAndMsgWrapper-sc-8nv24v-6 bVhyCq">--%>
+        <%--                        <div>--%>
+        <%--                            <span style="color: darkgray;float:right;"></span>--%>
+        <%--                        </div>--%>
+        <%--                        <div>--%>
+        <%--                            <p>${dto.name}/${dto.nickname}/(${dto.loginid})</p>--%>
+        <%--                            <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"--%>
+        <%--                                                                        pattern="yyyy-MM-dd"/><span class="fr"><i--%>
+        <%--                                    class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i--%>
+        <%--                                    class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>--%>
 
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </a>--%>
-<%--            </div>--%>
-
+        <%--                        </div>--%>
+        <%--                    </div>--%>
+        <%--                </a>--%>
+        <%--            </div>--%>
 
 
     </div>
@@ -395,23 +389,30 @@
         <c:forEach var="dto" items="${list}" varStatus="i">
             <td style="width:25%;">
                 <div type="portrait" class="accompanyItem__ItemWrapper-sc-8nv24v-0 dUcsyA">
-                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
-                   style="color:black;text-decoration:none;">
-                    <c:set var="photo" value="${dto.photo}"/>
-                    <div style="text-align: center;height:75%">
-                        <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                             style="margin-bottom:7px;width:100%;aspect-ratio: 1/1;max-height:250px;max-width:250px; ">
-                    </div>
-                    <p>${dto.subject}</p>
-                    <p>${dto.content}&nbsp;</p>
-                    <p>
-                            ${dto.name}/${dto.nickname}/(${dto.loginid})
-                    </p>
-                    <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
-                                                                pattern="yyyy-MM-dd"/><span class="fr"><i
-                            class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
-                            class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>
-                </a>
+                    <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
+                       style="color:black;text-decoration:none;">
+
+                        <c:set var="photo" value="${dto.photo}"/>
+                        <div style="text-align: center;height:75%">
+                            <c:if test="${dto.find1photo!=null}">
+                                <img alt="" src="${dto.find1photo}" class="img-thumbnail"
+                                     style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+                            </c:if>
+                            <c:if test="${dto.find1photo==null}">
+                                <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
+                                     style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+                            </c:if>
+                        </div>
+                        <p>${dto.subject}</p>
+                        <p>${dto.content}&nbsp;</p>
+                        <p>
+                                ${dto.name}/${dto.nickname}/(${dto.loginid})
+                        </p>
+                        <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
+                                                                    pattern="yyyy-MM-dd"/><span class="fr"><i
+                                class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
+                                class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>
+                    </a>
                 </div>
             </td>
 

@@ -24,7 +24,7 @@
 
 
     <select id="findPagingList" parameterType="Map" resultType="finddto">
-        select F.find_num, F.user_num, F.subject, F.content, F.photo, F.readcount, F.writeday, U.name, U.nickname,
+        select F.find_num, F.user_num, F.subject, F.content, F.photo, F.readcount, F.writeday, F.find1, F.find2, F.find3, F.find4, F.find5, U.name, U.nickname,
         U.loginid from find F INNER JOIN user U ON F.user_num = U.user_num
         <if test="findcolumn!=null and findword!=null">
             <choose>
@@ -70,6 +70,21 @@
         <if test="photo!=null">
             , photo=#{photo}
         </if>
+        <if test="find1!=null">
+            , find1=#{find1}
+        </if>
+        <if test="find2!=null">
+            , find2=#{find2}
+        </if>
+        <if test="find3!=null">
+            , find3=#{find3}
+        </if>
+        <if test="find4!=null">
+            , find4=#{find4}
+        </if>
+        <if test="find5!=null">
+            , find5=#{find5}
+        </if>
         where find_num=#{find_num}
     </update>
     <delete id="deleteFindBoard" parameterType="int">
@@ -86,12 +101,24 @@
         select * from trip where title like concat('%',#{cword},'%') order by readcount
     </select>
 
-    <select id="selectFoodData" parameterType="String" resultType="cafedto">
+    <select id="selectFoodData" parameterType="String" resultType="fooddto">
         select * from food where title like concat('%',#{cword},'%') order by readcount
     </select>
 
     <select id="selectMyCourse" parameterType="int" resultType="coursedto">
         select * from course where user_num=#{user_num}
+    </select>
+
+    <select id="selectCafeByNum" parameterType="int" resultType="cafedto">
+        select * from cafe where cafe_num=#{cafe_num}
+    </select>
+
+    <select id="selectTripByNum" parameterType="int" resultType="tripdto">
+        select * from trip where trip_num=#{trip_num}
+    </select>
+
+    <select id="selectFoodByNum" parameterType="int" resultType="fooddto">
+        select * from food where food_num=#{food_num}
     </select>
 
 
