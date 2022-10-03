@@ -39,6 +39,8 @@
       list-style: circle;
     }
   </style>
+  <script>
+  </script>
 </head>
 <body>
 <div class="qna_main">
@@ -49,14 +51,16 @@
     <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
   </div>
   <div class="qna_list">
-    <ul class="qna_title">
-      <h3>1:1 문의사항</h3>
-      <h3>${subject}</h3>
-      <span><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/></span>
-      <li class="qna_context">
-        ${content}
-      </li>
-    </ul>
+    <h3>1:1 문의사항</h3>
+    <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform'">글쓰기</button>
+    <c:forEach var="dto" items="${list}" >
+      <div class="qna_title">
+        <a href="#"><b>${dto.subject}</b>${dto.writeday}</a>
+        <div class="qna_context">
+          ${dto.content}
+        </div>
+      </div>
+    </c:forEach>
   </div>
 </div>
 </body>

@@ -22,6 +22,11 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
+	public List<QnaDto> getAllData() {
+		return daoInter.getAllData();
+	}
+
+	@Override
 	public int getMaxNum() {
 		return daoInter.getMaxNum();
 	}

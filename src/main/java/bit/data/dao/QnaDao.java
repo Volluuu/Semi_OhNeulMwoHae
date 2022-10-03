@@ -20,6 +20,11 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
+	public List<QnaDto> getAllData() {
+		return session.selectList(ns+"getAllData");
+	}
+
+	@Override
 	public int getMaxNum() {
 		return session.selectOne(ns+"getMaxNum");
 	}

@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface QnaDaoInter {
 	public QnaDto getQna(int qna_num);
+	public List<QnaDto> getAllData();
 	public int getMaxNum();
 	public int getTotalCount(Map<String, String> map);
 	public List<QnaDto> getPagingList(Map<String, Object> map);

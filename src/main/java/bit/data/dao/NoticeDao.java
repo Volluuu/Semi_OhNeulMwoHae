@@ -13,7 +13,7 @@ import java.util.Map;
 public class NoticeDao implements NoticeDaoInter {
 	@Autowired
 	SqlSession session;
-	String ns = "bit.data.dao.QnaDao.";
+	String ns = "bit.data.dao.NoticeDao.";
 
 	@Override
 	public NoticeDto getNotice(int notice_num) {
