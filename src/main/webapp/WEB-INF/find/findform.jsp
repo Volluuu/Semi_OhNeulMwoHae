@@ -23,7 +23,13 @@
 
     .findlist {
         background-color: ghostwhite;
+        width:700px;
     }
+
+    .courseinsertdiv{
+        background-color: ghostwhite;
+    }
+
 
     .ainsertlist:hover {
         background-color: darkgray;
@@ -46,10 +52,6 @@
 
     .radio_select {
         cursor: pointer;
-    }
-
-    div.findlist {
-        width: 700px;
     }
 
     .cancel {
@@ -108,7 +110,14 @@
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="currentPage" value="${currentPage}">
             <div id="put">
-                <div class="aput"></div>
+                <div class="aput">
+                    <input type='hidden' class='inputfind' name='find1' value=''>
+                    <input type='hidden' class='inputfind' name='find2' value=''>
+                    <input type='hidden' class='inputfind' name='find3' value=''>
+                    <input type='hidden' class='inputfind' name='find4' value=''>
+                    <input type='hidden' class='inputfind' name='find5' value=''>
+
+                </div>
                 <div class="cput"></div>
 
             </div>
@@ -224,7 +233,8 @@
             success: function (res) {
                 s += "<ul><br>";
                 $.each(res, function (i, elt) {
-                    s += "<li class='ainsertlist' photo='" + elt.photo + "'>" + elt.title + "</li>";
+                    s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
+                    // s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
                 });
                 s += "</ul>";
                 $(".findlist").html(s);
@@ -236,6 +246,7 @@
         var ti = $(this);
         var txt = ti.text();
         var photo = ti.attr("photo");
+        var ffind=ti.attr("ffind");
 
         if ($(".fig").length == 5) {
             alert("장소는 5개만 추가 가능합니다");
@@ -245,13 +256,30 @@
         if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
-        $("#selectaword").append("<figure style='margin: 10px;' class='fig'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+        $("#selectaword").append("<figure style='margin: 10px;' class='fig' ffind='"+ffind+"'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+
+        $(".inputfind").attr("value","");
+        for (var i = 0; i < $(".fig").length; i++) {
+
+            var ffind=$(".fig").eq(i).attr("ffind");
+            console.log(ffind);
+            $(".inputfind").eq(i).attr("value",ffind);
+        }
+
 
     });
 
     $(document).on("click", ".cancel", function () {
         var ti = $(this);
         ti.parents(".fig").remove();
+
+        $(".inputfind").attr("value","");
+        for (var i = 0; i < $(".fig").length; i++) {
+
+            var ffind=$(".fig").eq(i).attr("ffind");
+            console.log(ffind);
+            $(".inputfind").eq(i).attr("value",ffind);
+        }
     });
 
     $(document).on("click", "#radio_search", function () {
@@ -259,6 +287,11 @@
         $(".cput").remove();
         if ($(".aput").length == 0) {
             $("#put").append("<div class='aput'></div>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find1' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find2' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find3' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find4' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find5' value=''>");
         }
         if ($("#selectaword").length == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
@@ -269,6 +302,9 @@
 
 
         $(".radio_search").show();
+
+
+
     });
 
     $(document).on("click", "#radio_myplace", function () {
@@ -276,6 +312,11 @@
         $(".cput").remove();
         if ($(".aput").length == 0) {
             $("#put").append("<div class='aput'></div>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find1' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find2' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find3' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find4' value=''>");
+            $(".aput").append("<input type='hidden' class='inputfind' name='find5' value=''>");
         }
         if ($("#selectaword").length == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
@@ -295,6 +336,7 @@
             type: "get",
             url: root + "/subs/myplace",
             dataType: "json",
+            async: false,
             data: {"user_num": user_num},
             success: function (res) {
                 if (res.length == 0) {
@@ -308,10 +350,12 @@
                                 type: "get",
                                 url: root + "/myplace/food",
                                 dataType: "json",
+                                async: false,
                                 data: {"food_num": elt.food_num},
                                 success: function (resf) {
-                                    f += "<li class='ainsertlist' photo='" + resf.photo + "'>" + resf.title + "</li>";
+                                    f += "<li class='ainsertlist' photo='" + resf.photo + "' ffind='food,"+resf.food_num+"'>" + resf.title + "</li>";
                                     $(".foodlist").append(f);
+
                                 }
                             });
 
@@ -321,9 +365,10 @@
                                 type: "get",
                                 url: root + "/myplace/trip",
                                 dataType: "json",
+                                async: false,
                                 data: {"trip_num": elt.trip_num},
                                 success: function (rest) {
-                                    t += "<li class='ainsertlist' photo='" + rest.photo + "'>" + rest.title + "</li>";
+                                    t += "<li class='ainsertlist' photo='" + rest.photo + "' ffind='trip,"+rest.trip_num+"'>" + rest.title + "</li>";
                                     $(".triplist").append(t);
                                 }
                             });
@@ -334,9 +379,10 @@
                                 type: "get",
                                 url: root + "/myplace/cafe",
                                 dataType: "json",
+                                async: false,
                                 data: {"cafe_num": elt.cafe_num},
                                 success: function (resc) {
-                                    c += "<li class='ainsertlist' photo='" + resc.photo + "'>" + resc.title + "</li>";
+                                    c += "<li class='ainsertlist' photo='" + resc.photo + "' ffind='cafe,"+resc.cafe_num+"'>" + resc.title + "</li>";
                                     $(".cafelist").append(c);
                                 }
                             });
@@ -387,7 +433,7 @@
                             data: {"table": step1[0], "num": step1[1]},
                             success: function (res) {
                                 st1 = "";
-                                st1 += "<span photo='" + res.photo + "' class='st1' step1='" + elt.step1 + "'>1." + res.title + "</span><br>";
+                                st1 += "<span photo='" + res.photo + "' class='st1' step1='" + elt.step1 + "'>1. " + res.title + "</span><br>";
                             }
                         });
                     }
@@ -404,7 +450,7 @@
                             data: {"table": step2[0], "num": step2[1]},
                             success: function (res) {
                                 st2 = "";
-                                st2 += "<span photo='" + res.photo + "' class='st2' step2='" + elt.step2 + "'>2." + res.title + "</span><br>";
+                                st2 += "<span photo='" + res.photo + "' class='st2' step2='" + elt.step2 + "'>2. " + res.title + "</span><br>";
                             }
                         });
                     }
@@ -419,7 +465,7 @@
                             data: {"table": step3[0], "num": step3[1]},
                             success: function (res) {
                                 st3 = "";
-                                st3 += "<span photo='" + res.photo + "' class='st3' step3='" + elt.step3 + "'>3." + res.title + "</span><br>";
+                                st3 += "<span photo='" + res.photo + "' class='st3' step3='" + elt.step3 + "'>3. " + res.title + "</span><br>";
                             }
                         });
                     }
@@ -434,7 +480,7 @@
                             data: {"table": step4[0], "num": step4[1]},
                             success: function (res) {
                                 st4 = "";
-                                st4 += "<span photo='" + res.photo + "' class='st4' step4='" + elt.step4 + "'>4." + res.title + "</span><br>";
+                                st4 += "<span photo='" + res.photo + "' class='st4' step4='" + elt.step4 + "'>4. " + res.title + "</span><br>";
                             }
                         });
                     }
@@ -449,21 +495,22 @@
                             data: {"table": step5[0], "num": step5[1]},
                             success: function (res) {
                                 st5 = "";
-                                st5 += "<span photo='" + res.photo + "' class='st5' step5='" + elt.step5 + "'>5." + res.title + "</span><br>";
+                                st5 += "<span photo='" + res.photo + "' class='st5' step5='" + elt.step5 + "'>5. " + res.title + "</span><br>";
 
                             }
                         });
                     }
                     mc = "";
                     mc+="<div class='courseinsertdiv'>";
-                    mc += "<p class='courseinsertlist'>경로" + (i + 1) + " " + elt.title + "</p>";
+                    mc += "<span class='courseinsertlist'>경로" + (i + 1) + " " + elt.title + "</span><br>";
                     mc+="</div>";
                     $(".mycourselist").append(mc);
-                    $(".courseinsertdiv").append(st1);
-                    $(".courseinsertdiv").append(st2);
-                    $(".courseinsertdiv").append(st3);
-                    $(".courseinsertdiv").append(st4);
-                    $(".courseinsertdiv").append(st5);
+                    $(".courseinsertdiv").eq(i).append(st1);
+                    $(".courseinsertdiv").eq(i).append(st2);
+                    $(".courseinsertdiv").eq(i).append(st3);
+                    $(".courseinsertdiv").eq(i).append(st4);
+                    $(".courseinsertdiv").eq(i).append(st5);
+                    $(".courseinsertdiv").eq(i).append("<br>");
 
                     mc = "";
                     st1 = "";
@@ -527,43 +574,43 @@
         //     $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
         // }
 
-        if (ti.next(".st1").length!=0) {
-            var st1 = ti.next(".st1").text();
-            var f1 = ti.next(".st1").attr("step1");
-            var photo1 = ti.next(".st1").attr("photo");
+        if (ti.next().next(".st1").length!=0) {
+            var st1 = ti.next().next(".st1").text();
+            var f1 = ti.next().next(".st1").attr("step1");
+            var photo1 = ti.next().next(".st1").attr("photo");
             $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo1 + "' width='250' height='250'><figcaption><span class='txt'>" + st1 + "</span></figcaption></figure>");
             $(".cput").append("<input type='hidden' name='find1' value='" + f1 + "'>");
 
         }
 
-        if (ti.next(".st1").next().next(".st2").length!=0) {
-            var st2 = ti.next(".st1").next().next(".st2").text();
-            var f2 = ti.next(".st1").next().next(".st2").attr("step2");
-            var photo2 = ti.next(".st1").next().next(".st2").attr("photo");
+        if (ti.next().next(".st1").next().next(".st2").length!=0) {
+            var st2 = ti.next().next(".st1").next().next(".st2").text();
+            var f2 = ti.next().next(".st1").next().next(".st2").attr("step2");
+            var photo2 = ti.next().next(".st1").next().next(".st2").attr("photo");
             $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo2 + "' width='250' height='250'><figcaption><span class='txt'>" + st2 + "</span></figcaption></figure>");
             $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
         }
 
-        if (ti.next(".st1").next().next(".st2").next().next(".st3").length!=0) {
-            var st3 = ti.next(".st1").next().next(".st2").next().next(".st3").text();
-            var f3 = ti.next(".st1").next().next(".st2").next().next(".st3").attr("step3");
-            var photo3 = ti.next(".st1").next().next(".st2").next().next(".st3").attr("photo");
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").length!=0) {
+            var st3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").text();
+            var f3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("step3");
+            var photo3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("photo");
             $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo3 + "' width='250' height='250'><figcaption><span class='txt'>" + st3 + "</span></figcaption></figure>");
             $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
         }
 
-        if (ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length!=0) {
-            var st4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").text();
-            var f4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("step4");
-            var photo4 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("photo");
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length!=0) {
+            var st4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").text();
+            var f4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("step4");
+            var photo4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("photo");
             $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo4 + "' width='250' height='250'><figcaption><span class='txt'>" + st4 + "</span></figcaption></figure>");
             $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
         }
 
-        if (ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length!=0) {
-            var st5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").text();
-            var f5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("step5");
-            var photo5 = ti.next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("photo");
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length!=0) {
+            var st5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").text();
+            var f5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("step5");
+            var photo5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("photo");
             $("#selectcword").append("<figure style='margin: 10px;' class='fig'><img onerror=this.style.display='none' src='" + photo5 + "' width='250' height='250'><figcaption><span class='txt'>" + st5 + "</span></figcaption></figure>");
             $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
         }
