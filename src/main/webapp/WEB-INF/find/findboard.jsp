@@ -405,9 +405,7 @@
                         </div>
                         <p>${dto.subject}</p>
                         <p>${dto.content}&nbsp;</p>
-                        <p>
-                                ${dto.name}/${dto.nickname}/(${dto.loginid})
-                        </p>
+                        <p>${dto.nickname}</p>
                         <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
                                                                     pattern="yyyy-MM-dd"/><span class="fr"><i
                                 class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
