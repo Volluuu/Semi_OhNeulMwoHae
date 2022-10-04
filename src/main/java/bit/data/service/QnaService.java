@@ -55,28 +55,8 @@ public class QnaService implements QnaServiceInter{
 
 	@Override
 	public void insertQna(QnaDto dto) {
-		/*//새글인지 답글인지 판단해서 로직 설계 필요
-		int num=dto.getNum();//새글일 경우는 0이 들어감
-		int regroup=dto.getRegroup();
-		int restep=dto.getRestep();
-		int relevel=dto.getRelevel();
 
-		if(num==0)
-		{
-			regroup=this.getMaxNum();
-			restep=0;
-			relevel=0;
-		}else {//답글일 경우
-			//같은 그룹중 전달받은 restep보다 큰값들은 모두 일괄적으로 +1을 해준다
-			this.updateRestep(regroup, restep);
-			//그리고 나서 전달받은 값보다 1크게 db에 저장한다
-			restep++;
-			relevel++;
-		}
-		//변경된 값들은 다시 dto에 넣는다
-		dto.setRegroup(regroup);
-		dto.setRestep(restep);
-		dto.setRelevel(relevel);*/
+		int qna_num=dto.getQna_num();
 
 		daoInter.insertQna(dto);
 	}
@@ -98,9 +78,9 @@ public class QnaService implements QnaServiceInter{
 	}*/
 
 	@Override
-	public QnaDto getData(int num) {
+	public QnaDto getData(int qna_num) {
 
-		return daoInter.getData(num);
+		return daoInter.getData(qna_num);
 	}
 
 	@Override

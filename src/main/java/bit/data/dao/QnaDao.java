@@ -16,7 +16,7 @@ public class QnaDao implements QnaDaoInter {
 
 	@Override
 	public QnaDto getQna(int qna_num) {
-		return session.selectOne(ns + "getQna");
+		return session.selectOne(ns + "getQna",qna_num);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public class QnaDao implements QnaDaoInter {
 	}*/
 
 	@Override
-	public QnaDto getData(int num) {
-		return session.selectOne(ns+"getData",num);
+	public QnaDto getData(int qna_num) {
+		return session.selectOne(ns+"getData",qna_num);
 	}
 
 	@Override

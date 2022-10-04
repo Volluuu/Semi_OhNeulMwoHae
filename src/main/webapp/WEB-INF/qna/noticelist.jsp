@@ -49,6 +49,7 @@
   <div class="notice_list">
     <ul class="notice_title">
       <h3>공지사항</h3>
+      <hr>
       <h3>${subject}</h3>
       <li class="notice_context">
         <pre>${content}</pre>

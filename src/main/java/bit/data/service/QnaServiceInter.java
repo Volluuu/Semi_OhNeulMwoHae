@@ -14,7 +14,7 @@ public interface QnaServiceInter {
 	public void insertQna(QnaDto dto);
 	/*public void updateRestep(int regroup,int restep);*/
 	/*public void updateReadCount(int num);*/
-	public QnaDto getData(int num);
+	public QnaDto getData(int qna_num);
 	public void updateQna(QnaDto dto);
 	public void deleteQna(int num);
 

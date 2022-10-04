@@ -57,10 +57,11 @@
     <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
   </div>
   <div class="qna_list">
-    <h3>1:1 문의 게시글 작성</h3>
+    <h3>1:1 문의 게시글 수정</h3>
     <div>
-      <form action="qnainsert" method="post">
+      <form action="qnaupdate" method="post">
         <input type="hidden" name="user_num" value="${user_num}">
+        <input type="hidden" name="qna_num" value="${qna_num}">
         <%--<input type="hidden" name="id" value="${sessionScope.loginid}">
         <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
         <input type="hidden" name="currentPage" value="${currentPage}">
@@ -68,19 +69,19 @@
           <tr>
             <th>제목</th>
             <td>
-              <input type="text" name="subject" class="form-control" required="required" value="${subject}">
+              <input type="text" name="subject" class="form-control" required="required" value="${dto.subject}">
             </td>
           </tr>
           <tr>
             <th>문의 사항</th>
             <td>
-              <textarea name="content" class="form-control" required="required"></textarea>
+              <textarea name="content" class="form-control" required="required">${dto.content}</textarea>
             </td>
           </tr>
           <tr>
             <td colspan="2" align="center">
               <button type="submit" class="btn btn-secondary addqna">게시글 저장</button>
-              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='qnalist?currnetPage=${currentPage}'">이전</button>
+              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='qnadetail?currnetPage=${currentPage}'">이전</button>
             </td>
           </tr>
         </table>
