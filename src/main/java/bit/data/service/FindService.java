@@ -82,4 +82,19 @@ public class FindService implements FindServiceInter{
     public List<CourseDto> selectMyCourse(int user_num) {
         return findDao.selectMyCourse(user_num);
     }
+
+    @Override
+    public CafeDto selectCafeByNum(int cafe_num) {
+        return findDao.selectCafeByNum(cafe_num);
+    }
+
+    @Override
+    public TripDto selectTripByNum(int trip_num) {
+        return findDao.selectTripByNum(trip_num);
+    }
+
+    @Override
+    public FoodDto selectFoodByNum(int food_num) {
+        return findDao.selectFoodByNum(food_num);
+    }
 }

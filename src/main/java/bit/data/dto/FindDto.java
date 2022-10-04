@@ -22,4 +22,14 @@ public class FindDto {
 	private String find3;
 	private String find4;
 	private String find5;
+	private String find1photo;
+	private String find2photo;
+	private String find3photo;
+	private String find4photo;
+	private String find5photo;
+	private String find1title;
+	private String find2title;
+	private String find3title;
+	private String find4title;
+	private String find5title;
 }

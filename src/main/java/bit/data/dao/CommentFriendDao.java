@@ -22,6 +22,16 @@ public class CommentFriendDao implements CommentFriendDaoInter {
     }
 
     @Override
+    public int selectMaxDiff(int find_num) {
+        return session.selectOne(ns+"selectMaxDiff",find_num);
+    }
+
+    @Override
+    public int selectMaxRestep(Map<String, Integer> map) {
+        return session.selectOne(ns+"selectMaxRestep",map);
+    }
+
+    @Override
     public List<CommentFriendDto> selectAllComments(int find_num) {
         return session.selectList(ns+"selectAllComments", find_num);
     }
@@ -39,6 +49,17 @@ public class CommentFriendDao implements CommentFriendDaoInter {
     @Override
     public void updateRestep(Map<String, Integer> map) {
         session.update(ns+"updateRestep", map);
+    }
+
+    @Override
+    public void updateRestepDiff(Map<String, Integer> map) {
+        session.update(ns+"updateRestepDiff",map);
+
+    }
+
+    @Override
+    public void updateRestepMinus(Map<String, Integer> map) {
+        session.update(ns+"updateRestepMinus",map);
     }
 
     @Override

@@ -15,6 +15,12 @@
     <title>Title</title>
 </head>
 <style>
+    div.dg_container{
+        display: flex;
+    }
+    div.place{
+        display: flex;
+    }
     span.day {
         float: right;
         color: gray;
@@ -59,14 +65,14 @@
                 $("b.banswer").html("<i class='bi bi-chat'> " + res.length);
                 $.each(res, function (i, elt) {
                     s += "<div class='eltnickname'><p>";
-                    if(elt.relevel>0){
-                        for(var a=0;a<elt.relevel;a++){
-                            s+="&emsp;";
+                    if (elt.relevel > 0) {
+                        for (var a = 0; a < elt.relevel; a++) {
+                            s += "&emsp;";
                         }
-                        s+="<i class='bi bi-arrow-return-right'></i>";
+                        s += "<i class='bi bi-arrow-return-right'></i>";
                     }
 
-                    s+=elt.nickname;
+                    s += elt.nickname;
                     if (user_num == elt.user_num) {
                         s += "<span class='writer'>&nbsp;작성자&nbsp;</span>";
                     }
@@ -78,18 +84,18 @@
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
                     s += '<button class="btn btn-outline-dark adap fr" ' +
                         'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '" rev="'+elt.rev+'">답글</button>';
+                        ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
                     s += '</p>';
                     s += '</c:if>';
 
                     s += "<p class='eltcontent'><pre class='precontent'>";
-                    if(elt.relevel>0){
-                        for(var a=0;a<elt.relevel;a++){
-                            s+="&emsp;&nbsp;&nbsp;";
+                    if (elt.relevel > 0) {
+                        for (var a = 0; a < elt.relevel; a++) {
+                            s += "&emsp;&nbsp;&nbsp;";
                         }
                     }
-                    s+=elt.content;
-                    s+="</p>";
+                    s += elt.content;
+                    s += "</p>";
                     s += "<span class='day'>" + elt.writeday + "</span>";
                     s += "</pre>";
                     s += "</div>";
@@ -104,79 +110,117 @@
 </script>
 
 <body>
-<table class="table table-bordered" style="width:600px;max-width: 600px;">
-    <tr>
-        <td>
-            <h4><b>${dto.subject}</b></h4>
-            <%--            <c:if test="${memphoto!='no'}">--%>
-            <%--                <img alt="" src="../upload/${memphoto}" width="60" height="60" class="rounded-circle"--%>
-            <%--                     align="left" onerror="this.src='../image/noimage.png'" hspace="15">--%>
-            <%--            </c:if>--%>
-            <%--            <b>${dto.name}(${dto.id})</b><br>--%>
-            <span style="color:#ccc;font-size:13px;">
+<div class="dg_container">
+    <div>
+        <table class="table table-bordered" style="width:600px;max-width: 600px;">
+            <tr>
+                <td>
+                    <h4><b>${dto.subject}</b></h4>
+                    <%--            <c:if test="${memphoto!='no'}">--%>
+                    <%--                <img alt="" src="../upload/${memphoto}" width="60" height="60" class="rounded-circle"--%>
+                    <%--                     align="left" onerror="this.src='../image/noimage.png'" hspace="15">--%>
+                    <%--            </c:if>--%>
+                    <%--            <b>${dto.name}(${dto.id})</b><br>--%>
+                    <span style="color:#ccc;font-size:13px;">
 					<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
 					&nbsp;&nbsp;
 					조회&nbsp;${dto.readcount}
 				</span>
-        </td>
-    </tr>
-    <tr height="300" valign="top">
-        <td>
-            <pre>${dto.content}</pre>
-            <br><br>
-            <c:if test="${dto.photo!='noimage.png'}">
-                <c:forTokens var="photo" items="${dto.photo}" delims=",">
-                    <img alt="" src="${root}/upload/${photo}" width="250"
-                         onerror="this.style.display='none'"><!-- 해당 폴더에 없는 사진은 안보이게 처리 -->
-                </c:forTokens>
-            </c:if>
-            <br><br>
-            &nbsp;<b class="banswer">0</b>
-            <br>
-            <div class="alist">
-                댓글목록
-            </div>
+                </td>
+            </tr>
+            <tr height="300" valign="top">
+                <td>
+                    <pre>${dto.content}</pre>
+                    <br><br>
+                    <c:if test="${dto.photo!='noimage.png'}">
+                        <c:forTokens var="photo" items="${dto.photo}" delims=",">
+                            <img alt="" src="${root}/upload/${photo}" width="250"
+                                 onerror="this.style.display='none'"><!-- 해당 폴더에 없는 사진은 안보이게 처리 -->
+                        </c:forTokens>
+                    </c:if>
+                    <br><br>
+                    &nbsp;<b class="banswer">0</b>
+                    <br>
+                    <div class="alist">
+                        댓글목록
+                    </div>
 
-            <c:if test="${sessionScope.loginok!=null}">
-                <div class="aform">
-                    <form id="aform">
-                        <input type="hidden" name="find_num" value="${dto.find_num}">
-                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                        <input type="hidden" name="regroup" value="0">
-                        <input type="hidden" name="restep" value="0">
-                        <input type="hidden" name="relevel" value="0">
-                        <br>
-                        <textarea class="form-control" name="content" id="content" style="width:400px;height:60px;"></textarea>
-                        <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
-                    </form>
-                </div>
-            </c:if>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button type="button" class="btn btn-outline-dark" onclick="location.href='${root}/findboard/findform'">새글
-            </button>
+                    <c:if test="${sessionScope.loginok!=null}">
+                        <div class="aform">
+                            <form id="aform">
+                                <input type="hidden" name="find_num" value="${dto.find_num}">
+                                <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+                                <input type="hidden" name="regroup" value="0">
+                                <input type="hidden" name="restep" value="0">
+                                <input type="hidden" name="relevel" value="0">
+                                <br>
+                                <textarea class="form-control" name="content" id="content"
+                                          style="width:400px;height:60px;"></textarea>
+                                <button type="button" class="btn btn-outline-dark" id="btnasave">등록</button>
+                            </form>
+                        </div>
+                    </c:if>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-outline-dark"
+                            onclick="location.href='${root}/findboard/findform'">새글
+                    </button>
 
-            <button type="button" class="btn btn-outline-dark"
-                    onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록
-            </button>
+                    <button type="button" class="btn btn-outline-dark"
+                            onclick="location.href='${root}/findboard/list?currentPage=${currentPage}'">목록
+                    </button>
 
-            <!-- 로그인 중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
-            <c:if test="${sessionScope.loginok!=null && sessionScope.user_num==dto.user_num}">
-                <button type="button" class="btn btn-outline-dark"
-                        onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
-                    수정
-                </button>
+                    <!-- 로그인 중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
+                    <c:if test="${sessionScope.loginok!=null && sessionScope.user_num==dto.user_num}">
+                        <button type="button" class="btn btn-outline-dark"
+                                onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
+                            수정
+                        </button>
 
-                <button type="button" class="btn btn-outline-dark"
-                        onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
-                    삭제
-                </button>
-            </c:if>
-        </td>
-    </tr>
-</table>
+                        <button type="button" class="btn btn-outline-dark"
+                                onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'">
+                            삭제
+                        </button>
+                    </c:if>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="place">
+        <c:if test="${dto.find1photo!=null}">
+            <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
+                    src="${dto.find1photo}" width="250" height="250">
+                <figcaption><span class="txt">1. ${dto.find1title}</span</figcaption>
+            </figure>
+        </c:if>
+        <c:if test="${dto.find2photo!=null}">
+            <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
+                    src="${dto.find2photo}" width="250" height="250">
+                <figcaption><span class="txt">2. ${dto.find2title}</span></figcaption>
+            </figure>
+        </c:if>
+        <c:if test="${dto.find3photo!=null}">
+            <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
+                    src="${dto.find3photo}" width="250" height="250">
+                <figcaption><span class="txt">3. ${dto.find3title}</span></figcaption>
+            </figure>
+        </c:if>
+        <c:if test="${dto.find4photo!=null}">
+            <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
+                    src="${dto.find4photo}" width="250" height="250">
+                <figcaption><span class="txt">4. ${dto.find4title}</span></figcaption>
+            </figure>
+        </c:if>
+        <c:if test="${dto.find5photo!=null}">
+            <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
+                    src="${dto.find5photo}" width="250" height="250">
+                <figcaption><span class="txt">5. ${dto.find5title}</span></figcaption>
+            </figure>
+        </c:if>
+    </div>
+</div>
 <script type="text/javascript">
     var find_num =${dto.find_num};
     var root = "${root}";
@@ -208,7 +252,7 @@
             var regroup = ti.attr("regroup");
             var restep = ti.attr("restep");
             var relevel = ti.attr("relevel");
-            var rev = ti.attr("rev");
+            var diff = ti.attr("diff");
 
             $(".aform").remove();
             ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
@@ -218,7 +262,7 @@
                 '<input type="hidden" name="regroup" value="' + regroup + '">' +
                 '<input type="hidden" name="restep" value="' + restep + '">' +
                 '<input type="hidden" name="relevel" value="' + relevel + '">' +
-                '<input type="hidden" name="rev" value="' + rev + '">' +
+                '<input type="hidden" name="diff" value="' + diff + '">' +
                 '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
                 '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
 
@@ -274,66 +318,6 @@
         });
 
     });
-
-    function list() {
-        var loginok = '${sessionScope.loginok}';
-        var loginid = '${sessionScope.loginid}';
-        var loginnum = '${sessionScope.user_num}';
-        var user_num = '${dto.user_num}';
-// 		console.log(loginok);
-// 		console.log(loginid);
-        var s = "";
-        $.ajax({
-            type: "get",
-            url: root + "/commentfriend/list",
-            dataType: "json",
-            data: {"find_num": find_num},
-            success: function (res) {
-                $("b.banswer").html("<i class='bi bi-chat'> " + res.length);
-                $.each(res, function (i, elt) {
-                    s += "<div class='eltnickname'><p>";
-                    if(elt.relevel>0){
-                        for(var a=0;a<elt.relevel;a++){
-                            s+="&emsp;";
-                        }
-                        s+="<i class='bi bi-arrow-return-right'></i>";
-                    }
-
-                    s+=elt.nickname;
-                    if (user_num == elt.user_num) {
-                        s += "<span class='writer'>&nbsp;작성자&nbsp;</span>";
-                    }
-                    if (loginok == 'yes' && loginnum == elt.user_num) {
-                        s += '<button class="btn btn-outline-dark adel fr" friend_num="' + elt.friend_num + '">삭제</button>';
-                        s += '<button class="btn btn-outline-dark aupd fr" friend_num="' + elt.friend_num + '">수정</button>';
-
-                    }
-                    s += ' <c:if test="${sessionScope.loginok!=null}">';
-                    s += '<button class="btn btn-outline-dark adap fr" ' +
-                        'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '" rev="'+elt.rev+'">답글</button>';
-                    s += '</p>';
-                    s += '</c:if>';
-
-                    s += "<p class='eltcontent'><pre class='precontent'>";
-                    if(elt.relevel>0){
-                        for(var a=0;a<elt.relevel;a++){
-                            s+="&emsp;&nbsp;&nbsp;";
-                        }
-                    }
-                    s+=elt.content;
-                    s+="</p>";
-                    s += "<span class='day'>" + elt.writeday + "</span>";
-                    s += "</pre>";
-                    s += "</div>";
-
-                });
-                $("div.alist").html(s);
-            }
-        });
-
-
-    }
 </script>
 </body>
 </html>

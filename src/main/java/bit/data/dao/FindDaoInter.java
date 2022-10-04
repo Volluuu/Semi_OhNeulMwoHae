@@ -21,4 +21,8 @@ public interface FindDaoInter {
     public List<FoodDto> selectFoodData(String cword);
     public List<CourseDto> selectMyCourse(int user_num);
 
+    public CafeDto selectCafeByNum(int cafe_num);
+    public TripDto selectTripByNum(int trip_num);
+    public FoodDto selectFoodByNum(int food_num);
+
 }

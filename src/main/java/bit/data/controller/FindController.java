@@ -41,31 +41,45 @@ public class FindController {
             @RequestParam(defaultValue = "1") int currentPage,
             @RequestParam(value = "findcolumn", required = false) String findcolumn,
             @RequestParam(value = "findword", required = false) String findword,
-            Model model)
-    {
-        int totalCount=findService.selectTotalCount(findcolumn, findword); // 검색한 글의 갯수
-        int perPage=8; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
-        int perBlock=5; // 한 블럭당 보여질 페이지의 갯수
+            Model model) {
+        int totalCount = findService.selectTotalCount(findcolumn, findword); // 검색한 글의 갯수
+        int perPage = 8; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
+        int perBlock = 5; // 한 블럭당 보여질 페이지의 갯수
         int startNum; // db에서 가져올 글의 시작번호 (mysql은 첫 글이 0번)
         int startPage; // 각 블럭당 보여질 시작 페이지
         int endPage; // 각 블럭당 보여질 끝 페이지
         int totalPage; // 총 페이지 수
         int no; // 각 페이지당 출력할 시작번호
 
-        totalPage=totalCount/perPage+(totalCount%perPage==0?0:1); // 총 페이지 수 구한다, 나머지가 1이라도 있으면 1페이지 추가
-        startPage=(currentPage-1)/perBlock*perBlock+1; // 블럭당 보여질 시작 페이지
-        endPage=startPage+perBlock-1; // 끝 페이지는 시작 페이지+블럭당 보여질 페이지 -1
-        if(endPage>totalPage){
-            endPage=totalPage; // 끝 페이지가 총 페이지보다 작으면 끝 페이지가 총 페이지
+        totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1); // 총 페이지 수 구한다, 나머지가 1이라도 있으면 1페이지 추가
+        startPage = (currentPage - 1) / perBlock * perBlock + 1; // 블럭당 보여질 시작 페이지
+        endPage = startPage + perBlock - 1; // 끝 페이지는 시작 페이지+블럭당 보여질 페이지 -1
+        if (endPage > totalPage) {
+            endPage = totalPage; // 끝 페이지가 총 페이지보다 작으면 끝 페이지가 총 페이지
         }
-        startNum=(currentPage-1)*perPage; // 각 페이지에서 보여질 시작 번호
-        no=totalCount-(currentPage-1)*perPage; // 각 페이지당 출력할 시작번호
+        startNum = (currentPage - 1) * perPage; // 각 페이지에서 보여질 시작 번호
+        no = totalCount - (currentPage - 1) * perPage; // 각 페이지당 출력할 시작번호
 
-        List<FindDto> list=findService.findPagingList(findcolumn, findword, startNum, perPage);
+        List<FindDto> list = findService.findPagingList(findcolumn, findword, startNum, perPage);
 
-        for(FindDto dto:list){
-            int answercount=commentFriendService.selectAllComments(dto.getFind_num()).size();
+        for (FindDto dto : list) {
+            int answercount = commentFriendService.selectAllComments(dto.getFind_num()).size();
             dto.setAnswercount(answercount);
+            if (dto.getFind1() != null) {
+                String find[] = dto.getFind1().split(",");
+                if (find[0].equals("cafe")) {
+                    CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(cdto.getPhoto());
+                }
+                if (find[0].equals("trip")) {
+                    TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(tdto.getPhoto());
+                }
+                if (find[0].equals("food")) {
+                    FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                    dto.setFind1photo(fdto.getPhoto());
+                }
+            }
         }
 
         model.addAttribute("list", list);
@@ -82,9 +96,9 @@ public class FindController {
     @GetMapping("/findboard/login")
     @ResponseBody
     public void loginprocess(String user_num, String loginid, String password, String name,
-                                            String nickname, String email, String hp, String profile,
-                                            String interest, String profilephoto, String alarm,
-                                            String isadmin, String gaipday, HttpSession session){
+                             String nickname, String email, String hp, String profile,
+                             String interest, String profilephoto, String alarm,
+                             String isadmin, String gaipday, HttpSession session) {
         session.setAttribute("loginok", "yes");
         session.setAttribute("user_num", user_num);
         session.setAttribute("loginid", loginid);
@@ -103,7 +117,7 @@ public class FindController {
 
     @GetMapping("/findboard/logout")
     @ResponseBody
-    public void logoutprocess(HttpSession session){
+    public void logoutprocess(HttpSession session) {
         //로그아웃하면 제거할 옵션
         session.removeAttribute("loginok");
         session.removeAttribute("user_num");
@@ -123,7 +137,7 @@ public class FindController {
 
     @GetMapping("/findboard/findform")
     public String findform(@RequestParam(defaultValue = "1") int currentPage,
-                           Model model){
+                           Model model) {
         model.addAttribute("currentPage", currentPage);
         return "/bit/find/findform";
 
@@ -132,85 +146,83 @@ public class FindController {
     @PostMapping("/findboard/insertfind")
     public String insertfind(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
         //업로드 경로
-        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
         //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
         //업로드 안해도 upload.size가 1이 된다
         System.out.println(findupload.size());
 
-        if(findupload.get(0).getOriginalFilename().equals("")) {
+        if (findupload.get(0).getOriginalFilename().equals("")) {
             dto.setPhoto("noimage.png");
-        }else {
-            String photo="";
-            int idx=1;
-            for(MultipartFile multi:findupload) {
+        } else {
+            String photo = "";
+            int idx = 1;
+            for (MultipartFile multi : findupload) {
                 //파일명을 현재 날짜로 변경 후 ,로 연결
-                String newName=idx++ +"_"+ ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo+=newName+",";
+                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+                photo += newName + ",";
 
                 //업로드
                 try {
-                    multi.transferTo(new File(path+"/"+newName));
+                    multi.transferTo(new File(path + "/" + newName));
                 } catch (IOException | IllegalStateException e) {
                     throw new RuntimeException(e);
                 }
 
             }
             //마지막 컴마 제거
-            photo=photo.substring(0,photo.length()-1);
+            photo = photo.substring(0, photo.length() - 1);
             //dto에 저장
             dto.setPhoto(photo);
         }
         findService.insertFindBoard(dto);
-        return "redirect:../findboard/list?currentPage="+currentPage;
+        return "redirect:../findboard/list?currentPage=" + currentPage;
     }
 
     @PostMapping("/findboard/updatefindaction")
     public String updatefindaction(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
         //업로드 경로
-        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
         //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
         //업로드 안해도 upload.size가 1이 된다
         System.out.println(findupload.size());
 
-        if(findupload.get(0).getOriginalFilename().equals("")) {
+        if (findupload.get(0).getOriginalFilename().equals("")) {
             dto.setPhoto(dto.getPhoto());
-        }else {
-            String photo="";
-            int idx=1;
-            for(MultipartFile multi:findupload) {
+        } else {
+            String photo = "";
+            int idx = 1;
+            for (MultipartFile multi : findupload) {
                 //파일명을 현재 날짜로 변경 후 ,로 연결
-                String newName=idx++ +"_"+ ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo+=newName+",";
+                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+                photo += newName + ",";
 
                 //업로드
                 try {
-                    multi.transferTo(new File(path+"/"+newName));
+                    multi.transferTo(new File(path + "/" + newName));
                 } catch (IOException | IllegalStateException e) {
                     throw new RuntimeException(e);
                 }
 
             }
             //마지막 컴마 제거
-            photo=photo.substring(0,photo.length()-1);
+            photo = photo.substring(0, photo.length() - 1);
             //dto에 저장
             dto.setPhoto(photo);
         }
         findService.updateFindBoard(dto);
-        return "redirect:../findboard/list?currentPage="+currentPage;
+        return "redirect:../findboard/list?currentPage=" + currentPage;
     }
-
-
 
 
     @GetMapping("/findboard/finddetail")
     public ModelAndView finddetail(int find_num, int currentPage) {
-        ModelAndView mview=new ModelAndView();
+        ModelAndView mview = new ModelAndView();
         //조회수 증가
         findService.updateReadCount(find_num);
         //num에 해당하는 dto 얻기
-        FindDto dto=findService.selectByNum(find_num);
+        FindDto dto = findService.selectByNum(find_num);
         //글쓴 사람의 사진을 memphoto
         //이 때 글 쓴사람이 탈퇴했을경우 널포인터익셉션 발생
 //        String memphoto="";
@@ -221,20 +233,222 @@ public class FindController {
 //            dto.setName("탈퇴한 회원");
 //        }
 
-        mview.addObject("dto",dto);
-        mview.addObject("currentPage",currentPage);
+        if (dto.getFind1() != null) {
+            String find[] = dto.getFind1().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(cdto.getPhoto());
+                dto.setFind1title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(tdto.getPhoto());
+                dto.setFind1title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(fdto.getPhoto());
+                dto.setFind1title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind2() != null) {
+            String find[] = dto.getFind2().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(cdto.getPhoto());
+                dto.setFind2title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(tdto.getPhoto());
+                dto.setFind2title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(fdto.getPhoto());
+                dto.setFind2title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind3() != null) {
+            String find[] = dto.getFind3().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(cdto.getPhoto());
+                dto.setFind3title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(tdto.getPhoto());
+                dto.setFind3title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(fdto.getPhoto());
+                dto.setFind3title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind4() != null) {
+            String find[] = dto.getFind4().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(cdto.getPhoto());
+                dto.setFind4title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(tdto.getPhoto());
+                dto.setFind4title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(fdto.getPhoto());
+                dto.setFind4title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind5() != null) {
+            String find[] = dto.getFind5().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(cdto.getPhoto());
+                dto.setFind5title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(tdto.getPhoto());
+                dto.setFind5title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(fdto.getPhoto());
+                dto.setFind5title(fdto.getTitle());
+            }
+        }
+
+        mview.addObject("dto", dto);
+        mview.addObject("currentPage", currentPage);
 //        mview.addObject("memphoto", memphoto);
         mview.setViewName("/bit/find/finddetail");
         return mview;
     }
 
     @GetMapping("/findboard/updatefind")
-    public String updateform(int find_num, int currentPage,Model model) {
+    public String updateform(int find_num, int currentPage, Model model) {
         //num에 해당하는 dto 얻기
-        FindDto dto=findService.selectByNum(find_num);
+        FindDto dto = findService.selectByNum(find_num);
 
-        model.addAttribute("dto",dto);
-        model.addAttribute("currentPage",currentPage);
+        if (dto.getFind1() != null) {
+            String find[] = dto.getFind1().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(cdto.getPhoto());
+                dto.setFind1title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(tdto.getPhoto());
+                dto.setFind1title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind1photo(fdto.getPhoto());
+                dto.setFind1title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind2() != null) {
+            String find[] = dto.getFind2().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(cdto.getPhoto());
+                dto.setFind2title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(tdto.getPhoto());
+                dto.setFind2title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind2photo(fdto.getPhoto());
+                dto.setFind2title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind3() != null) {
+            String find[] = dto.getFind3().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(cdto.getPhoto());
+                dto.setFind3title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(tdto.getPhoto());
+                dto.setFind3title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind3photo(fdto.getPhoto());
+                dto.setFind3title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind4() != null) {
+            String find[] = dto.getFind4().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(cdto.getPhoto());
+                dto.setFind4title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(tdto.getPhoto());
+                dto.setFind4title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind4photo(fdto.getPhoto());
+                dto.setFind4title(fdto.getTitle());
+            }
+        }
+        if (dto.getFind5() != null) {
+            String find[] = dto.getFind5().split(",");
+            if (find[0].equals("cafe")) {
+                CafeDto cdto = findService.selectCafeByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(cdto.getPhoto());
+                dto.setFind5title(cdto.getTitle());
+
+            }
+            if (find[0].equals("trip")) {
+                TripDto tdto = findService.selectTripByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(tdto.getPhoto());
+                dto.setFind5title(tdto.getTitle());
+
+            }
+            if (find[0].equals("food")) {
+                FoodDto fdto = findService.selectFoodByNum(Integer.parseInt(find[1]));
+                dto.setFind5photo(fdto.getPhoto());
+                dto.setFind5title(fdto.getTitle());
+            }
+        }
+
+        model.addAttribute("dto", dto);
+        model.addAttribute("currentPage", currentPage);
 
         return "/bit/find/updatefind";
     }
@@ -243,47 +457,47 @@ public class FindController {
     @ResponseBody
     public List<? extends Object> insertlist(
             @RequestParam(value = "ccolumn", required = false) String ccolumn,
-            @RequestParam(value = "cword", required = false) String cword){
-        if(ccolumn.equals("cafe")){
-            List<CafeDto> list=findService.selectCafeData(cword);
+            @RequestParam(value = "cword", required = false) String cword) {
+        if (ccolumn.equals("cafe")) {
+            List<CafeDto> list = findService.selectCafeData(cword);
             return list;
         }
-        if(ccolumn.equals("trip")){
-            List<TripDto> list=findService.selectTripData(cword);
+        if (ccolumn.equals("trip")) {
+            List<TripDto> list = findService.selectTripData(cword);
             return list;
         }
-        if(ccolumn.equals("food")){
-            List<FoodDto> list=findService.selectFoodData(cword);
-            return  list;
+        if (ccolumn.equals("food")) {
+            List<FoodDto> list = findService.selectFoodData(cword);
+            return list;
         }
         return null;
     }
 
     @GetMapping("/findboard/myplace")
     @ResponseBody
-    public List<? extends Object> myplace(int user_num){
+    public List<? extends Object> myplace(int user_num) {
         return null;
     }
 
     @GetMapping("/findboard/deletefind")
-    public String delete(int find_num,int currentPage,HttpServletRequest request) {
-        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
+    public String delete(int find_num, int currentPage, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
 
-        String photo=findService.selectByNum(find_num).getPhoto();
+        String photo = findService.selectByNum(find_num).getPhoto();
 
-        if(photo.indexOf(",")>=0){
-            String sphoto[]=photo.split(",");
-            for(int i=0;i< sphoto.length;i++){
-                File file=new File(path+"/"+sphoto[i]);
-                if(file.exists()){
-                System.out.println("파일이 존재하므로 삭제합니다");
-                file.delete();
+        if (photo.indexOf(",") >= 0) {
+            String sphoto[] = photo.split(",");
+            for (int i = 0; i < sphoto.length; i++) {
+                File file = new File(path + "/" + sphoto[i]);
+                if (file.exists()) {
+                    System.out.println("파일이 존재하므로 삭제합니다");
+                    file.delete();
                 }
             }
-        }else {
-            File file=new File(path+"/"+photo);
-            if(file.exists()){
+        } else {
+            File file = new File(path + "/" + photo);
+            if (file.exists()) {
                 System.out.println("파일이 존재하므로 삭제합니다");
                 file.delete();
             }
@@ -291,31 +505,31 @@ public class FindController {
 
         findService.deleteFindBoard(find_num);
         //삭제 후 보던 페이지로 이동
-        return "redirect:../findboard/list?currentPage="+currentPage;
+        return "redirect:../findboard/list?currentPage=" + currentPage;
     }
 
     @GetMapping("/findboard/mycourse")
     @ResponseBody
-    public List<CourseDto> selectMyCourse(int user_num){
-        List<CourseDto> list=findService.selectMyCourse(user_num);
+    public List<CourseDto> selectMyCourse(int user_num) {
+        List<CourseDto> list = findService.selectMyCourse(user_num);
 
         return list;
     }
 
     @GetMapping("/findboard/step")
     @ResponseBody
-    public Object selectStep(String table, String num){
+    public Object selectStep(String table, String num) {
 
-        if(table.equals("cafe")){
-            CafeDto dto=subsService.selectCafeData(Integer.parseInt(num));
+        if (table.equals("cafe")) {
+            CafeDto dto = subsService.selectCafeData(Integer.parseInt(num));
             return dto;
         }
-        if(table.equals("trip")){
-            TripDto dto=subsService.selectTripData(Integer.parseInt(num));
+        if (table.equals("trip")) {
+            TripDto dto = subsService.selectTripData(Integer.parseInt(num));
             return dto;
         }
-        if(table.equals("food")){
-            FoodDto dto=subsService.selectFoodData(Integer.parseInt(num));
+        if (table.equals("food")) {
+            FoodDto dto = subsService.selectFoodData(Integer.parseInt(num));
             return dto;
         }
         return null;

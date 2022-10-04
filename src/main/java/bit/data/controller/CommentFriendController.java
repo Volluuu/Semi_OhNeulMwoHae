@@ -25,24 +25,42 @@ public class CommentFriendController {
     @ResponseBody
     public void insertcommentfriend(CommentFriendDto dto,
                                     @RequestParam(defaultValue = "0") int regroup,
+                                    @RequestParam(defaultValue = "0") int relevel,
                                     @RequestParam(defaultValue = "0") int restep,
-                                    @RequestParam(defaultValue = "0") int relevel
+                                    @RequestParam(defaultValue = "0") int diff
+
+
     ) {
 
-        if(dto.getFriend_num()==0){
+        if(regroup==0){
             regroup=commentFriendService.selectMaxNum(dto.getFind_num())+1;
-            restep=0;
+            restep=1000;
             relevel=0;
-        }else{
-            commentFriendService.updateRestep(regroup, restep);
+            dto.setDiff(0);
+        }else if(diff==0){
+            diff=commentFriendService.selectMaxDiff(dto.getFind_num());
+            relevel++;
+            dto.setDiff(diff+1);
+        }else {
+            commentFriendService.updateRestepDiff(regroup, diff, restep);
+
+//            restep=commentFriendService.selectMaxRestep(dto.getFind_num(), regroup, diff)+1;
             restep++;
             relevel++;
+
         }
+
+//        }else{
+//            restep--;
+//            commentFriendService.updateRestepRelevel(regroup, relevel, restep);
+//            commentFriendService.updateRestepMinus(regroup, restep);
+//            relevel++;
+//            dto.setDiff(1);
+//        }
         dto.setRegroup(regroup);
         dto.setRestep(restep);
         dto.setRelevel(relevel);
         commentFriendService.insertComment(dto);
-
     }
 
     @GetMapping("/commentfriend/delete")

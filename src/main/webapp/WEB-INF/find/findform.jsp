@@ -77,9 +77,6 @@
         font-size: .9em;
     }
 
-    table.dg_table {
-        border: 1px solid black;
-    }
 
     .radio_search {
         display: none;
@@ -143,7 +140,7 @@
                     <td>
                         <div class="input-group">
                             <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                            <div id='att_zone' placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+                            <div id='att_zone' data-placeholder='파일 선택 or 드래그 앤 드롭'></div>
                         </div>
                     </td>
                 </tr>
@@ -233,8 +230,15 @@
             success: function (res) {
                 s += "<ul><br>";
                 $.each(res, function (i, elt) {
-                    s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
-                    // s += "<li class='ainsertlist' photo='" + elt.photo + "' >" + elt.title + "</li>";
+                    if(elt.food_num!=null){
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='food,"+elt.food_num+"'>" + elt.title + "</li>";
+                    }
+                    if(elt.trip_num!=null){
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='trip,"+elt.trip_num+"'>" + elt.title + "</li>";
+                    }
+                    if(elt.cafe_num!=null){
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='cafe,"+elt.cafe_num+"'>" + elt.title + "</li>";
+                    }
                 });
                 s += "</ul>";
                 $(".findlist").html(s);
@@ -252,7 +256,12 @@
             alert("장소는 5개만 추가 가능합니다");
             return;
         }
-        ;
+        for(var j=0;j<$(".fig").length;j++){
+            if($(".fig").eq(j).attr("ffind")==ffind){
+                alert("중복 불가");
+                return;
+            }
+        }
         if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
