@@ -166,7 +166,7 @@
     <c:set var="root" value="${root}"/>
     <c:if test="${CafetotalCount>0}">
         <c:forEach var="dto" items="${Cafelist}" varStatus="i">
-        <a href="../course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
+        <a href="${root}/course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
             <div class="item">
                 <div class="blog-card spring-fever" >
                     <c:set var="photo" value="${dto.photo}"/>

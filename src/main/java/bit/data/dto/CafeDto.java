@@ -15,4 +15,5 @@ public class CafeDto {
 	private String lon;
 	private int gu;
 	private int readcount;
+	private int user_num;
 }

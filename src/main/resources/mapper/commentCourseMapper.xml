@@ -10,4 +10,8 @@
         insert into comment_course values (null,#{user_num},null,null,#{cafe_num},#{star},#{content},now())
     </insert>
 
+<!--    <select id="selectAllComments" parameterType="int" resultType="cfdto">-->
+<!--        select CF.friend_num, CF.find_num, CF.user_num, CF.content, CF.writeday, CF.regroup, CF.restep, CF.relevel, CF.diff, U.name, U.nickname,-->
+<!--               U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by CF.regroup asc,CF.diff asc, CF.restep asc, CF.friend_num asc-->
+<!--    </select>-->
 </mapper>

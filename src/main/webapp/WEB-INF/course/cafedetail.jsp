@@ -16,35 +16,39 @@
 <link rel="stylesheet" href="../css/footer.css">
 <style>
 
-    *{
+    * {
         font-size: 24px;
         font-family: Dongle;
     }
+
     html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
     blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
     img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u,
     i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption,
     tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure,
     figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time,
-    mark, audio, video
-    {
+    mark, audio, video {
         margin: 0;
         padding: 0;
         border: 0;
         font-style: normal;
     }
 
-    div
-    {
+    div {
         display: block;
     }
 
-    section
-    {
+    section {
         display: block;
     }
-    button.fr{
-        float:right;
+
+    button.fr {
+        float: right;
+    }
+    .dg_container{
+        position: ;
+        width: 100%;
+        height: 200px;
     }
 
 </style>
@@ -54,35 +58,35 @@
     <title>Title</title>
 </head>
 <script>
-    $(function (){
+    var cafe_num =${dto.cafe_num};
+    var root = "${root}";
+    $(function () {
         cafelist();
     });
 
     function cafelist() {
-        var root='${root}';
         var loginok = '${sessionScope.loginok}';
-        var loginnum = '${sessionScope.user_num}';
-        var cafe_num = '${dto.cafe_num}';
+        var user_num = '${sessionScope.user_num}';
         var s = "";
         $.ajax({
             type: "get",
-            url: root + "/course/cafedetailist",
+            url: root + "/course/cafedetaillist",
             dataType: "json",
             data: {"cafe_num": cafe_num},
             success: function (res) {
-                $("#review").append("댓글 갯수 : " + res.length);
+                $("#answer").html("댓글 갯수 : " + res.length);
                 $.each(res, function (i, elt) {
                     s += "<div class='cafestar'>";
-                    s += "유저 번호 : "+elt.user_num;
-                    if (loginok == 'yes' && loginnum == elt.user_num) {
+                    s += "유저 번호 : " + elt.user_num;
+                    if (loginok == 'yes' && user_num == elt.user_num) {
                         s += '<button class="btn btn-outline-dark adel fr" course_num="' + elt.course_num + '">삭제</button>';
                         s += '<button class="btn btn-outline-dark aupd fr" course_num="' + elt.course_num + '">수정</button>';
                     }
-                    s += "<p><pre class='cafecontent'>"+elt.content+"</pre><span class='day'>" + elt.writeday + "</span></p>";
+                    s += "<p><pre class='cafecontent'>" + elt.content + "</pre><span class='day'>" + elt.writeday + "</span></p>";
                     s += "</div>";
 
                 });
-                $("#review").append(s);
+                $("#review").html(s);
             }
         });
 
@@ -140,20 +144,23 @@
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
-                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button>
+                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
+                    <b id="answer"></b>
+                    <div id="review"></div>
                 </form>
+
                 <script>
                     $(document).on("click", "#cafestarbtn", function () {
                         var root = "${root}";
-                        var user_num="${sessionScope.user_num}";
-                        var star=$("input[name='star']:checked").val();
-                        var content=$("#reviewContents").val();
-                        var cafe_num="${dto.cafe_num}";
+                        var user_num = "${sessionScope.user_num}";
+                        var star = $("input[name='star']:checked").val();
+                        var content = $("#reviewContents").val();
+                        var cafe_num = "${dto.cafe_num}";
                         $.ajax({
                             type: "get",
                             url: root + "/commentcourse/cafestar",
                             dataType: "text",
-                            data: {"user_num":user_num,"star":star,"content":content,"cafe_num":cafe_num},
+                            data: {"user_num": user_num, "star": star, "content": content, "cafe_num": cafe_num},
                             success: function (res) {
                                 cafelist();
 
@@ -167,10 +174,12 @@
         </div>
     </div>
 </div>
-<div id="review"></div>
+<div class="dg_container">
+
+</div>
 
 
-%--------------------------------------------------------------------------------footer--%>
+<%--footer--%>
 <footer id="footer" class="efLSbp">
     <div class="inner">
         <%--            ----------------logo--%>
