@@ -47,6 +47,7 @@ public class CommentFriendController {
 //            restep=commentFriendService.selectMaxRestep(dto.getFind_num(), regroup, diff)+1;
             restep++;
             relevel++;
+            dto.setDiff(diff);
 
         }
 

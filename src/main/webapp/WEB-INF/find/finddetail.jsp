@@ -82,10 +82,12 @@
 
                     }
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
+                    if(elt.relevel<2){
                     s += '<button class="btn btn-outline-dark adap fr" ' +
                         'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
                         ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
                     s += '</p>';
+                    }
                     s += '</c:if>';
 
                     s += "<p class='eltcontent'><pre class='precontent'>";
