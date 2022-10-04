@@ -26,6 +26,7 @@ public class LoginController {
 	UserServiceInter userService;
 
 	@GetMapping("/login")
+	@ResponseBody
 	public Map<String , String> loginprocess(String loginid, String password,HttpSession session)
 	{
 		//System.out.println(id);
