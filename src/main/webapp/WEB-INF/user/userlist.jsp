@@ -37,7 +37,7 @@
 		<c:forEach var="dto" items="${list}">
 			<tr>
 				<td style="width: 250px;" align="center" rowspan="5" >
-					<img src="../upload/${dto.photo}" width="230px;" height="250px;" border="1">
+
 					<br>
 					<!-- 로그인 한 사람만 보이도록 -->
 					<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.loginid}">
@@ -64,9 +64,6 @@
 			</tr>
 			<tr>
 				<td>핸드폰 : ${dto.hp}</td>
-			</tr>
-			<tr>
-				<td>주소 : ${dto.address}</td>
 			</tr>
 		</c:forEach>
 	</table>

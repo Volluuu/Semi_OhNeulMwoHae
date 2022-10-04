@@ -9,6 +9,7 @@ import java.util.Map;
 public interface UserDaoInter {
     public int getTotalCount();
     public int getLoginIdSearch(String loginid);
+    public int loginNicknameCheck(String nickname);
     public void insertUser(UserDto dto);
     public List<UserDto> getAllUsers();
     public UserDto getDataByUserNum(int user_num);

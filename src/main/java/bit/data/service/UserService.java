@@ -2,12 +2,14 @@ package bit.data.service;
 
 import bit.data.dao.UserDaoInter;
 import bit.data.dto.UserDto;
+import net.nurigo.sdk.message.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class UserService implements UserServiceInter{
@@ -25,6 +27,11 @@ public class UserService implements UserServiceInter{
     public int getLoginIdSearch(String loginid) {
         // TODO Auto-generated method stub
         return userDao.getLoginIdSearch(loginid);
+    }
+
+    @Override
+    public int loginNicknameCheck(String nickname) {
+        return userDao.loginNicknameCheck(nickname);
     }
 
     @Override
