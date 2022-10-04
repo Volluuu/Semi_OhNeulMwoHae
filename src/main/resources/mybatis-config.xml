@@ -21,6 +21,7 @@
 		<typeAlias type="bit.data.dto.FaqDto" alias="faqdto"/>
 		<typeAlias type="bit.data.dto.NoticeDto" alias="noticedto"/>
 		<typeAlias type="bit.data.dto.SubsDto" alias="subsdto"/>
+		<typeAlias type="bit.data.dto.CommentCourseDto" alias="ccdto"/>
 
 
 	</typeAliases>

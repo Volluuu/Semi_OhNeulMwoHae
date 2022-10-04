@@ -28,8 +28,6 @@ public class CommentFriendController {
                                     @RequestParam(defaultValue = "0") int relevel,
                                     @RequestParam(defaultValue = "0") int restep,
                                     @RequestParam(defaultValue = "0") int diff
-
-
     ) {
 
         if(regroup==0){

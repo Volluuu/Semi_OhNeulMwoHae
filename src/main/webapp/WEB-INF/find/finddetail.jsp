@@ -226,7 +226,6 @@
 <script type="text/javascript">
     var find_num =${dto.find_num};
     var root = "${root}";
-    $(function () {
         console.log("find_num=" + find_num);
 
         list();//처음 시작시 댓글 출력
@@ -319,7 +318,6 @@
             });
         });
 
-    });
 </script>
 </body>
 </html>
