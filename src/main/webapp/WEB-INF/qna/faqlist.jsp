@@ -49,6 +49,7 @@
   <div class="faq_list">
     <ul class="faq_title">
       <h3>자주묻는 질문</h3>
+      <hr>
       <h3>${subject}</h3>
       <li class="faq_context">
         <pre>${content}</pre>

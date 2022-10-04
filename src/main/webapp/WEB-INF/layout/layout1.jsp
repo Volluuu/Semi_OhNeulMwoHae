@@ -47,6 +47,7 @@
     	height: 150px;
     	text-align: center;
     	line-height: 130px;
+		box-shadow: 1px 1px 20px lightgray;
     }
     
     /*#menu{
