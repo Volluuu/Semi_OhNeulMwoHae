@@ -14,4 +14,5 @@ public class QnaDto {
 	private String answer;
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
 	private Timestamp writeday;
+	private int acount;
 }

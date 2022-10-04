@@ -53,7 +53,11 @@
   <div class="qna_list">
     <h3>1:1 문의 상세보기</h3>
     <div>
-      <table class="table table-bordered" style="width: 700px; margin-left: 300px;">
+      <table class="table table-bordered" >
+        <input type="hidden" name="qna_num" value="${dto.qna_num}">
+        <input type="hidden" name="user_num" value="${dto.user_num}">
+        <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
+         <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
         <tr>
           <td>
             <h2><b>${dto.subject}</b></h2>
@@ -72,11 +76,12 @@
               <div class="aform">
                 <form id="aform">
                   <input type="hidden" name="qna_num" value="${dto.qna_num}">
+                  <input type="hidden" name="user_num" value="${dto.user_num}">
                  <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
                   <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
 
                   <div class="input-group">
-                    <textarea name="message" id="message" style="width: 400px; height: 60px;" class="form-control"></textarea>
+                    <textarea name="message" id="message" class="form-control"></textarea>
                     <button type="button" class="btn btn-dark btn-sm" id="btnsave">등록</button>
                   </div>
                 </form>
@@ -93,7 +98,7 @@
             <!-- 로그인중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
            <%-- <c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.id}">--%>
               <button type="button" class="btn btn-dark" onclick="location.href='qnaupdateform?qna_num=${dto.qna_num}&currentPage=${currentPage}'">수정</button>
-              <button type="button" class="btn btn-dark" onclick="location.href='qnadeletefrom?qna_num=${dto.qna_num}&currentPage=${currentPage}'">삭제</button>
+              <button type="button" class="btn btn-dark" onclick="location.href='qnadelete?qna_num=${dto.qna_num}&currentPage=${currentPage}'">삭제</button>
            <%-- </c:if>--%>
           </td>
         </tr>

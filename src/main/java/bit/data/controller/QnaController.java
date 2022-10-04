@@ -81,14 +81,6 @@ public class QnaController {
 
 		return "/bit/qna/qnalist";
 	}
-	@GetMapping("/qna/qnaform")
-	public String qnainsert(int user_num,int currentPage,Model model){
-
-		model.addAttribute("user_num",user_num);
-		model.addAttribute("currentPage",currentPage);
-
-		return "/bit/qna/qnaform";
-	}
 
 	@GetMapping("/qna/qnadetail")
 	public ModelAndView detailQna(int qna_num, int currentPage) {
@@ -105,14 +97,22 @@ public class QnaController {
 		return mview;
 	}
 
-	@PostMapping("/qna/qnainsert")
-	public String insertQna(QnaDto dto, int currentPage, HttpServletRequest request)
-	{
+	@GetMapping("/qna/qnaform")
+	public String qnainsert(int user_num,int currentPage,Model model){
 
+		model.addAttribute("user_num",user_num);
+		model.addAttribute("currentPage",currentPage);
+
+		return "/bit/qna/qnaform";
+	}
+
+	@PostMapping("/qna/qnainsert")
+	public String insertQna(QnaDto dto, int currentPage)
+	{
 		//db에 insert
 		serviceInter.insertQna(dto);
 
-		return "redirect:qnalist?currentPage="+currentPage;
+		return "redirect:qnalist?qna_num="+dto.getQna_num()+"currentPage="+currentPage;
 	}
 
 	@GetMapping("/qna/qnadelete")
@@ -124,9 +124,9 @@ public class QnaController {
 	}
 
 	@PostMapping("/qna/qnaupdate")
-	public String updateqna(QnaDto dto,int currentPage,int qna_num,HttpServletRequest request)
+	public String updateQna(QnaDto dto,int currentPage)
 	{
-		//db에 insert
+		//db에 update
 		serviceInter.updateQna(dto);
 
 		return "redirect:qnadetail?currentPage="+currentPage+"&qna_num="+dto.getQna_num();
@@ -136,8 +136,10 @@ public class QnaController {
 	@GetMapping("/qna/qnaupdateform")
 	public String qnaUpdateForm(Model model,int qna_num, int currentPage)
 	{
+		System.out.println("1:"+qna_num);
 		//num에 해당하는 dto 얻기
 		QnaDto dto=serviceInter.getQna(qna_num);
+		System.out.println("2:"+dto.getQna_num());
 
 		//model에 저장
 		model.addAttribute("dto",dto);
