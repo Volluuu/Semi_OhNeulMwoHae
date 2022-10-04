@@ -82,9 +82,8 @@
             overflow-y: scroll;
         }
 
-        #searchword {
+        input.in1 {
             width: 300px;
-            display: flex;
             display: inline-block;
             vertical-align: top;
         }
@@ -170,66 +169,68 @@
 
             /* 검색 이벤트 */
 
-            $(document).on("keyup", "#searchword", function () {
-                if($(this).attr("cnt") != cnt) { return;}
-                var txt = $(this).val();
+            $(document).on("keyup", "input.in1", function () {
+                var word = $(this); // parent, children, find 등을 사용하기 위해 #searchword를 특정 시켜준다.
+                var txt = word.val();
                 if(txt != '') {
-                    $(".searchlist").children().remove();
+                    $(this).next().children().remove();
 
                     $.ajax({
                         type    : "get",
                         url     : "../course/searchlist",
                         dataType: "json",
-                        data    : {"searchthema": $("#searchthema").val(), "searchword": $("#searchword").val()},
+                        data    : {"searchthema": word.parent().parent().find("select.sel1").val(), "searchword": word.val()},
                         success : function (res) {
+
                             //테마를 3개로 나눠서 검색 시 테이블을 구분해서 가져옴
-                            if($("#searchthema").val() == "cafe") {
+                            if(word.parent().parent().find("select.sel1").val() == "cafe") {
                                 console.log("cafe");
                                 $.each(res, function(i, elt){
-                                    $(".searchlist").append(
+                                    word.next().append(
                                         $('<div>').text(elt.title).attr({'cafe_num' : elt.cafe_num})
                                     );
                                 });
                             }
-                            if($("#searchthema").val() == "trip") {
+                            if(word.parent().parent().find("select.sel1").val() == "trip") {
                                 console.log("trip");
                                 $.each(res, function(i, elt){
-                                    $(".searchlist").append(
+                                    word.next().append(
                                         $('<div>').text(elt.title).attr({'trip_num' : elt.trip_num})
                                     );
                                 });
                             }
-                            if($("#searchthema").val() == "food") {
+                            if(word.parent().parent().find("select.sel1").val() == "food") {
                                 console.log("food");
                                 $.each(res, function(i, elt){
-                                    $(".searchlist").append(
+                                    word.next().append(
                                         $('<div>').text(elt.title).attr({'food_num' : elt.food_num})
                                     );
                                 });
                             }
 
-                            $(".searchlist").children().addClass("searchwordlist");
+                            word.next().children().addClass("searchwordlist");
                         }//sucess
                     });//ajax
 
                 } else {
-                    $(".searchlist").children().remove();
+                    $(this).next().children().remove();
                 } // if end
             }); // getlist click end
 
             //검색목록 클릭 시 값이 input tag에 바인드되고 검색창이 꺼지게 하는 이벤트
             $(document).on("click", ".searchwordlist",function(){
                 alert("hi");
-                $("input.in1").val($(this).text());
-                if($("#searchthema").val() == "cafe") {
+                var checkedword = $(this);
+                $(this).parent().prev().val($(this).text());
+                if($(this).parent().parent().find("select.sel1").val() == "cafe") {
                     console.log("cafe");
                     stepArr[0] = "cafe," + $(this).attr("cafe_num");
                 }
-                if($("#searchthema").val() == "trip") {
+                if($(this).parent().parent().find("select.sel1").val() == "trip") {
                     console.log("trip");
                     stepArr[0] = "trip," + $(this).attr("trip_num");
                 }
-                if($("#searchthema").val() == "food") {
+                if($(this).parent().parent().find("select.sel1").val() == "food") {
                     console.log("food");
                     stepArr[0] = "food," + $(this).attr("food_num");
                 }
@@ -238,13 +239,13 @@
             });
 
         //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
-        $(document).on("click", "#searchword", function () {
-            if($("#searchthema option:selected").text() == "테마 선택") {
+        $(document).on("click", "input.in1", function () {
+            if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 선택") {
                 alert("테마를 먼저 선택해 주세요");
-                $("#searchthema").focus();
+                $(this).parent().parent().find("select.sel1").focus();
                 return;
             }
-            $(".searchlist").show();
+            $(this).next().show();
         });
 
         });
@@ -256,7 +257,7 @@
             s += "<button type='button' class='cosselectsubstract'><i class='fas fa-minus'></i></button>";
             s += "<br>";
             s += "<div class='cosselect_thema'>";
-            s += "<select class='form-control sel1' id='searchthema' cnt=" + cnt + " name='searchthema'>";
+            s += "<select class='form-control sel1' cnt=" + cnt + " name='searchthema'>";
             s += "<option selected='' disabled='' hidden='' class=op1'>테마 선택</option>";
             s += "<option class='op1' value='cafe'>카페</option>";
             s += "<option class='op1' value='food'>음식점</option>";
@@ -264,7 +265,7 @@
             s += "</select>";
             s += "</div>";
             s += "<div class='i' id='cossearch_insert'>";
-            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' id='searchword' name='searchword' cnt='"+cnt+"'>";
+            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' name='searchword' cnt='"+cnt+"'>";
             s += "<div class='searchlist'></div>";
             s += "<button class='form-control' id='getlist'><i class='fas fa-search' aria-hidden='true'></i></button>";
             s += "</div>";
@@ -303,12 +304,12 @@
             <h2>경로설정</h2>
             <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title"
                    required="required">
-            <div class="cosselect_main first">
+            <div class="cosselect_main">
                 <span class="coscnt">경로 1</span>
                 <button type="button" class="cosselectsubstract"><i class='fas fa-minus'></i></button>
                 <br>
                 <div class="cosselect_thema">
-                    <select class="form-control sel1" id="searchthema" required="required" name="searchthema">
+                    <select class="form-control sel1" required="required" name="searchthema">
                         <option selected="" disabled="" hidden="" class="op1">테마 선택</option>
                         <option class="op1" value="cafe">카페</option>
                         <option class="op1" value="food">음식점</option>
@@ -316,7 +317,7 @@
                     </select>
                 </div>
                 <div class="i" id="cossearch_insert">
-                    <input type="text" class="form-control in1" placeholder="검색어를 입력" id="searchword"
+                    <input type="text" class="form-control in1" placeholder="검색어를 입력"
                            required="required" name="searchword" cnt="1">
                     <div class="searchlist"></div>
                     <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
