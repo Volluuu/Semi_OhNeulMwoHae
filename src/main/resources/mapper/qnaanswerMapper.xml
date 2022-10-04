@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="bit.data.dao.QnaAnswerDao">
+	<select id="selectAllDatas" parameterType="int" resultType="qnaanswerdto">
+		select * from qna_answer where answer_num=#{answer_num} order by idx desc
+	</select>
+	<insert id="insertAnswer" parameterType="qnaanswerdto">
+		insert into qna_answer values (null,#{user_num},#{message},now(),#{qna_num})
+	</insert>
+	<select id="selectAnswerByQna_num" parameterType="int" resultType="qnaanswerdto">
+		select * from qna_answer where qna_num=#{qna_num}
+	</select>
+
+	<select id="selectAnswerByUser_num" parameterType="int" resultType="qnaanswerdto">
+		select * from qna_answer where user_num=#{user_num}
+	</select>
+
+	<delete id="deleteAnswer" parameterType="int">
+		delete from qna_answer where qna_num=#{qna_num}
+	</delete>
+
+</mapper>

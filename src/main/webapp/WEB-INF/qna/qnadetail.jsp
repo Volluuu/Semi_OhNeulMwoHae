@@ -40,6 +40,83 @@
     }
   </style>
   <script>
+    $(function (){
+
+      console.log("num="+num);
+
+      list();// 처음시작 시 댓글 출력
+
+      //삭제 이벤트
+      $(document).on("click",".adel",function() {
+        var idx=$(this).attr("idx");
+        var ans=confirm("정말 삭제하시겠습니까?");
+        if(ans){
+          $.ajax({
+            type:"get",
+            url:"../answer/delete",
+            dataType:"text",
+            data:{"idx":idx},
+            success:function(res){
+              alert("삭제하였습니다");
+              list();
+            }//sucess
+          });//ajax
+        };
+      });//click
+
+      //댓글저장
+      $("#btnsave").click(function() {
+        var fdata=$("#aform").serialize();//form태그안의 name을 쿼리 스트링 형태로 읽어온다
+        //alert(fdata);
+        $.ajax({
+          type:"post",
+          url:"../answer/insert",
+          dataType:"text",
+          data:fdata,
+          success:function(res){
+            list();//댓글 내용만 바뀐다.location.reload();도 가능함, 댓글 목록을 다시 db에서 가져와 출력
+
+            //입력값이랑 사진 안보이게 처리
+            $("#message").val("");
+            $("#aphoto").attr("src","").css("display","none");
+          }//success
+        }); //ajax
+      });
+
+    });
+
+    function list() {
+      var loginok='${sessionScope.loginok}';
+      var loginid='${sessionScope.loginid}';
+      var writerid='${dto.id}';
+      //alert(loginok+","+loginid);
+      //alert(writerid);
+
+      var s="";
+      $.ajax({
+        type:"get",
+        url:"../answer/list",
+        dataType:"json",
+        data:{"num":num},
+        success:function(res){
+          $("b.banswer").text(res.length);//댓글 갯수 출력
+          $.each(res, function(i, elt){
+            s+="<div>"+elt.name;
+            if(writerid==elt.id){
+              s+="<span class='writer'>작성자</span>";
+            }
+            s+="<br>";
+            s+="<pre>"+elt.message;
+            s+="<span class='day'>"+elt.writeday;
+            if(loginok=='yes' && loginid==elt.id){
+              s+="<i class='material-icons adel' style='font-size:17px;' id='adel' idx="+elt.idx+">close</i>"
+            }
+            s+="</span></pre></div>";
+          });
+          $("div.alist").html(s);
+        }//success
+      }); //ajax
+    };//function
   </script>
 </head>
 <body>
