@@ -84,7 +84,7 @@
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
                     s += '<button class="btn btn-outline-dark adap fr" ' +
                         'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '" rev="' + elt.rev + '">답글</button>';
+                        ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
                     s += '</p>';
                     s += '</c:if>';
 
@@ -252,7 +252,7 @@
             var regroup = ti.attr("regroup");
             var restep = ti.attr("restep");
             var relevel = ti.attr("relevel");
-            var rev = ti.attr("rev");
+            var diff = ti.attr("diff");
 
             $(".aform").remove();
             ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
@@ -262,7 +262,7 @@
                 '<input type="hidden" name="regroup" value="' + regroup + '">' +
                 '<input type="hidden" name="restep" value="' + restep + '">' +
                 '<input type="hidden" name="relevel" value="' + relevel + '">' +
-                '<input type="hidden" name="rev" value="' + rev + '">' +
+                '<input type="hidden" name="diff" value="' + diff + '">' +
                 '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
                 '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
 
@@ -318,66 +318,6 @@
         });
 
     });
-
-    function list() {
-        var loginok = '${sessionScope.loginok}';
-        var loginid = '${sessionScope.loginid}';
-        var loginnum = '${sessionScope.user_num}';
-        var user_num = '${dto.user_num}';
-// 		console.log(loginok);
-// 		console.log(loginid);
-        var s = "";
-        $.ajax({
-            type: "get",
-            url: root + "/commentfriend/list",
-            dataType: "json",
-            data: {"find_num": find_num},
-            success: function (res) {
-                $("b.banswer").html("<i class='bi bi-chat'> " + res.length);
-                $.each(res, function (i, elt) {
-                    s += "<div class='eltnickname'><p>";
-                    if (elt.relevel > 0) {
-                        for (var a = 0; a < elt.relevel; a++) {
-                            s += "&emsp;";
-                        }
-                        s += "<i class='bi bi-arrow-return-right'></i>";
-                    }
-
-                    s += elt.nickname;
-                    if (user_num == elt.user_num) {
-                        s += "<span class='writer'>&nbsp;작성자&nbsp;</span>";
-                    }
-                    if (loginok == 'yes' && loginnum == elt.user_num) {
-                        s += '<button class="btn btn-outline-dark adel fr" friend_num="' + elt.friend_num + '">삭제</button>';
-                        s += '<button class="btn btn-outline-dark aupd fr" friend_num="' + elt.friend_num + '">수정</button>';
-
-                    }
-                    s += ' <c:if test="${sessionScope.loginok!=null}">';
-                    s += '<button class="btn btn-outline-dark adap fr" ' +
-                        'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '" rev="' + elt.rev + '">답글</button>';
-                    s += '</p>';
-                    s += '</c:if>';
-
-                    s += "<p class='eltcontent'><pre class='precontent'>";
-                    if (elt.relevel > 0) {
-                        for (var a = 0; a < elt.relevel; a++) {
-                            s += "&emsp;&nbsp;&nbsp;";
-                        }
-                    }
-                    s += elt.content;
-                    s += "</p>";
-                    s += "<span class='day'>" + elt.writeday + "</span>";
-                    s += "</pre>";
-                    s += "</div>";
-
-                });
-                $("div.alist").html(s);
-            }
-        });
-
-
-    }
 </script>
 </body>
 </html>

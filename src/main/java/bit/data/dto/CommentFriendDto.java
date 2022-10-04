@@ -19,5 +19,6 @@ public class CommentFriendDto {
 	private String name;
 	private String nickname;
 	private String loginid;
+	private int diff;
 
 }

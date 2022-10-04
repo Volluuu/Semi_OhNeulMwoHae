@@ -21,6 +21,20 @@ public class CommentFriendService implements  CommentFriendServiceInter{
     }
 
     @Override
+    public int selectMaxDiff(int find_num) {
+        return commentFriendDao.selectMaxDiff(find_num);
+    }
+
+    @Override
+    public int selectMaxRestep(int find_num, int regroup, int diff) {
+        Map<String, Integer> map=new HashMap<>();
+        map.put("find_num",find_num);
+        map.put("regroup",regroup);
+        map.put("diff",diff);
+        return commentFriendDao.selectMaxRestep(map);
+    }
+
+    @Override
     public List<CommentFriendDto> selectAllComments(int find_num) {
         return commentFriendDao.selectAllComments(find_num);
     }
@@ -42,6 +56,24 @@ public class CommentFriendService implements  CommentFriendServiceInter{
         map.put("regroup", regroup);
         map.put("restep", restep);
         commentFriendDao.updateRestep(map);
+    }
+
+    @Override
+    public void updateRestepDiff(int regroup, int diff, int restep) {
+        Map<String, Integer> map=new HashMap<>();
+        map.put("regroup", regroup);
+        map.put("diff", diff);
+        map.put("restep", restep);
+        commentFriendDao.updateRestepDiff(map);
+
+    }
+
+    @Override
+    public void updateRestepMinus(int regroup, int restep) {
+        Map<String, Integer> map=new HashMap<>();
+        map.put("regroup",regroup);
+        map.put("restep",restep);
+        commentFriendDao.updateRestepMinus(map);
     }
 
     @Override
