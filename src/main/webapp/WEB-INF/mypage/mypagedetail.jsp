@@ -23,14 +23,25 @@
         top: 50%;
         left: 50%;
         padding: 5px;
-
-
     }
     </style>
 
 
 </head>
 <body>
-
+<div>
+    <form action="list">
+    <table class="table table-bordered" style="width: 600px">
+        <caption align="top">
+            <h1 style="text-align: center;"><b>마이페이지</b></h1>
+        </caption>
+        <tr>
+            <td>
+            <td></td>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
 </body>
 </html>
