@@ -2,13 +2,15 @@ package bit.data.controller;
 
 import bit.data.dto.UserDto;
 import bit.data.service.UserServiceInter;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import util.ChangeName;
 
@@ -27,6 +29,12 @@ public class UserController {
     @Autowired
     UserServiceInter userService;
 
+    final DefaultMessageService messageService;
+
+    public UserController() {
+        this.messageService = NurigoApp.INSTANCE.initialize("NCSNEBVIMIQMPMQO", "VDFIF8POOXXQVXHVYZ7OJTIA6NKMYBUW", "https://api.coolsms.co.kr");
+    }
+
     @GetMapping("/list")
     public String ulist(Model model)
     {
@@ -43,7 +51,7 @@ public class UserController {
         return "/bit/user/userlist";
     }
 
-    @GetMapping("/form")
+    @GetMapping("/userform")
     public String uform()
     {
         return "/bit/user/userform";
@@ -70,42 +78,60 @@ public class UserController {
     @PostMapping("/insert")
     public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto)// MemberDto dto은 모델앤뷰 생략
     {
-        // Tom cat에 올라간upload 폴더 경로
-        String path=request.getSession().getServletContext().getRealPath("/resources/upload");
-        System.out.println(path);
-        //저장할 파일명 구하기
-        String fileName= ChangeName.getChangeFileName(myphoto.getOriginalFilename());
-        //dto에 photo에 저장
-        dto.setProfilephoto(fileName);
+        try {
+            // Tom cat에 올라간upload 폴더 경로
+            String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+            System.out.println(path);
+            //저장할 파일명 구하기
+            String fileName = ChangeName.getChangeFileName(myphoto.getOriginalFilename());
+            //dto에 photo에 저장
+            dto.setProfilephoto(fileName);
 
-        //upload try/catch
+            //upload try/catch
+            myphoto.transferTo(new File(path + "/" + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
-            myphoto.transferTo(new File(path+"/"+fileName));
+            System.out.println("dto: " + dto);
 
             //db insert (성공했을때만 업로드되도록 try에 배치)
             userService.insertUser(dto);
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-
-        return "redirect:list"; // /member/list 맵핑주소 호출 - controller메서드 호출.redirect라 url주소도 바뀜
+        return "redirect:/"; // /member/list 맵핑주소 호출 - controller메서드 호출.redirect라 url주소도 바뀜
     }
 
     //아이디 체크하는 메서드
     @GetMapping("/loginidcheck")
     @ResponseBody //json 반환 annotation
-    public Map<String, Integer> getLoginIdSearch(String loginid)
+    public Map<String, Integer> getLoginIdSearch(@RequestParam Map<String, String> param)
     {
+        String loginid = param.get("loginid");
         Map<String, Integer> map=new HashMap<String, Integer>();
         int count=userService.getLoginIdSearch(loginid);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
 
+        System.out.println("loginid : " + loginid + ", count : " + count);
+        map.put("count", count);//조회된 id에 값을 저장
+
+        return map;
+    }
+
+    @GetMapping("/loginNicknameCheck")
+    @ResponseBody //json 반환 annotation
+    public Map<String, Integer> loginNicknameCheck(@RequestParam Map<String, String> param) {
+        String nickname = param.get("nickname");
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        int count = userService.loginNicknameCheck(nickname);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
+
+        System.out.println("nickname : " + nickname + ", count : " + count);
         map.put("count", count);//조회된 id에 값을 저장
 
         return map;
@@ -179,6 +205,28 @@ public class UserController {
         session.setAttribute("loginemail", dto.getEmail());
 
 
+    }
+
+    /**
+     * 단일 메시지 발송 예제
+     */
+    @PostMapping("/send-one")
+    @ResponseBody
+    public SingleMessageSentResponse sendOne(@RequestParam Map<String, String> param) {
+
+        String hp = param.get("hp").replace("-", "");
+        String correctAuthNum = param.get("correctAuthNum");
+
+        Message message = new Message();
+        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        message.setFrom("01030093934");
+        message.setTo(hp);
+        message.setText(correctAuthNum);
+
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        System.out.println(response);
+
+        return response;
     }
 
 }

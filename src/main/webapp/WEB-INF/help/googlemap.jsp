@@ -82,9 +82,8 @@
             overflow-y: scroll;
         }
 
-        #searchword {
+        input.in1 {
             width: 300px;
-            display: flex;
             display: inline-block;
             vertical-align: top;
         }
@@ -128,32 +127,20 @@
 
     </style>
     <script>
-        var cnt = "1";
+        var cnt = 1;
         var s = "";
         var c = "";
+        var stepArr = new Array(5);
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
-            /* 검색 시, 검색화면 보여주기 */
-            $(document).on("keyup", "#searchword", function () {
-                var searchcheck = "";
-                searchcheck += $("#searchword").text();
-                if ($("#searchword").text() == '') {
-                    searchcheck += $(".searchlist").css("display", "none");
-                }
-                if ($("#searchword").text() != '') {
-                    searchcheck += $(".searchlist").css("display", "flex");
-                }
-                $("#searchword").html(searchcheck);
-            });
-
             /* +버튼 클릭 시, 경로 추가 이벤트 */
             $(document).on("click", ".cosselectadd", function () {
                 if ($("div.cosselect_main").length == 5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
                     return;
-                }
-                ;
+                };
                 cnt++;
+                console.log(cnt);
                 cosSelectAdd();
                 $("div.cos2").append(s);
                 s = "";
@@ -181,31 +168,85 @@
             });
 
             /* 검색 이벤트 */
-            $(document).on("click", "#getlist", function () {
 
-                $.ajax({
-                    type    : "get",
-                    url     : "../course/searchlist",
-                    dataType: "json",
-                    data    : {"searchthema": $("#searchthema").val(), "searchword": $("#searchword").val()},
-                    success : function (res) {
-                        alert("안녕");
-                        c += "<ul>";
-                        $.each(res, function (i, elt) {
-                            c += "<li class='searchwordlist'>" + elt.title + "</li><br>";
-                        });
-                        c += "</ul>";
-                        $(".searchlist").html(c);
-                    }//sucess
-                });//ajax
+            $(document).on("keyup", "input.in1", function () {
+                var word = $(this); // parent, children, find 등을 사용하기 위해 #searchword를 특정 시켜준다.
+                var txt = word.val();
+                if(txt != '') {
+                    $(this).next().children().remove();
+
+                    $.ajax({
+                        type    : "get",
+                        url     : "../course/searchlist",
+                        dataType: "json",
+                        data    : {"searchthema": word.parent().parent().find("select.sel1").val(), "searchword": word.val()},
+                        success : function (res) {
+
+                            //테마를 3개로 나눠서 검색 시 테이블을 구분해서 가져옴
+                            if(word.parent().parent().find("select.sel1").val() == "cafe") {
+                                console.log("cafe");
+                                $.each(res, function(i, elt){
+                                    word.next().append(
+                                        $('<div>').text(elt.title).attr({'cafe_num' : elt.cafe_num})
+                                    );
+                                });
+                            }
+                            if(word.parent().parent().find("select.sel1").val() == "trip") {
+                                console.log("trip");
+                                $.each(res, function(i, elt){
+                                    word.next().append(
+                                        $('<div>').text(elt.title).attr({'trip_num' : elt.trip_num})
+                                    );
+                                });
+                            }
+                            if(word.parent().parent().find("select.sel1").val() == "food") {
+                                console.log("food");
+                                $.each(res, function(i, elt){
+                                    word.next().append(
+                                        $('<div>').text(elt.title).attr({'food_num' : elt.food_num})
+                                    );
+                                });
+                            }
+
+                            word.next().children().addClass("searchwordlist");
+                        }//sucess
+                    });//ajax
+
+                } else {
+                    $(this).next().children().remove();
+                } // if end
             }); // getlist click end
 
-            //리스트 목록 클릭 시 리스트가 닫히고 선택한 목록이 인풋창에 입력되는 이벤트
-            $(document).on("click", ".searchwordlist", function () {
-                var steplist=$(this).attr().text();
-                $(".searchlist").css("display", "none");
-                $("#searchword").text(steplist);
+            //검색목록 클릭 시 값이 input tag에 바인드되고 검색창이 꺼지게 하는 이벤트
+            $(document).on("click", ".searchwordlist",function(){
+                alert("hi");
+                var checkedword = $(this);
+                $(this).parent().prev().val($(this).text());
+                if($(this).parent().parent().find("select.sel1").val() == "cafe") {
+                    console.log("cafe");
+                    stepArr[0] = "cafe," + $(this).attr("cafe_num");
+                }
+                if($(this).parent().parent().find("select.sel1").val() == "trip") {
+                    console.log("trip");
+                    stepArr[0] = "trip," + $(this).attr("trip_num");
+                }
+                if($(this).parent().parent().find("select.sel1").val() == "food") {
+                    console.log("food");
+                    stepArr[0] = "food," + $(this).attr("food_num");
+                }
+                console.log(stepArr[0]);
+                $(this).parent().hide();
             });
+
+        //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
+        $(document).on("click", "input.in1", function () {
+            if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 선택") {
+                alert("테마를 먼저 선택해 주세요");
+                $(this).parent().parent().find("select.sel1").focus();
+                return;
+            }
+            $(this).next().show();
+        });
 
         });
 
@@ -216,7 +257,7 @@
             s += "<button type='button' class='cosselectsubstract'><i class='fas fa-minus'></i></button>";
             s += "<br>";
             s += "<div class='cosselect_thema'>";
-            s += "<select class='form-control sel1' id='searchthema' cnt=" + cnt + " name='searchthema'>";
+            s += "<select class='form-control sel1' cnt=" + cnt + " name='searchthema'>";
             s += "<option selected='' disabled='' hidden='' class=op1'>테마 선택</option>";
             s += "<option class='op1' value='cafe'>카페</option>";
             s += "<option class='op1' value='food'>음식점</option>";
@@ -224,7 +265,7 @@
             s += "</select>";
             s += "</div>";
             s += "<div class='i' id='cossearch_insert'>";
-            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' id='searchword' name='searchword'>";
+            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' name='searchword' cnt='"+cnt+"'>";
             s += "<div class='searchlist'></div>";
             s += "<button class='form-control' id='getlist'><i class='fas fa-search' aria-hidden='true'></i></button>";
             s += "</div>";
@@ -261,14 +302,14 @@
 
             <%-- <form action="cosInsert" method="post">--%>
             <h2>경로설정</h2>
-            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" cnt=${dto.cnt} name="title"
+            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title"
                    required="required">
             <div class="cosselect_main">
                 <span class="coscnt">경로 1</span>
                 <button type="button" class="cosselectsubstract"><i class='fas fa-minus'></i></button>
                 <br>
                 <div class="cosselect_thema">
-                    <select class="form-control sel1" id="searchthema" required="required" name="searchthema">
+                    <select class="form-control sel1" required="required" name="searchthema">
                         <option selected="" disabled="" hidden="" class="op1">테마 선택</option>
                         <option class="op1" value="cafe">카페</option>
                         <option class="op1" value="food">음식점</option>
@@ -276,8 +317,8 @@
                     </select>
                 </div>
                 <div class="i" id="cossearch_insert">
-                    <input type="text" class="form-control in1" placeholder="검색어를 입력" id="searchword"
-                           required="required" name="searchword">
+                    <input type="text" class="form-control in1" placeholder="검색어를 입력"
+                           required="required" name="searchword" cnt="1">
                     <div class="searchlist"></div>
                     <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
                 </div>
@@ -304,40 +345,6 @@
 
 <script>
 
-    /*var type_of_course = "";
-    var user_keyword = "";*/
-    /*
-        $("#type").change(function () {
-            type_of_course = $("#type").val();
-            alert(type_of_course);
-
-        }); //type change end
-
-        $("#keyword").change(function () {
-            alert("hi");
-            user_keyword = $(this).val();
-        }); // keyword change end
-    */
-
-
-
-    /* function list() {
-         var c="";
-         $.ajax({
-             type:"get",
-             url:"../course/searchlist",
-             dataType:"json",
-             data:{"type":type,"keyword":keyword},
-             success:function(res){
-                 c+="<ul>";
-                 $.each(res, function(i, elt){
-                     c+="<li>"+elt.title+"</li>";
-                 });
-                 c+="</ul>";
-                 $(".searchlist").html(c);
-             }//success
-         }); //ajax
-     };//function*!/*/
 </script>
 </body>
 </html>

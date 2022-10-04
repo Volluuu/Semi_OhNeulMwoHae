@@ -12,6 +12,10 @@
         select count(*) from user where loginid=#{loginid}
     </select>
 
+    <select id="loginNicknameCheck" parameterType="String" resultType="int">
+        select count(*) from user where nickname=#{nickname}
+    </select>
+
     <insert id="insertUser" parameterType="udto">
         insert into user (loginid,password,name,nickname,age,gender,email,hp,gaipday)
         values (#{loginid},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())

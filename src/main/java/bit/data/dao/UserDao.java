@@ -32,6 +32,11 @@ public class UserDao implements UserDaoInter{
     }
 
     @Override
+    public int loginNicknameCheck(String nickname) {
+        return session.selectOne(ns+"loginNicknameCheck", nickname);
+    }
+
+    @Override
     public void insertUser(UserDto dto) {
         // TODO Auto-generated method stub
         session.insert(ns+"insertUser", dto);

@@ -84,9 +84,9 @@
     //로그인창에 있는 로그인 버튼
     $("#btnloginok").click(function(){
         //아이디와 비번 읽기
-        var id=$("#loginid").val();
+        var id=$("#loginid2").val();
         // console.log(id);
-        var pass=$("#loginpass").val();
+        var pass=$("#pass").val();
         // console.log(pass);
         var root='${root}';
 
@@ -100,7 +100,8 @@
                     alert("아이디나 비번이 맞지 않습니다");
                 }else{
                     alert("로그인 되었습니다.");
-                    location.reload();
+
+
                 }
             }//success
 

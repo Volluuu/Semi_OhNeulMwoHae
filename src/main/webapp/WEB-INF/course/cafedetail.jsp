@@ -6,15 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-
 <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/cafedetail.css">
 <link rel="stylesheet" href="../css/star.css">
 <link rel="stylesheet" href="../css/footer.css">
-
 <style>
 
     *{
@@ -47,7 +46,6 @@
     button.fr{
         float:right;
     }
-
 
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
@@ -103,6 +101,7 @@
             <div class="hj_bbody">
                 <div id="title">
                     <h2>${dto.title}</h2>
+
                 </div>
                 <div id="topinfo" type="companion" class="iYZztd">
                     <div>
@@ -170,6 +169,7 @@
 </div>
 <div id="review"></div>
 
+
 %--------------------------------------------------------------------------------footer--%>
 <footer id="footer" class="efLSbp">
     <div class="inner">
@@ -211,7 +211,7 @@
             <p> | 파트너 입점</p>
         </div>
 
-        <%--   copyright  --%>
+        <%--            ------------------------------copyright--%>
         <div class="middle_gap">
             <p class="copyright">Copyright © 오늘뭐해 Inc. All Rights Reserved.</p>
         </div>

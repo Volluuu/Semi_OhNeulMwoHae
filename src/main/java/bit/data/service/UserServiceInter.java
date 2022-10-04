@@ -9,6 +9,7 @@ public interface UserServiceInter {
     public int getTotalCount();
 
     public int getLoginIdSearch(String loginid);
+    public int loginNicknameCheck(String nickname);
 
     public void insertUser(UserDto dto);
 
