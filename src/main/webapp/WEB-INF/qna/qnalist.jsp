@@ -87,8 +87,9 @@
   <div class="qna_list">
     <h3>1:1 문의사항</h3>
     <hr>
-    <input type="hidden" name="user_num" value="${user_num}">
-    <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+    <input type="hidden" name="user_num" value="${dto.user_num}">
+    <input type="hidden" name="currentPage" value="${currentPage}">
+    <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform?user_num=${dto.user_num}&currentPage=${currentPage}'">글쓰기</button>
     <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
     <c:forEach var="dto" items="${list}">
       <div class="qna_title">

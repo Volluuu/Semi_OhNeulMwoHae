@@ -31,7 +31,7 @@
     </select>
 
     <insert id="insertQna" parameterType="qnadto">
-        insert into qna values (null,#{user_num},#{subject},#{content},'not',now())
+        insert into qna values (null,#{user_num},#{subject},#{content},'not',now(),0)
     </insert>
 
     <delete id="deleteQna" parameterType="int">
