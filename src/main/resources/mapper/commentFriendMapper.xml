@@ -15,7 +15,7 @@
 	<!--최근 댓글이 밑으로 나오게-->
 	<select id="selectAllComments" parameterType="int" resultType="cfdto">
 		select CF.friend_num, CF.find_num, CF.user_num, CF.content, CF.writeday, CF.regroup, CF.restep, CF.relevel, CF.diff, U.name, U.nickname,
-			   U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by CF.regroup asc,CF.diff asc, CF.restep asc, CF.friend_num desc
+			   U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by CF.regroup asc,CF.diff asc, CF.restep asc, CF.friend_num asc
 	</select>
 	<!--계층형 댓글 입력-->
 	<insert id="insertComment" parameterType="cfdto">
@@ -27,7 +27,7 @@
 	</update>
 	<!--계층형 댓글 relevel도-->
 	<update id="updateRestepDiff" parameterType="Map">
-		<![CDATA[update comment_friend set restep=restep+1 where regroup=#{regroup} and diff=#{diff} and restep=#{restep}]]>
+		<![CDATA[update comment_friend set restep=restep+2 where regroup=#{regroup} and diff=#{diff} and restep>=#{restep}]]>
 
 	</update>
 	<update id="updateRestepMinus" parameterType="Map">
