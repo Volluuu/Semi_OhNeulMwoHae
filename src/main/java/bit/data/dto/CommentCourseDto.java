@@ -1,5 +1,6 @@
 package bit.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -13,5 +14,6 @@ public class CommentCourseDto {
 	private int cafe_num;
 	private int star;
 	private String content;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
 	private Timestamp writeday;
 }

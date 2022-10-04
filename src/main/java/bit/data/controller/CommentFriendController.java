@@ -28,8 +28,6 @@ public class CommentFriendController {
                                     @RequestParam(defaultValue = "0") int relevel,
                                     @RequestParam(defaultValue = "0") int restep,
                                     @RequestParam(defaultValue = "0") int diff
-
-
     ) {
 
         if(regroup==0){
@@ -47,6 +45,7 @@ public class CommentFriendController {
 //            restep=commentFriendService.selectMaxRestep(dto.getFind_num(), regroup, diff)+1;
             restep++;
             relevel++;
+            dto.setDiff(diff);
 
         }
 

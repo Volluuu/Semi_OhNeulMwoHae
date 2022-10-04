@@ -82,10 +82,12 @@
 
                     }
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
+                    if(elt.relevel<2){
                     s += '<button class="btn btn-outline-dark adap fr" ' +
                         'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
                         ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
                     s += '</p>';
+                    }
                     s += '</c:if>';
 
                     s += "<p class='eltcontent'><pre class='precontent'>";
@@ -224,7 +226,6 @@
 <script type="text/javascript">
     var find_num =${dto.find_num};
     var root = "${root}";
-    $(function () {
         console.log("find_num=" + find_num);
 
         list();//처음 시작시 댓글 출력
@@ -317,7 +318,6 @@
             });
         });
 
-    });
 </script>
 </body>
 </html>

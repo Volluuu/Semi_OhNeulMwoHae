@@ -27,7 +27,7 @@
 	</update>
 	<!--계층형 댓글 relevel도-->
 	<update id="updateRestepDiff" parameterType="Map">
-		<![CDATA[update comment_friend set restep=restep+2 where regroup=#{regroup} and diff=#{diff} and restep>=#{restep}]]>
+		<![CDATA[update comment_friend set restep=restep+1 where regroup=#{regroup} and diff=#{diff} and restep=#{restep}]]>
 
 	</update>
 	<update id="updateRestepMinus" parameterType="Map">
