@@ -109,6 +109,19 @@
     <title>Title</title>
 </head>
 <body>
+<script>
+    let count = 1;
+    window.onscroll = function (e) {
+        console.log(window.innerHeight , window,scrollY,document.body.offsetHeight)
+        if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
+          {
+                let addContent = document.createElement("div");
+                addContent.classList.add("container");
+              document.querySelector('section').appendChild(addContent);
+            }
+        }
+    }
+</script>
 <%---------------------------------------------------------------------검색창--%>
 <div class="hj_search">
     <form action="list" method="get">
@@ -154,7 +167,7 @@
 
 
 <%---------------------------------------------------------------------------카페list--%>
-
+<section class="cf">
 <div class="container Cafe" style="width:100%; height: 60%;">
     <%--글 갯수가 0이 아닐시--%>
     <c:set var="root" value="${root}"/>
@@ -198,6 +211,7 @@
         </c:forEach>
     </c:if>
 </div>
+</section>
 <%-----------------------------------------------------------------------------%>
 
 <%---------------------------------------------------------------------------triplist--%>
