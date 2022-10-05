@@ -26,8 +26,8 @@
         order by qna_num desc limit #{startnum},#{perpage}
     </select>
 
-    <select id="selectByNum" parameterType="int" resultType="qnadto">
-        select * from qna where qna_num=#{qna_num}
+    <select id="selectUser_num" parameterType="int" resultType="qnadto">
+        select * from qna where user_num=#{user_num}
     </select>
 
     <insert id="insertQna" parameterType="qnadto">

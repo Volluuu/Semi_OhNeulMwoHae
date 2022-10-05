@@ -12,25 +12,24 @@
   <style type="text/css">
     .qna_main{
       width: 1500px;
-      height: 80vh;
-      border: 1px solid crimson;
+      height: 90vh;
+      /*border: 2px solid black;*/
       margin: 0 auto;
     }
     .qna_info{
       width: 200px;
-      height: 80vh;
-      border: 1px solid black;
+      height: 90vh;
+      /*border: 1px solid black;*/
       float: left;
     }
-    .qna_info a {
-      float: right;
+    .qna_info a{
       text-decoration: none;
       color: gray;
       font-size: 15px;
     }
     .qna_list{
       width: 1200px;
-      border: 1px solid orange;
+      margin-left: 45px;
       display: inline-block;
     }
     .qna_list ul{
@@ -53,7 +52,7 @@
   <div class="qna_info">
     <h1>고객센터</h1>
     <a href="${root}/qna/noticelist"><p>공지사항</p></a>
-    <a href="${root}/qna//faqlist"><p>자주묻는 질문</p></a>
+    <a href="${root}/qna/faqlist"><p>자주묻는 질문</p></a>
     <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
   </div>
   <div class="qna_list">

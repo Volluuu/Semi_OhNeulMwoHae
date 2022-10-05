@@ -61,26 +61,9 @@ public class QnaService implements QnaServiceInter{
 		daoInter.insertQna(dto);
 	}
 
-	/*@Override
-	public void updateRestep(int regroup, int restep) {
-		// TODO Auto-generated method stub
-		Map<String, Integer> map=new HashMap<String, Integer>();
-
-		map.put("regroup", regroup);
-		map.put("restep", restep);
-
-		daoInter.updateRestep(map);
-	}
-*/
-	/*@Override
-	public void updateReadCount(int num) {
-		daoInter.updateReadCount(num);
-	}*/
-
 	@Override
-	public QnaDto getData(int qna_num) {
-
-		return daoInter.getData(qna_num);
+	public QnaDto getUser(int user_num) {
+		return daoInter.getUser(user_num);
 	}
 
 	@Override

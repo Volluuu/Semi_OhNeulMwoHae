@@ -12,25 +12,24 @@
   <style type="text/css">
     .faq_main{
       width: 1500px;
-      height: 80vh;
-      border: 1px solid crimson;
+      height: 90vh;
+      /*border: 2px solid black;*/
       margin: 0 auto;
     }
     .faq_info{
       width: 200px;
-      height: 80vh;
-      border: 1px solid black;
+      height: 90vh;
+      /*border: 1px solid black;*/
       float: left;
     }
     .faq_info a{
-      float: right;
       text-decoration: none;
       color: gray;
       font-size: 15px;
     }
     .faq_list{
       width: 1200px;
-      border: 1px solid orange;
+      margin-left: 45px;
       display: inline-block;
     }
     .faq_list li{
