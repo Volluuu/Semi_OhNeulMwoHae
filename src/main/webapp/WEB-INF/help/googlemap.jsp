@@ -131,7 +131,7 @@
         var s = "";
         var c = "";
         var stepArr = new Array(5);
-
+        var markerArr = new Array(5);
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -140,7 +140,6 @@
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
                     return;
                 }
-                ;
                 cnt++;
                 console.log(cnt);
                 cosSelectAdd();
@@ -159,7 +158,7 @@
                     alert("첫 경로는 삭제 할 수 없습니다.");
                     return;
                 }
-                ;
+
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
@@ -169,6 +168,7 @@
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
                     $(".cosselect_main").eq(i).find(".in1").attr("cnt", (i + 1));
                 }
+                MarkerArr[cnt-1].setMap(null);
             });
 
             /* 검색 이벤트 */
@@ -268,6 +268,7 @@
             //마커에 넣을 위도와 경도를 가져오는 이벤트
             $(document).on("click", ".insert_course_button", function() {
                 var button = $(this);
+                var thiscnt = button.siblings("input.in1").attr("cnt");
                 if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 검색") {
                     alert("테마를 먼저 선택해 주세요");
                     $(this).parent().parent().find("select.sel1").focus();
@@ -277,6 +278,12 @@
                     alert("목적지를 먼저 선택해 주세요");
                     button.siblings("input.in1").focus();
                     return;
+                }
+                if(markerArr[thiscnt - 1 ]) {
+                   if(!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
+                       return;
+                   }
+                   markerArr[thiscnt - 1].setMap(null);
                 }
                 var course_type = button.parent().siblings("div.cosselect_thema").find("select.sel1").val();
                 var course_num = button.siblings("input.in1").attr("course_num");
@@ -295,6 +302,9 @@
                         var markerPosition = new kakao.maps.LatLng(res.lat, res.lon);
                         var marker = new kakao.maps.Marker({position:markerPosition});
                         marker.setMap(map);
+                        markerArr[thiscnt - 1 ] = marker;
+                        var movelatlon = new kakao.maps.LatLng(res.lat, res.lon);
+                        map.setCenter(movelatlon);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
@@ -333,7 +343,6 @@
     </script>
 </head>
 <body>
-
 <div class="mapandselect">
     <div class="input-group">
         <!-- 저장된 경로 -->
@@ -348,7 +357,7 @@
         <script>
             var container = document.getElementById('map');
             var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                center: new kakao.maps.LatLng(37.499442, 127.029023),
                 level : 3
             };
 
