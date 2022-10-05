@@ -12,25 +12,24 @@
   <style type="text/css">
     .notice_main{
       width: 1500px;
-      height: 80vh;
-      border: 1px solid crimson;
+      height: 90vh;
+      /*border: 2px solid black;*/
       margin: 0 auto;
     }
     .notice_info{
       width: 200px;
-      height: 80vh;
-      border: 1px solid black;
+      height: 90vh;
+      /*border: 1px solid black;*/
       float: left;
     }
-    .notice_info a {
-      float: right;
+    .notice_info a{
       text-decoration: none;
       color: gray;
       font-size: 15px;
     }
     .notice_list{
       width: 1200px;
-      border: 1px solid orange;
+      margin-left: 45px;
       display: inline-block;
     }
     .notice_list li{

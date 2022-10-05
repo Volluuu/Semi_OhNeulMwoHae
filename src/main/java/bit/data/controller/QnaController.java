@@ -2,6 +2,7 @@ package bit.data.controller;
 
 import bit.data.dto.FindDto;
 import bit.data.dto.QnaDto;
+import bit.data.service.QnaAnswerServiceInter;
 import bit.data.service.QnaServiceInter;
 import bit.data.service.UserServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,9 @@ public class QnaController {
 
 	@Autowired
 	UserServiceInter userServiceInter;
+
+	@Autowired
+	QnaAnswerServiceInter qnaAnswerServiceInter;
 
 
 	/*@GetMapping("/qna/qnalist")
@@ -65,11 +70,11 @@ public class QnaController {
 		//List<QnaDto> list=serviceInter.getAllData();
 		List<QnaDto> list=serviceInter.getPagingList(sc,sw,startNum,perPage);
 
-		/*for(QnaDto dto:list)
+		for(QnaDto dto:list)
 		{
-			int acount=answerService.getAllAnswerList(dto.getNum()).size();
+			int acount=qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
 			dto.setAcount(acount);
-		}*/
+		}
 
 		model.addAttribute("list",list);
 		model.addAttribute("totalCount",totalCount);
@@ -91,6 +96,7 @@ public class QnaController {
 
 
 		mview.addObject("dto",dto);
+		mview.addObject("qna_num",qna_num);
 		mview.addObject("currentPage",currentPage);
 
 		mview.setViewName("/bit/qna/qnadetail");
@@ -116,6 +122,7 @@ public class QnaController {
 	}
 
 	@GetMapping("/qna/qnadelete")
+	@ResponseBody
 	public String deleteQna(int qna_num,int currentPage)
 	{
 		serviceInter.deleteQna(qna_num);
@@ -134,7 +141,7 @@ public class QnaController {
 
 
 	@GetMapping("/qna/qnaupdateform")
-	public String qnaUpdateForm(Model model,int qna_num, int currentPage)
+	public String qnaUpdateForm(Model model,int qna_num,int currentPage)
 	{
 		System.out.println("1:"+qna_num);
 		//num에 해당하는 dto 얻기
@@ -143,6 +150,7 @@ public class QnaController {
 
 		//model에 저장
 		model.addAttribute("dto",dto);
+		model.addAttribute("qna_num",qna_num);
 		model.addAttribute("currentPage",currentPage);
 
 		return "/bit/qna/qnaupdateform";
