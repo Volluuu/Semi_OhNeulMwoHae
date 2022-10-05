@@ -47,10 +47,14 @@ public class CafeController {
         int CafetotalCount=cafeService.selectTotalCount(cc, cw);
         int TriptotalCount=cafeService.selectTotalCount(tc, tw);
         int FoodtotalCount=cafeService.selectTotalCount(fc, fw);
-        int perPage=10;//한페이지당 보여질 글의 갯수
-        int perBlock=4;//한블럭당 보여질 페이지의 갯수
-        int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
-        int startPage;//각블럭당 보여질 시작페이지
+        int perPage=8;//한페이지당 보여질 글의 갯수
+        int perBlock=6;//한블럭당 보여질 페이지의 갯수
+        int CafestartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+        int TripstartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+        int FoodstartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+        int CafestartPage;//각블럭당 보여질 시작페이지
+        int TripstartPage;//각블럭당 보여질 시작페이지
+        int FoodstartPage;//각블럭당 보여질 시작페이지
         int CafeendPage;//각 블럭당 보여질 끝페이지
         int TripendPage;//각 블럭당 보여질 끝페이지
         int FoodendPage;//각 블럭당 보여질 끝페이지
@@ -69,37 +73,40 @@ public class CafeController {
         //각 블럭당 보여질 시작페이지
         //perBlock=5 일경우 현재페이지가 1~5 일경우는 시작페이지가 1, 끝페이지가 5
         //만약 현재페이지가 13 일경우는 시작페이지가 11, 끝페이지가 15
-        startPage=(currentPage-1)/perBlock*perBlock+1;
-        CafeendPage=startPage+perBlock-1;
+        CafestartPage=(currentPage-1)/perBlock*perBlock+1;
+        CafeendPage=CafestartPage+perBlock-1;
 
-        startPage=(currentPage-1)/perBlock*perBlock+1;
-        TripendPage=startPage+perBlock-1;
+        TripstartPage=(currentPage-1)/perBlock*perBlock+1;
+        TripendPage=TripstartPage+perBlock-1;
 
-        startPage=(currentPage-1)/perBlock*perBlock+1;
-        FoodendPage=startPage+perBlock-1;
+        FoodstartPage=(currentPage-1)/perBlock*perBlock+1;
+        FoodendPage=FoodstartPage+perBlock-1;
+
 
         //총페이지수가 23개일경우 마지막 블럭은 끝페이지가 25가 아니라 23이라야한다
         if(CafeendPage>CafetotalPage)
             CafeendPage=CafetotalPage;
 
-        if(TripendPage>CafetotalPage)
-            TripendPage=CafetotalPage;
+        if(TripendPage>TriptotalPage)
+            TripendPage=TriptotalPage;
 
-        if(FoodendPage>CafetotalPage)
-            FoodendPage=CafetotalPage;
+        if(FoodendPage>FoodtotalPage)
+            FoodendPage=FoodtotalPage;
 
         //각 페이지에서 보여질 시작번호
         //예: 1페이지->0, 2페이지:5, 3페이지 : 10...
-        startNum=(currentPage-1)*perPage;
+        CafestartNum=(currentPage-1)*perPage;
+        TripstartNum=(currentPage-1)*perPage;
+        FoodstartNum=(currentPage-1)*perPage;
 
         //각페이지당 출력할 시작번호 구하기
         //예: 총글갯수가 23이라면  1페이지는 23,2페이지는 18,3페이지는 13...
         no=CafetotalCount-(currentPage-1)*perPage;
 
         //페이지에서 보여질 글만 가져오기
-        List<CafeDto> Cafelist=cafeService.selectPagingList(cc, cw, startNum, perPage);
-        List<TripDto> Triplist=tripService.selectPagingList(tc, tw, startNum, perPage);
-        List<FoodDto> Foodlist=foodService.selectPagingList(fc, fw, startNum, perPage);
+        List<CafeDto> Cafelist=cafeService.selectPagingList(cc, cw, CafestartNum, perPage);
+        List<TripDto> Triplist=tripService.selectPagingList(tc, tw, TripstartNum, perPage);
+        List<FoodDto> Foodlist=foodService.selectPagingList(fc, fw, FoodstartNum, perPage);
 
         model.addAttribute("Cafelist", Cafelist);
         model.addAttribute("Triplist", Triplist);
@@ -108,7 +115,9 @@ public class CafeController {
         model.addAttribute("TriptotalCount", TriptotalCount);
         model.addAttribute("FoodtotalCount", FoodtotalCount);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("startPage", startPage);
+        model.addAttribute("CafestartPage", CafestartPage);
+        model.addAttribute("TripstartPage", TripstartPage);
+        model.addAttribute("FoodstartPage", FoodstartPage);
         model.addAttribute("CafeendPage", CafeendPage);
         model.addAttribute("TripendPage", TripendPage);
         model.addAttribute("FoodendPage", FoodendPage);
