@@ -17,15 +17,28 @@
             rel="stylesheet"
     />
     <style type="text/css">
-    div.usermain{
+    div.mypagemain{
         position: absolute;
         margin: -100px 0px 0px -200px;
         top: 50%;
         left: 50%;
         padding: 5px;
     }
-    </style>
 
+    .btn1{
+        text-align: center;
+    }
+
+    .btn2{
+        display :inline-block;
+    }
+
+    img{
+        display: block;
+        margin: auto;
+        border-radius: 70%;
+    }
+    </style>
 
 </head>
 <body>
@@ -35,13 +48,27 @@
         <caption align="top">
             <h1 style="text-align: center;"><b>마이페이지</b></h1>
         </caption>
-        <tr>
-            <td>
-            <td></td>
-            </td>
-        </tr>
-    </table>
-    </form>
+        <hr>
+        <img src="${profilephoto}">
+
+        <div>닉네임 <input type="text" id="nickname" value="${nickname}"></div>
+        <br>
+        <div>핸드폰 번호 <input type="text" id="hp" value="${hp}"></div>
+        <br>
+        <div>연령대 <input type="text" id="age" value="${age}"></div>
+        <br>
+        <div>관심사 </div>
+        <br>
+        <div>소개글 <textarea placeholder="소개글을 작성하세요" style="height:150px;"></textarea> </div>
+        <br>
+
+
+
+        <div class="btn1">
+        <button type="button" class="btn2">수정</button>
+        <button type="button" class="btn2">나의 경로</button>
+        </div>
+
 </div>
 </body>
 </html>
