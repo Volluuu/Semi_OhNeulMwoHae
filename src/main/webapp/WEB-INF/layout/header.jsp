@@ -175,12 +175,14 @@
 				<button class="form-control btn1"><i class='fas fa-search'></i></button>
 			</div>
 		</div>
-		<div class="myinfo">
-			<div class="input-group my1">
-				<a href="#">마이페이지</a>
+	<div class="myinfo">
+		<div class="input-group my1">
+			<c:if test="${sessionScope.loginok!=null}">
+			<a href="${root}/mypage/mypagedetail">마이페이지</a>
+			</c:if>
 				<a href="${root}/user/userlist">회원목록</a>
-				<a href="${root}/user/userform">회원가입</a>
 				<c:if test="${sessionScope.loginok==null}">
+					<a href="${root}/user/userform">회원가입</a>
 				<a href="${root}/user/userlogin">로그인</a>
 				</c:if>
 				<c:if test="${sessionScope.loginok!=null}">

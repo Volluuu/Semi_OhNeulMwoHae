@@ -68,7 +68,7 @@
                 if (!regex.test(p1)) {
                     $("#passwordSuccess").text("조건에 맞게 입력해주세요");
                 } else if (p2 == '') {
-                    $("#passwordSuccess").text("조건에 맞게 채워주세요.");
+                    $("#passwordSuccess").text("비밀번호 확인란을 입력해주세요.");
                 } else if (!regex.test(p2) || p1 != p2) {
                     $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
                 } else {
