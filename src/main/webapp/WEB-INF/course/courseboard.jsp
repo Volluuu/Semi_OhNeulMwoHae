@@ -13,15 +13,16 @@
         /* justify-content: center;*/
         /* justify-content: space-between;*/
         /*justify-content: space-around;*/
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*justify-content: space-between;*/
     }
 
     .item {
 
         /*justify-content: flex-start;*/
     }
+
     /*-----------------------------------------------------------------------*/
 
     /*-----------------------------------------------------------------------category,조회순 css부분*/
@@ -66,25 +67,25 @@
     svg:not(:root) {
         overflow: hidden;
     }
+
     /*-----------------------------------------------------------------------*/
 
     /*-----------------------------------------------------------------------card사이 공백*/
-    .blog-card{
+    .blog-card {
         margin-bottom: 50px;
     }
+
     /*-----------------------------------------------------------------------*/
 
     /*-----------------------------------------------------------------------검색창 css*/
-    div.hj_search
-    {
+    div.hj_search {
         height: 40px;
         width: 400px;
         border: 1px solid #1b5ac2;
         background: #ffffff;
     }
 
-    input.hj_input
-    {
+    input.hj_input {
         font-size: 16px;
         width: 99%;
         height: 99%;
@@ -94,8 +95,7 @@
         float: left;
     }
 
-    button.hj_button
-    {
+    button.hj_button {
         width: 50px;
         height: 100%;
         border: 0px;
@@ -104,11 +104,24 @@
         float: right;
         color: #ffffff;
     }
+
     /*-----------------------------------------------------------------------*/
-    .paging{
-        display:flex;
-        justify-content:center;
+    .paging {
+        display: flex;
+        justify-content: center;
     }
+
+    #divgrid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(200px, auto);
+        gap: 20px;
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        justify-content: space-between;
+    }
+
 </style>
 <html>
 <head>
@@ -119,8 +132,9 @@
 <%---------------------------------------------------------------------검색창--%>
 <div class="hj_search">
     <form action="list" method="get">
-    <input type="text" placeholder="검색어를 입력해주세요" class="hj_input" value="${param.cafeword}">
-    <button type="submit" class="hj_button">검색</button>위치수정필요
+        <input type="text" placeholder="검색어를 입력해주세요" class="hj_input" value="${param.cafeword}">
+        <button type="submit" class="hj_button">검색</button>
+        위치수정필요
     </form>
 </div>
 <br>
@@ -151,12 +165,12 @@
 </div>
 <div class="paging">
     <ul class="pagination">
-        <c:if test="${CafestartPage>1}">
-            <li class="page-item"><a href="list?currentPage=${CafestartPage-1}" class="page-link">&lt;</a></li>
+        <c:if test="${startPage>1}">
+            <li class="page-item"><a href="list?currentPage=${startPage-1}" class="page-link">&lt;</a></li>
         </c:if>
 
         <!-- 페이지 번호 -->
-        <c:forEach var="pp" begin="${CafestartPage}" end="${CafeendPage}">
+        <c:forEach var="pp" begin="${startPage}" end="${endPage}">
             <c:if test="${pp==currentPage}">
                 <li class="page-item active"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>
             </c:if>
@@ -165,8 +179,8 @@
             </c:if>
         </c:forEach>
 
-        <c:if test="${CafeendPage<CafetotalPage}">
-            <li class="page-item"><a href="list?currentPage=${CafeendPage+1}" class="page-link">&gt;</a></li>
+        <c:if test="${endPage<totalPage}">
+            <li class="page-item"><a href="list?currentPage=${endPage+1}" class="page-link">&gt;</a></li>
         </c:if>
     </ul>
 </div>
@@ -179,40 +193,138 @@
 <%-------------------------------------------------------------------------card시작--%>
 <%--기본 카드에 주소가 나와있으면 사진 색깔에 따라서 주소식별이 어려움 hover하면 안에 넣을지 선택하기--%>
 <script>
-    var catesel=$("#categorysel option:selected").val();
-    var root="${root}";
-    $(document).on("change","#categorysel",function (){
-        if(catesel=="cafe"){
+    $(document).on("change", "#categorysel", function () {
+        var root = "${root}";
+        var currentPage = "${currentPage}";
+        var catesel = $("#categorysel option:selected").val();
+        console.log(catesel);
+        $("#divgrid").empty();
+        $(".paging").empty();
+        if (catesel == "cafe") {
+            var c = "";
+            var p = "";
             $.ajax({
-                type:"get",
-                url:root+"/courseboard/cafelist",
-                dataType:"json",
-                data:,
-                success:function(res){
+                type: "get",
+                url: root + "/courseboard/cafelist",
+                dataType: "json",
+                success: function (suc) {
+                    alert("CAFE 성공");
+                    $.each(suc, function (i, res) {
+                        c += '<div class="griditem">';
+                        <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                        c += '<a href="' + root + '"/course/cafedetail?cafe_num=' + res.cafe_num + '&currentPage=' + currentPage + '">';
+                        c += '<div class="item">';
+                        c += '<div class="blog-card spring-fever">';
+                        <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                        c += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                        c += '<div class="title-content">';
+                        c += '<h3>' + res.title + '</h3>';
+                        c += '<hr/>';
+                        c += '<div class="intro">' + res.addr + '</div>';
+                        c += '</div>';
+                        c += '<div class="card-info">';
+                        c += '대표메뉴: ' + res.menu + '<br>';
+                        c += '전화번호: ' + res.tel;
+                        c += '</div>';
+                        c += '<div class="utility-info">';
+                        c += '<ul class="utility-list">';
+                        c += '<li class="comments">' + res.answercount + '</li>';
+                        c += '<li class="date">' + res.readcount + '</li>';
+                        c += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                        c += '</ul>';
+                        c += ' </div>';
+                        c += '<div class="gradient-overlay"></div>';
+                        c += '<div class="color-overlay"></div>';
+                        c += '</div>';
+                        c += ' <div class="card-info">';
+                        c += '</div>';
+                        c += '<div class="gradient-overlay"></div>';
+                        c += '<div class="color-overlay"></div>';
+                        c += '</div>';
+                        c += '</a>';
+                        <%--c+='</c:forEach>';--%>
+                        c += '</div>';
 
+                    })
+                    p += '<ul class="pagination">';
+                    p += '<c:if test="${startPage>1}">';
+                    p += '<li class="page-item"><a href="list?currentPage=${startPage-1}" class="page-link">&lt;</a></li>';
+                    p+='</c:if>';
+                    p+='<c:forEach var="pp" begin="${startPage}" end="${endPage}">';
+                    p+='<c:if test="${pp==currentPage}">';
+                    p += '<li class="page-item active"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>';
+                    p += ' </c:if>';
+                    p += '<c:if test="${pp!=currentPage}">';
+                    p += '<li class="page-item"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>';
+                    p += '</c:if>';
+                    p += '</c:forEach>';
+                    p += '<c:if test="${endPage<totalPage}">';
+                    p += '<li class="page-item"><a href="list?currentPage=${endPage+1}" class="page-link">&gt;</a></li>';
+                    p += '</c:if>';
+                    p += '</ul>';
+                    $("#divgrid").html(c);
+                    $(".paging").html(p);
+                }
+
+            });
+
+        } else if (catesel == "food") {
+            var f = "";
+            $.ajax({
+                type: "get",
+                url: root + "/courseboard/foodlist",
+                dataType: "json",
+                success: function (suc) {
+                    alert("FOOD 성공");
+                    $.each(suc, function (i, res) {
+                        f += '<div class="griditem">';
+                        <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                        f += '<a href="' + root + '"/course/fooddetail?food_num=' + res.food_num + '&currentPage=' + currentPage + '">';
+                        f += '<div class="item">';
+                        f += '<div class="blog-card spring-fever">';
+                        <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                        f += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                        f += '<div class="title-content">';
+                        f += '<h3>' + res.title + '</h3>';
+                        f += '<hr/>';
+                        f += '<div class="intro">' + res.addr + '</div>';
+                        f += '</div>';
+                        f += '<div class="card-info">';
+                        f += '대표메뉴: ' + res.menu + '<br>';
+                        f += '전화번호: ' + res.tel;
+                        f += '</div>';
+                        f += '<div class="utility-info">';
+                        f += '<ul class="utility-list">';
+                        f += '<li class="comments">' + res.answercount + '</li>';
+                        f += '<li class="date">' + res.readcount + '</li>';
+                        f += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                        f += '</ul>';
+                        f += ' </div>';
+                        f += '<div class="gradient-overlay"></div>';
+                        f += '<div class="color-overlay"></div>';
+                        f += '</div>';
+                        f += ' <div class="card-info">';
+                        f += '</div>';
+                        f += '<div class="gradient-overlay"></div>';
+                        f += '<div class="color-overlay"></div>';
+                        f += '</div>';
+                        f += '</a>';
+                        <%--c+='</c:forEach>';--%>
+                        f += '</div>';
+                    })
+
+
+                    $("#divgrid").html(f);
                 }
             });
 
-        }
-        if(catesel=="food"){
+        } else if (catesel == "trip") {
             $.ajax({
-                type:"get",
-                url:root+"/courseboard/foodlist",
-                dataType:"json",
-                data:,
-                success:function(res){
-
-                }
-            });
-
-        }
-        if(catesel=="trip"){
-            $.ajax({
-                type:"get",
-                url:root+"/courseboard/triplist",
-                dataType:"json",
-                data:,
-                success:function(res){
+                type: "get",
+                url: root + "/courseboard/triplist",
+                dataType: "json",
+                success: function (suc) {
+                    alert("TRIP 성공");
 
                 }
             });
@@ -223,13 +335,13 @@
 
 <%---------------------------------------------------------------------------카페list--%>
 
-<div class="container Cafe" style="width:100%; height: 60%;">
+<div class="container Cafe" style="width:100%; height: 60%;" id="divgrid">
     <%--글 갯수가 0이 아닐시--%>
-    <c:if test="${CafetotalCount>0}">
-        <c:forEach var="dto" items="${Cafelist}" varStatus="i">
+    <%--        <c:if test="${totalCount>0}">--%>
+    <c:forEach var="dto" items="${list}" varStatus="i">
         <a href="${root}/course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
             <div class="item">
-                <div class="blog-card spring-fever" >
+                <div class="blog-card spring-fever">
                     <c:set var="photo" value="${dto.photo}"/>
                     <img src="${dto.photo}" style="width:100%; height: 100%;">
                     <div class="title-content">
@@ -263,93 +375,93 @@
                     <%--        card =========================================================================================--%>
             </div>
         </a>
-        </c:forEach>
-    </c:if>
+    </c:forEach>
+    <%--        </c:if>--%>
 
-<%-----------------------------------------------------------------------------%>
+    <%-----------------------------------------------------------------------------%>
 
-<%---------------------------------------------------------------------------triplist--%>
-<div class="container Trip" style="width:100%; height: 60%; display: none;">
-    <%--글 갯수가 0이 아닐시--%>
-    <c:if test="${TriptotalCount>0}" >
-        <c:forEach var="dto" items="${Triplist}" varStatus="i">
-            <div class="item">
-                <div class="blog-card spring-fever" >
-                    <c:set var="photo" value="${dto.photo}"/>
-                    <img src="${dto.photo}" style="width:100%; height: 100%;">
-                    <div class="title-content">
-                        <h3>${dto.title}</h3>
-                        <hr/>
-                        <div class="intro">${dto.addr}</div>
-                    </div><!-- /.title-content -->
-                    <div class="card-info">
-                        개요: ${dto.content}<br>
-                    </div><!-- /.card-info -->
-                    <div class="utility-info">
-                        <ul class="utility-list">
-                            <li class="comments"></li>
-                            <li class="date">${dto.readcount}</li>
-                        </ul>
-                    </div><!-- /.utility-info -->
-                    <!-- overlays -->
-                    <div class="gradient-overlay"></div>
-                    <div class="color-overlay"></div>
-                </div>
+    <%---------------------------------------------------------------------------triplist--%>
+    <%--    <div class="container Trip" style="width:100%; height: 60%; display: none;">--%>
+    <%--        &lt;%&ndash;글 갯수가 0이 아닐시&ndash;%&gt;--%>
+    <%--        <c:if test="${TriptotalCount>0}">--%>
+    <%--            <c:forEach var="dto" items="${Triplist}" varStatus="i">--%>
+    <%--                <div class="item">--%>
+    <%--                    <div class="blog-card spring-fever">--%>
+    <%--                        <c:set var="photo" value="${dto.photo}"/>--%>
+    <%--                        <img src="${dto.photo}" style="width:100%; height: 100%;">--%>
+    <%--                        <div class="title-content">--%>
+    <%--                            <h3>${dto.title}</h3>--%>
+    <%--                            <hr/>--%>
+    <%--                            <div class="intro">${dto.addr}</div>--%>
+    <%--                        </div><!-- /.title-content -->--%>
+    <%--                        <div class="card-info">--%>
+    <%--                            개요: ${dto.content}<br>--%>
+    <%--                        </div><!-- /.card-info -->--%>
+    <%--                        <div class="utility-info">--%>
+    <%--                            <ul class="utility-list">--%>
+    <%--                                <li class="comments"></li>--%>
+    <%--                                <li class="date">${dto.readcount}</li>--%>
+    <%--                            </ul>--%>
+    <%--                        </div><!-- /.utility-info -->--%>
+    <%--                        <!-- overlays -->--%>
+    <%--                        <div class="gradient-overlay"></div>--%>
+    <%--                        <div class="color-overlay"></div>--%>
+    <%--                    </div>--%>
 
-                <div class="card-info">
+    <%--                    <div class="card-info">--%>
 
-                </div><!-- /.card-info -->
+    <%--                    </div><!-- /.card-info -->--%>
 
-                <!-- overlays -->
-                <div class="gradient-overlay"></div>
-                <div class="color-overlay"></div>
-                    <%--card =========================================================================================--%>
-            </div>
-        </c:forEach>
-    </c:if>
-</div>
+    <%--                    <!-- overlays -->--%>
+    <%--                    <div class="gradient-overlay"></div>--%>
+    <%--                    <div class="color-overlay"></div>--%>
+    <%--                        &lt;%&ndash;card =========================================================================================&ndash;%&gt;--%>
+    <%--                </div>--%>
+    <%--            </c:forEach>--%>
+    <%--        </c:if>--%>
+    <%--    </div>--%>
 
-<%---------------------------------------------------------------------------foodlist--%>
-<div class="container Food" style="width:100%; height: 60%; display: none;">
-    <%--글 갯수가 0이 아닐시--%>
-    <c:if test="${FoodtotalCount>0}" >
-        <c:forEach var="dto" items="${Foodlist}" varStatus="i">
-            <div class="item">
-                <div class="blog-card spring-fever" >
-                    <c:set var="photo" value="${dto.photo}"/>
-                    <img src="${dto.photo}" style="width:100%; height: 100%;">
-                    <div class="title-content">
-                        <h3>${dto.title}</h3>
-                        <hr/>
-                        <div class="intro">${dto.addr}</div>
-                    </div><!-- /.title-content -->
-                    <div class="card-info">
-                        종류: ${dto.category}<br>
-                        대표메뉴: ${dto.menu}<br>
-                        전화번호: ${dto.tel}<br>
+    <%--    &lt;%&ndash;-------------------------------------------------------------------------foodlist&ndash;%&gt;--%>
+    <%--    <div class="container Food" style="width:100%; height: 60%; display: none;">--%>
+    <%--        &lt;%&ndash;글 갯수가 0이 아닐시&ndash;%&gt;--%>
+    <%--        <c:if test="${FoodtotalCount>0}">--%>
+    <%--            <c:forEach var="dto" items="${Foodlist}" varStatus="i">--%>
+    <%--                <div class="item">--%>
+    <%--                    <div class="blog-card spring-fever">--%>
+    <%--                        <c:set var="photo" value="${dto.photo}"/>--%>
+    <%--                        <img src="${dto.photo}" style="width:100%; height: 100%;">--%>
+    <%--                        <div class="title-content">--%>
+    <%--                            <h3>${dto.title}</h3>--%>
+    <%--                            <hr/>--%>
+    <%--                            <div class="intro">${dto.addr}</div>--%>
+    <%--                        </div><!-- /.title-content -->--%>
+    <%--                        <div class="card-info">--%>
+    <%--                            종류: ${dto.category}<br>--%>
+    <%--                            대표메뉴: ${dto.menu}<br>--%>
+    <%--                            전화번호: ${dto.tel}<br>--%>
 
-                    </div><!-- /.card-info -->
-                    <div class="utility-info">
-                        <ul class="utility-list">
-                            <li class="comments"></li>
-                            <li class="date">${dto.readcount}</li>
-                        </ul>
-                    </div><!-- /.utility-info -->
-                    <!-- overlays -->
-                    <div class="gradient-overlay"></div>
-                    <div class="color-overlay"></div>
-                </div>
+    <%--                        </div><!-- /.card-info -->--%>
+    <%--                        <div class="utility-info">--%>
+    <%--                            <ul class="utility-list">--%>
+    <%--                                <li class="comments"></li>--%>
+    <%--                                <li class="date">${dto.readcount}</li>--%>
+    <%--                            </ul>--%>
+    <%--                        </div><!-- /.utility-info -->--%>
+    <%--                        <!-- overlays -->--%>
+    <%--                        <div class="gradient-overlay"></div>--%>
+    <%--                        <div class="color-overlay"></div>--%>
+    <%--                    </div>--%>
 
-                <div class="card-info">
+    <%--                    <div class="card-info">--%>
 
-                </div><!-- /.card-info -->
+    <%--                    </div><!-- /.card-info -->--%>
 
-                <!-- overlays -->
-                <div class="gradient-overlay"></div>
-                <div class="color-overlay"></div>
-            </div>
-        </c:forEach>
-    </c:if>
+    <%--                    <!-- overlays -->--%>
+    <%--                    <div class="gradient-overlay"></div>--%>
+    <%--                    <div class="color-overlay"></div>--%>
+    <%--                </div>--%>
+    <%--            </c:forEach>--%>
+    <%--        </c:if>--%>
 </div>
 
 
@@ -357,24 +469,20 @@
 <%--Cafe:cafe정보 전체 담고있는 클래스명--%>
 <%--categorysel:Category  ID--%>
 
-<script>
-    $(document).on("change", "#categorysel", function () {
-        if($(this).val() == "food"){
-            $(".Cafe,.Trip").hide();
-            $(".Food").show();
-        }
-        else if($(this).val() == "trip")
-        {
-            $(".Cafe,.Food").hide();
-            $(".Trip").show();
-        }
-        else if($(this).val() == "cafe")
-        {
-            $(".Trip,.Food").hide();
-            $(".Cafe").show();
-        }
-    });
-</script>
+<%--    <script>--%>
+<%--        $(document).on("change", "#categorysel", function () {--%>
+<%--            if ($(this).val() == "food") {--%>
+<%--                $(".Cafe,.Trip").hide();--%>
+<%--                $(".Food").show();--%>
+<%--            } else if ($(this).val() == "trip") {--%>
+<%--                $(".Cafe,.Food").hide();--%>
+<%--                $(".Trip").show();--%>
+<%--            } else if ($(this).val() == "cafe") {--%>
+<%--                $(".Trip,.Food").hide();--%>
+<%--                $(".Cafe").show();--%>
+<%--            }--%>
+<%--        });--%>
+<%--    </script>--%>
 
 </body>
 </html>

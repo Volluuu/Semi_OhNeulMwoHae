@@ -38,8 +38,8 @@ public class TripController {
             Model model
     ) {
         int TriptotalCount = tripService.selectTotalCount(tc, tw);
-        int perPage = 8;//한페이지당 보여질 글의 갯수
-        int perBlock = 6;//한블럭당 보여질 페이지의 갯수
+        int perPage = 12;//한페이지당 보여질 글의 갯수
+        int perBlock = 10;//한블럭당 보여질 페이지의 갯수
         int TripstartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int TripstartPage;//각블럭당 보여질 시작페이지
         int TripendPage;//각 블럭당 보여질 끝페이지

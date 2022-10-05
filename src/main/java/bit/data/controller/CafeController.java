@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-
 public class CafeController {
 
     @Autowired
@@ -42,8 +41,8 @@ public class CafeController {
         //페이징 처리에 필요한 변수들
         //전체 갯수
         int CafetotalCount=cafeService.selectTotalCount(cc, cw);
-        int perPage=8;//한페이지당 보여질 글의 갯수
-        int perBlock=6;//한블럭당 보여질 페이지의 갯수
+        int perPage=12;//한페이지당 보여질 글의 갯수
+        int perBlock=10;//한블럭당 보여질 페이지의 갯수
         int CafestartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int CafestartPage;//각블럭당 보여질 시작페이지
         int CafeendPage;//각 블럭당 보여질 끝페이지
@@ -85,17 +84,17 @@ public class CafeController {
         }
 
         model.addAttribute("list", Cafelist);
-        model.addAttribute("CafetotalCount", CafetotalCount);
+        model.addAttribute("totalCount", CafetotalCount);
         model.addAttribute("currentPage", currentPage);
-        model.addAttribute("CafestartPage", CafestartPage);
-        model.addAttribute("CafeendPage", CafeendPage);
+        model.addAttribute("startPage", CafestartPage);
+        model.addAttribute("endPage", CafeendPage);
         model.addAttribute("no", no);
-        model.addAttribute("CafetotalPage", CafetotalPage);
+        model.addAttribute("totalPage", CafetotalPage);
 
         return "/bit/course/courseboard";
     }
 
-    @GetMapping("/courseboard/triplist")
+    @GetMapping("/courseboard/cafelist")
     @ResponseBody
     public List<CafeDto> cafelist(
             @RequestParam(defaultValue = "1") int currentPage,
@@ -104,8 +103,8 @@ public class CafeController {
             Model model
     ) {
         int CafetotalCount = cafeService.selectTotalCount(cc, cw);
-        int perPage = 8;//한페이지당 보여질 글의 갯수
-        int perBlock = 6;//한블럭당 보여질 페이지의 갯수
+        int perPage = 12;//한페이지당 보여질 글의 갯수
+        int perBlock = 10;//한블럭당 보여질 페이지의 갯수
         int CafestartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int CafestartPage;//각블럭당 보여질 시작페이지
         int CafeendPage;//각 블럭당 보여질 끝페이지
