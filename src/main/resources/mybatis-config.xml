@@ -5,9 +5,6 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias type="bit.data.dto.MemberDto" alias="mdto"/>
-		<typeAlias type="bit.data.dto.BoardDto" alias="bdto"/>
-		<typeAlias type="bit.data.dto.BoardAnswerDto" alias="badto"/>
 
 		<typeAlias type="bit.data.dto.CafeDto" alias="cafedto"/>
 		<typeAlias type="bit.data.dto.TripDto" alias="tripdto"/>
