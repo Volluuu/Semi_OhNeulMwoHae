@@ -108,6 +108,9 @@
         /*margin-right: auto;*/
         /*justify-content: space-between;*/
     }
+    .page-link{
+        cursor: pointer;
+    }
 </style>
 <body>
 <div class="dg_container">
@@ -126,11 +129,16 @@
 
             <button type="submit" class="btn btn-outline-dark" id="searchbtn">검색</button>
             <c:if test="${sessionScope.loginok!=null}">
-                <a href="${root}/findboard/searchlist?findcolumn=nickname&findword=${sessionScope.nickname}&currentPage=${currentPage}"
-                   class="dg_a">내가 쓴 글</a>
+                <a class="page-link" findcolumn="nickname" findword="${sessionScope.nickname}">내가 쓴 글</a>
             </c:if>
             <script>
                 var root = "${root}";
+                $(document).on("keyup","#findword",function (e){
+                    if(e.keyCode==13){
+                        $("#searchbtn").trigger("click");
+                    }
+                });
+
                 $(document).on("click", "#searchbtn", function () {
                     var findcolumn = $("#findcolumn option:selected").val();
                     var findword = $("#findword").val();
@@ -141,7 +149,8 @@
                         type: "get",
                         url: root + "/findboard/searchlist",
                         dataType: "json",
-                        data: {"findcolumn": findcolumn, "findword": findword, "currentPage": currentPage},
+                        data: {"findcolumn": findcolumn, "findword": findword},
+                        //, "currentPage": currentPage
                         success: function (res) {
                             if (res.totalCount == 0) {
                                 $("#uc").text("등록된 글이 없습니다");
@@ -168,17 +177,21 @@
                                 });
                                 p += '<ul class="pagination">';
                                 if (res.startPage > 1) {
-                                    p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
                                 }
                                 for (var pp = res.startPage; pp <= res.endPage; pp++) {
                                     if (pp == res.currentPage) {
-                                        p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
                                     } else {
-                                        p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
                                     }
                                 }
                                 if (res.totalPage > res.endPage) {
-                                    p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
 
                                 }
                                 p += '</ul>';
@@ -228,17 +241,22 @@
                                 });
                                 p += '<ul class="pagination">';
                                 if (res.startPage > 1) {
-                                    p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
                                 }
+
                                 for (var pp = res.startPage; pp <= res.endPage; pp++) {
                                     if (pp == res.currentPage) {
-                                        p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
                                     } else {
-                                        p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
                                     }
                                 }
                                 if (res.totalPage > res.endPage) {
-                                    p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
 
                                 }
                                 p += '</ul>';
@@ -258,8 +276,7 @@
                 </c:if>
 
                 <c:if test="${sessionScope.loginok!=null}">
-                    <b>${sessionScope.name}님 로그인 중</b>
-                    &nbsp;&nbsp;
+                    <b> [${sessionScope.nickname}]님 로그인 중 </b>
                     <button type="button" class="btn btn-outline-dark" id="dg_logoutbtn">세션 없애기</button>
                 </c:if>
             </div>
