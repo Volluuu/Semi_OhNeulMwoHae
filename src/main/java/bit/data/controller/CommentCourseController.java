@@ -22,12 +22,6 @@ public class CommentCourseController {
     CafeServiceInter cafeService;
 
 
-    @GetMapping("/course/cafedetaillist")
-    @ResponseBody
-    public List<CommentCourseDto> commentcourselist(int cafe_num,int currentPage){
-        return commentCourseService.selectCafeStar(cafe_num);
-    }
-
     @GetMapping("/course/cafedetail")
     public ModelAndView cafedetail(int cafe_num, int currentPage) {
         ModelAndView mview = new ModelAndView();
@@ -41,6 +35,13 @@ public class CommentCourseController {
         mview.setViewName("/bit/course/cafedetail");
         return mview;
     }
+    @GetMapping("/course/cafedetaillist")
+    @ResponseBody
+    public List<CommentCourseDto> commentcafelist(int cafe_num){
+        return commentCourseService.selectCafeStar(cafe_num);
+    }
+
+
 
     @GetMapping("/commentcourse/cafestar")
     @ResponseBody
