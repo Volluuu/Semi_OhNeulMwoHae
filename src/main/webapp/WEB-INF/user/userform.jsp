@@ -29,10 +29,9 @@
         $(function(){
             //아이디 입력 시, .idsuccess 값 지움
             $("#loginid2").keyup(function() {
+                $("#idSuccess").text("");
                 var id = $("#loginid2").val();
-                if(id == '') {
-                    $("#idSuccess").text("");
-                } else if (!id.match(/^[a-zA-Z0-9]{2,10}$/)) {
+                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)) {
                     $("#idSuccess").text("조건에 맞게 입력해주세요");
                 }
             });//아이디 지움 event
@@ -65,9 +64,12 @@
             $("#pass").keyup(function () {
                 var p1 = $("#pass").val();
                 var p2 = $("#pass2").val();
-                if (!p1.match(/^[a-zA-Z0-9]{8,20}$/) || !p2.match(/^[a-zA-Z0-9]{8,20}$/)) {
+                const regex = /^[a-zA-Z0-9]{8,20}$/;
+                if (!regex.test(p1)) {
                     $("#passwordSuccess").text("조건에 맞게 입력해주세요");
-                } else if (p1 != p2) {
+                } else if (p2 == '') {
+                    $("#passwordSuccess").text("조건에 맞게 채워주세요.");
+                } else if (!regex.test(p2) || p1 != p2) {
                     $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
                 } else {
                     $("#passwordSuccess").text("사용가능한 비밀번호입니다");
@@ -77,10 +79,13 @@
             //2번째 비밀번호 입력 시 체크
             $("#pass2").keyup(function () {
                 var p1 = $("#pass").val();
-                var p2 = $(this).val();
-                if (!p1.match(/^[a-zA-Z0-9]{8,20}$/) || !p2.match(/^[a-zA-Z0-9]{8,20}$/)) {
+                var p2 = $("#pass2").val();
+                const regex = /^[a-zA-Z0-9]{8,20}$/;
+                if (!regex.test(p1)) {
                     $("#passwordSuccess").text("조건에 맞게 입력해주세요");
-                } else if (p1 != p2) {
+                } else if (p2 == '') {
+                    $("#passwordSuccess").text("조건에 맞게 채워주세요.");
+                } else if (!regex.test(p2) || p1 != p2) {
                     $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
                 } else {
                     $("#passwordSuccess").text("사용가능한 비밀번호입니다");
@@ -104,6 +109,11 @@
             });
 
             $("#btnNicknameCheck").click(function() {
+                const regex = /^[ㄱ-ㅎ|가-힣]{2,8}$/;
+                if (!regex.test($('#nickname').val())) {
+                    $('#nicknameSuccess').text("조건에 맞지 않습니다.");
+                    return ;
+                }
                 $("#nicknameSuccess").text("");
                 $.ajax({
                     type:"GET",
