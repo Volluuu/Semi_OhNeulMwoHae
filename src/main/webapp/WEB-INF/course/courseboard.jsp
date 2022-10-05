@@ -4,6 +4,7 @@
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <style>
     /*-----------------------------------------------------------------------card 감싸고있는 div태그*/
     .container {
@@ -177,13 +178,53 @@
 <br>
 <%-------------------------------------------------------------------------card시작--%>
 <%--기본 카드에 주소가 나와있으면 사진 색깔에 따라서 주소식별이 어려움 hover하면 안에 넣을지 선택하기--%>
+<script>
+    var catesel=$("#categorysel option:selected").val();
+    var root="${root}";
+    $(document).on("change","#categorysel",function (){
+        if(catesel=="cafe"){
+            $.ajax({
+                type:"get",
+                url:root+"/courseboard/cafelist",
+                dataType:"json",
+                data:,
+                success:function(res){
 
+                }
+            });
+
+        }
+        if(catesel=="food"){
+            $.ajax({
+                type:"get",
+                url:root+"/courseboard/foodlist",
+                dataType:"json",
+                data:,
+                success:function(res){
+
+                }
+            });
+
+        }
+        if(catesel=="trip"){
+            $.ajax({
+                type:"get",
+                url:root+"/courseboard/triplist",
+                dataType:"json",
+                data:,
+                success:function(res){
+
+                }
+            });
+        }
+    });
+
+</script>
 
 <%---------------------------------------------------------------------------카페list--%>
 
 <div class="container Cafe" style="width:100%; height: 60%;">
     <%--글 갯수가 0이 아닐시--%>
-    <c:set var="root" value="${root}"/>
     <c:if test="${CafetotalCount>0}">
         <c:forEach var="dto" items="${Cafelist}" varStatus="i">
         <a href="${root}/course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
@@ -202,8 +243,9 @@
                     </div><!-- /.card-info -->
                     <div class="utility-info">
                         <ul class="utility-list">
-                            <li class="comments"></li>
+                            <li class="comments">${dto.answercount}</li>
                             <li class="date">${dto.readcount}</li>
+                            <li class="staravg"><i class="fa-solid fa-star"></i>${dto.staravg}</li>
                         </ul>
                     </div><!-- /.utility-info -->
                     <!-- overlays -->

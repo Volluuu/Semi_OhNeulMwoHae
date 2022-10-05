@@ -16,4 +16,6 @@ public class CafeDto {
 	private int gu;
 	private int readcount;
 	private int user_num;
+	private double staravg;
+	private int answercount;
 }
