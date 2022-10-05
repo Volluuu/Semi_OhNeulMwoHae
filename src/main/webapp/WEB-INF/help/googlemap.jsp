@@ -272,7 +272,7 @@
                     $(this).parent().parent().find("select.sel1").focus();
                     return;
                 }
-                if(button.siblings("input.in1").attr("isSelect") == "no") {
+                if(button.siblings("input.in1").attr("isSelect") == "no" && button.siblings("input.in1").val() =="") {
                     alert("목적지를 먼저 선택해 주세요");
                     button.siblings("input.in1").focus();
                     return;
@@ -294,7 +294,12 @@
                     }//sucess
                 });//ajax
             }); // insert_course_button end
+            //목록창이 입력되어 있는 상태에서 테마를 바꾸면 검색목록이 초기화되는 이벤트
             $(document).on("change", "select.sel1", function (){
+                var find_in1 = $(this).parent().parent().find("input.in1");
+                find_in1.val("");
+                console.log("reset");
+                find_in1.attr("isSelect", "no");
 
             });
         }); //$function end

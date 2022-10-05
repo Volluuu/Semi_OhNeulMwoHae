@@ -41,7 +41,7 @@
     </select>
 
     <select id="getFoodLatLon" parameterType="int" resultType="FoodDto">
-        select * from food where trip_num = ${course_num}
+        select * from food where food_num = ${course_num}
     </select>
 
     <select id="getTripLatLon" parameterType="int" resultType="TripDto">
