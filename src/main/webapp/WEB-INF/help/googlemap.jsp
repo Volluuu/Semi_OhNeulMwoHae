@@ -131,6 +131,7 @@
         var s = "";
         var c = "";
         var stepArr = new Array(5);
+
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -291,6 +292,9 @@
                     },
                     success: function (res) {
                         console.log(res.lat, res.lon);
+                        var markerPosition = new kakao.maps.LatLng(res.lat, res.lon);
+                        var marker = new kakao.maps.Marker({position:markerPosition});
+                        marker.setMap(map);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
