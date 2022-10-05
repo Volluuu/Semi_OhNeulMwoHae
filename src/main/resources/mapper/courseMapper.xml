@@ -35,4 +35,16 @@
         SELECT * FROM food where title like concat('%',#{searchword},'%')
     </select>
 
+    <!--위도 경도 가져오기 -->
+    <select id="getCafeLatLon" parameterType="int" resultType="CafeDto">
+        select * from cafe where cafe_num = ${course_num}
+    </select>
+
+    <select id="getFoodLatLon" parameterType="int" resultType="FoodDto">
+        select * from food where trip_num = ${course_num}
+    </select>
+
+    <select id="getTripLatLon" parameterType="int" resultType="TripDto">
+        select * from trip where trip_num = ${course_num}
+    </select>
 </mapper>

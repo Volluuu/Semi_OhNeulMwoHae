@@ -63,4 +63,18 @@ public class CourseDao implements CourseDaoInter{
 	public List<FoodDto> getSearchFood(Map<String, String> map) {
 		return session.selectList(ns+"getSearchFood",map);
 	}
+	@Override
+	public CafeDto getCafeLatLon(int course_num) {
+		return session.selectOne(ns + "getCafeLatLon", course_num);
+	}
+
+	@Override
+	public FoodDto getFoodLatLon(int course_num) {
+		return session.selectOne(ns + "getFoodLatLon", course_num);
+	}
+
+	@Override
+	public TripDto getTripLatLon(int course_num) {
+		return session.selectOne(ns + "getTripLatLon", course_num);
+	}
 }

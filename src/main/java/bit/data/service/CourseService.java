@@ -85,5 +85,20 @@ public class CourseService implements CourseServiceInter{
 
 		return daoInter.getSearchFood(map);
 	}
+
+	@Override
+	public CafeDto getCafeLatLon(int course_num) {
+		return daoInter.getCafeLatLon(course_num);
+	}
+
+	@Override
+	public FoodDto getFoodLatLon(int course_num) {
+		return daoInter.getFoodLatLon(course_num);
+	}
+
+	@Override
+	public TripDto getTripLatLon(int course_num) {
+		return daoInter.getTripLatLon(course_num);
+	}
 }
 

@@ -236,16 +236,19 @@
                     console.log("cafe 여기에요");
                     stepArr[step] = "cafe," + $(this).attr("cafe_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("cafe_num"));
                 }
                 if (selectedType == "trip") {
                     console.log("trip");
                     stepArr[step] = "trip," + $(this).attr("trip_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("trip_num"));
                 }
                 if (selectedType == "food") {
                     console.log("food");
                     stepArr[step] = "food," + $(this).attr("food_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("food_num"));
                 }
                 console.log(stepArr);
                 $(this).parent().hide();
@@ -261,6 +264,7 @@
                 $(this).next().show();
             }); // $(document).on("click", "input.in1", function end
 
+            //마커에 넣을 위도와 경도를 가져오는 이벤트
             $(document).on("click", ".insert_course_button", function() {
                 var button = $(this);
                 if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 검색") {
@@ -274,10 +278,25 @@
                     return;
                 }
                 var course_type = button.parent().siblings("div.cosselect_thema").find("select.sel1").val();
-     //           var course_num = button.siblings("input.in1").;
+                var course_num = button.siblings("input.in1").attr("course_num");
                 var step = button.siblings("input.in1").attr("cnt");
-            }); // insert_course_button end
 
+                $.ajax({
+                    type: "get",
+                    url: "../course/getlatlon",
+                    dataType: "json",
+                    data: {
+                        "course_type": course_type,
+                        "course_num" : course_num
+                    },
+                    success: function (res) {
+                        console.log(res.lat, res.lon);
+                    }//sucess
+                });//ajax
+            }); // insert_course_button end
+            $(document).on("change", "select.sel1", function (){
+
+            });
         }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
