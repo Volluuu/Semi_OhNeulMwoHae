@@ -148,7 +148,27 @@
     위치수정필요
     <%-----------------------------------------------------------%>
 </div>
+<div class="paging">
+    <ul class="pagination">
+        <c:if test="${CafestartPage>1}">
+            <li class="page-item"><a href="list?currentPage=${CafestartPage-1}" class="page-link">&lt;</a></li>
+        </c:if>
 
+        <!-- 페이지 번호 -->
+        <c:forEach var="pp" begin="${CafestartPage}" end="${CafeendPage}">
+            <c:if test="${pp==currentPage}">
+                <li class="page-item active"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>
+            </c:if>
+            <c:if test="${pp!=currentPage}">
+                <li class="page-item"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>
+            </c:if>
+        </c:forEach>
+
+        <c:if test="${CafeendPage<CafetotalPage}">
+            <li class="page-item"><a href="list?currentPage=${CafeendPage+1}" class="page-link">&gt;</a></li>
+        </c:if>
+    </ul>
+</div>
 <br>
 <br>
 <br>

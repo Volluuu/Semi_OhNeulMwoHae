@@ -1,6 +1,5 @@
 package bit.data.dao;
 
-import bit.data.dto.MemberDto;
 import bit.data.dto.UserDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
