@@ -168,7 +168,7 @@
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
                     $(".cosselect_main").eq(i).find(".in1").attr("cnt", (i + 1));
                 }
-                MarkerArr[cnt-1].setMap(null);
+                MarkerArr[cnt - 1].setMap(null);
             });
 
             /* 검색 이벤트 */
@@ -180,14 +180,14 @@
                     $(this).next().children().remove();
 
                     $.ajax({
-                        type: "get",
-                        url: "../course/searchlist",
+                        type    : "get",
+                        url     : "../course/searchlist",
                         dataType: "json",
-                        data: {
+                        data    : {
                             "searchthema": word.parent().parent().find("select.sel1").val(),
                             "searchword" : word.val()
                         },
-                        success: function (res) {
+                        success : function (res) {
 
                             //테마를 3개로 나눠서 검색 시 테이블을 구분해서 가져옴
                             if (word.parent().parent().find("select.sel1").val() == "cafe") {
@@ -266,50 +266,62 @@
             }); // $(document).on("click", "input.in1", function end
 
             //마커에 넣을 위도와 경도를 가져오는 이벤트
-            $(document).on("click", ".insert_course_button", function() {
+            $(document).on("click", ".insert_course_button", function () {
                 var button = $(this);
                 var thiscnt = button.siblings("input.in1").attr("cnt");
-                if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 검색") {
+                if ($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 검색") {
                     alert("테마를 먼저 선택해 주세요");
                     $(this).parent().parent().find("select.sel1").focus();
                     return;
                 }
-                if(button.siblings("input.in1").attr("isSelect") == "no" && button.siblings("input.in1").val() =="") {
+                if (button.siblings("input.in1").attr("isSelect") == "no" && button.siblings("input.in1").val() == "") {
                     alert("목적지를 먼저 선택해 주세요");
                     button.siblings("input.in1").focus();
                     return;
                 }
-                if(markerArr[thiscnt - 1 ]) {
-                   if(!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
-                       return;
-                   }
-                   markerArr[thiscnt - 1].setMap(null);
+                if (markerArr[thiscnt - 1]) {
+                    if (!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
+                        return;
+                    }
+                    markerArr[thiscnt - 1].setMap(null);
                 }
                 var course_type = button.parent().siblings("div.cosselect_thema").find("select.sel1").val();
                 var course_num = button.siblings("input.in1").attr("course_num");
                 var step = button.siblings("input.in1").attr("cnt");
 
                 $.ajax({
-                    type: "get",
-                    url: "../course/getlatlon",
+                    type    : "get",
+                    url     : "../course/getlatlon",
                     dataType: "json",
-                    data: {
+                    data    : {
                         "course_type": course_type,
                         "course_num" : course_num
                     },
-                    success: function (res) {
+                    success : function (res) {
                         console.log(res.lat, res.lon);
                         var markerPosition = new kakao.maps.LatLng(res.lat, res.lon);
-                        var marker = new kakao.maps.Marker({position:markerPosition});
+                        var marker = new kakao.maps.Marker({position: markerPosition});
                         marker.setMap(map);
-                        markerArr[thiscnt - 1 ] = marker;
+                        markerArr[thiscnt - 1] = marker;
                         var movelatlon = new kakao.maps.LatLng(res.lat, res.lon);
                         map.setCenter(movelatlon);
+
+                        //인포 윈도우 생성
+                        var iwContent =
+                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                            iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
+                        // 인포윈도우를 생성합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            position: iwPosition,
+                            content : iwContent
+                        });
+                        infowindow.open(map, marker);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
             //목록창이 입력되어 있는 상태에서 테마를 바꾸면 검색목록이 초기화되는 이벤트
-            $(document).on("change", "select.sel1", function (){
+            $(document).on("change", "select.sel1", function () {
                 var find_in1 = $(this).parent().parent().find("input.in1");
                 find_in1.val("");
                 console.log("reset");
@@ -387,7 +399,8 @@
                     <input type="text" class="form-control in1" placeholder="검색어를 입력"
                            required="required" name="searchword" cnt="1" isSelect="no">
                     <div class="searchlist"></div>
-                    <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i></button>
+                    <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
                 </div>
 
             </div>
