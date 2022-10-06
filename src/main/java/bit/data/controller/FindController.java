@@ -91,12 +91,13 @@ public class FindController {
 
         return "/bit/find/findboard";
     }
-        @GetMapping("/findboard/searchlist")
-        @ResponseBody
-        public Map<String, Object> findBoardsearch(
-        @RequestParam(defaultValue = "1") int currentPage,
-        @RequestParam(value = "findcolumn", required = false) String findcolumn,
-        @RequestParam(value = "findword", required = false) String findword) {
+
+    @GetMapping("/findboard/searchlist")
+    @ResponseBody
+    public Map<String, Object> findBoardsearch(
+            @RequestParam(defaultValue = "1") int currentPage,
+            @RequestParam(value = "findcolumn", required = false) String findcolumn,
+            @RequestParam(value = "findword", required = false) String findword) {
         int totalCount = findService.selectTotalCount(findcolumn, findword); // 검색한 글의 갯수
         int perPage = 8; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
         int perBlock = 5; // 한 블럭당 보여질 페이지의 갯수
@@ -144,16 +145,17 @@ public class FindController {
         map.put("endPage", endPage);
         map.put("no", no);
         map.put("totalPage", totalPage);
-        map.put("findcolumn",findcolumn);
-        map.put("findword",findword);
+        map.put("findcolumn", findcolumn);
+        map.put("findword", findword);
         return map;
     }
-        @GetMapping("/findboard/login")
-        @ResponseBody
-        public void loginprocess(String user_num, String loginid, String password, String name,
-            String nickname, String email, String hp, String profile,
-            String interest, String profilephoto, String alarm,
-            String isadmin, String gaipday, HttpSession session) {
+
+    @GetMapping("/findboard/login")
+    @ResponseBody
+    public void loginprocess(String user_num, String loginid, String password, String name,
+                             String nickname, String email, String hp, String profile,
+                             String interest, String profilephoto, String alarm,
+                             String isadmin, String gaipday, HttpSession session) {
         session.setAttribute("loginok", "yes");
         session.setAttribute("user_num", user_num);
         session.setAttribute("loginid", loginid);
@@ -170,9 +172,9 @@ public class FindController {
         session.setAttribute("gaipday", gaipday);
     }
 
-        @GetMapping("/findboard/logout")
-        @ResponseBody
-        public void logoutprocess(HttpSession session) {
+    @GetMapping("/findboard/logout")
+    @ResponseBody
+    public void logoutprocess(HttpSession session) {
         //로그아웃하면 제거할 옵션
         session.removeAttribute("loginok");
         session.removeAttribute("user_num");
@@ -190,16 +192,16 @@ public class FindController {
         session.removeAttribute("gaipday");
     }
 
-        @GetMapping("/findboard/findform")
-        public String findform(@RequestParam(defaultValue = "1") int currentPage,
-        Model model) {
+    @GetMapping("/findboard/findform")
+    public String findform(@RequestParam(defaultValue = "1") int currentPage,
+                           Model model) {
         model.addAttribute("currentPage", currentPage);
         return "/bit/find/findform";
 
     }
 
-        @PostMapping("/findboard/insertfind")
-        public String insertfind(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
+    @PostMapping("/findboard/insertfind")
+    public String insertfind(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
         //업로드 경로
         String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
@@ -234,8 +236,8 @@ public class FindController {
         return "redirect:../findboard/list?currentPage=" + currentPage;
     }
 
-        @PostMapping("/findboard/updatefindaction")
-        public String updatefindaction(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
+    @PostMapping("/findboard/updatefindaction")
+    public String updatefindaction(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
         //업로드 경로
         String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
@@ -271,8 +273,8 @@ public class FindController {
     }
 
 
-        @GetMapping("/findboard/finddetail")
-        public ModelAndView finddetail(int find_num, int currentPage) {
+    @GetMapping("/findboard/finddetail")
+    public ModelAndView finddetail(int find_num, int currentPage) {
         ModelAndView mview = new ModelAndView();
         //조회수 증가
         findService.updateReadCount(find_num);
@@ -396,8 +398,8 @@ public class FindController {
         return mview;
     }
 
-        @GetMapping("/findboard/updatefind")
-        public String updateform(int find_num, int currentPage, Model model) {
+    @GetMapping("/findboard/updatefind")
+    public String updateform(int find_num, int currentPage, Model model) {
         //num에 해당하는 dto 얻기
         FindDto dto = findService.selectByNum(find_num);
 
@@ -508,9 +510,9 @@ public class FindController {
         return "/bit/find/updatefind";
     }
 
-        @GetMapping("/findboard/insertlist")
-        @ResponseBody
-        public List<? extends Object> insertlist(
+    @GetMapping("/findboard/insertlist")
+    @ResponseBody
+    public List<? extends Object> insertlist(
             @RequestParam(value = "ccolumn", required = false) String ccolumn,
             @RequestParam(value = "cword", required = false) String cword) {
         if (ccolumn.equals("cafe")) {
@@ -528,14 +530,14 @@ public class FindController {
         return null;
     }
 
-        @GetMapping("/findboard/myplace")
-        @ResponseBody
-        public List<? extends Object> myplace(int user_num) {
+    @GetMapping("/findboard/myplace")
+    @ResponseBody
+    public List<? extends Object> myplace(int user_num) {
         return null;
     }
 
-        @GetMapping("/findboard/deletefind")
-        public String delete(int find_num, int currentPage, HttpServletRequest request) {
+    @GetMapping("/findboard/deletefind")
+    public String delete(int find_num, int currentPage, HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("/resources/upload");
         System.out.println(path);
 
@@ -563,17 +565,17 @@ public class FindController {
         return "redirect:../findboard/list?currentPage=" + currentPage;
     }
 
-        @GetMapping("/findboard/mycourse")
-        @ResponseBody
-        public List<CourseDto> selectMyCourse(int user_num) {
+    @GetMapping("/findboard/mycourse")
+    @ResponseBody
+    public List<CourseDto> selectMyCourse(int user_num) {
         List<CourseDto> list = findService.selectMyCourse(user_num);
 
         return list;
     }
 
-        @GetMapping("/findboard/step")
-        @ResponseBody
-        public Object selectStep(String table, String num) {
+    @GetMapping("/findboard/step")
+    @ResponseBody
+    public Object selectStep(String table, String num) {
 
         if (table.equals("cafe")) {
             CafeDto dto = subsService.selectCafeData(Integer.parseInt(num));
@@ -590,4 +592,4 @@ public class FindController {
         return null;
     }
 
-    }
+}

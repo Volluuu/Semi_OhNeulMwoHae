@@ -17,7 +17,7 @@ public class TripDao implements TripDaoInter{
     String ns="bit.data.dao.TripDao.";
 
     @Override
-    public int selectTotalCount(Map<String, String> map) {
+    public int selectTotalCount(Map<String, Object> map) {
         return session.selectOne(ns+"selectTotalCount", map);
     }
 
@@ -59,5 +59,10 @@ public class TripDao implements TripDaoInter{
     @Override
     public void likesUpdate(int trip_num) {
         session.update(ns+"likesUpdate", trip_num);
+    }
+
+    @Override
+    public TripDto selectByNum(int trip_num) {
+        return session.selectOne(ns+"selectByNum",trip_num);
     }
 }

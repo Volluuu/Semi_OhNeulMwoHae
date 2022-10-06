@@ -46,6 +46,7 @@
         float: right;
     }
     .dg_container{
+        position: ;
         width: 100%;
         height: 200px;
     }
@@ -57,21 +58,21 @@
     <title>Title</title>
 </head>
 <script>
-    var cafe_num =${dto.cafe_num};
+    var food_num =${dto.food_num};
     var root = "${root}";
     $(function () {
-        cafelist();
+        foodlist();
     });
 
-    function cafelist() {
+    function foodlist() {
         var loginok = '${sessionScope.loginok}';
         var user_num = '${sessionScope.user_num}';
         var s = "";
         $.ajax({
             type: "get",
-            url: root + "/course/cafedetailanswer",
+            url: root + "/course/fooddetailanswer",
             dataType: "json",
-            data: {"cafe_num": cafe_num},
+            data: {"food_num": food_num},
             success: function (res) {
                 $("#answer").html("댓글 갯수 : " + res.length);
                 $.each(res, function (i, elt) {
@@ -124,8 +125,8 @@
                         </div>
                     </div>
                     <div>
-                        <b id="answer"></b>
-                        <div id="review"></div>
+                    <b id="answer"></b>
+                    <div id="review"></div>
                     </div>
                 </div>
 
@@ -133,7 +134,7 @@
                 <c:if test="${sessionScope.loginok!=null}">
                 <form class="mb-3" id="myform">
                     <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                    <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
+                    <input type="hidden" name="food_num" value="${dto.food_num}">
                     <fieldset>
                         <span class="text-bold">별점을 선택해주세요</span>
                         <input type="radio" name="star" value="5" id="rate1"><label
@@ -151,12 +152,10 @@
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
-                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
+                    <button type="button" class="btn btn-outline-dark" id="foodstarbtn">등록</button><br>
 
                 </form>
                 </c:if>
-
-
                 <script>
                     // $(document).on("keyup","#reviewContents",function (e){
                     //     if(e.keyCode==13){
@@ -164,18 +163,18 @@
                     //     }
                     // })
 
-                    $(document).on("click", "#cafestarbtn", function () {
+                    $(document).on("click", "#foodstarbtn", function () {
                         var root = "${root}";
                         var user_num = "${sessionScope.user_num}";
                         var star = $("input[name='star']:checked").val();
                         var content = $("#reviewContents").val();
                         $.ajax({
                             type: "get",
-                            url: root + "/commentcourse/cafestar",
+                            url: root + "/commentcourse/foodstar",
                             dataType: "text",
-                            data: {"user_num": user_num, "star": star, "content": content, "cafe_num": cafe_num},
+                            data: {"user_num": user_num, "star": star, "content": content, "food_num": food_num},
                             success: function (res) {
-                                cafelist();
+                                foodlist();
 
                                 $("#reviewContents").val("");
                             }

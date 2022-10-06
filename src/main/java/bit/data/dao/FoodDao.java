@@ -17,7 +17,7 @@ public class FoodDao implements FoodDaoInter{
     String ns="bit.data.dao.FoodDao.";
 
     @Override
-    public int selectTotalCount(Map<String, String> map) {
+    public int selectTotalCount(Map<String, Object> map) {
         return session.selectOne(ns+"selectTotalCount", map);
     }
 
@@ -59,5 +59,10 @@ public class FoodDao implements FoodDaoInter{
     @Override
     public void likesUpdate(int food_num) {
         session.update(ns+"likesUpdate", food_num);
+    }
+
+    @Override
+    public FoodDto selectByNum(int food_num) {
+        return session.selectOne(ns+"selectByNum",food_num);
     }
 }

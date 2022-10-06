@@ -16,7 +16,7 @@ public class CafeDao implements CafeDaoInter{
     String ns="bit.data.dao.CafeDao.";
 
     @Override
-    public int selectTotalCount(Map<String, String> map) {
+    public int selectTotalCount(Map<String, Object> map) {
         return session.selectOne(ns+"selectTotalCount", map);
     }
 

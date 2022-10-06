@@ -16,10 +16,11 @@ public class TripService implements TripServiceInter{
     TripDaoInter tripdao;
 
     @Override
-    public int selectTotalCount(String tripcolumn, String tripword) {
-        Map<String, String> map=new HashMap<>();
+    public int selectTotalCount(String tripcolumn, String tripword, int gu) {
+        Map<String, Object> map=new HashMap<>();
         map.put("tripcolumn",tripcolumn);
         map.put("tripword",tripword);
+        map.put("gu",gu);
         return tripdao.selectTotalCount(map);
     }
 
@@ -29,12 +30,13 @@ public class TripService implements TripServiceInter{
     }
 
     @Override
-    public List<TripDto> selectPagingList(String tripcolumn, String tripword, int startnum, int perpage) {
+    public List<TripDto> selectPagingList(String tripcolumn, String tripword, int startnum, int perpage, int gu) {
         Map<String, Object> map = new HashMap<>();
         map.put("tripcolumn",tripcolumn);
         map.put("tripword",tripword);
         map.put("startnum",startnum);
         map.put("perpage",perpage);
+        map.put("gu",gu);
         return tripdao.selectPagingList(map);
     }
 
@@ -66,5 +68,10 @@ public class TripService implements TripServiceInter{
     @Override
     public void likesUpdate(int trip_num) {
         tripdao.likesInsert(trip_num);
+    }
+
+    @Override
+    public TripDto selectByNum(int trip_num) {
+        return tripdao.selectByNum(trip_num);
     }
 }

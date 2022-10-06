@@ -11,8 +11,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
-
-
 <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <html>
@@ -290,6 +288,102 @@
         /*margin-right: auto;*/
         justify-content: space-between;
     }
+    .item {
+
+        /*justify-content: flex-start;*/
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------category,조회순 css부분*/
+    .jgfRlo {
+        position: relative;
+        float: right;
+
+    }
+
+    div {
+        display: block;
+    }
+
+    .fotqhs {
+        font-weight: 350;
+        font-size: 14px;
+        line-height: 21px;
+        color: rgb(37, 37, 37);
+        padding: 8px 33px 8px 33px;
+        border: unset;
+        background-color: unset;
+        appearance: none;
+
+    }
+
+
+    option {
+        font-weight: normal;
+        display: block;
+        white-space: nowrap;
+        min-height: 1.2em;
+        padding: 0px 2px 1px;
+    }
+
+
+    .jgfRlo > svg:last-child {
+        position: absolute;
+        top: 40%;
+        right: 10px;
+    }
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------card사이 공백*/
+    .blog-card {
+        margin-bottom: 50px;
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------검색창 css*/
+    div.hj_search {
+        height: 40px;
+        width: 400px;
+        border: 1px solid #1b5ac2;
+        background: #ffffff;
+    }
+
+    input.hj_input {
+        font-size: 16px;
+        width: 99%;
+        height: 99%;
+        padding: 10px;
+        border: 0px;
+        outline: none;
+        float: left;
+    }
+
+    button.hj_button {
+        width: 50px;
+        height: 100%;
+        border: 0px;
+        background: #1b5ac2;
+        outline: none;
+        float: right;
+        color: #ffffff;
+    }
+    #divgrid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(200px, auto);
+        gap: 20px;
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        justify-content: space-between;
+    }
 </style>
 <body>
 <div class="dg_container">
@@ -472,39 +566,13 @@
                     },
                 });
             });
-
-            $(document).on("click", "#dg_logoutbtn", function () {
-                var root = "${root}";
-                $.ajax({
-                    type: "get",
-                    url: root + "/findboard/logout",
-                    dataType: "text",
-                    success: function (res) {
-                        location.reload();
-
-                    }
-                });
-            })
-        </script>
-        <div class="alert alert-light">
-
             <br>
             <c:if test="${sessionScope.loginok!=null}">
                 <button type="button" class="btn btn-outline-dark"
                         onclick="location.href='${root}/findboard/findform'">글쓰기
                 </button>
             </c:if>
-
             <br>
-            <c:if test="${totalCount==0}">
-                <tr>
-                    <td colspan="4" align="center" valign="middle">
-                        <h4>등록된 글이 없습니다</h4>
-                    </td>
-                </tr>
-            </c:if>
-
-
         </div>
     </div>
 <%-----------------------------카드변경--%>
@@ -557,7 +625,6 @@
         </c:if>
         </div>
     <%------------------------------%>
-
 
         <div class="paging" id="paging">
             <ul class="pagination">

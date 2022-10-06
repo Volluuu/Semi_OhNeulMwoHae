@@ -43,7 +43,7 @@ public class CommentCourseDao implements CommentCourseDaoInter {
 
     @Override
     public double selectFoodStarAvg(int food_num) {
-        return session.selectOne(ns+"insertFoodStar",food_num);
+        return session.selectOne(ns+"selectFoodStarAvg",food_num);
     }
 
     @Override
@@ -58,6 +58,6 @@ public class CommentCourseDao implements CommentCourseDaoInter {
 
     @Override
     public double selectTripStarAvg(int trip_num) {
-        return session.selectOne(ns+"insertTripStar",trip_num);
+        return session.selectOne(ns+"selectTripStarAvg",trip_num);
     }
 }

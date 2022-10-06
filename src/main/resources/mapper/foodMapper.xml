@@ -5,17 +5,29 @@
 <mapper namespace="bit.data.dao.FoodDao">
 	<select id="selectTotalCount" parameterType="Map" resultType="int">
 		select count(*) from food
-		<if test="foodcolumn!=null and foodword!=null">
+		<if test="foodcolumn!=null and foodword!=null and gu!=0">
+			where ${foodcolumn} like concat('%',#{foodword},'%') and gu=#{gu}
+		</if>
+		<if test="foodcolumn!=null and foodword!=null and gu==0">
 			where ${foodcolumn} like concat('%',#{foodword},'%')
+		</if>
+		<if test="foodcolumn==null and foodword==null and gu!=0">
+			where gu=#{gu}
 		</if>
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="fooddto">
 		select * from food
-		<if test="foodcolumn!=null and foodword!=null">
+		<if test="foodcolumn!=null and foodword!=null and gu!=0">
+			where ${foodcolumn} like concat('%',#{foodword},'%') and gu=#{gu}
+		</if>
+		<if test="foodcolumn!=null and foodword!=null and gu==0">
 			where ${foodcolumn} like concat('%',#{foodword},'%')
 		</if>
-		limit #{startnum},#{perpage}
+		<if test="foodcolumn==null and foodword==null and gu!=0">
+			where gu=#{gu}
+		</if>
+		order by readcount desc limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertFood" parameterType="fooddto">
