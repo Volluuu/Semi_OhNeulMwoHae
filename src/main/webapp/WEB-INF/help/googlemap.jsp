@@ -163,7 +163,7 @@
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
-                }
+                } else {return;}
 
                 for (var i = 0; i < $(".cosselect_main").length; i++) {
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
@@ -174,6 +174,7 @@
                 customArr[thiscnt - 1].setMap(null);
                 customArr[thiscnt - 1] = null;
                 stepArr[thiscnt - 1] = null;
+                mapBound[thiscnt - 1] = null;
                 //customArr 배열의 순서를 삭제한것과 동일하게 설정
                 var newCustomArr = new Array(5);
                 var newStepArr = new Array(5);
@@ -181,11 +182,17 @@
                 for(var i = 0; i < newCustomArr.length; i++) {
                     if(!customArr[i]) {continue;}
                     newStepArr[n] = stepArr[i];
-                    newCustomArr[n++] = customArr[i];
-                    console.log(newCustomArr);
+                    newCustomArr[n++] = customArr[i].setContent('<span style="background: skyblue;" class="step">step'+n+'</span>');
                 }
                 customArr = newCustomArr;
                 stepArr = newStepArr;
+                //지도범위 재설정
+                var bounds = new kakao.maps.LatLngBounds();
+                for(var i = 0 ; i < mapBound.length; i++) {
+                    if(!mapBound[i]) {continue;}
+                    bounds.extend(mapBound[i]);
+                }
+                map.setBounds(bounds);
                 //custom overlay에 텍스트 새로고침
             });
 
@@ -290,6 +297,8 @@
                     return;
                 }
 // *************************스텝1에서 지정한 위치에 커스텀오버레이가 있을 때 다른 스텝에서 해당 장소를 추가하면 이미 경로에 등록되어있다는 alert 출력***************
+                for(var i = 0; customArr.length; i++) {
+                }
                 if (customArr[thiscnt - 1]) {
                     if (!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
                         return;
