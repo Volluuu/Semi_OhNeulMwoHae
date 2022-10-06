@@ -3,7 +3,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bit.data.dao.NoticeDao">
-    <select id="getNotice" resultType="noticedto">
-        select * from notice
+    <select id="getNotice" parameterType="int" resultType="noticedto">
+        select * from notice where notice_num=#{notice_num}
     </select>
+    <select id="getAllData" resultType="noticedto">
+        select * from notice order by notice_num desc
+    </select>
+    <select id="getTotalCount" parameterType="Map" resultType="int">
+        select count(*) from notice
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+
+    <select id="getPagingList" parameterType="Map" resultType="noticedto">
+        select * from notice
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+        order by notice_num desc limit #{startnum},#{perpage}
+    </select>
+
+    <select id="selectUser_num" parameterType="int" resultType="noticedto">
+        select * from notice where user_num=#{user_num}
+    </select>
+
+    <insert id="insertNotice" parameterType="noticedto">
+        insert into notice values (null,#{user_num},#{subject},#{content},'not',now())
+    </insert>
+
+    <delete id="deleteNotice" parameterType="int">
+        delete from notice where notice_num=#{notice_num}
+    </delete>
+
+    <update id="updateNotice" parameterType="noticedto">
+        update notice set subject=#{subject},content=#{content} where notice_num=#{notice_num}
+    </update>
+
 </mapper>

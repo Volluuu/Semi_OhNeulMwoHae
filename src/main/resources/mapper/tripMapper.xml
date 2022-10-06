@@ -5,18 +5,30 @@
 <mapper namespace="bit.data.dao.TripDao">
 	<select id="selectTotalCount" parameterType="Map" resultType="int">
 		select count(*) from trip
-		<if test="tripcolumn!=null and tripword!=null">
+		<if test="tripcolumn!=null and tripword!=null and gu!=0">
+			where ${tripcolumn} like concat('%',#{tripword},'%') and gu=#{gu}
+		</if>
+		<if test="tripcolumn!=null and tripword!=null and gu==0">
 			where ${tripcolumn} like concat('%',#{tripword},'%')
 		</if>
+		<if test="tripcolumn==null and tripword==null and gu!=0">
+			where gu=#{gu}
+		</if>
+
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="tripdto">
-
 		select * from trip
-		<if test="tripcolumn!=null and tripword!=null">
+		<if test="tripcolumn!=null and tripword!=null and gu!=0">
+			where ${tripcolumn} like concat('%',#{tripword},'%') and gu=#{gu}
+		</if>
+		<if test="tripcolumn!=null and tripword!=null and gu==0">
 			where ${tripcolumn} like concat('%',#{tripword},'%')
 		</if>
-		limit #{startnum},#{perpage}
+		<if test="tripcolumn==null and tripword==null and gu!=0">
+			where gu=#{gu}
+		</if>
+		order by readcount desc limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertTrip" parameterType="tripdto">

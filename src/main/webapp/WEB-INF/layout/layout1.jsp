@@ -43,6 +43,7 @@
     }*/
     
     #header{
+		padding: 0px 12px;
     	width: 100%;
     	height: 150px;
     	text-align: center;

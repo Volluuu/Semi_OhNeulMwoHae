@@ -15,5 +15,6 @@ public interface QnaDaoInter {
 	public void insertQna(QnaDto dto);
 	public QnaDto getUser(int user_num);
 	public void updateQna(QnaDto dto);
+	public void updateAnswer(QnaDto dto);
 	public void deleteQna(int num);
 }

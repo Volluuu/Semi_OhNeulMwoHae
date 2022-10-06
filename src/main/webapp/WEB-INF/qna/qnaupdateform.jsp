@@ -27,6 +27,9 @@
       color: gray;
       font-size: 15px;
     }
+    .qna_info a:hover{
+      text-shadow: 10px 10px 10px gray;
+    }
     .qna_list{
       width: 1200px;
       margin-left: 45px;

@@ -9,7 +9,7 @@
 		<typeAlias type="bit.data.dto.CafeDto" alias="cafedto"/>
 		<typeAlias type="bit.data.dto.TripDto" alias="tripdto"/>
 		<typeAlias type="bit.data.dto.FoodDto" alias="fooddto"/>
-
+		<typeAlias type="bit.data.dto.AdminDto" alias="admindto"/>
 		<typeAlias type="bit.data.dto.FindDto" alias="finddto"/>
 		<typeAlias type="bit.data.dto.UserDto" alias="udto"/>
 		<typeAlias type="bit.data.dto.CommentFriendDto" alias="cfdto"/>

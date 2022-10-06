@@ -11,7 +11,7 @@
         insert into comment_course values (null,#{user_num},#{star},#{content},null,null,#{cafe_num},now())
     </insert>
     <select id="selectCafeStarAvg" parameterType="int" resultType="double">
-        select ifnull(round(avg(star),1),0) from comment_course where cafe_num=${cafe_num}
+        select ifnull(round(avg(star),1),0) from comment_course where cafe_num=#{cafe_num}
     </select>
 
     <select id="selectFoodStar" parameterType="int" resultType="ccdto">

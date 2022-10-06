@@ -27,6 +27,9 @@
       color: gray;
       font-size: 15px;
     }
+    .qna_info a:hover{
+      text-shadow: 10px 10px 10px gray;
+    }
     .qna_list{
       width: 1200px;
       margin-left: 45px;
@@ -41,6 +44,12 @@
       width: 100%;
     }
     .answer_list{
+    }
+    .adminans{
+
+    }
+    .writer{
+
     }
     span.answermessage{
       width: 80%;
@@ -57,12 +66,21 @@
       color: red;
     }
 
+    .answercntsuc{
+      color: gray;
+    }
+    .answercntfail{
+
+    }
+
   </style>
   <script>
     var qna_num=${dto.qna_num};
+    var user_num=${dto.user_num};
 
     $(function (){
      console.log("qna_num:"+qna_num);
+     console.log("user_num:"+user_num);
      list(); // 처음시작 시 댓글 출력
 
       $(document).on("click","#btnsave",function() {
@@ -105,6 +123,7 @@
 
     function list() {
       var s="";
+      var admin="${sessionScope.isadmin}";
       $.ajax({
         type:"get",
         url:"answerList",
@@ -112,13 +131,12 @@
         data:{"qna_num":qna_num},
         success:function(res){
           $.each(res, function(i, elt){
-              s += "<div class='answer_list'><span class='answermessage' user_num="+user_num+">";
-              if($.trim(elt.user_num)==1 && user_num == 1){
-                s+="<span class='writer'>관리자</span>";
-              }
+              s += "<div class='answer_list'><span class='answermessage'>";
               s += "└"+elt.message+"</span>";
               s += "<span class='day'>" + elt.writeday;
-              s+="<i class='material-icons adel' style='font-size:17px;' id='adel' answer_num="+elt.answer_num+">close</i>";
+              if(admin == 'admin') {
+                s += "<i class='material-icons adel' style='font-size:17px;' id='adel' answer_num=" + elt.answer_num + ">close</i>";
+              }
               s += "</span></div>";
           });
           $("div.alist").html(s);
@@ -146,11 +164,11 @@
         <tr>
           <td>
             <h2><b>${dto.subject}</b></h2>
-            <c:if test="${dto.acount}>0 && ${dto.user_num}==1">
-              <span class="answercount">[답변 완료]</span>
+            <c:if test="${dto.acount>0 && dto.answer eq 'yes'}">
+              <span class="answercntsuc">[답변 완료]</span>
             </c:if>
-            <c:if test="${dto.acount}==0">
-              <span class="answercount">[답변 대기중]</span>
+            <c:if test="${dto.acount==0}">
+              <span class="answercntfail">[답변 대기중]</span>
             </c:if>
             <span style="color: #ccc; font-size: 13px; text-align: left;">
               <fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
@@ -171,11 +189,12 @@
                   <input type="hidden" name="user_num" value="${dto.user_num}">
                  <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
                   <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
-
+                  <c:if test="${sessionScope.isadmin eq 'admin'}">
                   <div class="input-group">
                     <textarea name="message" id="message" class="form-control"></textarea>
-                    <button type="button" class="btn btn-dark btn-sm" id="btnsave">등록</button>
+                    <button type="button" class="btn btn-dark btn-sm" id="btnsave" user_num="${user_num}">등록</button>
                   </div>
+                  </c:if>
                 </form>
               </div>
             </c:if>

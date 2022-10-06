@@ -131,7 +131,8 @@
         var s = "";
         var c = "";
         var stepArr = new Array(5);
-        var markerArr = new Array(5);
+        var customArr = new Array(5);
+        var mapBound = new Array(5);
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -162,13 +163,37 @@
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
-                }
+                } else {return;}
 
                 for (var i = 0; i < $(".cosselect_main").length; i++) {
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
                     $(".cosselect_main").eq(i).find(".in1").attr("cnt", (i + 1));
+                    $("span.step").eq(i).text("step" + (i+1));
                 }
-                MarkerArr[cnt - 1].setMap(null);
+                var thiscnt = $(this).siblings("div.i").children("input.in1").attr("cnt");
+                customArr[thiscnt - 1].setMap(null);
+                customArr[thiscnt - 1] = null;
+                stepArr[thiscnt - 1] = null;
+                mapBound[thiscnt - 1] = null;
+                //customArr 배열의 순서를 삭제한것과 동일하게 설정
+                var newCustomArr = new Array(5);
+                var newStepArr = new Array(5);
+                var n = 0;
+                for(var i = 0; i < newCustomArr.length; i++) {
+                    if(!customArr[i]) {continue;}
+                    newStepArr[n] = stepArr[i];
+                    newCustomArr[n++] = customArr[i].setContent('<span style="background: skyblue;" class="step">step'+n+'</span>');
+                }
+                customArr = newCustomArr;
+                stepArr = newStepArr;
+                //지도범위 재설정
+                var bounds = new kakao.maps.LatLngBounds();
+                for(var i = 0 ; i < mapBound.length; i++) {
+                    if(!mapBound[i]) {continue;}
+                    bounds.extend(mapBound[i]);
+                }
+                map.setBounds(bounds);
+                //custom overlay에 텍스트 새로고침
             });
 
             /* 검색 이벤트 */
@@ -191,7 +216,6 @@
 
                             //테마를 3개로 나눠서 검색 시 테이블을 구분해서 가져옴
                             if (word.parent().parent().find("select.sel1").val() == "cafe") {
-                                console.log("cafe");
                                 $.each(res, function (i, elt) {
                                     word.next().append(
                                         $('<div>').text(elt.title).attr({'cafe_num': elt.cafe_num})
@@ -199,7 +223,6 @@
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "trip") {
-                                console.log("trip");
                                 $.each(res, function (i, elt) {
                                     word.next().append(
                                         $('<div>').text(elt.title).attr({'trip_num': elt.trip_num})
@@ -207,7 +230,6 @@
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "food") {
-                                console.log("food");
                                 $.each(res, function (i, elt) {
                                     word.next().append(
                                         $('<div>').text(elt.title).attr({'food_num': elt.food_num})
@@ -226,33 +248,28 @@
 
             //검색목록 클릭 시 값이 input tag에 바인드되고 검색창이 꺼지게 하는 이벤트
             $(document).on("click", ".searchwordlist", function () {
-                alert("hi");
-                var checkedword = $(this);
                 var selectedType = $(this).parent().parent().parent().find("select.sel1").val();
                 var step = $(this).parent().siblings("input.in1").attr("cnt") - 1;
                 // input tag에 선택한 목적지를 바인드
                 $(this).parent().prev().val($(this).text());
 
                 if (selectedType == "cafe") {
-                    console.log("cafe 여기에요");
                     stepArr[step] = "cafe," + $(this).attr("cafe_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
                     $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("cafe_num"));
                 }
                 if (selectedType == "trip") {
-                    console.log("trip");
                     stepArr[step] = "trip," + $(this).attr("trip_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
                     $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("trip_num"));
                 }
                 if (selectedType == "food") {
-                    console.log("food");
                     stepArr[step] = "food," + $(this).attr("food_num");
                     $(this).parent().siblings("input.in1").attr("isSelect", "yes");
                     $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("food_num"));
                 }
-                console.log(stepArr);
-                $(this).parent().hide();
+                //검색목록이 닫히게 하는 이벤트
+                $(this).parent().hide().empty();
             });
 
             //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
@@ -279,11 +296,14 @@
                     button.siblings("input.in1").focus();
                     return;
                 }
-                if (markerArr[thiscnt - 1]) {
+// *************************스텝1에서 지정한 위치에 커스텀오버레이가 있을 때 다른 스텝에서 해당 장소를 추가하면 이미 경로에 등록되어있다는 alert 출력***************
+                for(var i = 0; customArr.length; i++) {
+                }
+                if (customArr[thiscnt - 1]) {
                     if (!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
                         return;
                     }
-                    markerArr[thiscnt - 1].setMap(null);
+                    customArr[thiscnt - 1].setMap(null);
                 }
                 var course_type = button.parent().siblings("div.cosselect_thema").find("select.sel1").val();
                 var course_num = button.siblings("input.in1").attr("course_num");
@@ -298,25 +318,45 @@
                         "course_num" : course_num
                     },
                     success : function (res) {
-                        console.log(res.lat, res.lon);
-                        var markerPosition = new kakao.maps.LatLng(res.lat, res.lon);
-                        var marker = new kakao.maps.Marker({position: markerPosition});
-                        marker.setMap(map);
-                        markerArr[thiscnt - 1] = marker;
-                        var movelatlon = new kakao.maps.LatLng(res.lat, res.lon);
-                        map.setCenter(movelatlon);
-
                         //인포 윈도우 생성
                         var iwContent =
-                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
-                                '<br><a href="https://map.kakao.com/link/to/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/'+res.title+',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/'+res.title+',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
                             iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
+                        var customContent = '<span style="background: skyblue;" class="step">step'+thiscnt+'</span>'
                         // 인포윈도우를 생성합니다
-                        var infowindow = new kakao.maps.InfoWindow({
+                        var custom = new kakao.maps.CustomOverlay({
+                            position: iwPosition,
+                            content : customContent
+                        });
+                        customArr[thiscnt - 1] = custom;
+                        var detailInfowindow = new kakao.maps.InfoWindow({
                             position: iwPosition,
                             content : iwContent
                         });
-                        infowindow.open(map, marker);
+                        custom.setMap(map);
+
+                        //마커가 생성될 때 마다 지도의 범위를 수정
+                        var bounds = new kakao.maps.LatLngBounds();
+                            mapBound[thiscnt - 1] = new kakao.maps.LatLng(res.lat, res.lon);
+                        for(var i = 0 ; i < mapBound.length; i++) {
+                            if(!mapBound[i]) {continue;}
+                            bounds.extend(mapBound[i]);
+                        }
+                        map.setBounds(bounds);
+// *******************************커스텀오버레이에 마우스를 올렸을 때 커스텀 오버레이가 꺼지고 디테일인포가 출력이 되지 않고 있음**********************
+                        kakao.maps.event.addListener(custom, 'mouseover', function() {
+                            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+                            custom.setMap(null);
+                            detailInfowindow.open(map);
+                        });
+
+// 마커에 마우스아웃 이벤트를 등록합니다
+                        kakao.maps.event.addListener(detailInfowindow, 'mouseout', function() {
+                            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+                            detailInfowindow.close();
+                            custom.setMap(map);
+                        });
                     }//sucess
                 });//ajax
             }); // insert_course_button end
@@ -324,10 +364,9 @@
             $(document).on("change", "select.sel1", function () {
                 var find_in1 = $(this).parent().parent().find("input.in1");
                 find_in1.val("");
-                console.log("reset");
                 find_in1.attr("isSelect", "no");
-
             });
+
         }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */

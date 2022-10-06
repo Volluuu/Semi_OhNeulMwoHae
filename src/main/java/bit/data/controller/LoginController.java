@@ -42,11 +42,19 @@ public class LoginController {
 			//로그인한 아이디에 대한 정보를 얻어서 세션에 저장
 			UserDto udto=userService.getDataByLoginId(loginid);
 			session.setAttribute("loginok", "yes");
-			session.setAttribute("loginid", loginid);
+			session.setAttribute("user_num", udto.getUser_num());
+			session.setAttribute("loginid", udto.getLoginid());
+			session.setAttribute("password", udto.getPassword());
 			session.setAttribute("loginname", udto.getName());
+			session.setAttribute("nickname", udto.getNickname());
+			session.setAttribute("email", udto.getEmail());
+			session.setAttribute("profile", udto.getProfile());
 			session.setAttribute("loginphoto", udto.getProfilephoto());
 			session.setAttribute("loginhp", udto.getHp());
-			session.setAttribute("loginemail", udto.getEmail());
+			session.setAttribute("isadmin",udto.getIsadmin());
+			session.setAttribute("alarm", udto.getAlarm());
+			session.setAttribute("interest", udto.getInterest());
+
 			
 		}
 		map.put("result", result==1?"success":"fail");
@@ -59,7 +67,18 @@ public class LoginController {
 	{
 		//로그아웃 시 제거되어야할 세션
 		session.removeAttribute("loginok");
+		session.removeAttribute("user_num");
 		session.removeAttribute("loginid");
+		session.removeAttribute("password");
+		session.removeAttribute("loginname");
+		session.removeAttribute("nickname");
+		session.removeAttribute("email");
+		session.removeAttribute("profile");
+		session.removeAttribute("loginphoto");
+		session.removeAttribute("loginhp");
+		session.removeAttribute("isadmin");
+		session.removeAttribute("alarm");
+		session.removeAttribute("interest");
 	}
 	
 	

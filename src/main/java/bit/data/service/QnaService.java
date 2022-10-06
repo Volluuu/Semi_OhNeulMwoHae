@@ -72,6 +72,11 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
+	public void updateAnswer(QnaDto dto) {
+		daoInter.updateAnswer(dto);
+	}
+
+	@Override
 	public void deleteQna(int num) {
 		daoInter.deleteQna(num);
 	}

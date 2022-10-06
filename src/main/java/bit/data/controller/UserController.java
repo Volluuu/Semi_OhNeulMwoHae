@@ -75,6 +75,19 @@ public class UserController {
         return "/bit/user/userpassword";
     }
 
+
+    @PostMapping("/findid")
+    public String findid(UserDto userdto,Model model){
+        System.out.println("name="+ userdto.getName());
+        if(userService.findIdCheckByName(userdto.getName())==0) {
+            model.addAttribute("msg", "이름을 확인해주세요");
+            return "/bit/user/userid";
+        }else {
+            model.addAttribute("user", userService.findIdByName(userdto.getName()));
+            return "/bit/user/findid";
+        }
+    }
+
     @PostMapping("/insert")
     public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto)// MemberDto dto은 모델앤뷰 생략
     {
