@@ -145,6 +145,8 @@
 		font-size: 12px;
 	}
 
+
+
 </style>
 
 </head>
@@ -200,7 +202,7 @@
 			</c:if>
 	</span>
 	<!-- 로그인창 -->
-	<div class="modal" id="myModal">
+	<div class="modal" id="myModal" >
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 
@@ -225,8 +227,15 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok">로그인</button>
-					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+					<div class="input-group">
+						<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok" style="background-color: black; color: white; width:260px;">로그인</button>
+					</div>
+						<button type="button" class="btn btn-success"  id="btnsocial1" style="width: 260px;">네이버</button>
+						<button type="button" class="btn btn-success"  id="btnsocial2" style="width: 260px; background-color: yellow; color:black;">카카오</button>
+					<button type="button" onclick="location.href='${root}/user/userform'" class="btn btn-success"  id="btnjoin" style="border-radius:30px; background-color: white; width:260px; color:black;">간편 회원가입</button>
+					<button type="button" onclick="location.href='${root}/user/userid'" class="btn btn-success"  id="btnid" style="border-radius:30px; background-color: white; width:260px; color:black;">아이디 찾기</button>
+					<button type="button" onclick="location.href='${root}/user/userpassword'" class="btn btn-success"  id="btnpassword" style="border-radius:30px; background-color: white; width:260px; color:black;">비밀번호 찾기</button>
+
 				</div>
 			</div>
 		</div>
