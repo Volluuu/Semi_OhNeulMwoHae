@@ -18,4 +18,7 @@ public interface CourseServiceInter {
 	public List<CafeDto> getSearchCafe(String searchword);
 	public List<TripDto> getSearchTrip(String searchword);
 	public List<FoodDto> getSearchFood(String searchword);
+	public CafeDto getCafeLatLon(int course_num);
+	public FoodDto getFoodLatLon(int course_num);
+	public TripDto getTripLatLon(int course_num);
 }
