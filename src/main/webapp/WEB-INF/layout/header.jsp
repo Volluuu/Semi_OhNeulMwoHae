@@ -22,7 +22,6 @@
 	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <style type="text/css">
 	.title{
-		width: 1900px;
 		text-align: center;
 		display: flex;
 		/*position: fixed;*/

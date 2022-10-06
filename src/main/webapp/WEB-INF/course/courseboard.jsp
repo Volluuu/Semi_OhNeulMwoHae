@@ -114,12 +114,14 @@
     #divgrid {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        padding:8px 12px;
+        grid-template-columns: repeat(4, 25%);
         grid-auto-rows: minmax(200px, auto);
-        gap: 20px;
+        gap: 50px;
+
         /*margin-left: auto;*/
         /*margin-right: auto;*/
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
 
     #svgdiv {
@@ -135,7 +137,6 @@
     .contentdot {
         display: -webkit-box;
         display: -ms-flexbox;
-        display: box;
         margin-top: 1px;
         max-height: 120px;
         overflow: hidden;
@@ -815,9 +816,9 @@
 
 
 </script>
-<div id="svgdiv">
+
     <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-         y="0px" viewBox="510 246 2551.2 1236" style="enable-background:new 0 0 2551.2 1236;" xml:space="preserve">
+         y="0px" viewBox="100 100 2551.2 1236" xml:space="preserve">
 
         <style type="text/css">
             text.gu1:hover, text.gu2:hover, text.gu3:hover, text.gu4:hover, text.gu5:hover, text.gu6:hover, text.gu7:hover, text.gu8:hover, text.gu9:hover, text.gu10:hover, text.gu11:hover, text.gu12:hover, text.gu13:hover, text.gu14:hover, text.gu15:hover, text.gu16:hover, text.gu17:hover, text.gu18:hover, text.gu19:hover, text.gu20:hover, text.gu21:hover, text.gu22:hover, text.gu23:hover, text.gu24:hover, text.gu25:hover {
@@ -1586,7 +1587,7 @@
         </tbody>
     </table>
 
-</div>
+
 
 <script>
     $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=44714b1973a73780b4840a89a5f87c7e&units=metric", function (result) {

@@ -566,6 +566,7 @@
                     },
                 });
             });
+            </script>
             <br>
             <c:if test="${sessionScope.loginok!=null}">
                 <button type="button" class="btn btn-outline-dark"
