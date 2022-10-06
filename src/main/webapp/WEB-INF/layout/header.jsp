@@ -177,22 +177,26 @@
 		</div>
 	<div class="myinfo">
 		<div class="input-group my1">
+			<c:if test="${sessionScope.loginok!=null}">
 				<a href="${root}/mypage/mypagedetail">마이페이지</a>
-				<a href="${root}/user/userlist">회원목록</a>
-				<a href="${root}/user/userform">회원가입</a>
+			</c:if>
+			<c:if test="${sessionScope.loginok==null}">
+			<a href="${root}/user/userform">회원가입</a>
+			</c:if>
+			<a href="${root}/user/userlist">회원목록</a>
 		</div>
 	</div>
 
 	<span id="loginstate">
 		<c:if test="${sessionScope.loginok==null}">
 				<button type="button" class="btn btn-success" id="btnlogin"
-						data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
+						data-bs-toggle="modal" data-bs-target="#myModal" style="background-color: white; color:black;">로그인</button>
 		</c:if>
 
 			<c:if test="${sessionScope.loginok!=null}">
 				<b>${sessionScope.loginname}님</b>
 				&nbsp;&nbsp;
-				<button type="button" class="btn btn-danger" id="btnlogout">로그아웃</button>
+				<button type="button" class="btn btn-danger" id="btnlogout" style="background-color: white; color:black;">로그아웃</button>
 			</c:if>
 	</span>
 	<!-- 로그인창 -->
