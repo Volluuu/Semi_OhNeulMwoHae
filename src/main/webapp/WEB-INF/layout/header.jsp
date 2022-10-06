@@ -39,8 +39,8 @@
 	}
 
 	.logo img{
-		width: 150px;
-		height: 150px;
+		width: 100px;
+		height: 100px;
 	}
 
 	.menu{
