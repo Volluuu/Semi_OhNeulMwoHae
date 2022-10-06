@@ -81,11 +81,10 @@ public class UserController {
         System.out.println("name="+ userdto.getName());
         if(userService.findIdCheckByName(userdto.getName())==0) {
             model.addAttribute("msg", "이름을 확인해주세요");
-            return "/user/userid";
+            return "/bit/user/userid";
         }else {
             model.addAttribute("user", userService.findIdByName(userdto.getName()));
-            return
-                    "/user/findid";
+            return "/bit/user/findid";
         }
     }
 
