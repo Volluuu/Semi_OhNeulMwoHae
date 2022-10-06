@@ -201,11 +201,14 @@
 				<button type="button" class="btn btn-danger" id="btnlogout" style="background-color: white; color:black;">로그아웃</button>
 			</c:if>
 	</span>
+
+	<!--관리자 아이디로 로그인 하면 바로 관리자 페이지로 이동-->
 	<c:if test="${sessionScope.isadmin=='admin'}">
 		<script>
 			location.href="adminmain.jsp";
 		</script>
 	</c:if>
+
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal" >
 		<div class="modal-dialog modal-sm">
@@ -258,7 +261,7 @@
 			// console.log(pass);
 			var root='${root}';
 
-				console.log("root"+root);
+				//console.log("root"+root);
 				$.ajax({
 					type:"get",
 					url:root+"/user/login",
@@ -268,13 +271,13 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							alert("로그인 되었습니다.");
 							location.reload();
 						}
 					}//success
 					
 				}); //ajax
 		});
+
 		
 		//로그아웃
 		$("#btnlogout").click(function(){
@@ -284,12 +287,38 @@
 				url:root+"/user/logout",
 				dataType:"text",
 				success:function(res){
-					alert("로그아웃 되었습니다.")
 					location.reload();
 					
 				}//success
 				
 			});//ajax
+		});
+
+		//엔터키로 누르면 로그인
+		$("#myModal").keypress(function (e){
+			if(e.keyCode==13){
+				var id=$("#loginid").val();
+				// console.log(id);
+				var pass=$("#loginpass").val();
+				// console.log(pass);
+				var root='${root}';
+
+				//console.log("root"+root);
+				$.ajax({
+					type:"get",
+					url:root+"/user/login",
+					dataType:"json",
+					data:{"loginid":id,"password":pass},
+					success:function(res){
+						if(res.result=='fail'){
+							alert("아이디나 비번이 맞지 않습니다");
+						}else{
+							location.reload();
+						}
+					}//success
+
+				}); //ajax
+			}
 		});
 
 	</script>
