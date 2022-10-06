@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CafeDaoInter {
-    public int selectTotalCount(Map<String, String> map);
+    public int selectTotalCount(Map<String, Object> map);
     public CafeDto getCafeData(int cafe_num);
     public List<CafeDto> selectPagingList(Map<String, Object> map);
      public void insertCafe(CafeDto dto);

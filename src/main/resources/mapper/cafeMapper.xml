@@ -5,17 +5,29 @@
 <mapper namespace="bit.data.dao.CafeDao">
 	<select id="selectTotalCount" parameterType="Map" resultType="int">
 		select count(*) from cafe
-		<if test="cafecolumn!=null and cafeword!=null">
+		<if test="cafecolumn!=null and cafeword!=null and gu!=0">
+			where ${cafecolumn} like concat('%',#{cafeword},'%') and gu=#{gu}
+		</if>
+		<if test="cafecolumn!=null and cafeword!=null and gu==0">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
+		</if>
+		<if test="cafecolumn==null and cafeword==null and gu!=0">
+			where gu=#{gu}
 		</if>
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="cafedto">
 		select * from cafe
-		<if test="cafecolumn!=null and cafeword!=null">
+		<if test="cafecolumn!=null and cafeword!=null and gu!=0">
+			where ${cafecolumn} like concat('%',#{cafeword},'%') and gu=#{gu}
+		</if>
+		<if test="cafecolumn!=null and cafeword!=null and gu==0">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
 		</if>
-		limit #{startnum},#{perpage}
+		<if test="cafecolumn==null and cafeword==null and gu!=0">
+			where gu=#{gu}
+		</if>
+		order by readcount desc limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertCafe" parameterType="cafedto">

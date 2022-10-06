@@ -45,7 +45,8 @@
     button.fr {
         float: right;
     }
-    .dg_container{
+
+    .dg_container {
         position: ;
         width: 100%;
         height: 200px;
@@ -70,7 +71,7 @@
         var s = "";
         $.ajax({
             type: "get",
-            url: root + "/course/tripdetaillist",
+            url: root + "/course/tripdetailanswer",
             dataType: "json",
             data: {"trip_num": trip_num},
             success: function (res) {
@@ -82,10 +83,10 @@
                         s += '<button class="btn btn-outline-dark adel fr" course_num="' + elt.course_num + '">삭제</button>';
                         s += '<button class="btn btn-outline-dark aupd fr" course_num="' + elt.course_num + '">수정</button>';
                     }
-                    s +="<p><pre class='cafecontent'>" + elt.content + "</pre>";
-                    s+="<span class='day'> 작성일 : " + elt.writeday + "</span>";
-                    s+="<span class='star'> 별점 : "+elt.star+"</span>";
-                    s+="</p>";
+                    s += "<p><pre class='cafecontent'>" + elt.content + "</pre>";
+                    s += "<span class='day'> 작성일 : " + elt.writeday + "</span>";
+                    s += "<span class='star'> 별점 : " + elt.star + "</span>";
+                    s += "</p>";
                     s += "</div>";
 
                 });
@@ -117,42 +118,42 @@
                         </div>
                     </div>
                     <div>
-                        <p><img src="../image/call.png" style="width:20px;"> ${dto.tel}</p>
+                        <p><img src="../image/coffee.png" style="width:23px;">${dto.content}</p>
                     </div>
                     <div>
-                        <div>
-                            <p><img src="../image/coffee.png" style="width:23px;"> ${dto.menu}</p>
-                        </div>
+                        <b id="answer"></b>
+                        <div id="review"></div>
                     </div>
                 </div>
 
                 <%--------------------------------------------------------------------------- 별점--%>
                 <c:if test="${sessionScope.loginok!=null}">
-                <form class="mb-3" id="myform">
-                    <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                    <input type="hidden" name="trip_num" value="${dto.trip_num}">
-                    <fieldset>
-                        <span class="text-bold">별점을 선택해주세요</span>
-                        <input type="radio" name="star" value="5" id="rate1"><label
-                            for="rate1">★</label>
-                        <input type="radio" name="star" value="4" id="rate2"><label
-                            for="rate2">★</label>
-                        <input type="radio" name="star" value="3" id="rate3" checked><label
-                            for="rate3">★</label>
-                        <input type="radio" name="star" value="2" id="rate4"><label
-                            for="rate4">★</label>
-                        <input type="radio" name="star" value="1" id="rate5"><label
-                            for="rate5">★</label>
-                    </fieldset>
-                    <div>
+                    <form class="mb-3" id="myform">
+                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+                        <input type="hidden" name="trip_num" value="${dto.trip_num}">
+                        <fieldset>
+                            <span class="text-bold">별점을 선택해주세요</span>
+                            <input type="radio" name="star" value="5" id="rate1"><label
+                                for="rate1">★</label>
+                            <input type="radio" name="star" value="4" id="rate2"><label
+                                for="rate2">★</label>
+                            <input type="radio" name="star" value="3" id="rate3" checked><label
+                                for="rate3">★</label>
+                            <input type="radio" name="star" value="2" id="rate4"><label
+                                for="rate4">★</label>
+                            <input type="radio" name="star" value="1" id="rate5"><label
+                                for="rate5">★</label>
+                        </fieldset>
+                        <div>
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-outline-dark" id="tripstarbtn">등록</button><br>
-                    <b id="answer"></b>
-                    <div id="review"></div>
-                </form>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark" id="tripstarbtn">등록</button>
+                        <br>
+
+                    </form>
                 </c:if>
+
 
                 <script>
                     // $(document).on("keyup","#reviewContents",function (e){

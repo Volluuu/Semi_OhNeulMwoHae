@@ -15,10 +15,11 @@ public class CafeService implements CafeServiceInter {
 
     @Autowired
     CafeDaoInter cafedao;
-    public int selectTotalCount(String cafecolumn, String cafeword) {
-        Map<String,String> map=new HashMap<String, String>();
+    public int selectTotalCount(String cafecolumn, String cafeword,int gu) {
+        Map<String, Object> map=new HashMap<String, Object>();
         map.put("cafecolumn", cafecolumn);
         map.put("cafeword", cafeword);
+        map.put("gu", gu);
         return cafedao.selectTotalCount(map);
     }
 
@@ -33,12 +34,13 @@ public class CafeService implements CafeServiceInter {
     }
 
     @Override
-    public List<CafeDto> selectPagingList(String cafecolumn, String cafeword, int startnum, int perpage) {
+    public List<CafeDto> selectPagingList(String cafecolumn, String cafeword, int startnum, int perpage, int gu) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cafecolumn", cafecolumn);
         map.put("cafesword", cafeword);
         map.put("startnum", startnum);
         map.put("perpage", perpage);
+        map.put("gu", gu);
         return cafedao.selectPagingList(map);
     }
 

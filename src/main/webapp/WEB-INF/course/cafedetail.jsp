@@ -46,7 +46,6 @@
         float: right;
     }
     .dg_container{
-        position: ;
         width: 100%;
         height: 200px;
     }
@@ -124,6 +123,10 @@
                             <p><img src="../image/coffee.png" style="width:23px;"> ${dto.menu}</p>
                         </div>
                     </div>
+                    <div>
+                        <b id="answer"></b>
+                        <div id="review"></div>
+                    </div>
                 </div>
 
                 <%--------------------------------------------------------------------------- 별점--%>
@@ -149,10 +152,10 @@
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
                     <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
-                    <b id="answer"></b>
-                    <div id="review"></div>
+
                 </form>
                 </c:if>
+
 
                 <script>
                     // $(document).on("keyup","#reviewContents",function (e){

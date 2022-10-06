@@ -124,6 +124,10 @@
                             <p><img src="../image/coffee.png" style="width:23px;"> ${dto.menu}</p>
                         </div>
                     </div>
+                    <div>
+                    <b id="answer"></b>
+                    <div id="review"></div>
+                    </div>
                 </div>
 
                 <%--------------------------------------------------------------------------- 별점--%>
@@ -149,11 +153,9 @@
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
                     <button type="button" class="btn btn-outline-dark" id="foodstarbtn">등록</button><br>
-                    <b id="answer"></b>
-                    <div id="review"></div>
+
                 </form>
                 </c:if>
-
                 <script>
                     // $(document).on("keyup","#reviewContents",function (e){
                     //     if(e.keyCode==13){
@@ -170,7 +172,7 @@
                             type: "get",
                             url: root + "/commentcourse/foodstar",
                             dataType: "text",
-                            data: {"user_num": user_num, "star": star, "content": content, "cafe_num": food_num},
+                            data: {"user_num": user_num, "star": star, "content": content, "food_num": food_num},
                             success: function (res) {
                                 foodlist();
 

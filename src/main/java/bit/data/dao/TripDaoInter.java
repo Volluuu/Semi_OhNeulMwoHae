@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface TripDaoInter {
-    public int selectTotalCount(Map<String, String> map);
+    public int selectTotalCount(Map<String, Object> map);
     public TripDto getFoodData(int trip_num);
     public List<TripDto> selectPagingList(Map<String, Object> map);
     public void insertTrip(TripDto dto);

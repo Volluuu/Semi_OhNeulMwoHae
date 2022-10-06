@@ -16,20 +16,22 @@ public class FoodService implements FoodServiceInter {
     FoodDaoInter fooddao;
 
     @Override
-    public int selectTotalCount(String foodcolumn, String foodword) {
-        Map<String, String> map=new HashMap<>();
+    public int selectTotalCount(String foodcolumn, String foodword, int gu) {
+        Map<String, Object> map=new HashMap<>();
         map.put("foodcolumn", foodcolumn);
         map.put("foodword", foodword);
+        map.put("gu",gu);
         return fooddao.selectTotalCount(map);
     }
 
         @Override
-        public List<FoodDto> selectPagingList(String foodcolumn, String foodword, int startnum, int perpage) {
+        public List<FoodDto> selectPagingList(String foodcolumn, String foodword, int startnum, int perpage, int gu) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("foodcolumn", foodcolumn);
             map.put("foodsword", foodword);
             map.put("startnum", startnum);
             map.put("perpage", perpage);
+            map.put("gu",gu);
             return fooddao.selectPagingList(map);
         }
 
