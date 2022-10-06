@@ -177,30 +177,24 @@
 		</div>
 	<div class="myinfo">
 		<div class="input-group my1">
-			<c:if test="${sessionScope.loginok!=null}">
-			<a href="${root}/mypage/mypagedetail">마이페이지</a>
-			</c:if>
+				<a href="${root}/mypage/mypagedetail">마이페이지</a>
 				<a href="${root}/user/userlist">회원목록</a>
-				<c:if test="${sessionScope.loginok==null}">
-					<a href="${root}/user/userform">회원가입</a>
-				<a href="${root}/user/userlogin">로그인</a>
-				</c:if>
-				<c:if test="${sessionScope.loginok!=null}">
-					<b>${sessionScope.loginname}님</b>
-					<a id="logout">로그아웃</a>
-				</c:if>
-			</div>
+				<a href="${root}/user/userform">회원가입</a>
 		</div>
+	</div>
 
-<%--	<span id="loginstate">
+	<span id="loginstate">
 		<c:if test="${sessionScope.loginok==null}">
-			<a href="${root}/user/userlogin">로그인</a>
+				<button type="button" class="btn btn-success" id="btnlogin"
+						data-bs-toggle="modal" data-bs-target="#myModal">로그인</button>
 		</c:if>
-		<c:if test="${sessionScope.loginok!=null}">
-			<b>${sessionScope.loginname}님</b>
-			<a href="${root}/user/userlogin">로그아웃</a>
-		</c:if>
-	</span>--%>
+
+			<c:if test="${sessionScope.loginok!=null}">
+				<b>${sessionScope.loginname}님</b>
+				&nbsp;&nbsp;
+				<button type="button" class="btn btn-danger" id="btnlogout">로그아웃</button>
+			</c:if>
+	</span>
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal">
 		<div class="modal-dialog modal-sm">
@@ -266,7 +260,7 @@
 		});
 		
 		//로그아웃
-		$("#logout").click(function(){
+		$("#btnlogout").click(function(){
 			var root='${root}';
 			$.ajax({
 				type:"get",
