@@ -201,6 +201,11 @@
 				<button type="button" class="btn btn-danger" id="btnlogout" style="background-color: white; color:black;">로그아웃</button>
 			</c:if>
 	</span>
+	<c:if test="${sessionScope.isadmin=='admin'}">
+		<script>
+			location.href="adminmain.jsp";
+		</script>
+	</c:if>
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal" >
 		<div class="modal-dialog modal-sm">
