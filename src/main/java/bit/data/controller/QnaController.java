@@ -135,6 +135,7 @@ public class QnaController {
 	{
 		//db에 update
 		serviceInter.updateQna(dto);
+		serviceInter.updateAnswer(dto);
 
 		return "redirect:qnadetail?currentPage="+currentPage+"&qna_num="+dto.getQna_num();
 	}

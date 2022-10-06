@@ -27,6 +27,9 @@
       color: gray;
       font-size: 15px;
     }
+    .notice_info a:hover{
+      text-shadow: 10px 10px 10px gray;
+    }
     .notice_list{
       width: 1200px;
       margin-left: 45px;
@@ -35,7 +38,51 @@
     .notice_list li{
       list-style: none;
     }
+    .notice_title_main{
+      border: 1px solid lightgray;
+    }
+    .paging{
+      width: 100%;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .pagination{
+      width: 20%;
+      margin-left: 750px;
+    }
+    .page-item{
+    }
+    div.notice_title_subject{
+      cursor: pointer;
+      border: 1px solid lightgray;
+      display: flex;
+    }
+    .notice_title_subject_title{
+      width: 80%;
+      font-size: 30px;
+      font-weight: bold;
+      vertical-align: middle;
+    }
+    .notice_title_subject_content{
+      width: 20%;
+    }
+    .notice_content_list{
+      background-color: lightgray;
+    }
   </style>
+  <script>
+    $(function (){
+
+      $("div.notice_content").hide();
+
+
+      $(document).on("click","div.notice_title_subject",function (){
+        $(this).next().toggle(1000);
+      });//click
+
+    });//function
+
+  </script>
 </head>
 <body>
 <div class="notice_main">
@@ -49,12 +96,51 @@
     <ul class="notice_title">
       <h3>공지사항</h3>
       <hr>
-      <h3>${subject}</h3>
-      <li class="notice_context">
-        <pre>${content}</pre>
-      </li>
+      <input type="hidden" name="user_num" value="${dto.user_num}">
+      <input type="hidden" name="notice_num" value="${dto.notice_num}">
+      <input type="hidden" name="currentPage" value="${currentPage}">
+      <button type="button" class="btn btn-secondary addnotice" onclick="location.href='noticeform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+      <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
+      <div class="notice_title_main">
+        <c:forEach var="dto" items="${list}">
+          <div class="notice_title_subject" notice_num="${dto.notice_num}">
+            <li class="notice_title_subject_title">${dto.subject}&nbsp;&nbsp;</li>
+            <li class="notice_title_subject_content"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/></li>
+            <c:if test="${user_num eq 1}">
+            <button type="button" onclick="location.href='noticedelete?notice_num=${dto.notice_num}&currentPage=${currentPage}'">삭제</button>
+            </c:if>
+          </div>
+          <div class="notice_content" notice_num="${dto.notice_num}">
+            <li class="notice_content_list">
+              └${dto.content}
+            </li>
+          </div>
+        </c:forEach>
+      </div>
+      <%--</c:if>--%>
+  </div><!-- -->
+  <!-- 페이징 처리 -->
+  <div class="paging">
+    <ul class="pagination">
+      <c:if test="${startPage>1}">
+        <li class="page-item"><a href="qnalist?currentPage=${startPage-1}" class="page-link">&lt;</a></li>
+      </c:if>
+
+      <!-- 페이지 번호 -->
+      <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+        <c:if test="${pp==currentPage}">
+          <li class="page-item active"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
+        </c:if>
+        <c:if test="${pp!=currentPage}">
+          <li class="page-item"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
+        </c:if>
+      </c:forEach>
+
+      <c:if test="${endPage<totalPage}">
+        <li class="page-item"><a href="qnalist?currentPage=${endPage+1}" class="page-link">&gt;</a></li>
+      </c:if>
     </ul>
-  </div>
+  </div><!-- paging -->
 </div>
 </body>
 </html>

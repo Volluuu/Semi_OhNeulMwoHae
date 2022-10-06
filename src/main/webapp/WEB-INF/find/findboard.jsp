@@ -11,93 +11,271 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <html>
 <head>
     <title>Title</title>
 </head>
 <style>
-    div.dg_container {
-        width: 65%;
-        margin-left: 15%;
-        margin-right: 20%;
-    }
-
-    div.dg_searcharea {
-        width: 100%;
-        text-align: center;
-    }
-
-    a.dg_a {
-        color: gray;
-        text-decoration: none;
-    }
-
-    a.dg_a:link, a.dg_a:visited {
-        color: dimgray;
-        text-decoration: none;
-    }
-
-    a.dg_a:hover, a.dg_a:active {
-        color: black;
-        text-decoration: underline;
-    }
-
-    table.findtable {
-        width: 65%;
-        margin-left: 15%;
-        margin-right: 20%;
-        outline: 1px solid black;
-        text-indent: 10px;
-
-    }
-
-    table.findtable td {
-        border: 1px solid black;
-    }
-
-    table.findtable tr {
-        width: 25%;
-    }
-
-    .findtable p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 300px;
-        height: 22px;
-    }
-
-    footer {
-        font-size: 5px;
-        background-color: #38b6ff;
-    }
 
     .paging {
         display: flex;
         justify-content: center;
     }
 
-    ul {
-        list-style: none;
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-    li {
-        float: left;
-        padding: 3px 3px 3px 3px;
+    body {
+        background: #323c41;
     }
 
-    div.dg_searcharea {
-        justify-content: center;
+    .blog-card {
+        width: 350px;
+        height: 500px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+        text-align: center;
+
     }
 
-    div.dg_session {
-        float: right;
+
+    .blog-card .color-overlay {
+        /* Rectangle 11: */
+        background: rgba(84, 104, 110, 0.4);
+        width: 350px;
+        height: 500px;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        transition: background 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
     }
 
-    span.fr {
-        float: right;
+    .blog-card .gradient-overlay {
+        /* bg-gradient: */
+        background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
+        background-image: -moz-linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
+        background-image: -o-linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
+        background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
+        width: 350px;
+        height: 500px;
+        position: absolute;
+        top: 350px;
+        left: 0;
+        z-index: 15;
+    }
+
+    .blog-card:hover .card-info {
+        opacity: 1;
+        bottom: 120px;
+    }
+
+    .blog-card:hover .color-overlay {
+        background: rgba(84, 104, 110, 0.8);
+    }
+
+    .title-content {
+        text-align: center;
+        margin: 70px 0 0 0;
+        position: absolute;
+        z-index: 20;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        color: #9CC9E3;
+        font-family: "Roboto", sans-serif;
+        margin-bottom: 0;
+    }
+
+    hr {
+        width: 50px;
+        height: 3px;
+        margin: 20px auto;
+        border: 0;
+        background: #D0BB57;
+    }
+
+    .intro {
+        width: 170px;
+        margin: 0 auto;
+        color: #DCE3E7;
+        font-family: "Droid Serif", serif;
+        font-size: 13px;
+        font-style: italic;
+        line-height: 18px;
+    }
+
+    .card-info {
+        width: 100%;
+        position: absolute;
+        bottom: 100px;
+        left: 0;
+        margin: 0 auto;
+        padding: 0 50px;
+        color: #DCE3E7;
+        font-family: "Droid Serif", serif;
+        line-height: 24px;
+        z-index: 20;
+        opacity: 0;
+        transition: bottom 0.3s, opacity 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
+    }
+
+    .utility-info {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        z-index: 20;
+    }
+
+    .utility-list {
+        list-style-type: none;
+        margin: 0 0 30px 20px;
+        padding: 0;
+        width: 100%;
+    }
+
+    .utility-list li {
+        margin: 0 15px 0 0;
+        padding: 0 0 0 22px;
+        display: inline-block;
+        color: #DCE3E7;
+        font-family: "Roboto", sans-serif;
+    }
+
+    .utility-list li.comments {
+        background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-chat.svg) no-repeat 0 0.1em;
+    }
+
+    .utility-list li.date {
+        background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-calendar.svg) no-repeat 0 0.1em;
+    }
+
+    /*}*/
+    /*---------------------------------------------------------------Footer*/
+    #footer {
+        padding: 8px 12px;
+    }
+
+    #footer .inner {
+        padding: 50px 280px 0 0;
+        box-sizing: border-box;
+    }
+
+    .inner {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .efLSbp {
+        display: flex;
+        position: relative;
+        width: 100%;
+        min-width: 1200px;
+        box-sizing: border-box;
+        border-top: 1px solid rgb(233, 233, 233);
+        margin-top: 200px;
+        padding-bottom: 49px;
+        background: rgb(255, 255, 255);
+    }
+
+    h1 {
+        display: block;
+        font-size: 2em;
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+
+    .bjBbfw {
+        width: 146px;
+        user-select: none;
+        -webkit-user-drag: none;
+        cursor: pointer;
+    }
+
+    .efLSbp {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    .efLSbp .info_wrap_horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    .efLSbp .big_gap {
+        margin-top: 26px;
+    }
+
+    .efLSbp .grey_6A {
+        color: rgb(106, 106, 106);
+    }
+
+    .efLSbp .info_wrap_horizontal > div {
+        display: inline-flex;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    #footer .footer_info {
+        /*position: relative;*/
+        margin-top: 15px;
+    }
+
+    #footer .footer_info span, #footer .footer_info address, #footer .footer_info a {
+        display: inline-block;
+        font-size: 15px;
+        line-height: 1.5em;
+        color: #6a6a6a;
+        vertical-align: top;
+        margin: 0 24px 6px 0;
+    }
+
+    .efLSbp .info_regular {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    .efLSbp .small_gap {
+        margin-top: 16px;
+    }
+
+    .efLSbp .middle_gap {
+        margin-top: 24px;
+    }
+
+    #footer .copyright {
+        margin-top: 10px;
+        font-size: 15px;
+        color: lightgray;
+    }
+
+    .icons {
+        color: #70D9F2;
     }
 
     #divgrid {
@@ -108,10 +286,7 @@
         gap: 20px;
         /*margin-left: auto;*/
         /*margin-right: auto;*/
-        /*justify-content: space-between;*/
-    }
-    .page-link{
-        cursor: pointer;
+        justify-content: space-between;
     }
     .item {
 
@@ -231,8 +406,8 @@
             </c:if>
             <script>
                 var root = "${root}";
-                $(document).on("keyup","#findword",function (e){
-                    if(e.keyCode==13){
+                $(document).on("keyup", "#findword", function (e) {
+                    if (e.keyCode == 13) {
                         $("#searchbtn").trigger("click");
                     }
                 });
@@ -276,20 +451,20 @@
                                 p += '<ul class="pagination">';
                                 if (res.startPage > 1) {
                                     // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
-                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + (res.startPage - 1) + '">이전</a></li>';
                                 }
                                 for (var pp = res.startPage; pp <= res.endPage; pp++) {
                                     if (pp == res.currentPage) {
                                         // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
-                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="' + res.findcolumn + '" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + pp + '">' + pp + '</a></li>';
                                     } else {
                                         // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
-                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + pp + '">' + pp + '</a></li>';
                                     }
                                 }
                                 if (res.totalPage > res.endPage) {
                                     // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
-                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + (res.endPage + 1) + '">다음</a></li>';
 
                                 }
                                 p += '</ul>';
@@ -340,21 +515,21 @@
                                 p += '<ul class="pagination">';
                                 if (res.startPage > 1) {
                                     // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
-                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + (res.startPage - 1) + '">이전</a></li>';
                                 }
 
                                 for (var pp = res.startPage; pp <= res.endPage; pp++) {
                                     if (pp == res.currentPage) {
                                         // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
-                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + pp + '">' + pp + '</a></li>';
                                     } else {
                                         // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
-                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + pp + '">' + pp + '</a></li>';
                                     }
                                 }
                                 if (res.totalPage > res.endPage) {
                                     // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
-                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="' + res.findcolumn + '" findword="' + res.findword + '" currentPage="' + (res.endPage + 1) + '">다음</a></li>';
 
                                 }
                                 p += '</ul>';
@@ -367,166 +542,164 @@
                     });
                 });
             </script>
-            <div class="dg_session">
-                <c:if test="${sessionScope.loginok==null}">
-                    <b>로그인이 안 되어 있습니다</b>
-                    <button type="button" class="btn btn-outline-dark" id="dg_loginbtn">세션 주기</button>
-                </c:if>
 
-                <c:if test="${sessionScope.loginok!=null}">
-                    <b> [${sessionScope.nickname}]님 로그인 중 </b>
-                    <button type="button" class="btn btn-outline-dark" id="dg_logoutbtn">세션 없애기</button>
-                </c:if>
-            </div>
+            <%--        </form>--%>
+
         </div>
-        <%--        </form>--%>
 
-    </div>
-
-    <script>
-        $(document).on("click", "#dg_loginbtn", function () {
-            var root = "${root}";
-            console.log("root" + root);
-            $.ajax({
-                type: "get",
-                url: root + "/findboard/login",
-                dataType: "text",
-                data: {
-                    "user_num": "2", "loginid": "angel", "password": "1234",
-                    "name": "천사", "nickname": "악마", "email": "gotothehell@naver.com",
-                    "hp": "010-7272-9573", "profile": "나는 정지훈이다", "interest": "infp", "profilephoto": "user.png",
-                    "alarm": "없음", "isadmin": "user", "gaipday": "2022-09-29 09:42:44"
-                },
-                success: function (res) {
-                    location.reload();
-                },
+        <script>
+            $(document).on("click", "#dg_loginbtn", function () {
+                var root = "${root}";
+                console.log("root" + root);
+                $.ajax({
+                    type: "get",
+                    url: root + "/findboard/login",
+                    dataType: "text",
+                    data: {
+                        "user_num": "2", "loginid": "angel", "password": "1234",
+                        "name": "천사", "nickname": "악마", "email": "gotothehell@naver.com",
+                        "hp": "010-7272-9573", "profile": "나는 정지훈이다", "interest": "infp", "profilephoto": "user.png",
+                        "alarm": "없음", "isadmin": "user", "gaipday": "2022-09-29 09:42:44"
+                    },
+                    success: function (res) {
+                        location.reload();
+                    },
+                });
             });
-        });
-
-        $(document).on("click", "#dg_logoutbtn", function () {
-            var root = "${root}";
-            $.ajax({
-                type: "get",
-                url: root + "/findboard/logout",
-                dataType: "text",
-                success: function (res) {
-                    location.reload();
-
-                }
-            });
-        })
-    </script>
-    <div class="alert alert-light">
-        <c:if test="${totalCount>0}">
-            <h4 id="uc">총 ${totalCount}개의 글이 있습니다</h4>
-        </c:if>
-        <c:if test="${totalCount==0}">
-            <h4 id="uc">등록된 글이 없습니다</h4>
-        </c:if>
-        <br>
-        <c:if test="${sessionScope.loginok!=null}">
-            <button type="button" class="btn btn-outline-dark"
-                    onclick="location.href='${root}/findboard/findform'">글쓰기
-            </button>
-        </c:if>
-
-        <br>
-        <c:if test="${totalCount==0}">
-            <tr>
-                <td colspan="4" align="center" valign="middle">
-                    <h4>등록된 글이 없습니다</h4>
-                </td>
-            </tr>
-        </c:if>
-
-
+            <br>
+            <c:if test="${sessionScope.loginok!=null}">
+                <button type="button" class="btn btn-outline-dark"
+                        onclick="location.href='${root}/findboard/findform'">글쓰기
+                </button>
+            </c:if>
+            <br>
+        </div>
     </div>
-</div>
+<%-----------------------------카드변경--%>
+    <div id="divgrid">
+            <c:if test="${totalCount>0}">
+            <c:forEach var="dto" items="${list}" varStatus="i">
+        <div class="griditem">
+            <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
+               style="color:black;text-decoration:none;">
+                <c:set var="photo" value="${dto.photo}"/>
+                <div class="item">
+                    <div class="blog-card spring-fever">
+                        <c:if test="${dto.find1photo!=null}">
+                            <img alt="" src="${dto.find1photo}" class="img-thumbnail"
+                                 style="width:100%; height: 100%;">
+                        </c:if>
+                        <c:if test="${dto.find1photo==null}">
+                            <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
+                                 style="width:100%; height: 100%;">
+                        </c:if>
+                        <div class="title-content">
+                            <h3>제목 : ${dto.subject}</h3>
+                            <hr/>
+                            <div class="intro">닉네임 : ${dto.nickname}</div>
+                        </div>
+                        <div class="card-info">
+                            내용 : ${dto.content}
+                        </div>
+                        <div class="utility-info">
+                            <ul class="utility-list">
+                                <li class="comments">${dto.readcount}</li>
+                                <li class="date"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/></li>
+                            </ul>
+                        </div>
+                        <div class="gradient-overlay"></div>
+                        <div class="color-overlay"></div>
+                    </div>
+                    <div class="card-info">
+                        <div class="gradient-overlay"></div>
+                        <div class="color-overlay"></div>
+                    </div>
+                    <div class="card-info">
+                    </div>
+                    <div class="gradient-overlay"></div>
+                    <div class="color-overlay"></div>
+                </div>
+            </a>
+        </div>
+    </c:forEach>
+        </c:if>
+        </div>
+    <%------------------------------%>
 
-<div id="divgrid">
-    <c:if test="${totalCount>0}">
-
-        <c:forEach var="dto" items="${list}" varStatus="i">
-            <div class="griditem">
-                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
-                   style="color:black;text-decoration:none;">
-
-                    <c:set var="photo" value="${dto.photo}"/>
-                    <c:if test="${dto.find1photo!=null}">
-                        <img alt="" src="${dto.find1photo}" class="img-thumbnail"
-                             style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+        <div class="paging" id="paging">
+            <ul class="pagination">
+                <c:if test="${startPage>1}">
+                    <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${startPage-1}">이전</a>
+                    </li>
+                </c:if>
+                <!-- 페이지 번호 -->
+                <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+                    <c:if test="${pp==currentPage}">
+                        <li class="page-item active"><a class="page-link"
+                                                        href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
                     </c:if>
-                    <c:if test="${dto.find1photo==null}">
-                        <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                             style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+                    <c:if test="${pp!=currentPage}">
+                        <li class="page-item"><a class="page-link"
+                                                 href="${root}/findboard/list?currentPage=${pp}">${pp}</a>
+                        </li>
                     </c:if>
-                    <p>제목 : ${dto.subject}</p>
-                    <p>내용 : ${dto.content}&nbsp;</p>
-                    <p>닉네임 : ${dto.nickname}</p>
-                    <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
-                                                                pattern="yyyy-MM-dd"/><span class="fr"><i
-                            class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
-                            class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>
-                </a>
+
+                </c:forEach>
+
+                <c:if test="${totalPage>endPage}">
+                    <li class="page-item">
+                        <a class="page-link" href="${root}/findboard/list?currentPage=${endPage+1}">다음</a>
+                    </li>
+                </c:if>
+            </ul>
+        </div>
+        <footer id="footer" class="efLSbp">
+            <div class="inner">
+                <%------------------logo--%>
+                <h6 class="h_logo bjBbfw"><i class="fa-sharp fa-solid fa-car-side icons"></i> 오늘뭐해?</h6>
+                <%------------------------------info start--%>
+                <div class="finfo info_wrap_horizontal big_gap grey_6A">
+                    <div>
+                        <p class="info_bold info_large grey_6A_only">
+                            고객센터: 070-8835-2626
+
+                        </p>
+                    </div>
+                    <p class="info_regular grey_6A_only">
+                        <em>상담가능시간: 매일 9:00~24:00</em>
+                    </p>
+                </div>
+                <%--            -----------------------주식회사 Start--%>
+                <div class="Footer__FoldWrapper-sc-190uiip-1 dRbhKq footer_info grey_6A">
+                    <span>
+                        <em>주식회사: 오늘뭐해</em>
+                    </span>
+                    <span>
+                        <em>대표: 이동건</em>
+                    </span>
+                    <span>
+                        <em>개인정보보호책임자: 이동건</em>
+                    </span>
+                    <span>
+                        <em>사업자 등록번호: 010-4154-8185</em>
+                    </span>
+                </div>
+
+                <%--            ----------------------------------------------개인정보Start--%>
+                <div class="info_wrap_horizontal vertical_line info_regular grey_6A small_gap font_fix_320">
+                    <p class="info_bold">개인정보 처리방침</p>
+                    <p> | 이용약관</p>
+                    <p> | 취소 및 환불정책</p>
+                    <p> | 파트너 입점</p>
+                </div>
+
+                <%--            ------------------------------copyright--%>
+                <div class="middle_gap">
+                    <p class="copyright">Copyright © 오늘뭐해 Inc. All Rights Reserved.</p>
+                </div>
             </div>
-        </c:forEach>
-    </c:if>
-</div>
-
-<div class="paging" id="paging">
-    <ul class="pagination">
-        <c:if test="${startPage>1}">
-            <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${startPage-1}">이전</a>
-            </li>
-        </c:if>
-        <!-- 페이지 번호 -->
-        <c:forEach var="pp" begin="${startPage}" end="${endPage}">
-            <c:if test="${pp==currentPage}">
-                <li class="page-item active"><a class="page-link"
-                                                href="${root}/findboard/list?currentPage=${pp}">${pp}</a></li>
-            </c:if>
-            <c:if test="${pp!=currentPage}">
-                <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${pp}">${pp}</a>
-                </li>
-            </c:if>
-
-        </c:forEach>
-
-        <c:if test="${totalPage>endPage}">
-            <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${endPage+1}">다음</a>
-            </li>
-        </c:if>
-    </ul>
-</div>
-<footer>
-
-    <p>
-        <img src="${root}/image/logo1.jpg" alt="logo" style="width: 60px;">
-        <em> 고객센터 </em>010-4154-8185
-        <button class="btn btn-outline-light text-dark">1:1 채팅상담</button>
-        <em>채팅상담</em> 9:00 ~ 24:00
-        <em>유선상담</em> 10:00 ~ 19:00
-    </p>
-    <p>
-        <em>주식회사</em> 오늘 뭐해!? <em>대표</em> 이동건 <em>개인정보보호책임자</em> AWS
-        <br>
-        <em>사업자등록번호</em> 000-00-00000 <em>관광사업등록번호</em> 00000-0000-000000 <em>통신판매업 신고번호</em> 몰라
-    </p>
-    <address>서울시 강남구 비트캠프</address>
-    <a href="mailto:donggeonlee95@naver.com">donggeonlee95@naver.com</a>
-    <div>개인정보 처리방침</div>
-    <div>이용약관</div>
-    <div>취소 및 환불정책</div>
-    <div>파트너 입점</div>
-    <a target="_blank" href="https://blog.naver.com/">blog</a>
-    <br>
-    <a target="_blank" href="https://www.instagram.com/">instagram</a>
-
-    <p class="copyright">자사는 서울특별시관광협회 공제영업보증보험에 가입되어 있지 않습니다.</p>
-    <p class="copyright">오늘 뭐해?!는 여행중개자이며 여행판매 당사자가 아닙니다. 여행에 관한 책임은 고객에게 있습니다.</p>
-    <p class="copyright">Copyright © What are you doing today!? Inc. All Rights Didn't Reserved.</p>
-    <br><br>
-</footer>
+        </footer>
+    </div>
 
 </body>
 </html>

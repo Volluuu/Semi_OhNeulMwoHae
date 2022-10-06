@@ -21,11 +21,6 @@ public class FaqDao implements FaqDaoInter {
 	}
 
 	@Override
-	public int getMaxNum() {
-		return session.selectOne(ns+"getMaxNum");
-	}
-
-	@Override
 	public int getTotalCount(Map<String, String> map) {
 		return session.selectOne(ns+"getTotalCount",map);
 	}
@@ -41,8 +36,8 @@ public class FaqDao implements FaqDaoInter {
 	}
 
 	@Override
-	public FaqDto getData(int num) {
-		return session.selectOne(ns+"getData",num);
+	public FaqDto getUser_num(int user_num) {
+		return session.selectOne(ns+"getUser_num",user_num);
 	}
 
 	@Override
@@ -51,7 +46,7 @@ public class FaqDao implements FaqDaoInter {
 	}
 
 	@Override
-	public void deleteFaq(int num) {
-		session.delete(ns+"deleteFaq",num);
+	public void deleteFaq(int faq_num) {
+		session.delete(ns+"deleteFaq",faq_num);
 	}
 }

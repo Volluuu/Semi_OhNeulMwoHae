@@ -12,46 +12,54 @@
             rel="stylesheet"
     >
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <style type="text/css">
-    div.mypagemain{
-        position: absolute;
-        margin: -100px 0px 0px -200px;
-        top: 50%;
-        left: 50%;
-        padding: 5px;
-    }
+        div.mypagemain{
+            width: 400px;
+            height: 90vh;
+            /*border: 1px solid black;*/
+            float: left;
+            margin-left: 55px;
+        }
 
-    .btn1{
-        text-align: center;
-    }
+        div.mypagemain2{
+            width: 700px;
+            margin-left: 150px;
+            /*border: 1px solid black;*/
+        }
 
-    .btn2{
-        display :inline-block;
-    }
-
-    img{
-        display: block;
-        margin: auto;
-        border-radius: 70%;
-    }
+        img{
+            display: block;
+            margin: auto;
+            border-radius: 70%;
+        }
     </style>
 
 </head>
 <body>
-<div>
-    <form action="list">
-    <table class="table table-bordered" style="width: 600px">
-        <caption align="top">
-            <h1 style="text-align: center;"><b>마이페이지</b></h1>
-        </caption>
-        <hr>
-        <img src="${profilephoto}">
+<div class="mypagemain">
+    <caption align="top">
+        <h1><b>마이페이지</b></h1>
+    </caption>
+    <hr>
+    <div><img src="${profilephoto}">닉네임 </div>
+    <br>
+    <a href=""><p>계정관리</p></a>
+    <a href="${root}/findboard/list?user_num=${sessionScope.user_num}"><p>내 동행 게시글</p></a>
+    <a href="${root}/qna/qnalist?user_num=${sessionScope.user_num}"><p>내 Q&A</p></a>
+    <a href="${root}/help/map?user_num=${sessionScope.user_num}"><p>내 경로</p></a>
 
-        <div>닉네임 <input type="text" id="nickname" value="${nickname}"></div>
+</div>
+
+    <div class="mypagemain2">
+        <caption align="top">
+            <h1 style="text-align: center;"><b>계정관리</b></h1>
+            <hr>
+        </caption>
+        <div><img src="${profilephoto}"></div>
+        <div>닉네임<input type="text" id="nickname" value="${nickname}"></div>
         <br>
         <div>핸드폰 번호 <input type="text" id="hp" value="${hp}"></div>
         <br>
@@ -59,16 +67,49 @@
         <br>
         <div>관심사 </div>
         <br>
-        <div>소개글 <textarea placeholder="소개글을 작성하세요" style="height:150px;"></textarea> </div>
+        <div>소개글</div>
+        <div><textarea placeholder="소개글을 작성하세요(**자 이내)" style="height:150px;"></textarea> </div>
         <br>
 
+        <h5>설정</h5>
 
 
-        <div class="btn1">
-        <button type="button" class="btn2">수정</button>
-        <button type="button" class="btn2">나의 경로</button>
+        <div class="container mt-3">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                Open modal
+            </button>
         </div>
 
-</div>
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Modal body..
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
 </body>
 </html>
