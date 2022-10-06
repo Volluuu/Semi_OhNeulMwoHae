@@ -37,6 +37,11 @@
         </tr>
         <tr>
             <td>
+                <input type="text" placeholder="이름을 입력해주세요" style="width: 530px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <div class="input-group">
                     <button type="button" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone">휴대폰 인증하기</button>
                 </div>

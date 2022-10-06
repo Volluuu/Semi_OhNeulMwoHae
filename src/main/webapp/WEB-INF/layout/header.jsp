@@ -235,7 +235,6 @@
 					<button type="button" onclick="location.href='${root}/user/userform'" class="btn btn-success"  id="btnjoin" style="border-radius:30px; background-color: white; width:260px; color:black;">간편 회원가입</button>
 					<button type="button" onclick="location.href='${root}/user/userid'" class="btn btn-success"  id="btnid" style="border-radius:30px; background-color: white; width:260px; color:black;">아이디 찾기</button>
 					<button type="button" onclick="location.href='${root}/user/userpassword'" class="btn btn-success"  id="btnpassword" style="border-radius:30px; background-color: white; width:260px; color:black;">비밀번호 찾기</button>
-
 				</div>
 			</div>
 		</div>
