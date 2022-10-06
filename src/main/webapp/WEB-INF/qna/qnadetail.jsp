@@ -123,6 +123,7 @@
 
     function list() {
       var s="";
+      var admin="${sessionScope.isadmin}";
       $.ajax({
         type:"get",
         url:"answerList",
@@ -131,15 +132,9 @@
         success:function(res){
           $.each(res, function(i, elt){
               s += "<div class='answer_list'><span class='answermessage'>";
-              if(elt.user_num==1) {
-                s += "<span class='adminans'>관리자 답변</span>";
-              }
-              if(elt.user_num==user_num && user_num!=1) {
-                s += "<span class='writer'>작성자</span>";
-              }
               s += "└"+elt.message+"</span>";
               s += "<span class='day'>" + elt.writeday;
-              if(elt.user_num==user_num) {
+              if(admin == 'admin') {
                 s += "<i class='material-icons adel' style='font-size:17px;' id='adel' answer_num=" + elt.answer_num + ">close</i>";
               }
               s += "</span></div>";
@@ -163,7 +158,7 @@
     <div>
       <table class="table table-bordered" >
         <input type="hidden" name="qna_num" value="${dto.qna_num}">
-        <input type="hidden" name="user_num" value="${dto.user_num}">
+        <input type="hidden" name="user_num" value="${user_num}">
         <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
          <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
         <tr>
@@ -172,7 +167,7 @@
             <c:if test="${dto.acount>0 && dto.answer eq 'yes'}">
               <span class="answercntsuc">[답변 완료]</span>
             </c:if>
-            <c:if test="${dto.acount}==0">
+            <c:if test="${dto.acount==0}">
               <span class="answercntfail">[답변 대기중]</span>
             </c:if>
             <span style="color: #ccc; font-size: 13px; text-align: left;">
@@ -194,11 +189,12 @@
                   <input type="hidden" name="user_num" value="${dto.user_num}">
                  <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
                   <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
-
+                  <c:if test="${sessionScope.isadmin eq 'admin'}">
                   <div class="input-group">
                     <textarea name="message" id="message" class="form-control"></textarea>
                     <button type="button" class="btn btn-dark btn-sm" id="btnsave" user_num="${user_num}">등록</button>
                   </div>
+                  </c:if>
                 </form>
               </div>
             </c:if>
