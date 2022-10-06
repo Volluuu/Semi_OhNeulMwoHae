@@ -15,6 +15,18 @@ public class UserDao implements UserDaoInter{
     SqlSession session;
     String ns="bit.data.dao.UserDao.";
 
+
+
+    @Override
+    public String findIdByName(String name){
+        return session.selectOne(ns+"findIdByName", name);
+    }
+
+    @Override
+    public int findIdCheckByName(String name){
+        return session.selectOne(ns+"findIdCheckByName", name);
+    }
+
     @Override
     public int getTotalCount() {
         // TODO Auto-generated method stub

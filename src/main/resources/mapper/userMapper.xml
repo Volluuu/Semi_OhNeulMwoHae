@@ -4,6 +4,14 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
+    <select id="findIdByName" parameterType="String" resultType="udto">
+        select * from user where name=#{name}
+    </select>
+
+    <select id="findIdCheckByName" parameterType="String" resultType="int">
+        select count(*) from user where name=#{name}
+    </select>
+
     <select id="getTotalCount" resultType="int">
         select count(*) from user
     </select>
