@@ -18,6 +18,15 @@ public class UserService implements UserServiceInter{
     UserDaoInter userDao;
 
     @Override
+    public UserDto findIdByName(String name){
+        return userDao.findIdByName(name);
+    }
+    @Override
+    public int findIdCheckByName(String name){
+        return userDao.findIdCheckByName(name);
+    }
+
+    @Override
     public int getTotalCount() {
         // TODO Auto-generated method stub
         return userDao.getTotalCount();

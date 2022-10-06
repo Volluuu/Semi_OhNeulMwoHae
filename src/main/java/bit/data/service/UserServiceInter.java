@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface UserServiceInter {
 
+    public UserDto findIdByName(String name);
+    public int findIdCheckByName(String name);
+
     public int getTotalCount();
 
     public int getLoginIdSearch(String loginid);
