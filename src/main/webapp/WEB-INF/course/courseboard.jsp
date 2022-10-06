@@ -898,11 +898,6 @@
     }
 
 
-    .st18 {
-        fill: #F0FBE6;
-    }
-
-
     .st22 {
         fill: #B8ECF3;
     }
@@ -1428,12 +1423,12 @@
 	c2.7,0,5.3-0.8,8.1-1.2c-0.5-0.6-0.8-1.1-1.2-1.6c1.4-0.3,2.8-0.6,4.7-0.5c2.9,3.5,6.4,3.2,9.4-0.5c0.4,0,0.8,0,1.8,0.2
 	C1290.4,638.6,1291.7,637.9,1291.6,635.1z"/>
 
-    <text transform="matrix(1 0 0 1 1447.6338 968.3757)" class="st39 st40 gu1">강남구</text>
-    <text transform="matrix(1 0 0 1 1289.5262 1007.8318)" class="st39 st40 gu15">서초구</text>
-    <text transform="matrix(1 0 0 1 1093.476 1067.2949)" class="st39 st40 gu5">관악구</text>
-    <text transform="matrix(1 0 0 1 1099.4939 911.2505)" class="st39 st40 gu12">동작구</text>
-    <text transform="matrix(1 0 0 1 951.5786 844.35)" class="st39 st40 gu20">영등포구</text>
-    <text transform="matrix(1 0 0 1 936.382 1033.7063)" class="st39 st40 gu8">금천구</text>
+    <text transform="matrix(1 0 0 1 1447.6338 968.3757)" class="st39 st40 gu1" lon="127.0495" lat="37.5145" gu="1"> 강남구</text>
+    <text transform="matrix(1 0 0 1 1289.5262 1007.8318)" class="st39 st40 gu15" lon="127.0348" lat="37.4807" gu="15">서초구</text>
+    <text transform="matrix(1 0 0 1 1093.476 1067.2949)" class="st39 st40 gu5" lon="126.9538" lat="37.4753" gu="5">관악구</text>
+    <text transform="matrix(1 0 0 1 1099.4939 911.2505)" class="st39 st40 gu12" lon="126.9415" lat="37.5096" gu="12">동작구</text>
+    <text transform="matrix(1 0 0 1 951.5786 844.35)" class="st39 st40 gu20" lon="126.8983" lat="37.5236" gu="20">영등포구</text>
+    <text transform="matrix(1 0 0 1 936.382 1033.7063)" class="st39 st40 gu8" lon="127.0495" lat="37.4491" gu="8">금천구</text>
     <%--    구로구7--%>
     <g>
         <path class="st9 gu7 sd7" lon="126.9041" lat="37.4926" gu="7" d="M733,1030c0.2-0.6,0.9-1.8,1.5-1.7c6.4,0.5,12.8,1.4,19.3,1.6c4.1,0.2,8.2-0.9,12.4-0.8
@@ -1450,23 +1445,23 @@
 		c-2.1-6.1-5.4-11.9-7.5-18.1c-1.2-3.6-2.5-8-1.4-11.3c3.7-11.2,8.4-22.1,12.9-33.1c2.2-5.5,5.4-10.6,7.1-16.2
 		c1.3-4.5,1-9.6-2.8-13.5c-1.2-1.2-2.1-2.7-3.9-5.2c9.4,1.3,17.4,1.9,25.1,3.7c2.1,0.5,4,4.2,4.8,6.9c2.5,8.1,2.5,8.2,11,8.3
 		c3.8,0.1,7.6,0.9,11.4,0.7C809.7,884.6,812.5,883.3,815.6,882.3z"/>
-        <text transform="matrix(1 0 0 1 796.632 934.4565)" class="st39 st40 gu7">구로구</text>
+        <text transform="matrix(1 0 0 1 796.632 934.4565)" class="st39 st40 gu7" lon="126.9041" lat="37.4926" gu="7">구로구</text>
     </g>
-    <text transform="matrix(1 0 0 1 816.2925 827.8484)" class="st39 st40 gu19">양천구</text>
-    <text transform="matrix(1 0 0 1 719.1567 660.7769)" class="st39 st40 gu4">강서구</text>
-    <text transform="matrix(1 0 0 1 973.5876 672.8569)" class="st39 st40 gu13">마포구</text>
-    <text transform="matrix(1 0 0 1 1056.4861 606.3223)" class="st39 st40 gu14">서대문구</text>
-    <text transform="matrix(1 0 0 1 1051.9479 429.657)" class="st39 st40 gu22">은평구</text>
-    <text transform="matrix(1 0 0 1 1200.7384 580.8973)" class="st39 st40 gu23">종로구</text>
-    <text transform="matrix(1 0 0 1 1232.739 679.2552)" class="st39 st40 gu24">중구</text>
-    <text transform="matrix(1 0 0 1 1377.1311 718.7552)" class="st39 st40 gu16">성동구</text>
-    <text transform="matrix(1 0 0 1 1397.6136 598.001)" class="st39 st40 gu11">동대문구</text>
-    <text transform="matrix(1 0 0 1 1310.2112 516.7784)" class="st39 st40 gu17">성북구</text>
-    <text transform="matrix(1 0 0 1 1310.2233 373.7785)" class="st39 st40 gu3">강북구</text>
-    <text transform="matrix(1 0 0 1 1351.9766 234.2786)" class="st39 st40 gu10">도봉구</text>
-    <text transform="matrix(1 0 0 1 1492.5422 313.7598)" class="st39 st40 gu9">노원구</text>
-    <text transform="matrix(1 0 0 1 1546.2155 532.5174)" class="st39 st40 gu25">중랑구</text>
-    <text transform="matrix(1 0 0 1 1514.0481 725.0132)" class="st39 st40 gu6">광진구</text>
+    <text transform="matrix(1 0 0 1 816.2925 827.8484)" class="st39 st40 gu19" lon="126.8687" lat="37.5142" gu="19">양천구</text>
+    <text transform="matrix(1 0 0 1 719.1567 660.7769)" class="st39 st40 gu4" lon="126.8516" lat="37.5481" gu="4">강서구</text>
+    <text transform="matrix(1 0 0 1 973.5876 672.8569)" class="st39 st40 gu13" lon="126.9105" lat="37.5607" gu="13">마포구</text>
+    <text transform="matrix(1 0 0 1 1056.4861 606.3223)" class="st39 st40 gu14" lon="126.9388" lat="37.5763" gu="14">서대문구</text>
+    <text transform="matrix(1 0 0 1 1051.9479 429.657)" class="st39 st40 gu22" lon="126.9312" lat="37.5999" gu="22">은평구</text>
+    <text transform="matrix(1 0 0 1 1200.7384 580.8973)" class="st39 st40 gu23" lon="126.9816" lat="37.5703" gu="23">종로구</text>
+    <text transform="matrix(1 0 0 1 1232.739 679.2552)" class="st39 st40 gu24" lon="126.9996" lat="37.5610" gu="24">중구</text>
+    <text transform="matrix(1 0 0 1 1377.1311 718.7552)" class="st39 st40 gu16" lon="127.0368" lat="37.5634" gu="16">성동구</text>
+    <text transform="matrix(1 0 0 1 1397.6136 598.001)" class="st39 st40 gu11" lon="127.0421" lat="37.5716" gu="11">동대문구</text>
+    <text transform="matrix(1 0 0 1 1310.2112 516.7784)" class="st39 st40 gu17" lon="127.0203" lat="37.5863" gu="17">성북구</text>
+    <text transform="matrix(1 0 0 1 1310.2233 373.7785)" class="st39 st40 gu3" lon="127.0277" lat="37.6369" gu="3">강북구</text>
+    <text transform="matrix(1 0 0 1 1351.9766 234.2786)" class="st39 st40 gu10" lon="127.0495" lat="37.6658" gu="10">도봉구</text>
+    <text transform="matrix(1 0 0 1 1492.5422 313.7598)" class="st39 st40 gu9" lon="127.0583" lat="37.6514" gu="9">노원구</text>
+    <text transform="matrix(1 0 0 1 1546.2155 532.5174)" class="st39 st40 gu25" lon="127.0947" lat="37.6038" gu="25">중랑구</text>
+    <text transform="matrix(1 0 0 1 1514.0481 725.0132)" class="st39 st40 gu6" lon="127.0651" lat="37.5340" gu="6">광진구</text>
     <%--    송파구18--%>
     <g>
         <path class="st6 gu18 sd18" lon="127.1079" lat="37.5117" gu="18" d="M1660.7,1077.9c6.4-1.4,10.9-6.5,13.8-15.4c3.8-11.7,8.2-14.8,20.4-15.4c8-0.4,15.6-2.3,18.6-11.2
@@ -1490,7 +1485,7 @@
 			c-5.9-9.2-12.6-17.8-18.5-27c-1.6-2.6-1.7-6.3-2.2-9.5c-1.4-8-2.3-16.1-4.1-23.9c-0.6-2.7-2.9-5.6-5.2-7.3
 			c-4.8-3.4-10-6.5-15.4-8.9c-6.2-2.7-8.7-7.6-10.3-13.5c-2.1-8-8.7-13.3-16.7-14.4c-10.6-1.5-21.8-2-31.7-5.6
 			c-10.8-4-20.6-11-30.7-16.9s-15.6-15.6-19.9-25.8c-1.6-3.8-1.8-8.4-1.9-12.7C1491.5,863.2,1491.6,849.5,1491.6,835.4z"/>
-        <text transform="matrix(1 0 0 1 1606.7791 918.2496)" class="st39 st40 gu18">송파구</text>
+        <text transform="matrix(1 0 0 1 1606.7791 918.2496)" class="st39 st40 gu18" lon="127.1079" lat="37.5117" gu="18">송파구</text>
         <path class="st6 gu18 sd18" lon="127.1079" lat="37.5117" gu="18" d="M1739,866.7c-3.4,5.6-6.7,11.1-10.1,16.7c-0.9,1.4-1.7,4-1,5c5.1,7.2,4.3,15.8,6.2,24c-3.7-0.6-7-1.4-10.3-2.5
 		c-6.8-2.1-11.1-5-11.5-13.4c-0.2-4.1-1.6-8.4-3.4-12.1c-1.5-3.2-1.9-5.6,0-8.7c3.8-6.2,7.3-12.6,11-19.1L1739,866.7z"/>
     </g>
@@ -1515,10 +1510,10 @@
 			c4.7-2.7,9.5-5.3,14.6-8.1c0.6,0.6,1.1,1.4,1,2.1c-1.4,10.2,0.5,13.8,9.7,18c3.2,1.4,7,2.3,9.2,4.7c2.3,2.4,3.4,6.2,4.4,9.6
 			c0.8,2.6,0.5,5.7,1.3,8.3c1.7,5.4,0.7,10.6-1.3,15.6c-4.8,11.6-3.2,23.4-1,35.2c1.6,8.6,3.4,17.2,4,25.9c0.6,9.7-6,18.5-15.4,21.5
 			c-21.1,6.9-42.2,13.6-63.3,20.4c-5.9,1.9-8.4,4.7-8,10.9c1,15.5-4.5,28.7-13.4,41.1C1732.7,834.9,1728.2,843.5,1722.9,851.9z"/>
-        <text transform="matrix(1 0 0 1 1688.0695 732.9474)" class="st39 st40 gu2">강동구</text>
+        <text transform="matrix(1 0 0 1 1688.0695 732.9474)" class="st39 st40 gu2" lon="127.1258" lat="37.5273" gu="2">강동구</text>
 
     </g>
-    <text transform="matrix(1 0 0 1 1201.5833 783.7552)" class="st39 st40 gu21">용산구</text>
+    <text transform="matrix(1 0 0 1 1201.5833 783.7552)" class="st39 st40 gu21" lon="126.9675" lat="37.5360" gu="21">용산구</text>
     <g id="레이어_2_1_">
     </g>
 </svg>
@@ -1558,7 +1553,7 @@
     // $(document).on("click",".hanriver",function(){
     //
     // });
-
+    // ,text.gu1,text.gu2,text.gu3,text.gu4,text.gu5,text.gu6,text.gu7,text.gu8,text.gu9,text.gu10,text.gu11,text.gu12,text.gu13,text.gu14,text.gu15,text.gu16,text.gu17,text.gu18,text.gu19,text.gu20,text.gu21,text.gu22,text.gu23,text.gu24,text.gu25
     $(document).on("click",".gu1,.gu2,.gu3,.gu4,.gu5,.gu6,.gu7,.gu8,.gu9,.gu10,.gu11,.gu12,.gu13,.gu14,.gu15,.gu16,.gu17,.gu18,.gu19,.gu20,.gu21,.gu22,.gu23,.gu24,.gu25",function(){
         var lat=$(this).attr("lat");
         var lon=$(this).attr("lon");
@@ -1644,35 +1639,35 @@
     //     // alert(result.main.temp);
     //
     //     for (var i = 0; i < 40; i++) {
-            var ctime = result.list[i].dt//배열 시간
-            var ctemp = result.list[i].main.temp//배열 날씨
-            var cgangsu = result.list[i].main.humidity//강수 확률
-            var cwind = result.list[i].wind.speed//풍속
-            var wicon = "<img src='http://openweathermap.org/img/wn/" + result.list[i].weather[0].icon + ".png' alt='" + result.list[i].weather[0].discription+"'>"
-
-            function convertTime(t) {
-                var ot = new Date(t * 1000);// jquery문 new Date(); 국제표준시로 변경 (Date생성자는 시간의 특정 지점을 나타내는 Date객체를 생성한다)
-                                            //변수 ot에는 Sun Sep 25 2022 01:38:10 GMT+0900 (한국 표준시) <-이런식으로 시간이 담겨져 있음 수정필요
-                //원하는 시간만 출력
-                var d = ot.getDate();//날짜 얻기
-                var hr = ot.getHours();//시간단위 얻기
-                var m = ot.getMinutes();//분단위 얻기
-                // var s = ot.getSeconds();//초단위 얻기
-
-                return d + "일" + " "+hr + "시";
-            }
-
-            var currentTime = convertTime(ctime);
-            var ta = "<tr>" +
-                "<td>" + currentTime + "</td>" +//날짜
-                "<td>" + ctemp + "</td>" +//날씨
-                "<td>" + cgangsu + "%</td>" +//강수확률
-                "<td>" + cwind + "m/s</td>" +//풍속
-                "<td>" + wicon + "</td>" +//아이콘
-                "</tr>";
-
-
-            $("tbody").append(ta);//tbody에 ta내용을 넣어준다
+    //         var ctime = result.list[i].dt//배열 시간
+    //         var ctemp = result.list[i].main.temp//배열 날씨
+    //         var cgangsu = result.list[i].main.humidity//강수 확률
+    //         var cwind = result.list[i].wind.speed//풍속
+    //         var wicon = "<img src='http://openweathermap.org/img/wn/" + result.list[i].weather[0].icon + ".png' alt='" + result.list[i].weather[0].discription+"'>"
+    //
+    //         function convertTime(t) {
+    //             var ot = new Date(t * 1000);// jquery문 new Date(); 국제표준시로 변경 (Date생성자는 시간의 특정 지점을 나타내는 Date객체를 생성한다)
+    //                                         //변수 ot에는 Sun Sep 25 2022 01:38:10 GMT+0900 (한국 표준시) <-이런식으로 시간이 담겨져 있음 수정필요
+    //             //원하는 시간만 출력
+    //             var d = ot.getDate();//날짜 얻기
+    //             var hr = ot.getHours();//시간단위 얻기
+    //             var m = ot.getMinutes();//분단위 얻기
+    //             // var s = ot.getSeconds();//초단위 얻기
+    //
+    //             return d + "일" + " "+hr + "시";
+    //         }
+    //
+    //         var currentTime = convertTime(ctime);
+    //         var ta = "<tr>" +
+    //             "<td>" + currentTime + "</td>" +//날짜
+    //             "<td>" + ctemp + "</td>" +//날씨
+    //             "<td>" + cgangsu + "%</td>" +//강수확률
+    //             "<td>" + cwind + "m/s</td>" +//풍속
+    //             "<td>" + wicon + "</td>" +//아이콘
+    //             "</tr>";
+    //
+    //
+    //         $("tbody").append(ta);//tbody에 ta내용을 넣어준다
     //     }
     //
     // });

@@ -69,7 +69,7 @@
 
     footer {
         font-size: 5px;
-        background-color: darkslateblue;
+        background-color: #38b6ff;
     }
 
     .paging {
