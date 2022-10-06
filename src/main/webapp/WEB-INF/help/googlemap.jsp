@@ -252,7 +252,10 @@
                     $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("food_num"));
                 }
                 console.log(stepArr);
-                $(this).parent().hide();
+                //blur를 사용해 input tag에서 포커스가 벗어나면 검색목록이 닫히게 하는 이벤트
+                $(document).on("blur", "input.in1", function (){
+                    $(this).siblings("div.searchlist").hide().empty();
+                }); //blur event end
             });
 
             //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
@@ -328,6 +331,7 @@
                 find_in1.attr("isSelect", "no");
 
             });
+
         }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
