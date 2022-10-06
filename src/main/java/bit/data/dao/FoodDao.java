@@ -60,4 +60,9 @@ public class FoodDao implements FoodDaoInter{
     public void likesUpdate(int food_num) {
         session.update(ns+"likesUpdate", food_num);
     }
+
+    @Override
+    public FoodDto selectByNum(int food_num) {
+        return session.selectOne(ns+"selectByNum",food_num);
+    }
 }

@@ -16,4 +16,6 @@ public interface FoodDaoInter {
     public void updateFood(FoodDto dto);
     public void likesInsert(int food_num);
     public void likesUpdate(int food_num);
+
+    public FoodDto selectByNum(int food_num);
 }

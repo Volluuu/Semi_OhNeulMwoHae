@@ -21,33 +21,43 @@ public class CommentCourseController {
     @Autowired
     CafeServiceInter cafeService;
 
-
-    @GetMapping("/course/cafedetail")
-    public ModelAndView cafedetail(int cafe_num, int currentPage) {
-        ModelAndView mview = new ModelAndView();
-        //조회수 증가
-        cafeService.updateReadCount(cafe_num);
-        //num에 해당하는 dto 얻기
-        CafeDto dto=cafeService.selectByNum(cafe_num);
-
-        mview.addObject("dto", dto);
-        mview.addObject("currentPage", currentPage);
-        mview.setViewName("/bit/course/cafedetail");
-        return mview;
-    }
-    @GetMapping("/course/cafedetaillist")
+    @GetMapping("/course/cafedetailanswer")
     @ResponseBody
-    public List<CommentCourseDto> commentcafelist(int cafe_num){
+    public List<CommentCourseDto> commentCafeAnswer(int cafe_num){
         return commentCourseService.selectCafeStar(cafe_num);
     }
 
+    @GetMapping("/course/fooddetailanswer")
+    @ResponseBody
+    public List<CommentCourseDto> commentFoodAnswer(int food_num){
+        return commentCourseService.selectFoodStar(food_num);
+    }
 
+    @GetMapping("/course/tripdetailanswer")
+    @ResponseBody
+    public List<CommentCourseDto> commentTripAnswer(int trip_num){
+        return commentCourseService.selectTripstar(trip_num);
+    }
 
     @GetMapping("/commentcourse/cafestar")
     @ResponseBody
     public void cafestar(int user_num,int star, int cafe_num, String content){
 
         commentCourseService.insertCafeStar(user_num,star,cafe_num,content);
+    }
+
+    @GetMapping("/commentcourse/foodstar")
+    @ResponseBody
+    public void foodstar(int user_num,int star, int food_num, String content){
+
+        commentCourseService.insertFoodStar(user_num,star,food_num,content);
+    }
+
+    @GetMapping("/commentcourse/tripstar")
+    @ResponseBody
+    public void tripstar(int user_num,int star, int trip_num, String content){
+
+        commentCourseService.insertTripStar(user_num,star,trip_num,content);
     }
 
 }

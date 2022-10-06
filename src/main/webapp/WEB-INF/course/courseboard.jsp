@@ -126,7 +126,9 @@
         top:100px;
         left:50px;
     }
-
+    /*.page-link{*/
+    /*    cursor: pointer;*/
+    /*}*/
 </style>
 <html>
 <head>
@@ -168,7 +170,7 @@
     위치수정필요
     <%-----------------------------------------------------------%>
 </div>
-<div class="paging">
+<div class="paging" id="paging">
     <ul class="pagination">
         <c:if test="${startPage>1}">
             <li class="page-item"><a href="list?currentPage=${startPage-1}" class="page-link">&lt;</a></li>
@@ -198,26 +200,29 @@
 <%-------------------------------------------------------------------------card시작--%>
 <%--기본 카드에 주소가 나와있으면 사진 색깔에 따라서 주소식별이 어려움 hover하면 안에 넣을지 선택하기--%>
 <script>
+    var root = "${root}";
     $(document).on("change", "#categorysel", function () {
-        var root = "${root}";
         var currentPage = "${currentPage}";
         var catesel = $("#categorysel option:selected").val();
+        var cs = $("#categorysel").val();
+        console.log(cs);
         console.log(catesel);
-        $("#divgrid").empty();
-        $(".paging").empty();
+        // $("#divgrid").empty();
+        // $(".paging").empty();
+
         if (catesel == "cafe") {
-            var c = "";
-            var p = "";
+            var c="";
+            var p="";
             $.ajax({
                 type: "get",
                 url: root + "/courseboard/cafelist",
                 dataType: "json",
+                data:{"currentPage":1},
                 success: function (suc) {
-                    alert("CAFE 성공");
-                    $.each(suc, function (i, res) {
+                    $.each(suc.list, function (i, res) {
                         c += '<div class="griditem">';
                         <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
-                        c += '<a href="' + root + '"/course/cafedetail?cafe_num=' + res.cafe_num + '&currentPage=' + currentPage + '">';
+                        c += '<a href="' + root + '/course/cafedetail?cafe_num=' + res.cafe_num + '&currentPage=' + suc.currentPage + '">';
                         c += '<div class="item">';
                         c += '<div class="blog-card spring-fever">';
                         <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
@@ -252,20 +257,23 @@
 
                     })
                     p += '<ul class="pagination">';
-                    p += '<c:if test="${startPage>1}">';
-                    p += '<li class="page-item"><a href="list?currentPage=${startPage-1}" class="page-link">&lt;</a></li>';
-                    p += '</c:if>';
-                    p += '<c:forEach var="pp" begin="${startPage}" end="${endPage}">';
-                    p += '<c:if test="${pp==currentPage}">';
-                    p += '<li class="page-item active"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>';
-                    p += ' </c:if>';
-                    p += '<c:if test="${pp!=currentPage}">';
-                    p += '<li class="page-item"><a href="list?currentPage=${pp}" class="page-link">${pp}</a></li>';
-                    p += '</c:if>';
-                    p += '</c:forEach>';
-                    p += '<c:if test="${endPage<totalPage}">';
-                    p += '<li class="page-item"><a href="list?currentPage=${endPage+1}" class="page-link">&gt;</a></li>';
-                    p += '</c:if>';
+                    if(suc.startPage>1){
+                        p += '<li class="page-item"><a class="page-link" cafecolumn="'+suc.cafecolumn+'" cafeword="'+suc.cafeword+'" currentPage="'+(suc.startPage - 1)+'">이전</a></li>';
+                    // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                    }
+                    for(var pp=suc.startPage;pp<=suc.endPage;pp++){
+                        if(pp==suc.currentPage){
+                            p += '<li class="page-item active"><a class="page-link" cafecolumn="'+suc.cafecolumn+'" cafeword="'+suc.cafeword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }else if(pp!=suc.currentPage){
+                            p += '<li class="page-item"><a class="page-link" cafecolumn="'+suc.cafecolumn+'" cafeword="'+suc.cafeword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }
+                    }
+                    if(suc.endPage<suc.totalPage){
+                        p += '<li class="page-item"><a class="page-link" cafecolumn="'+suc.cafecolumn+'" cafeword="'+suc.cafeword+'" currentPage="'+(suc.endPage + 1)+'">다음</a></li>';
+                        // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                    }
                     p += '</ul>';
                     $("#divgrid").html(c);
                     $(".paging").html(p);
@@ -274,17 +282,18 @@
             });
 
         } else if (catesel == "food") {
-            var f = "";
+            var f="";
+            var p="";
             $.ajax({
                 type: "get",
                 url: root + "/courseboard/foodlist",
                 dataType: "json",
+                data:{"currentPage":1},
                 success: function (suc) {
-                    alert("FOOD 성공");
-                    $.each(suc, function (i, res) {
+                    $.each(suc.list, function (i, res) {
                         f += '<div class="griditem">';
                         <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
-                        f += '<a href="' + root + '"/course/fooddetail?food_num=' + res.food_num + '&currentPage=' + currentPage + '">';
+                        f += '<a href="' + root + '/course/fooddetail?food_num=' + res.food_num + '&currentPage=' + suc.currentPage + '">';
                         f += '<div class="item">';
                         f += '<div class="blog-card spring-fever">';
                         <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
@@ -316,22 +325,101 @@
                         f += '</a>';
                         <%--c+='</c:forEach>';--%>
                         f += '</div>';
+
                     })
-
-
+                    p += '<ul class="pagination">';
+                    if(suc.startPage>1){
+                        p += '<li class="page-item"><a class="page-link" foodcolumn="'+suc.foodcolumn+'" foodword="'+suc.foodword+'" currentPage="'+(suc.startPage - 1)+'">이전</a></li>';
+                        // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                    }
+                    for(var pp=suc.startPage;pp<=suc.endPage;pp++){
+                        if(pp==suc.currentPage){
+                            p += '<li class="page-item active"><a class="page-link" foodcolumn="'+suc.foodcolumn+'" foodword="'+suc.foodword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }else if(pp!=suc.currentPage){
+                            p += '<li class="page-item"><a class="page-link" foodcolumn="'+suc.foodcolumn+'" foodword="'+suc.foodword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }
+                    }
+                    if(suc.endPage<suc.totalPage){
+                        p += '<li class="page-item"><a class="page-link" foodcolumn="'+suc.foodcolumn+'" foodword="'+suc.foodword+'" currentPage="'+(suc.endPage + 1)+'">다음</a></li>';
+                        // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                    }
+                    p += '</ul>';
                     $("#divgrid").html(f);
+                    $(".paging").html(p);
                 }
-            });
 
+            });
         } else if (catesel == "trip") {
+            var t="";
+            var p="";
             $.ajax({
                 type: "get",
                 url: root + "/courseboard/triplist",
                 dataType: "json",
+                data:{"currentPage":1},
                 success: function (suc) {
-                    alert("TRIP 성공");
+                    $.each(suc.list, function (i, res) {
+                        t += '<div class="griditem">';
+                        <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                        t += '<a href="' + root + '/course/tripdetail?trip_num=' + res.trip_num + '&currentPage=' + suc.currentPage + '">';
+                        t += '<div class="item">';
+                        t += '<div class="blog-card spring-fever">';
+                        <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                        t += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                        t += '<div class="title-content">';
+                        t += '<h3>' + res.title + '</h3>';
+                        t += '<hr/>';
+                        t += '<div class="intro">' + res.addr + '</div>';
+                        t += '</div>';
+                        t += '<div class="card-info">';
+                        t += '대표메뉴: ' + res.menu + '<br>';
+                        t += '전화번호: ' + res.tel;
+                        t += '</div>';
+                        t += '<div class="utility-info">';
+                        t += '<ul class="utility-list">';
+                        t += '<li class="comments">' + res.answercount + '</li>';
+                        t += '<li class="date">' + res.readcount + '</li>';
+                        t += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                        t += '</ul>';
+                        t += ' </div>';
+                        t += '<div class="gradient-overlay"></div>';
+                        t += '<div class="color-overlay"></div>';
+                        t += '</div>';
+                        t += ' <div class="card-info">';
+                        t += '</div>';
+                        t += '<div class="gradient-overlay"></div>';
+                        t += '<div class="color-overlay"></div>';
+                        t += '</div>';
+                        t += '</a>';
+                        <%--c+='</c:forEach>';--%>
+                        t += '</div>';
 
+                    })
+                    p += '<ul class="pagination">';
+                    if(suc.startPage>1){
+                        p += '<li class="page-item"><a class="page-link" tripcolumn="'+suc.tripcolumn+'" tripword="'+suc.tripword+'" currentPage="'+(suc.startPage - 1)+'">이전</a></li>';
+                        // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                    }
+                    for(var pp=suc.startPage;pp<=suc.endPage;pp++){
+                        if(pp==suc.currentPage){
+                            p += '<li class="page-item active"><a class="page-link" tripcolumn="'+suc.tripcolumn+'" tripword="'+suc.tripword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }else if(pp!=suc.currentPage){
+                            p += '<li class="page-item"><a class="page-link" tripcolumn="'+suc.tripcolumn+'" tripword="'+suc.tripword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                        }
+                    }
+                    if(suc.endPage<suc.totalPage){
+                        p += '<li class="page-item"><a class="page-link" tripcolumn="'+suc.tripcolumn+'" tripword="'+suc.tripword+'" currentPage="'+(suc.endPage + 1)+'">다음</a></li>';
+                        // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                    }
+                    p += '</ul>';
+                    $("#divgrid").html(t);
+                    $(".paging").html(p);
                 }
+
             });
         }
     });
@@ -1586,7 +1674,7 @@
             case "23": guname="종로구";break;
             case "24": guname="중구";break;
             case "25": guname="중랑구";break;
-            default : guname="숫자아님";break;
+            default : guname="구아님";break;
         }
         console.log(guname);
         $("#h2gu").text(guname+" 날씨");
@@ -1614,7 +1702,6 @@
                         // var s = ot.getSeconds();//초 단위 얻기
                         return d + "일" + " "+hr + "시";
                     }
-
                     var currentTime = convertTime(ctime);
 
                     ta+="<tr>" +
@@ -1626,50 +1713,7 @@
                         "</tr>";
                 });
                 $("tbody").html(ta);//tbody에 ta내용을 넣어준다
-
             }
         });
-
-
-
     });
-
-
-    // $.getJSON("https://api.openweathermap.org/data/2.5/forecast?lat=37.5683&lon=126.9779&appid=36ccda560636ea50a6c38074156e4bef&units=metric", function(result) {
-    //     // alert(result.main.temp);
-    //
-    //     for (var i = 0; i < 40; i++) {
-    //         var ctime = result.list[i].dt//배열 시간
-    //         var ctemp = result.list[i].main.temp//배열 날씨
-    //         var cgangsu = result.list[i].main.humidity//강수 확률
-    //         var cwind = result.list[i].wind.speed//풍속
-    //         var wicon = "<img src='http://openweathermap.org/img/wn/" + result.list[i].weather[0].icon + ".png' alt='" + result.list[i].weather[0].discription+"'>"
-    //
-    //         function convertTime(t) {
-    //             var ot = new Date(t * 1000);// jquery문 new Date(); 국제표준시로 변경 (Date생성자는 시간의 특정 지점을 나타내는 Date객체를 생성한다)
-    //                                         //변수 ot에는 Sun Sep 25 2022 01:38:10 GMT+0900 (한국 표준시) <-이런식으로 시간이 담겨져 있음 수정필요
-    //             //원하는 시간만 출력
-    //             var d = ot.getDate();//날짜 얻기
-    //             var hr = ot.getHours();//시간단위 얻기
-    //             var m = ot.getMinutes();//분단위 얻기
-    //             // var s = ot.getSeconds();//초단위 얻기
-    //
-    //             return d + "일" + " "+hr + "시";
-    //         }
-    //
-    //         var currentTime = convertTime(ctime);
-    //         var ta = "<tr>" +
-    //             "<td>" + currentTime + "</td>" +//날짜
-    //             "<td>" + ctemp + "</td>" +//날씨
-    //             "<td>" + cgangsu + "%</td>" +//강수확률
-    //             "<td>" + cwind + "m/s</td>" +//풍속
-    //             "<td>" + wicon + "</td>" +//아이콘
-    //             "</tr>";
-    //
-    //
-    //         $("tbody").append(ta);//tbody에 ta내용을 넣어준다
-    //     }
-    //
-    // });
-
 </script>

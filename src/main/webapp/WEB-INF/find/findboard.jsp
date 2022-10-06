@@ -10,7 +10,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../css/coursecss.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <html>
 <head>
     <title>Title</title>
@@ -110,6 +112,102 @@
     }
     .page-link{
         cursor: pointer;
+    }
+    .item {
+
+        /*justify-content: flex-start;*/
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------category,조회순 css부분*/
+    .jgfRlo {
+        position: relative;
+        float: right;
+
+    }
+
+    div {
+        display: block;
+    }
+
+    .fotqhs {
+        font-weight: 350;
+        font-size: 14px;
+        line-height: 21px;
+        color: rgb(37, 37, 37);
+        padding: 8px 33px 8px 33px;
+        border: unset;
+        background-color: unset;
+        appearance: none;
+
+    }
+
+
+    option {
+        font-weight: normal;
+        display: block;
+        white-space: nowrap;
+        min-height: 1.2em;
+        padding: 0px 2px 1px;
+    }
+
+
+    .jgfRlo > svg:last-child {
+        position: absolute;
+        top: 40%;
+        right: 10px;
+    }
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------card사이 공백*/
+    .blog-card {
+        margin-bottom: 50px;
+    }
+
+    /*-----------------------------------------------------------------------*/
+
+    /*-----------------------------------------------------------------------검색창 css*/
+    div.hj_search {
+        height: 40px;
+        width: 400px;
+        border: 1px solid #1b5ac2;
+        background: #ffffff;
+    }
+
+    input.hj_input {
+        font-size: 16px;
+        width: 99%;
+        height: 99%;
+        padding: 10px;
+        border: 0px;
+        outline: none;
+        float: left;
+    }
+
+    button.hj_button {
+        width: 50px;
+        height: 100%;
+        border: 0px;
+        background: #1b5ac2;
+        outline: none;
+        float: right;
+        color: #ffffff;
+    }
+    #divgrid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(200px, auto);
+        gap: 20px;
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        justify-content: space-between;
     }
 </style>
 <body>
@@ -341,52 +439,9 @@
             </tr>
         </c:if>
 
-        <%--        <c:if test="${totalCount>0}">--%>
-        <%--        <ul type="portrait" class="huOMZn">--%>
-        <%--            <c:forEach var="dto" items="${list}" varStatus="i">--%>
-
-        <%--            <div type="portrait" class="accompanyItem__ItemWrapper-sc-8nv24v-0 dUcsyA">--%>
-        <%--                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"--%>
-        <%--                   style="color:black;text-decoration:none;">--%>
-        <%--                    <div>--%>
-        <%--                        <c:set var="photo" value="${dto.photo}"/>--%>
-        <%--                        <img src="${root}/upload/${fn:split(photo, ',')[0]}" alt="배경사진"--%>
-        <%--                             style="width:100%;aspect-ratio: 1/1;max-height:250px;max-width:250px;">--%>
-        <%--                    </div>--%>
-
-        <%--                    <div type="portrait" class="accompanyItem__ContentWrapper-sc-8nv24v-1 kZxQCp">--%>
-        <%--                        <div class="accompanyItem__TitleWrapper-sc-8nv24v-2 QJbqF" id="subject">--%>
-        <%--                            <p class="Pgqux">모집중 ${dto.subject}</p>--%>
-
-        <%--                        </div>--%>
-        <%--                        <p type="portrait" class="accompanyItem__DescWrapper-sc-8nv24v-3 ewCfNG"--%>
-        <%--                           id="pcontent">${dto.content}</p>--%>
-
-        <%--                    </div>--%>
-        <%--                    <div class="accompanyItem__ViewAndMsgWrapper-sc-8nv24v-6 bVhyCq">--%>
-        <%--                        <div>--%>
-        <%--                            <span style="color: darkgray;float:right;"></span>--%>
-        <%--                        </div>--%>
-        <%--                        <div>--%>
-        <%--                            <p>${dto.name}/${dto.nickname}/(${dto.loginid})</p>--%>
-        <%--                            <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"--%>
-        <%--                                                                        pattern="yyyy-MM-dd"/><span class="fr"><i--%>
-        <%--                                    class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i--%>
-        <%--                                    class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>--%>
-
-        <%--                        </div>--%>
-        <%--                    </div>--%>
-        <%--                </a>--%>
-        <%--            </div>--%>
-
 
     </div>
 </div>
-
-<%--</c:forEach>--%>
-<%--</ul>--%>
-<%--</c:if>--%>
-
 
 <div id="divgrid">
     <c:if test="${totalCount>0}">

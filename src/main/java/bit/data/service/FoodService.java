@@ -62,4 +62,9 @@ public class FoodService implements FoodServiceInter {
     public void likesUpdate(int food_num) {
         fooddao.likesUpdate(food_num);
     }
+
+    @Override
+    public FoodDto selectByNum(int food_num) {
+        return fooddao.selectByNum(food_num);
+    }
 }

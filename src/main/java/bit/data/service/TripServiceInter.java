@@ -15,4 +15,6 @@ public interface TripServiceInter{
     public void updateTrip(TripDto dto);
     public void likesInsert(int trip_num);
     public void likesUpdate(int trip_num);
+
+    public TripDto selectByNum(int trip_num);
 }

@@ -67,4 +67,9 @@ public class TripService implements TripServiceInter{
     public void likesUpdate(int trip_num) {
         tripdao.likesInsert(trip_num);
     }
+
+    @Override
+    public TripDto selectByNum(int trip_num) {
+        return tripdao.selectByNum(trip_num);
+    }
 }

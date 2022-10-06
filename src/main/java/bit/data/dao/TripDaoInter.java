@@ -1,5 +1,6 @@
 package bit.data.dao;
 
+import bit.data.dto.CafeDto;
 import bit.data.dto.TripDto;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface TripDaoInter {
     public void updateTrip(TripDto dto);
     public void likesInsert(int trip_num);
     public void likesUpdate(int trip_num);
+
+    public TripDto selectByNum(int trip_num);
 }

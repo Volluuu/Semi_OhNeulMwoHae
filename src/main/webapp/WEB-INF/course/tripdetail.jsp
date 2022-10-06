@@ -58,21 +58,21 @@
     <title>Title</title>
 </head>
 <script>
-    var cafe_num =${dto.cafe_num};
+    var trip_num =${dto.trip_num};
     var root = "${root}";
     $(function () {
-        cafelist();
+        triplist();
     });
 
-    function cafelist() {
+    function triplist() {
         var loginok = '${sessionScope.loginok}';
         var user_num = '${sessionScope.user_num}';
         var s = "";
         $.ajax({
             type: "get",
-            url: root + "/course/cafedetailanswer",
+            url: root + "/course/tripdetaillist",
             dataType: "json",
-            data: {"cafe_num": cafe_num},
+            data: {"trip_num": trip_num},
             success: function (res) {
                 $("#answer").html("댓글 갯수 : " + res.length);
                 $.each(res, function (i, elt) {
@@ -130,7 +130,7 @@
                 <c:if test="${sessionScope.loginok!=null}">
                 <form class="mb-3" id="myform">
                     <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                    <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
+                    <input type="hidden" name="trip_num" value="${dto.trip_num}">
                     <fieldset>
                         <span class="text-bold">별점을 선택해주세요</span>
                         <input type="radio" name="star" value="5" id="rate1"><label
@@ -148,7 +148,7 @@
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
-                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
+                    <button type="button" class="btn btn-outline-dark" id="tripstarbtn">등록</button><br>
                     <b id="answer"></b>
                     <div id="review"></div>
                 </form>
@@ -161,18 +161,18 @@
                     //     }
                     // })
 
-                    $(document).on("click", "#cafestarbtn", function () {
+                    $(document).on("click", "#tripstarbtn", function () {
                         var root = "${root}";
                         var user_num = "${sessionScope.user_num}";
                         var star = $("input[name='star']:checked").val();
                         var content = $("#reviewContents").val();
                         $.ajax({
                             type: "get",
-                            url: root + "/commentcourse/cafestar",
+                            url: root + "/commentcourse/tripstar",
                             dataType: "text",
-                            data: {"user_num": user_num, "star": star, "content": content, "cafe_num": cafe_num},
+                            data: {"user_num": user_num, "star": star, "content": content, "trip_num": trip_num},
                             success: function (res) {
-                                cafelist();
+                                triplist();
 
                                 $("#reviewContents").val("");
                             }

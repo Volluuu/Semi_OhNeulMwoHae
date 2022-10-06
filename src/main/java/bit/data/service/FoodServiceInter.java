@@ -1,6 +1,7 @@
 package bit.data.service;
 
 
+import bit.data.dto.CafeDto;
 import bit.data.dto.FoodDto;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +17,6 @@ public interface FoodServiceInter {
     public void updateFood(FoodDto dto);
     public void likesInsert(int food_num);
     public void likesUpdate(int food_num);
+
+    public FoodDto selectByNum(int food_num);
 }

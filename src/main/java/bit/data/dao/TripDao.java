@@ -60,4 +60,9 @@ public class TripDao implements TripDaoInter{
     public void likesUpdate(int trip_num) {
         session.update(ns+"likesUpdate", trip_num);
     }
+
+    @Override
+    public TripDto selectByNum(int trip_num) {
+        return session.selectOne(ns+"selectByNum",trip_num);
+    }
 }
