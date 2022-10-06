@@ -23,11 +23,6 @@ public class FaqService implements FaqServiceInter {
 	}
 
 	@Override
-	public int getMaxNum() {
-		return daoInter.getMaxNum();
-	}
-
-	@Override
 	public int getTotalCount(String searchcolumn, String searchword) {
 		Map<String, String> map=new HashMap<String, String>();
 
@@ -55,8 +50,8 @@ public class FaqService implements FaqServiceInter {
 	}
 
 	@Override
-	public FaqDto getData(int num) {
-		return daoInter.getData(num);
+	public FaqDto getUser_num(int user_num) {
+		return daoInter.getUser_num(user_num);
 	}
 
 	@Override

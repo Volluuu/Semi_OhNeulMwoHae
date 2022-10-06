@@ -55,6 +55,11 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
+	public void updateAnswer(QnaDto dto) {
+		session.update(ns+"updateAnswer",dto);
+	}
+
+	@Override
 	public void deleteQna(int num) {
 		session.delete(ns+"deleteQna",num);
 	}
