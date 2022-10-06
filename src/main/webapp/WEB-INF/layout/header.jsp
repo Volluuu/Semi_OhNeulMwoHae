@@ -161,9 +161,11 @@
 				<a href="${root}/qna/qnalist">고객센터</a>
 				<a href="${root}/courseboard/list">추천 코스</a>
 				<a href="${root}/findboard/list">친구 찾기</a>
-				<a href="${root}/board/list">게시판</a>
 				<a href="${root}/board/form">장소 목록</a>
 				<a href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
+				<c:if test="${sessionScope.isadmin=='admin'}">
+				<a href="${root}/board/list">관리자페이지</a>
+				</c:if>
 			</div>
 		</div>
 		<div class="search_bar">
@@ -202,12 +204,8 @@
 			</c:if>
 	</span>
 
-	<!--관리자 아이디로 로그인 하면 바로 관리자 페이지로 이동-->
-	<c:if test="${sessionScope.isadmin=='admin'}">
-		<script>
-			location.href="adminmain.jsp";
-		</script>
-	</c:if>
+
+
 
 	<!-- 로그인창 -->
 	<div class="modal" id="myModal" >

@@ -31,7 +31,7 @@
         <tr>
             <td>
                 <div style="text-align: center;">
-                    <h7>휴대폰 본인인증을 통해 아이디를 확인합니다.</h7>
+                    <h7>이름 입력을 통해 아이디를 확인합니다.</h7>
                 </div>
             </td>
         </tr>
@@ -43,7 +43,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <button type="button" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone">휴대폰 인증하기</button>
+                    <button type="button" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone">아이디 확인하기</button>
                 </div>
             </td>
         </tr>
