@@ -16,4 +16,5 @@ public class CommentCourseDto {
 	private String content;
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
 	private Timestamp writeday;
+	String nickname;
 }

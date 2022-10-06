@@ -14,13 +14,13 @@ public class QnaAnswerService implements QnaAnswerServiceInter {
     QnaAnswerDaoInter daoInter;
 
     @Override
-    public List<QnaAnswerDto> getAllAnswerList(int answer_num) {
-        return daoInter.getAllAnswerList(answer_num);
+    public List<QnaAnswerDto> getAllAnswerList(int qna_num) {
+        return daoInter.getAllAnswerList(qna_num);
     }
 
     @Override
-    public void inserAnswer(QnaAnswerDto dto) {
-        daoInter.inserAnswer(dto);
+    public void insertAnswer(QnaAnswerDto dto) {
+        daoInter.insertAnswer(dto);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class QnaAnswerService implements QnaAnswerServiceInter {
     }
 
     @Override
-    public void deleteAnswer(int qna_num) {
-        daoInter.deleteAnswer(qna_num);
+    public void deleteAnswer(int answer_num) {
+        daoInter.deleteAnswer(answer_num);
     }
 }

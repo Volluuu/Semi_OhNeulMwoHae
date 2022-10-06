@@ -4,7 +4,7 @@
         
 <mapper namespace="bit.data.dao.QnaAnswerDao">
 	<select id="selectAllDatas" parameterType="int" resultType="qnaanswerdto">
-		select * from qna_answer where answer_num=#{answer_num} order by idx desc
+		select * from qna_answer where qna_num=#{qna_num} order by answer_num desc
 	</select>
 	<insert id="insertAnswer" parameterType="qnaanswerdto">
 		insert into qna_answer values (null,#{user_num},#{message},now(),#{qna_num})
@@ -17,8 +17,12 @@
 		select * from qna_answer where user_num=#{user_num}
 	</select>
 
+	<select id="selectAnswerCount" parameterType="int" resultType="int">
+		SELECT count(*) from qna_answer where qna_num=${qna_num}
+	</select>
+
 	<delete id="deleteAnswer" parameterType="int">
-		delete from qna_answer where qna_num=#{qna_num}
+		delete from qna_answer where answer_num=#{answer_num}
 	</delete>
 
 </mapper>

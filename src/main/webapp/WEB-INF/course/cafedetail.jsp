@@ -77,12 +77,15 @@
                 $("#answer").html("댓글 갯수 : " + res.length);
                 $.each(res, function (i, elt) {
                     s += "<div class='cafestar'>";
-                    s += "유저 번호 : " + elt.user_num;
+                    s += "닉네임 : " + elt.nickname;
                     if (loginok == 'yes' && user_num == elt.user_num) {
                         s += '<button class="btn btn-outline-dark adel fr" course_num="' + elt.course_num + '">삭제</button>';
                         s += '<button class="btn btn-outline-dark aupd fr" course_num="' + elt.course_num + '">수정</button>';
                     }
-                    s += "<p><pre class='cafecontent'>" + elt.content + "</pre><span class='day'>" + elt.writeday + "</span></p>";
+                    s +="<p><pre class='cafecontent'>" + elt.content + "</pre>";
+                    s+="<span class='day'> 작성일 : " + elt.writeday + "</span>";
+                    s+="<span class='star'> 별점 : "+elt.star+"</span>";
+                    s+="</p>";
                     s += "</div>";
 
                 });
@@ -124,6 +127,7 @@
                 </div>
 
                 <%--------------------------------------------------------------------------- 별점--%>
+                <c:if test="${sessionScope.loginok!=null}">
                 <form class="mb-3" id="myform">
                     <input type="hidden" name="user_num" value="${sessionScope.user_num}">
                     <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
@@ -148,14 +152,20 @@
                     <b id="answer"></b>
                     <div id="review"></div>
                 </form>
+                </c:if>
 
                 <script>
+                    // $(document).on("keyup","#reviewContents",function (e){
+                    //     if(e.keyCode==13){
+                    //         $("#cafestarbtn").trigger("click");
+                    //     }
+                    // })
+
                     $(document).on("click", "#cafestarbtn", function () {
                         var root = "${root}";
                         var user_num = "${sessionScope.user_num}";
                         var star = $("input[name='star']:checked").val();
                         var content = $("#reviewContents").val();
-                        var cafe_num = "${dto.cafe_num}";
                         $.ajax({
                             type: "get",
                             url: root + "/commentcourse/cafestar",

@@ -12,18 +12,16 @@ public class QnaAnswerDao implements QnaAnswerDaoInter {
 
     @Autowired
     SqlSession session;
-
-    @Autowired
     String ns="bit.data.dao.QnaAnswerDao.";
 
     @Override
-    public List<QnaAnswerDto> getAllAnswerList(int answer_num) {
-        return session.selectOne(ns+"selectAllDatas",answer_num);
+    public List<QnaAnswerDto> getAllAnswerList(int qna_num) {
+        return session.selectList(ns+"selectAllDatas",qna_num);
     }
 
     @Override
-    public void inserAnswer(QnaAnswerDto dto) {
-        session.insert(ns+"inserAnswer",dto);
+    public void insertAnswer(QnaAnswerDto dto) {
+        session.insert(ns+"insertAnswer",dto);
     }
 
     @Override
@@ -37,7 +35,7 @@ public class QnaAnswerDao implements QnaAnswerDaoInter {
     }
 
     @Override
-    public void deleteAnswer(int qna_num) {
-        session.delete(ns+"deleteAnswer",qna_num);
+    public void deleteAnswer(int answer_num) {
+        session.delete(ns+"deleteAnswer",answer_num);
     }
 }

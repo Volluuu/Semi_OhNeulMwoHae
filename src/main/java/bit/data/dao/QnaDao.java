@@ -44,19 +44,9 @@ public class QnaDao implements QnaDaoInter {
 		session.insert(ns+"insertQna",dto);
 	}
 
-/*	@Override
-	public void updateRestep(Map<String, Integer> map) {
-		session.update(ns+"updateRestep",map);
-	}
-
 	@Override
-	public void updateReadCount(int num) {
-		session.update(ns+"updateReadCount",num);
-	}*/
-
-	@Override
-	public QnaDto getData(int qna_num) {
-		return session.selectOne(ns+"selectByNum",qna_num);
+	public QnaDto getUser(int user_num) {
+		return session.selectOne(ns+"selectUser_num",user_num);
 	}
 
 	@Override

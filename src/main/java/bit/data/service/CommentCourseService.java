@@ -30,4 +30,49 @@ public class CommentCourseService implements CommentCourseServiceInter {
         map.put("content",content);
         commentCourseDao.insertCafeStar(map);
     }
+
+    @Override
+    public double selectCafeStarAvg(int cafe_num) {
+        return commentCourseDao.selectCafeStarAvg(cafe_num);
+    }
+
+    @Override
+    public List<CommentCourseDto> selectFoodStar(int food_num) {
+        return commentCourseDao.selectFoodStar(food_num);
+    }
+
+    @Override
+    public void insertFoodStar(int user_num, int star, int food_num, String content) {
+        Map<String, Object> map=new HashMap<>();
+        map.put("user_num",user_num);
+        map.put("star",star);
+        map.put("food_num",food_num);
+        map.put("content",content);
+        commentCourseDao.insertFoodStar(map);
+    }
+
+    @Override
+    public double selectFoodStarAvg(int food_num) {
+        return commentCourseDao.selectFoodStarAvg(food_num);
+    }
+
+    @Override
+    public List<CommentCourseDto> selectTripstar(int trip_num) {
+        return commentCourseDao.selectTripstar(trip_num);
+    }
+
+    @Override
+    public void insertTripStar(int user_num, int star, int trip_num, String content) {
+        Map<String, Object> map=new HashMap<>();
+        map.put("user_num",user_num);
+        map.put("star",star);
+        map.put("trip_num",trip_num);
+        map.put("content",content);
+        commentCourseDao.insertTripStar(map);
+    }
+
+    @Override
+    public double selectTripStarAvg(int trip_num) {
+        return commentCourseDao.selectTripStarAvg(trip_num);
+    }
 }

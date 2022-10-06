@@ -16,6 +16,7 @@
 		<if test="tripcolumn!=null and tripword!=null">
 			where ${tripcolumn} like concat('%',#{tripword},'%')
 		</if>
+		limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertTrip" parameterType="tripdto">

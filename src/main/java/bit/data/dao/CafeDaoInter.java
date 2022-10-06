@@ -1,9 +1,7 @@
 package bit.data.dao;
 
 
-import bit.data.dto.BoardDto;
 import bit.data.dto.CafeDto;
-import bit.data.dto.FindDto;
 
 import java.util.List;
 import java.util.Map;

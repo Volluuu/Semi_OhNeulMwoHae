@@ -4,14 +4,36 @@
 
 <mapper namespace="bit.data.dao.CommentCourseDao">
     <select id="selectCafeStar" parameterType="int" resultType="ccdto">
-        select * from comment_course where cafe_num=#{cafe_num}
+        select CC.course_num, CC.user_num, CC.star, CC.content, CC.cafe_num, CC.writeday, U.nickname
+        from comment_course CC INNER JOIN user U ON CC.user_num=U.user_num where cafe_num=#{cafe_num}
     </select>
     <insert id="insertCafeStar" parameterType="Map">
-        insert into comment_course values (null,#{user_num},null,null,#{cafe_num},#{star},#{content},now())
+        insert into comment_course values (null,#{user_num},#{star},#{content},null,null,#{cafe_num},now())
     </insert>
+    <select id="selectCafeStarAvg" parameterType="int" resultType="double">
+        select ifnull(round(avg(star),1),0) from comment_course where cafe_num=${cafe_num}
+    </select>
 
-<!--    <select id="selectAllComments" parameterType="int" resultType="cfdto">-->
-<!--        select CF.friend_num, CF.find_num, CF.user_num, CF.content, CF.writeday, CF.regroup, CF.restep, CF.relevel, CF.diff, U.name, U.nickname,-->
-<!--               U.loginid from comment_friend CF INNER JOIN user U ON CF.user_num = U.user_num where find_num=#{find_num} order by CF.regroup asc,CF.diff asc, CF.restep asc, CF.friend_num asc-->
-<!--    </select>-->
+    <select id="selectFoodStar" parameterType="int" resultType="ccdto">
+        select CC.course_num, CC.user_num, CC.star, CC.content, CC.food_num, CC.writeday, U.nickname
+        from comment_course CC INNER JOIN user U ON CC.user_num=U.user_num where food_num=#{food_num}
+    </select>
+    <insert id="insertFoodStar" parameterType="Map">
+        insert into comment_course values (null,#{user_num},#{star},#{content},#{food_num},null,null,now())
+    </insert>
+    <select id="selectFoodStarAvg" parameterType="int" resultType="double">
+        select ifnull(round(avg(star),1),0) from comment_course where food_num=#{food_num}
+    </select>
+
+    <select id="selectTripStar" parameterType="int" resultType="ccdto">
+        select CC.course_num, CC.user_num, CC.star, CC.content, CC.trip_num, CC.writeday, U.nickname
+        from comment_course CC INNER JOIN user U ON CC.user_num=U.user_num where trip_num=#{trip_num}
+    </select>
+    <insert id="insertTripStar" parameterType="Map">
+        insert into comment_course values (null,#{user_num},#{star},#{content},null,#{trip_num},null,now())
+    </insert>
+    <select id="selectTripStarAvg" parameterType="int" resultType="double">
+        select ifnull(round(avg(star),1),0) from comment_course where trip_num=#{trip_num}
+    </select>
+
 </mapper>

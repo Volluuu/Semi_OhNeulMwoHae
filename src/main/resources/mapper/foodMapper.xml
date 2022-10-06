@@ -15,6 +15,7 @@
 		<if test="foodcolumn!=null and foodword!=null">
 			where ${foodcolumn} like concat('%',#{foodword},'%')
 		</if>
+		limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertFood" parameterType="fooddto">

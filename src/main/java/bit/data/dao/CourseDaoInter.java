@@ -19,4 +19,8 @@ public interface CourseDaoInter {
 	public List<CafeDto> getSearchCafe(Map<String, String> map);
 	public List<TripDto> getSearchTrip(Map<String, String> map);
 	public List<FoodDto> getSearchFood(Map<String, String> map);
+
+	public CafeDto getCafeLatLon(int course_num);
+	public FoodDto getFoodLatLon(int course_num);
+	public TripDto getTripLatLon(int course_num);
 }

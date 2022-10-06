@@ -12,9 +12,7 @@ public interface QnaServiceInter {
 	public int getTotalCount(String searchcolumn,String searchword);
 	public List<QnaDto> getPagingList(String searchcolumn,String searchword,int startnum,int perpage);
 	public void insertQna(QnaDto dto);
-	/*public void updateRestep(int regroup,int restep);*/
-	/*public void updateReadCount(int num);*/
-	public QnaDto getData(int qna_num);
+	public QnaDto getUser(int user_num);
 	public void updateQna(QnaDto dto);
 	public void deleteQna(int num);
 

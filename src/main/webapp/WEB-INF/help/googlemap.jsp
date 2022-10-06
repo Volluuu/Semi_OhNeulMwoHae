@@ -88,7 +88,7 @@
             vertical-align: top;
         }
 
-        #getlist {
+        button.insert_course_button {
             border: 1px solid orange;
             width: 50px;
             display: inline-block;
@@ -131,6 +131,7 @@
         var s = "";
         var c = "";
         var stepArr = new Array(5);
+        var markerArr = new Array(5);
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -138,7 +139,7 @@
                 if ($("div.cosselect_main").length == 5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
                     return;
-                };
+                }
                 cnt++;
                 console.log(cnt);
                 cosSelectAdd();
@@ -147,6 +148,7 @@
 
                 for (var i = 0; i < $(".cosselect_main").length; i++) {
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
+                    $(".cosselect_main").eq(i).find(".in1").attr("cnt", (i + 1));
                 }
             });
 
@@ -156,7 +158,7 @@
                     alert("첫 경로는 삭제 할 수 없습니다.");
                     return;
                 }
-                ;
+
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
@@ -164,7 +166,9 @@
 
                 for (var i = 0; i < $(".cosselect_main").length; i++) {
                     $(".cosselect_main").eq(i).find(".coscnt").text("경로 " + (i + 1));
+                    $(".cosselect_main").eq(i).find(".in1").attr("cnt", (i + 1));
                 }
+                MarkerArr[cnt - 1].setMap(null);
             });
 
             /* 검색 이벤트 */
@@ -172,38 +176,41 @@
             $(document).on("keyup", "input.in1", function () {
                 var word = $(this); // parent, children, find 등을 사용하기 위해 #searchword를 특정 시켜준다.
                 var txt = word.val();
-                if(txt != '') {
+                if (txt != '') {
                     $(this).next().children().remove();
 
                     $.ajax({
                         type    : "get",
                         url     : "../course/searchlist",
                         dataType: "json",
-                        data    : {"searchthema": word.parent().parent().find("select.sel1").val(), "searchword": word.val()},
+                        data    : {
+                            "searchthema": word.parent().parent().find("select.sel1").val(),
+                            "searchword" : word.val()
+                        },
                         success : function (res) {
 
                             //테마를 3개로 나눠서 검색 시 테이블을 구분해서 가져옴
-                            if(word.parent().parent().find("select.sel1").val() == "cafe") {
+                            if (word.parent().parent().find("select.sel1").val() == "cafe") {
                                 console.log("cafe");
-                                $.each(res, function(i, elt){
+                                $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'cafe_num' : elt.cafe_num})
+                                        $('<div>').text(elt.title).attr({'cafe_num': elt.cafe_num})
                                     );
                                 });
                             }
-                            if(word.parent().parent().find("select.sel1").val() == "trip") {
+                            if (word.parent().parent().find("select.sel1").val() == "trip") {
                                 console.log("trip");
-                                $.each(res, function(i, elt){
+                                $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'trip_num' : elt.trip_num})
+                                        $('<div>').text(elt.title).attr({'trip_num': elt.trip_num})
                                     );
                                 });
                             }
-                            if(word.parent().parent().find("select.sel1").val() == "food") {
+                            if (word.parent().parent().find("select.sel1").val() == "food") {
                                 console.log("food");
-                                $.each(res, function(i, elt){
+                                $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'food_num' : elt.food_num})
+                                        $('<div>').text(elt.title).attr({'food_num': elt.food_num})
                                     );
                                 });
                             }
@@ -215,40 +222,113 @@
                 } else {
                     $(this).next().children().remove();
                 } // if end
-            }); // getlist click end
+            }); // input keyup end
 
             //검색목록 클릭 시 값이 input tag에 바인드되고 검색창이 꺼지게 하는 이벤트
-            $(document).on("click", ".searchwordlist",function(){
+            $(document).on("click", ".searchwordlist", function () {
                 alert("hi");
                 var checkedword = $(this);
+                var selectedType = $(this).parent().parent().parent().find("select.sel1").val();
+                var step = $(this).parent().siblings("input.in1").attr("cnt") - 1;
+                // input tag에 선택한 목적지를 바인드
                 $(this).parent().prev().val($(this).text());
-                if($(this).parent().parent().find("select.sel1").val() == "cafe") {
-                    console.log("cafe");
-                    stepArr[0] = "cafe," + $(this).attr("cafe_num");
+
+                if (selectedType == "cafe") {
+                    console.log("cafe 여기에요");
+                    stepArr[step] = "cafe," + $(this).attr("cafe_num");
+                    $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("cafe_num"));
                 }
-                if($(this).parent().parent().find("select.sel1").val() == "trip") {
+                if (selectedType == "trip") {
                     console.log("trip");
-                    stepArr[0] = "trip," + $(this).attr("trip_num");
+                    stepArr[step] = "trip," + $(this).attr("trip_num");
+                    $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("trip_num"));
                 }
-                if($(this).parent().parent().find("select.sel1").val() == "food") {
+                if (selectedType == "food") {
                     console.log("food");
-                    stepArr[0] = "food," + $(this).attr("food_num");
+                    stepArr[step] = "food," + $(this).attr("food_num");
+                    $(this).parent().siblings("input.in1").attr("isSelect", "yes");
+                    $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("food_num"));
                 }
-                console.log(stepArr[0]);
+                console.log(stepArr);
                 $(this).parent().hide();
             });
 
-        //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
-        $(document).on("click", "input.in1", function () {
-            if($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 선택") {
-                alert("테마를 먼저 선택해 주세요");
-                $(this).parent().parent().find("select.sel1").focus();
-                return;
-            }
-            $(this).next().show();
-        });
+            //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
+            $(document).on("click", "input.in1", function () {
+                if ($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 선택") {
+                    alert("테마를 먼저 선택해 주세요");
+                    $(this).parent().parent().find("select.sel1").focus();
+                    return;
+                }
+                $(this).next().show();
+            }); // $(document).on("click", "input.in1", function end
 
-        });
+            //마커에 넣을 위도와 경도를 가져오는 이벤트
+            $(document).on("click", ".insert_course_button", function () {
+                var button = $(this);
+                var thiscnt = button.siblings("input.in1").attr("cnt");
+                if ($(this).parent().parent().find("select.sel1 option:selected").text() == "테마 검색") {
+                    alert("테마를 먼저 선택해 주세요");
+                    $(this).parent().parent().find("select.sel1").focus();
+                    return;
+                }
+                if (button.siblings("input.in1").attr("isSelect") == "no" && button.siblings("input.in1").val() == "") {
+                    alert("목적지를 먼저 선택해 주세요");
+                    button.siblings("input.in1").focus();
+                    return;
+                }
+                if (markerArr[thiscnt - 1]) {
+                    if (!confirm("해당 경로의 마커가 이미 존재합니다. 기존의 마커를 삭제하고 마커를 새로 생성하시겠습니까?")) {
+                        return;
+                    }
+                    markerArr[thiscnt - 1].setMap(null);
+                }
+                var course_type = button.parent().siblings("div.cosselect_thema").find("select.sel1").val();
+                var course_num = button.siblings("input.in1").attr("course_num");
+                var step = button.siblings("input.in1").attr("cnt");
+
+                $.ajax({
+                    type    : "get",
+                    url     : "../course/getlatlon",
+                    dataType: "json",
+                    data    : {
+                        "course_type": course_type,
+                        "course_num" : course_num
+                    },
+                    success : function (res) {
+                        console.log(res.lat, res.lon);
+                        var markerPosition = new kakao.maps.LatLng(res.lat, res.lon);
+                        var marker = new kakao.maps.Marker({position: markerPosition});
+                        marker.setMap(map);
+                        markerArr[thiscnt - 1] = marker;
+                        var movelatlon = new kakao.maps.LatLng(res.lat, res.lon);
+                        map.setCenter(movelatlon);
+
+                        //인포 윈도우 생성
+                        var iwContent =
+                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                            iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
+                        // 인포윈도우를 생성합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            position: iwPosition,
+                            content : iwContent
+                        });
+                        infowindow.open(map, marker);
+                    }//sucess
+                });//ajax
+            }); // insert_course_button end
+            //목록창이 입력되어 있는 상태에서 테마를 바꾸면 검색목록이 초기화되는 이벤트
+            $(document).on("change", "select.sel1", function () {
+                var find_in1 = $(this).parent().parent().find("input.in1");
+                find_in1.val("");
+                console.log("reset");
+                find_in1.attr("isSelect", "no");
+
+            });
+        }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd() {
@@ -265,9 +345,9 @@
             s += "</select>";
             s += "</div>";
             s += "<div class='i' id='cossearch_insert'>";
-            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' name='searchword' cnt='"+cnt+"'>";
+            s += "<input type='text' class='form-control in1' placeholder='검색어를 입력' name='searchword' cnt='" + cnt + "' isSelect='no'>";
             s += "<div class='searchlist'></div>";
-            s += "<button class='form-control' id='getlist'><i class='fas fa-search' aria-hidden='true'></i></button>";
+            s += "<button class='form-control insert_course_button'><i class='fas fa-plus' aria-hidden='true'></i></button>";
             s += "</div>";
             s += "</div>";
         }
@@ -275,7 +355,6 @@
     </script>
 </head>
 <body>
-
 <div class="mapandselect">
     <div class="input-group">
         <!-- 저장된 경로 -->
@@ -290,7 +369,7 @@
         <script>
             var container = document.getElementById('map');
             var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                center: new kakao.maps.LatLng(37.499442, 127.029023),
                 level : 3
             };
 
@@ -318,17 +397,16 @@
                 </div>
                 <div class="i" id="cossearch_insert">
                     <input type="text" class="form-control in1" placeholder="검색어를 입력"
-                           required="required" name="searchword" cnt="1">
+                           required="required" name="searchword" cnt="1" isSelect="no">
                     <div class="searchlist"></div>
-                    <button class="form-control" id="getlist"><i class="fas fa-search" aria-hidden="true"></i></button>
+                    <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
                 </div>
 
-                <div class="cosadd_btn">
-
-                </div>
             </div>
             <div class="cos2"></div>
-                <button type="button" class="cosselectadd" style="margin:auto; display: block;">경로추가<i class='fas fa-angle-down'></i></button>
+            <button type="button" class="cosselectadd" style="margin:auto; display: block;">경로추가<i
+                    class='fas fa-angle-down'></i></button>
 
 
             <!-- 경로설정 버튼 -->
