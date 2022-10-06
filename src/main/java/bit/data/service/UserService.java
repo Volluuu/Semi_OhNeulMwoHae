@@ -18,7 +18,7 @@ public class UserService implements UserServiceInter{
     UserDaoInter userDao;
 
     @Override
-    public String findIdByName(String name){
+    public UserDto findIdByName(String name){
         return userDao.findIdByName(name);
     }
     @Override

@@ -18,7 +18,7 @@ public class UserDao implements UserDaoInter{
 
 
     @Override
-    public String findIdByName(String name){
+    public UserDto findIdByName(String name){
         return session.selectOne(ns+"findIdByName", name);
     }
 

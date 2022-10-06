@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInter {
-    public String findIdByName(String name);
+    public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
     public int getTotalCount();
     public int getLoginIdSearch(String loginid);

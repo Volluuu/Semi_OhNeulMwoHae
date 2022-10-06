@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserServiceInter {
 
-    public String findIdByName(String name);
+    public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
 
     public int getTotalCount();
