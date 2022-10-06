@@ -21,11 +21,6 @@ public class NoticeDao implements NoticeDaoInter {
 	}
 
 	@Override
-	public int getMaxNum() {
-		return session.selectOne(ns+"getMaxNum");
-	}
-
-	@Override
 	public int getTotalCount(Map<String, String> map) {
 		return session.selectOne(ns+"getTotalCount",map);
 	}
@@ -41,9 +36,10 @@ public class NoticeDao implements NoticeDaoInter {
 	}
 
 	@Override
-	public NoticeDto getData(int num) {
-		return session.selectOne(ns+"getData",num);
+	public NoticeDto getUser_num(int user_num) {
+		return session.selectOne(ns+"getData",user_num);
 	}
+
 
 	@Override
 	public void updateNotice(NoticeDto dto) {

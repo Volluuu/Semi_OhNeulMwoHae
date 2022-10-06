@@ -27,6 +27,9 @@
       color: gray;
       font-size: 15px;
     }
+    .qna_info a:hover{
+      text-shadow: 10px 10px 10px gray;
+    }
     .qna_list{
       width: 1200px;
       margin-left: 45px;
@@ -38,7 +41,7 @@
       list-style: circle;
     }
     #qna_title{
-      border: 1px solid black;
+      /*border: 1px solid black;*/
       width: 100%;
       max-height: 60vh;
       margin: 0 auto;
@@ -125,7 +128,7 @@
     <input type="hidden" name="currentPage" value="${currentPage}">
     <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
     <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
-    <table class="table table-bordered" id="qna_title">
+    <table class="table table-hover" id="qna_title">
       <tr>
         <th class="qna_subject_title">문의 내용</th>
         <th class="qna_writeday_title">문의 일자</th>
@@ -137,7 +140,7 @@
           <a href="qnadetail?qna_num=${dto.qna_num}&currentPage=${currentPage}">
            ${dto.subject}&nbsp;&nbsp;
             <c:choose>
-               <c:when test="${dto.acount>0 && dto.user_num eq 1}">
+               <c:when test="${dto.acount>0 && dto.answer eq 'yes'}">
                  <span class="answercntsuc">[답변 완료]</span>
                </c:when>
                <c:otherwise>
