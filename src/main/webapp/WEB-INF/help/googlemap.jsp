@@ -132,6 +132,7 @@
         var c = "";
         var stepArr = new Array(5);
         var markerArr = new Array(5);
+        var mapBound = new Array(5);
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -226,8 +227,6 @@
 
             //검색목록 클릭 시 값이 input tag에 바인드되고 검색창이 꺼지게 하는 이벤트
             $(document).on("click", ".searchwordlist", function () {
-                alert("hi");
-                var checkedword = $(this);
                 var selectedType = $(this).parent().parent().parent().find("select.sel1").val();
                 var step = $(this).parent().siblings("input.in1").attr("cnt") - 1;
                 // input tag에 선택한 목적지를 바인드
@@ -252,10 +251,8 @@
                     $(this).parent().siblings("input.in1").attr("course_num", $(this).attr("food_num"));
                 }
                 console.log(stepArr);
-                //blur를 사용해 input tag에서 포커스가 벗어나면 검색목록이 닫히게 하는 이벤트
-                $(document).on("blur", "input.in1", function (){
-                    $(this).siblings("div.searchlist").hide().empty();
-                }); //blur event end
+                //검색목록이 닫히게 하는 이벤트
+                $(this).parent().hide().empty();
             });
 
             //테마를 선택하지 않고 검색창 클릭시 테마선택으로 이동
@@ -307,12 +304,12 @@
                         marker.setMap(map);
                         markerArr[thiscnt - 1] = marker;
                         var movelatlon = new kakao.maps.LatLng(res.lat, res.lon);
-                        map.setCenter(movelatlon);
+             //           map.setCenter(movelatlon);
 
                         //인포 윈도우 생성
                         var iwContent =
-                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
-                                '<br><a href="https://map.kakao.com/link/to/Hello World!,' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                                '<div style="padding:5px; width:200px;">'+res.title+' <br><a href="https://map.kakao.com/link/map/'+res.title+',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/'+res.title+',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
                             iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
                         // 인포윈도우를 생성합니다
                         var infowindow = new kakao.maps.InfoWindow({
@@ -320,6 +317,15 @@
                             content : iwContent
                         });
                         infowindow.open(map, marker);
+
+                        //마커가 생성될 때 마다 지도의 범위를 수정
+                        var bounds = new kakao.maps.LatLngBounds();
+                            mapBound[cnt - 1] = new kakao.maps.LatLng(res.lat, res.lon);
+                        for(var i = 0 ; i < mapBound.length; i++) {
+                            if(!mapBound[i]) {continue;}
+                            bounds.extend(mapBound[i]);
+                        }
+                        map.setBounds(bounds);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
@@ -329,7 +335,6 @@
                 find_in1.val("");
                 console.log("reset");
                 find_in1.attr("isSelect", "no");
-
             });
 
         }); //$function end
