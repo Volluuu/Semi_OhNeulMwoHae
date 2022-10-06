@@ -8,16 +8,16 @@
 .inner {
     position: relative;
     width: 1200px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
 }
 .efLSbp {
     display: flex;
     position: relative;
-    width: 100%;
+    width: 50%;
     min-width: 1200px;
     box-sizing: border-box;
     border-top: 1px solid rgb(233, 233, 233);
-    margin-top: -200px;
+    margin-top: 200px;
     padding-bottom: 49px;
     background: rgb(255, 255, 255);
 }
@@ -67,7 +67,7 @@ h1{
     align-items: center;
 }
 #footer .footer_info {
-    position: relative;
+    /*position: relative;*/
     margin-top: 15px;
 }
 #footer .footer_info span, #footer .footer_info address, #footer .footer_info a {
