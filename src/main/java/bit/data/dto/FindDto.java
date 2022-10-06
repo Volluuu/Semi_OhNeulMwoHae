@@ -1,5 +1,6 @@
 package bit.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -12,6 +13,7 @@ public class FindDto {
 	private String content;
 	private String photo;
 	private int readcount;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
 	private Timestamp writeday;
 	private int answercount;
 	private String name;

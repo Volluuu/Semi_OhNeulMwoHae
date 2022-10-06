@@ -69,7 +69,7 @@
 
     footer {
         font-size: 5px;
-        background-color: darkslateblue;
+        background-color: #38b6ff;
     }
 
     .paging {
@@ -98,184 +98,190 @@
         float: right;
     }
 
-
-    section {
-        display: block;
-    }
-
-
-    button {
-        border: 0;
-        padding: 0;
-        margin: 0;
-        cursor: pointer;
-        outline: none;
-        vertical-align: top;
-        background: unset;
-    }
-
-
-    div {
-        display: block;
-    }
-
-
-    option {
-        font-weight: normal;
-        display: block;
-        white-space: nowrap;
-        min-height: 1.2em;
-        padding: 0px 2px 1px;
-    }
-
-    .jgfRlo > svg:last-child {
-        position: absolute;
-        top: 40%;
-        right: 10px;
-    }
-
-    svg:not(:root) {
-        overflow: hidden;
-    }
-
-
-    .libvtt > :nth-child(n+2) {
-        margin-top: 24px;
-    }
-
-
-    ul, ol {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-style: normal;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        padding-inline-start: 40px;
-    }
-
-    .dUcsyA {
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        margin: 0px 8px;
-        flex-direction: column;
-        padding: 0px;
-        width: 282px;
-    }
-
-    .dUcsyA > div:first-child {
-        width: 282px;
-        height: 282px;
-        margin-bottom: 16px;
-        overflow: hidden;
-        border-radius: 8px;
-        margin-right: 0px !important;
-
-    .dUcsyA > div:first-child > img {
-        transition: all 0.3s ease 0s;
-        transform: scale(1);
-        overflow: hidden;
-    }
-
-    .dUcsyA > div:first-child > img {
-        border-radius: 4px;
+    #divgrid {
         width: 100%;
-        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: minmax(200px, auto);
+        gap: 20px;
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        /*justify-content: space-between;*/
     }
-
-    img {
-        vertical-align: top;
-        object-fit: cover;
+    .page-link{
+        cursor: pointer;
     }
-
-    img, fieldset {
-        border: 0;
-    }
-
-    .dUcsyA > div:first-child {
-        width: 282px;
-        height: 282px;
-        margin-bottom: 16px;
-        overflow: hidden;
-        border-radius: 8px;
-        margin-right: 0px !important;
-    }
-
-    .dUcsyA > div:last-child {
-        padding-left: 0px;
-        box-sizing: border-box;
-    }
-
-
-    .QJbqF > b {
-        color: rgb(0, 206, 124);
-        font-weight: 500;
-        margin-right: 4px;
-    }
-
-
-    .bVhyCq > :nth-child(n-1) {
-        margin-left: 6px;
-    }
-
-    .bVhyCq > div {
-        position: relative;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-    }
-
-    .bVhyCq > div > :nth-child(n+1) {
-        margin-left: 2px;
-        font-size: 12px;
-    }
-
-
-    .bVhyCq > div > :nth-child(n+1) {
-        margin-left: 2px;
-        font-size: 12px;
-    }
-
 </style>
 <body>
-<%-- 검색창 --%>
-
 <div class="dg_container">
     <div class="dg_searcharea">
-        <form action="list">
-            <div class="input-group">
-                <select name="findcolumn" class="form-control" style="text-align: center;">
-                    <option value="subject" selected>제목</option>
-                    <option value="content">내용</option>
-                    <option value="subcon">제목+내용</option>
-                    <option value="nickname">닉네임</option>
-                </select>
+        <%--        <form action="searchlist">--%>
+        <div class="input-group">
+            <select name="findcolumn" class="form-control" style="text-align: center;" id="findcolumn">
+                <option value="subject" selected>제목</option>
+                <option value="content">내용</option>
+                <option value="subcon">제목+내용</option>
+                <option value="nickname">닉네임</option>
+            </select>
 
-                <input type="text" name="findword" class="form-control" placeholder="검색 단어" value="${param.findword}">
+            <input type="text" name="findword" class="form-control" placeholder="검색 단어" value="${param.findword}"
+                   id="findword">
 
-                <button type="submit" class="btn btn-outline-dark">검색</button>
-                <c:if test="${sessionScope.loginok!=null}">
-                    <a href="${root}/findboard/list?findcolumn=nickname&findword=${sessionScope.nickname}" class="dg_a">내가
-                        쓴 글</a>
+            <button type="submit" class="btn btn-outline-dark" id="searchbtn">검색</button>
+            <c:if test="${sessionScope.loginok!=null}">
+                <a class="page-link" findcolumn="nickname" findword="${sessionScope.nickname}">내가 쓴 글</a>
+            </c:if>
+            <script>
+                var root = "${root}";
+                $(document).on("keyup","#findword",function (e){
+                    if(e.keyCode==13){
+                        $("#searchbtn").trigger("click");
+                    }
+                });
+
+                $(document).on("click", "#searchbtn", function () {
+                    var findcolumn = $("#findcolumn option:selected").val();
+                    var findword = $("#findword").val();
+                    var currentPage = "${currentPage}";
+                    var s = "";
+                    var p = "";
+                    $.ajax({
+                        type: "get",
+                        url: root + "/findboard/searchlist",
+                        dataType: "json",
+                        data: {"findcolumn": findcolumn, "findword": findword},
+                        //, "currentPage": currentPage
+                        success: function (res) {
+                            if (res.totalCount == 0) {
+                                $("#uc").text("등록된 글이 없습니다");
+                            } else {
+                                $("#uc").text("총 " + res.totalCount + "개의 글이 있습니다");
+                                $.each(res.list, function (i, elt) {
+                                    s += '<div class="griditem">';
+                                    s += '<a href="' + root + '/findboard/finddetail?find_num=' + elt.find_num + '&currentPage=' + res.currentPage + '" style="color:black;text-decoration:none;">';
+                                    if (elt.find1photo != null) {
+                                        s += '<img src="' + elt.find1photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
+                                    } else {
+                                        s += '<img src="' + root + '/upload/' + elt.photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
+                                    }
+                                    s += '<p>제목 : ' + elt.subject + '</p>';
+                                    s += '<p>내용 : ' + elt.content + '</p>';
+                                    s += '<p>닉네임 : ' + elt.nickname + '</p>';
+                                    s += '<p style="color: darkgray;">';
+                                    s += '<span class="fr">';
+                                    s += '<i class="bi bi-eye"></i>&nbsp;' + elt.readcount + '&nbsp;';
+                                    s += '<i class="bi bi-chat"></i>&nbsp;' + elt.answercount + '&nbsp;';
+                                    s += '</span>';
+                                    s += '</p>';
+                                    s += '</div>';
+                                });
+                                p += '<ul class="pagination">';
+                                if (res.startPage > 1) {
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                }
+                                for (var pp = res.startPage; pp <= res.endPage; pp++) {
+                                    if (pp == res.currentPage) {
+                                        // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                    } else {
+                                        // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                    }
+                                }
+                                if (res.totalPage > res.endPage) {
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+
+                                }
+                                p += '</ul>';
+                                $("#divgrid").html(s);
+                                $("#paging").html(p);
+                            }
+
+
+                        }
+                    });
+                });
+
+                $(document).on("click", ".page-link", function () {
+                    var findcolumn = $(this).attr("findcolumn");
+                    var findword = $(this).attr("findword");
+                    var currentPage = $(this).attr("currentPage");
+                    var s = "";
+                    var p = "";
+                    $.ajax({
+                        type: "get",
+                        url: root + "/findboard/searchlist",
+                        dataType: "json",
+                        data: {"findcolumn": findcolumn, "findword": findword, "currentPage": currentPage},
+                        success: function (res) {
+                            if (res.totalCount == 0) {
+                                $("#uc").text("등록된 글이 없습니다");
+                            } else {
+                                $("#uc").text("총 " + res.totalCount + "개의 글이 있습니다");
+                                $.each(res.list, function (i, elt) {
+                                    s += '<div class="griditem">';
+                                    s += '<a href="' + root + '/findboard/finddetail?find_num=' + elt.find_num + '&currentPage=' + res.currentPage + '" style="color:black;text-decoration:none;">';
+                                    if (elt.find1photo != null) {
+                                        s += '<img src="' + elt.find1photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
+                                    } else {
+                                        s += '<img src="' + root + '/upload/' + elt.photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
+                                    }
+                                    s += '<p>제목 : ' + elt.subject + '</p>';
+                                    s += '<p>내용 : ' + elt.content + '</p>';
+                                    s += '<p>닉네임 : ' + elt.nickname + '</p>';
+                                    s += '<p style="color: darkgray;">';
+                                    s += '<span class="fr">';
+                                    s += '<i class="bi bi-eye"></i>&nbsp;' + elt.readcount + '&nbsp;';
+                                    s += '<i class="bi bi-chat"></i>&nbsp;' + elt.answercount + '&nbsp;';
+                                    s += '</span>';
+                                    s += '</p>';
+                                    s += '</div>';
+                                });
+                                p += '<ul class="pagination">';
+                                if (res.startPage > 1) {
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.startPage - 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.startPage - 1)+'">이전</a></li>';
+                                }
+
+                                for (var pp = res.startPage; pp <= res.endPage; pp++) {
+                                    if (pp == res.currentPage) {
+                                        // p += '<li class="page-item active"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item active"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                    } else {
+                                        // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + pp + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                        p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+pp+'">' + pp + '</a></li>';
+                                    }
+                                }
+                                if (res.totalPage > res.endPage) {
+                                    // p += '<li class="page-item"><a class="page-link" href="' + root + '/findboard/searchlist?findcolumn='+res.findcolumn+'&findword='+res.findword+'&currentPage=' + (res.endPage + 1) + '" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+                                    p += '<li class="page-item"><a class="page-link" findcolumn="'+res.findcolumn+'" findword="'+res.findword+'" currentPage="'+(res.endPage + 1)+'">다음</a></li>';
+
+                                }
+                                p += '</ul>';
+                                $("#divgrid").html(s);
+                                $("#paging").html(p);
+                            }
+
+
+                        }
+                    });
+                });
+            </script>
+            <div class="dg_session">
+                <c:if test="${sessionScope.loginok==null}">
+                    <b>로그인이 안 되어 있습니다</b>
+                    <button type="button" class="btn btn-outline-dark" id="dg_loginbtn">세션 주기</button>
                 </c:if>
-                <div class="dg_session">
-                    <c:if test="${sessionScope.loginok==null}">
-                        <b>로그인이 안 되어 있습니다</b>
-                        <button type="button" class="btn btn-outline-dark" id="dg_loginbtn">세션 주기</button>
-                    </c:if>
 
-                    <c:if test="${sessionScope.loginok!=null}">
-                        <b>${sessionScope.name}님 로그인 중</b>
-                        &nbsp;&nbsp;
-                        <button type="button" class="btn btn-outline-dark" id="dg_logoutbtn">세션 없애기</button>
-                    </c:if>
-                </div>
+                <c:if test="${sessionScope.loginok!=null}">
+                    <b> [${sessionScope.nickname}]님 로그인 중 </b>
+                    <button type="button" class="btn btn-outline-dark" id="dg_logoutbtn">세션 없애기</button>
+                </c:if>
             </div>
-        </form>
+        </div>
+        <%--        </form>--%>
 
     </div>
 
@@ -314,10 +320,10 @@
     </script>
     <div class="alert alert-light">
         <c:if test="${totalCount>0}">
-            <h4>총 ${totalCount}개의 글이 있습니다</h4>
+            <h4 id="uc">총 ${totalCount}개의 글이 있습니다</h4>
         </c:if>
         <c:if test="${totalCount==0}">
-            <h4>등록된 글이 없습니다</h4>
+            <h4 id="uc">등록된 글이 없습니다</h4>
         </c:if>
         <br>
         <c:if test="${sessionScope.loginok!=null}">
@@ -382,72 +388,37 @@
 <%--</c:if>--%>
 
 
-<table class="table findtable">
-
+<div id="divgrid">
     <c:if test="${totalCount>0}">
-        <tr>
+
         <c:forEach var="dto" items="${list}" varStatus="i">
-            <td style="width:25%;">
-                <div type="portrait" class="accompanyItem__ItemWrapper-sc-8nv24v-0 dUcsyA">
-                    <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
-                       style="color:black;text-decoration:none;">
+            <div class="griditem">
+                <a href="${root}/findboard/finddetail?find_num=${dto.find_num}&currentPage=${currentPage}"
+                   style="color:black;text-decoration:none;">
 
-                        <c:set var="photo" value="${dto.photo}"/>
-                        <div style="text-align: center;height:75%">
-                            <c:if test="${dto.find1photo!=null}">
-                                <img alt="" src="${dto.find1photo}" class="img-thumbnail"
-                                     style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
-                            </c:if>
-                            <c:if test="${dto.find1photo==null}">
-                                <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                                     style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
-                            </c:if>
-                        </div>
-                        <p>${dto.subject}</p>
-                        <p>${dto.content}&nbsp;</p>
-                        <p>${dto.nickname}</p>
-                        <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
-                                                                    pattern="yyyy-MM-dd"/><span class="fr"><i
-                                class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
-                                class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>
-                    </a>
-                </div>
-            </td>
-
-            <c:if test="${i.count==4}">
-                </tr><tr>
-            </c:if>
-
+                    <c:set var="photo" value="${dto.photo}"/>
+                    <c:if test="${dto.find1photo!=null}">
+                        <img alt="" src="${dto.find1photo}" class="img-thumbnail"
+                             style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+                    </c:if>
+                    <c:if test="${dto.find1photo==null}">
+                        <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
+                             style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">
+                    </c:if>
+                    <p>제목 : ${dto.subject}</p>
+                    <p>내용 : ${dto.content}&nbsp;</p>
+                    <p>닉네임 : ${dto.nickname}</p>
+                    <p style="color: darkgray;"><fmt:formatDate value="${dto.writeday}"
+                                                                pattern="yyyy-MM-dd"/><span class="fr"><i
+                            class="bi bi-eye"></i>&nbsp;${dto.readcount}&nbsp;<i
+                            class="bi bi-chat"></i>&nbsp;${dto.answercount}&nbsp;</span></p>
+                </a>
+            </div>
         </c:forEach>
-        <c:if test="${fn:length(list)==1}">
-            <td></td>
-            <td></td>
-            <td></td>
-        </c:if>
-        <c:if test="${fn:length(list)==2 }">
-            <td></td>
-            <td></td>
-        </c:if>
-        <c:if test="${fn:length(list)==3 }">
-            <td></td>
-        </c:if>
-        <c:if test="${fn:length(list)==5}">
-            <td></td>
-            <td></td>
-            <td></td>
-        </c:if>
-        <c:if test="${fn:length(list)==6 }">
-            <td></td>
-            <td></td>
-        </c:if>
-        <c:if test="${fn:length(list)==7 }">
-            <td></td>
-        </c:if>
-        </tr>
     </c:if>
-</table>
+</div>
 
-<div class="paging">
+<div class="paging" id="paging">
     <ul class="pagination">
         <c:if test="${startPage>1}">
             <li class="page-item"><a class="page-link" href="${root}/findboard/list?currentPage=${startPage-1}">이전</a>
@@ -471,7 +442,6 @@
             </li>
         </c:if>
     </ul>
-</div>
 </div>
 <footer>
 
@@ -502,7 +472,6 @@
     <p class="copyright">Copyright © What are you doing today!? Inc. All Rights Didn't Reserved.</p>
     <br><br>
 </footer>
-</div>
 
 </body>
 </html>

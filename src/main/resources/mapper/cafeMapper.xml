@@ -11,11 +11,11 @@
 	</select>
 
 	<select id="selectPagingList" parameterType="Map" resultType="cafedto">
-
 		select * from cafe
 		<if test="cafecolumn!=null and cafeword!=null">
 			where ${cafecolumn} like concat('%',#{cafeword},'%')
 		</if>
+		limit #{startnum},#{perpage}
 	</select>
 
 	<insert id="insertCafe" parameterType="cafedto">
