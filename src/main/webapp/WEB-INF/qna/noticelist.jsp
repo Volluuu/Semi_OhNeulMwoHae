@@ -99,14 +99,16 @@
       <input type="hidden" name="user_num" value="${dto.user_num}">
       <input type="hidden" name="notice_num" value="${dto.notice_num}">
       <input type="hidden" name="currentPage" value="${currentPage}">
+      <c:if test="${sessionScope.isadmin eq 'admin'}">
       <button type="button" class="btn btn-secondary addnotice" onclick="location.href='noticeform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
-      <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
+      </c:if>
+        <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
       <div class="notice_title_main">
         <c:forEach var="dto" items="${list}">
           <div class="notice_title_subject" notice_num="${dto.notice_num}">
             <li class="notice_title_subject_title">${dto.subject}&nbsp;&nbsp;</li>
             <li class="notice_title_subject_content"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/></li>
-            <c:if test="${user_num eq 1}">
+            <c:if test="${sessionScope.isadmin eq 'admin'}">
             <button type="button" onclick="location.href='noticedelete?notice_num=${dto.notice_num}&currentPage=${currentPage}'">삭제</button>
             </c:if>
           </div>
