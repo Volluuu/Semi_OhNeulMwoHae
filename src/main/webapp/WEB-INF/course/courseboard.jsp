@@ -146,6 +146,9 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 5;
     }
+    a.page-link{
+        cursor: pointer;
+    }
 
 </style>
 <html>
@@ -208,6 +211,254 @@
         </c:if>
     </ul>
 </div>
+<script>
+    $(document).on("click", ".page-link", function () {
+        var catesel = $("#categorysel option:selected").val();
+        var gucode=$("#gucode").val();
+        var currentPage=$(this).attr("currentPage");
+
+        if (catesel == "cafe") {
+            var c = "";
+            var p = "";
+            $.ajax({
+                type: "get",
+                url: root + "/courseboard/cafelist",
+                dataType: "json",
+                data: {"gu":gucode,"currentPage": currentPage},
+                success: function (suc) {
+                    if (suc.totalCount == 0) {
+                        c += '<div class="griditem">';
+                        c += '<h2>등록된 곳이 없습니다</h2>';
+                        c += '</div>';
+                        c += '<input type="hidden" id="gucode" value="' + suc.gu + '">';
+                    } else {
+                        $.each(suc.list, function (i, res) {
+                            c += '<div class="griditem">';
+                            <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                            c += '<a href="' + root + '/course/cafedetail?cafe_num=' + res.cafe_num + '&currentPage=' + suc.currentPage + '">';
+                            c += '<div class="item">';
+                            c += '<div class="blog-card spring-fever">';
+                            <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                            c += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                            c += '<div class="title-content">';
+                            c += '<h3>' + res.title + '</h3>';
+                            c += '<hr/>';
+                            c += '<div class="intro">' + res.addr + '</div>';
+                            c += '</div>';
+                            c += '<div class="card-info">';
+                            c += '대표메뉴: ' + res.menu + '<br>';
+                            c += '전화번호: ' + res.tel;
+                            c += '</div>';
+                            c += '<div class="utility-info">';
+                            c += '<ul class="utility-list">';
+                            c += '<li class="comments">' + res.answercount + '</li>';
+                            c += '<li class="date">' + res.readcount + '</li>';
+                            c += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            c += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
+                            c += '</ul>';
+                            c += ' </div>';
+                            c += '<div class="gradient-overlay"></div>';
+                            c += '<div class="color-overlay"></div>';
+                            c += '</div>';
+                            c += ' <div class="card-info">';
+                            c += '</div>';
+                            c += '<div class="gradient-overlay"></div>';
+                            c += '<div class="color-overlay"></div>';
+                            c += '</div>';
+                            c += '</a>';
+                            <%--c+='</c:forEach>';--%>
+                            c += '</div>';
+                            c += '<input type="hidden" id="gucode" value="' + suc.gu + '">';
+
+                        })
+                        p += '<ul class="pagination">';
+                        if (suc.startPage > 1) {
+                            p += '<li class="page-item"><a class="page-link" cafecolumn="' + suc.cafecolumn + '" cafeword="' + suc.cafeword + '" currentPage="' + (suc.startPage - 1) + '">이전</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                        }
+                        for (var pp = suc.startPage; pp <= suc.endPage; pp++) {
+                            if (pp == suc.currentPage) {
+                                p += '<li class="page-item active"><a class="page-link" cafecolumn="' + suc.cafecolumn + '" cafeword="' + suc.cafeword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            } else if (pp != suc.currentPage) {
+                                p += '<li class="page-item"><a class="page-link" cafecolumn="' + suc.cafecolumn + '" cafeword="' + suc.cafeword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            }
+                        }
+                        if (suc.endPage < suc.totalPage) {
+                            p += '<li class="page-item"><a class="page-link" cafecolumn="' + suc.cafecolumn + '" cafeword="' + suc.cafeword + '" currentPage="' + (suc.endPage + 1) + '">다음</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                        }
+                        p += '</ul>';
+
+                    }
+                    $("#divgrid").html(c);
+                    $(".paging").html(p);
+                }
+            });
+
+        } else if (catesel == "food") {
+            var f = "";
+            var p = "";
+            $.ajax({
+                type: "get",
+                url: root + "/courseboard/foodlist",
+                dataType: "json",
+                data: {"gu":gucode,"currentPage": currentPage},
+                success: function (suc) {
+                    if (suc.totalCount == 0) {
+                        f += '<div class="griditem">';
+                        f += '<h2>등록된 곳이 없습니다</h2>';
+                        f += '</div>';
+                        f += '<input type="hidden" id="gucode" value="' + suc.gu + '">';
+                    } else {
+                        $.each(suc.list, function (i, res) {
+                            f += '<div class="griditem">';
+                            <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                            f += '<a href="' + root + '/course/fooddetail?food_num=' + res.food_num + '&currentPage=' + suc.currentPage + '">';
+                            f += '<div class="item">';
+                            f += '<div class="blog-card spring-fever">';
+                            <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                            f += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                            f += '<div class="title-content">';
+                            f += '<h3>' + res.title + '</h3>';
+                            f += '<hr/>';
+                            f += '<div class="intro">' + res.addr + '</div>';
+                            f += '</div>';
+                            f += '<div class="card-info">';
+                            f += '대표메뉴: ' + res.menu + '<br>';
+                            f += '전화번호: ' + res.tel;
+                            f += '</div>';
+                            f += '<div class="utility-info">';
+                            f += '<ul class="utility-list">';
+                            f += '<li class="comments">' + res.answercount + '</li>';
+                            f += '<li class="date">' + res.readcount + '</li>';
+                            f += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            f += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
+                            f += '</ul>';
+                            f += ' </div>';
+                            f += '<div class="gradient-overlay"></div>';
+                            f += '<div class="color-overlay"></div>';
+                            f += '</div>';
+                            f += ' <div class="card-info">';
+                            f += '</div>';
+                            f += '<div class="gradient-overlay"></div>';
+                            f += '<div class="color-overlay"></div>';
+                            f += '</div>';
+                            f += '</a>';
+                            <%--c+='</c:forEach>';--%>
+                            f += '</div>';
+                            f+='<input type="hidden" id="gucode" value="'+suc.gu+'">';
+
+                        })
+                        p += '<ul class="pagination">';
+                        if (suc.startPage > 1) {
+                            p += '<li class="page-item"><a class="page-link" foodcolumn="' + suc.foodcolumn + '" foodword="' + suc.foodword + '" currentPage="' + (suc.startPage - 1) + '">이전</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                        }
+                        for (var pp = suc.startPage; pp <= suc.endPage; pp++) {
+                            if (pp == suc.currentPage) {
+                                p += '<li class="page-item active"><a class="page-link" foodcolumn="' + suc.foodcolumn + '" foodword="' + suc.foodword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            } else if (pp != suc.currentPage) {
+                                p += '<li class="page-item"><a class="page-link" foodcolumn="' + suc.foodcolumn + '" foodword="' + suc.foodword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            }
+                        }
+                        if (suc.endPage < suc.totalPage) {
+                            p += '<li class="page-item"><a class="page-link" foodcolumn="' + suc.foodcolumn + '" foodword="' + suc.foodword + '" currentPage="' + (suc.endPage + 1) + '">다음</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                        }
+                        p += '</ul>';
+
+                    }
+                    $("#divgrid").html(f);
+                    $(".paging").html(p);
+                }
+
+            });
+        } else if (catesel == "trip") {
+            var t = "";
+            var p = "";
+            $.ajax({
+                type: "get",
+                url: root + "/courseboard/triplist",
+                dataType: "json",
+                data: {"gu": gucode, "currentPage": currentPage},
+                success: function (suc) {
+                    if (suc.totalCount == 0) {
+                        t += '<div class="griditem">';
+                        t += '<h2>등록된 곳이 없습니다</h2>';
+                        t += '</div>';
+                        t += '<input type="hidden" id="gucode" value="' + suc.gu + '">';
+                    } else {
+                        $.each(suc.list, function (i, res) {
+                            t += '<div class="griditem">';
+                            <%--c+='<c:forEach var="dto" items="${res}" varStatus="i">';--%>
+                            t += '<a href="' + root + '/course/tripdetail?trip_num=' + res.trip_num + '&currentPage=' + suc.currentPage + '">';
+                            t += '<div class="item">';
+                            t += '<div class="blog-card spring-fever">';
+                            <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
+                            t += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
+                            t += '<div class="title-content">';
+                            t += '<h3>' + res.title + '</h3>';
+                            t += '<hr/>';
+                            t += '<div class="intro">' + res.addr + '</div>';
+                            t += '</div>';
+                            t += '<div class="card-info">';
+                            t += '<span class="contentdot">' + res.content + '</span>';
+                            t += '</div>';
+                            t += '<div class="utility-info">';
+                            t += '<ul class="utility-list">';
+                            t += '<li class="comments">' + res.answercount + '</li>';
+                            t += '<li class="date">' + res.readcount + '</li>';
+                            t += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            t += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
+                            t += '</ul>';
+                            t += ' </div>';
+                            t += '<div class="gradient-overlay"></div>';
+                            t += '<div class="color-overlay"></div>';
+                            t += '</div>';
+                            t += ' <div class="card-info">';
+                            t += '</div>';
+                            t += '<div class="gradient-overlay"></div>';
+                            t += '<div class="color-overlay"></div>';
+                            t += '</div>';
+                            t += '</a>';
+                            <%--c+='</c:forEach>';--%>
+                            t += '</div>';
+                            t += '<input type="hidden" id="gucode" value="' + suc.gu + '">';
+
+                        })
+                        p += '<ul class="pagination">';
+                        if (suc.startPage > 1) {
+                            p += '<li class="page-item"><a class="page-link" tripcolumn="' + suc.tripcolumn + '" tripword="' + suc.tripword + '" currentPage="' + (suc.startPage - 1) + '">이전</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.startPage-1)+'" class="page-link">&lt;</a></li>';
+                        }
+                        for (var pp = suc.startPage; pp <= suc.endPage; pp++) {
+                            if (pp == suc.currentPage) {
+                                p += '<li class="page-item active"><a class="page-link" tripcolumn="' + suc.tripcolumn + '" tripword="' + suc.tripword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item active"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            } else if (pp != suc.currentPage) {
+                                p += '<li class="page-item"><a class="page-link" tripcolumn="' + suc.tripcolumn + '" tripword="' + suc.tripword + '" currentPage="' + pp + '">' + pp + '</a></li>';
+                                // p += '<li class="page-item"><a href="list?currentPage='+pp+'" class="page-link">'+pp+'</a></li>';
+                            }
+                        }
+                        if (suc.endPage < suc.totalPage) {
+                            p += '<li class="page-item"><a class="page-link" tripcolumn="' + suc.tripcolumn + '" tripword="' + suc.tripword + '" currentPage="' + (suc.endPage + 1) + '">다음</a></li>';
+                            // p += '<li class="page-item"><a href="list?currentPage='+(suc.endPage+1)+'" class="page-link">&gt;</a></li>';
+                        }
+                        p += '</ul>';
+
+                    }
+                    $("#divgrid").html(t);
+                    $(".paging").html(p);
+                }
+
+            });
+        }
+    });
+</script>
 <br>
 <br>
 <br>
@@ -262,6 +513,7 @@
                             c += '<li class="comments">' + res.answercount + '</li>';
                             c += '<li class="date">' + res.readcount + '</li>';
                             c += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            c += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                             c += '</ul>';
                             c += ' </div>';
                             c += '<div class="gradient-overlay"></div>';
@@ -341,6 +593,7 @@
                         f += '<li class="comments">' + res.answercount + '</li>';
                         f += '<li class="date">' + res.readcount + '</li>';
                         f += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                        f += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                         f += '</ul>';
                         f += ' </div>';
                         f += '<div class="gradient-overlay"></div>';
@@ -419,6 +672,7 @@
                         t += '<li class="comments">' + res.answercount + '</li>';
                         t += '<li class="date">' + res.readcount + '</li>';
                         t += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                        t += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                         t += '</ul>';
                         t += ' </div>';
                         t += '<div class="gradient-overlay"></div>';
@@ -472,7 +726,7 @@
     <%--글 갯수가 0이 아닐시--%>
     <%--        <c:if test="${totalCount>0}">--%>
     <c:forEach var="dto" items="${list}" varStatus="i">
-        <a href="${root}/course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}">
+        <a href="${root}/course/cafedetail?cafe_num=${dto.cafe_num}&currentPage=${currentPage}&user_num=${sessionScope.user_num}">
             <div class="item">
                 <div class="blog-card spring-fever">
                     <c:set var="photo" value="${dto.photo}"/>
@@ -491,6 +745,7 @@
                             <li class="comments">${dto.answercount}</li>
                             <li class="date">${dto.readcount}</li>
                             <li class="staravg"><i class="fa-solid fa-star"></i>${dto.staravg}</li>
+                            <li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>${dto.substotal}</li>
                         </ul>
                     </div><!-- /.utility-info -->
                     <!-- overlays -->
@@ -516,7 +771,6 @@
 </body>
 </html>
 <script>
-
     $(document).on("mouseenter", ".hanriver", function () {
         $(".hanriver").css({"fill": "#6476fd", "cursor": "pointer"});
 
@@ -1768,6 +2022,7 @@
                             c += '<li class="comments">' + res.answercount + '</li>';
                             c += '<li class="date">' + res.readcount + '</li>';
                             c += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            c += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                             c += '</ul>';
                             c += ' </div>';
                             c += '<div class="gradient-overlay"></div>';
@@ -1849,6 +2104,7 @@
                             f += '<li class="comments">' + res.answercount + '</li>';
                             f += '<li class="date">' + res.readcount + '</li>';
                             f += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            f += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                             f += '</ul>';
                             f += ' </div>';
                             f += '<div class="gradient-overlay"></div>';
@@ -1928,6 +2184,7 @@
                             t += '<li class="comments">' + res.answercount + '</li>';
                             t += '<li class="date">' + res.readcount + '</li>';
                             t += '<li class="staravg"><i class="fa-solid fa-star"></i>' + res.staravg + '</li>';
+                            t += '<li class="substotal"><i class="fa-solid fa-heart" style="color:red;"></i>'+res.substotal+'</li>';
                             t += '</ul>';
                             t += ' </div>';
                             t += '<div class="gradient-overlay"></div>';
@@ -1967,13 +2224,8 @@
                     }
                     $("#divgrid").html(t);
                     $(".paging").html(p);
-
                 }
             });
         }
-
-
     });
-
-
 </script>
