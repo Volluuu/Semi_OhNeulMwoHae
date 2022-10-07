@@ -384,6 +384,9 @@
         /*margin-right: auto;*/
         justify-content: space-between;
     }
+    a.page-link{
+        cursor: pointer;
+    }
 </style>
 <body>
 <div class="dg_container">

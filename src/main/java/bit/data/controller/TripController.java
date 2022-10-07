@@ -3,10 +3,7 @@ package bit.data.controller;
 import bit.data.dto.CafeDto;
 import bit.data.dto.FoodDto;
 import bit.data.dto.TripDto;
-import bit.data.service.CafeServiceInter;
-import bit.data.service.CommentCourseServiceInter;
-import bit.data.service.FoodServiceInter;
-import bit.data.service.TripServiceInter;
+import bit.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +28,9 @@ public class TripController {
     TripServiceInter tripService;
     @Autowired
     CommentCourseServiceInter commentCourseService;
+
+    @Autowired
+    SubsServiceInter subsService;
 
     @GetMapping("/courseboard/triplist")
     @ResponseBody
@@ -80,6 +80,8 @@ public class TripController {
             dto.setAnswercount(answercount);
             double staravg = commentCourseService.selectTripStarAvg(dto.getTrip_num());
             dto.setStaravg(staravg);
+            int substotal=subsService.selectTotalSubsTrip(dto.getTrip_num());
+            dto.setSubstotal(substotal);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -142,6 +144,8 @@ public class TripController {
             dto.setAnswercount(answercount);
             double staravg = commentCourseService.selectTripStarAvg(dto.getTrip_num());
             dto.setStaravg(staravg);
+            int substotal=subsService.selectTotalSubsTrip(dto.getTrip_num());
+            dto.setSubstotal(substotal);
         }
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);

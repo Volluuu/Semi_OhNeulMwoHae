@@ -18,4 +18,5 @@ public class FoodDto {
 	private int user_num;
 	private double staravg;
 	private int answercount;
+	private int substotal;
 }

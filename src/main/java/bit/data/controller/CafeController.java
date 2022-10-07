@@ -29,6 +29,8 @@ public class CafeController {
     FoodServiceInter foodService;
     @Autowired
     TripServiceInter tripService;
+    @Autowired
+    SubsServiceInter subsService;
 
     @Autowired
     CommentCourseServiceInter commentCourseService;
@@ -84,6 +86,8 @@ public class CafeController {
             dto.setAnswercount(answercount);
             double staravg = commentCourseService.selectCafeStarAvg(dto.getCafe_num());
             dto.setStaravg(staravg);
+            int substotal=subsService.selectTotalSubsCafe(dto.getCafe_num());
+            dto.setSubstotal(substotal);
         }
 
         model.addAttribute("list", Cafelist);
@@ -144,6 +148,8 @@ public class CafeController {
             dto.setAnswercount(answercount);
             double staravg = commentCourseService.selectCafeStarAvg(dto.getCafe_num());
             dto.setStaravg(staravg);
+            int substotal=subsService.selectTotalSubsCafe(dto.getCafe_num());
+            dto.setSubstotal(substotal);
         }
 
         Map<String, Object> map = new HashMap<>();
@@ -209,6 +215,8 @@ public class CafeController {
             dto.setAnswercount(answercount);
             double staravg = commentCourseService.selectCafeStarAvg(dto.getCafe_num());
             dto.setStaravg(staravg);
+            int substotal=subsService.selectTotalSubsCafe(dto.getCafe_num());
+            dto.setSubstotal(substotal);
         }
 
         Map<String, Object> map = new HashMap<>();
