@@ -82,7 +82,7 @@
           <tr>
             <td colspan="2" align="center">
               <button type="submit" class="btn btn-secondary addqna">게시글 저장</button>
-              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='qnalist?currnetPage=${currentPage}'">이전</button>
+              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='qnalist?currentPage=${currentPage}'">이전</button>
             </td>
           </tr>
         </table>

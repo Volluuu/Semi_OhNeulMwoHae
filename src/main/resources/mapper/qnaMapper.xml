@@ -27,11 +27,15 @@
     </select>
 
     <select id="selectUser_num" parameterType="int" resultType="qnadto">
-        select * from qna where user_num=#{user_num}
+        select * from qna where user_num=#{user_num} order by qna_num desc
     </select>
 
     <insert id="insertQna" parameterType="qnadto">
         insert into qna values (null,#{user_num},#{subject},#{content},'not',now(),0)
+    </insert>
+
+    <insert id="insertQnaAnswer" parameterType="qnadto">
+        insert into qna Q values (null,#{user_num},#{subject},#{content},'not',now(),0)
     </insert>
 
     <delete id="deleteQna" parameterType="int">
@@ -42,7 +46,7 @@
         update qna set subject=#{subject},content=#{content} where qna_num=#{qna_num}
     </update>
 
-    <update id="updateQnaAnswer" parameterType="qnadto">
-        update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'yes' WHERE A.user_num = #{user_num}
+    <update id="updateQnaAnswer">
+        update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'yes' WHERE A.user_num = 1
     </update>
 </mapper>

@@ -88,31 +88,71 @@
 
   </style>
   <script>
-    $(function (){
 
+    $(function (){
+     /* alert("session user_num:"+user_num);
+      alert("dto user_num:"+num);
+      alert("isadmin:"+admin);*/
+      slist();
     });
+    function slist(){
+      var s="";
+      var adminok="${sessionScope.isadmin}";
+      var user_num="${sessionScope.user_num}";
+      var searchcolumn=$("#searchcolumn").val();
+      var searchword=$("#searchword").val();
+      var currentPage="${currentPage}";
+
+      $.ajax({
+        type: "get",
+        url: "qnaAllList",
+        dataType: "json",
+        data: {
+          "searchcolumn": searchcolumn,
+          "searchword": searchword,
+          "currentPage": currentPage,
+          "user_num": user_num},
+        success: function (res) {
+          $.each(res.list, function (i, elt) {
+            if (adminok == 'admin') {
+              s += "<tr><td class='qna_title_subject'>";
+              s += "<a href='qnadetail?qna_num=" + elt.qna_num + "&currentPage=" + res.currentPage + "'>";
+              s += elt.subject;
+              if (elt.answer == 'yes') {
+                s += "<span class='answercntsuc'>[답변 완료]</span>";
+              } else {
+                s += "<span class='answercntfail'>[답변 대기중]</span>";
+              }
+              s += "</a></td><td class='qna_title_content'><span class='qna_title_writeday'>";
+              s += elt.writeday;
+              s += "</span>&nbsp;&nbsp;</label></td></tr>";
+            }
+          });
+          $("#qna_title").append(s);
+        }//success
+      });
+      }; //ajax
+
 
   </script>
 </head>
 <body>
 <div class="qna_main">
   <!-- 검색 -->
-  <%--<div class="searcharea" style="width: 100%; text-align: center; margin-left: 830px;" >
-    <form action="list">
+  <div class="searcharea" style="width: 100%; text-align: center; margin-left: 830px;" >
       <div class="input-group" style="width: 450px;" >
-        <select class="form-control" style="width: 100px;" name="searchcolumn">
+        <select class="form-control" style="width: 100px;" name="searchcolumn" id="searchcolumn">
           <option value="subject">제목</option>
           <option value="id">아이디</option>
           <option value="name">작성자</option>
           <option value="content">내용</option>
         </select>
-        <input type="text" name="searchword" class="form-control" style="width: 200px;" placeholder="검색단어" value="${param.searchword}">
+        <input type="text" name="searchword" id="searchword" class="form-control" style="width: 200px;" placeholder="검색단어" value="${param.searchword}">
 
         <button type="submit" class="form-control"><i class='fas fa-search'></i></button>
         &nbsp;&nbsp;<a href="list?searchcolumn=id&searchword=${sessionScope.loginid}" class="form-control" style="width: 80px; text-decoration: none;">내가쓴글</a>
       </div>
-    </form>
-  </div>--%>
+  </div>
 <!-- 리스트 출력 -->
   <div class="qna_info">
     <h1>고객센터</h1>
@@ -123,29 +163,37 @@
   <div class="qna_list">
     <h3>1:1 문의사항</h3>
     <hr>
+
     <input type="hidden" name="user_num" value="${dto.user_num}">
     <input type="hidden" name="qna_num" value="${dto.qna_num}">
     <input type="hidden" name="currentPage" value="${currentPage}">
     <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+    <table class='table table-hover' id='qna_title'>
+     <tr>
+       <th class='qna_subject_title'>문의 내용</th>
+       <th class='qna_writeday_title'>문의 일자</th>
+     </tr>
+    </table>
     <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
-    <table class="table table-hover" id="qna_title">
+   <%-- <table class="table table-hover" id="qna_title">
       <tr>
         <th class="qna_subject_title">문의 내용</th>
         <th class="qna_writeday_title">문의 일자</th>
       </tr>
     <c:forEach var="dto" items="${list}">
+      <c:if test="${(sessionScope.user_num eq user_num and sessionScope.user_num ne '' and user_num ne '') or sessionScope.isadmin eq 'admin'}">
       <tr>
         <label>
         <td class="qna_title_subject">
           <a href="qnadetail?qna_num=${dto.qna_num}&currentPage=${currentPage}">
            ${dto.subject}&nbsp;&nbsp;
-            <c:choose>
-               <c:when test="${dto.acount>0 && dto.answer eq 'yes'}">
+           <c:choose>
+               <c:when test="${dto.answer eq 'yes'}">
                  <span class="answercntsuc">[답변 완료]</span>
                </c:when>
                <c:otherwise>
                  <span class="answercntfail">[답변 대기중]</span>
-               </c:otherwise>
+              </c:otherwise>
             </c:choose>
           </a>
         </td>
@@ -156,9 +204,9 @@
         </label>
         </td>
       </tr>
+      </c:if>
     </c:forEach>
-    </table>
-    <%--</c:if>--%>
+    </table>--%>
   </div><!-- -->
 
   <!-- 페이징 처리 -->
@@ -183,6 +231,7 @@
       </c:if>
     </ul>
   </div><!-- paging -->
+
 </div><!-- main -->
 </body>
 </html>
