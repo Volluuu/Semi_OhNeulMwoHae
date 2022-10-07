@@ -1,7 +1,9 @@
 package bit.data.service;
 
 import bit.data.dto.UserDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserServiceInter {
@@ -31,4 +33,11 @@ public interface UserServiceInter {
     public void updateUser(UserDto dto);
 
     public void deleteUser(int user_num);
+
+    public String getKakaoAccessToken(String code);
+
+    public UserDto getUserInfo(String access_token);
+
+    public UserDto getAgreementInfo(String access_token);
+
 }

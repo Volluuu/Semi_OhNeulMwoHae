@@ -35,6 +35,8 @@ public class UserController {
         this.messageService = NurigoApp.INSTANCE.initialize("NCSNEBVIMIQMPMQO", "VDFIF8POOXXQVXHVYZ7OJTIA6NKMYBUW", "https://api.coolsms.co.kr");
     }
 
+    
+
     @GetMapping("/list")
     public String ulist(Model model)
     {
@@ -99,7 +101,6 @@ public class UserController {
             String fileName = ChangeName.getChangeFileName(myphoto.getOriginalFilename());
             //dto에 photo에 저장
             dto.setProfilephoto(fileName);
-
             //upload try/catch
             myphoto.transferTo(new File(path + "/" + fileName));
         } catch (Exception e) {
