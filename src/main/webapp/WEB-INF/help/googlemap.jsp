@@ -183,8 +183,8 @@
                     $("span.step").eq(i).text("step" + (i + 1));
                 }
                 var thiscnt = $(this).siblings("div.i").children("input.in1").attr("cnt");
-                if(customArr[thiscnt-1]) { //삭제하려는 경로가 아직 설정되어있지 않은 경우 에러 발생, 예외처리
-                customArr[thiscnt - 1].setMap(null);
+                if (customArr[thiscnt - 1]) { //삭제하려는 경로가 아직 설정되어있지 않은 경우 에러 발생, 예외처리
+                    customArr[thiscnt - 1].setMap(null);
                 }
                 customArr[thiscnt - 1] = null;
                 stepArr[thiscnt - 1] = null;
@@ -195,8 +195,13 @@
                 var newStepArr = new Array(5);
                 var n = 0;
                 for (var i = 0; i < newCustomArr.length; i++) {
-                    if(i == (thiscnt-1)){continue;}
-                    if(!customArr[i]){n++;continue;}
+                    if (i == (thiscnt - 1)) {
+                        continue;
+                    }
+                    if (!customArr[i]) {
+                        n++;
+                        continue;
+                    }
                     newStepArr[n] = stepArr[i];
                     newCustomArr[n++] = customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + n + '</span>');
                 }
@@ -214,8 +219,8 @@
                 //삭제한 경로를 제외한 폴리라인 다시 그리기
                 polyline.setMap(null);
                 var new_linePath = new Array(5);
-                for(var i = 0; i < new_linePath.length; i++) {
-                    if(i == (thiscnt-1) || !linePath[i]) {
+                for (var i = 0; i < new_linePath.length; i++) {
+                    if (i == (thiscnt - 1) || !linePath[i]) {
                         continue;
                     }
                     new_linePath[i] = linePath[i];
@@ -416,9 +421,45 @@
                 find_in1.val("");
                 find_in1.attr("isSelect", "no");
             });
-            $(".cosbtnsave").click(function (){
+
+            //코스를 저장하는 이벤트 : 저장 시 경로들 사이에 null이 있으면 채워달라는 alert 문구 출력
+            $(".cosbtnsave").click(function () {
                 console.log(stepArr);
+                for (var i = 0; i < stepArr.length; i++) {
+                    if (!stepArr[i]) {
+                        for (var j = i + 1; j < stepArr.length; j++) {
+                            if (stepArr[j]) {
+                                alert((i + 1) + "번째 경로가 비어있습니다. 경로삭제 혹은 경로를 추가해주세요.")
+                                $("select.sel1").eq(i+1).focus(); // 헤더부분 검색기능 빠지면 i수정
+                                return;
+                            }
+                        }
+
+                    }
+                }
+                if (confirm("경로를 [나만의 경로]에 추가하시겠습니까?")) {
+                    //페이지 이동하는 부분
+                    $.ajax({
+                        type    : "post",
+                        url     : "../course/insertcourse",
+                        dataType: "json",
+                        data    : {
+                            "step1" : stepArr[0],
+                            "step2" : stepArr[1],
+                            "step3" : stepArr[2],
+                            "step4" : stepArr[3],
+                            "step5" : stepArr[4]
+                        },
+                        success : function (res) {
+
+                        }//sucess
+                    });//ajax
+                } else {
+                    alert("저장이 취소되었습니다.");
+                }
             });
+
+
         }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
