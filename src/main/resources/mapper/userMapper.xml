@@ -4,6 +4,14 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
+    <update id="findPassword" >
+        update user set password=#{password} where loginid=#{loginid} and email=#{email}
+    </update>
+
+    <select id="findPasswordCheck" resultType="int">
+        select count(*) from user where email=#{email} and loginid=#{loginid}
+    </select>
+
     <select id="findIdByName" parameterType="String" resultType="udto">
         select * from user where name=#{name}
     </select>

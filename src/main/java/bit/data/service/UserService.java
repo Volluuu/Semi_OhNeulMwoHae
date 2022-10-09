@@ -25,6 +25,33 @@ public class UserService implements UserServiceInter{
     @Autowired
     UserDaoInter userDao;
 
+   /* @Override
+    public void findPassword(String email,String loginid){
+        String memberKey = new TempKey().getKey(8,false);
+        String password=BCrypt.hashpw(memberKey,BCrypt.gensalt());
+        userDao.findPassword(email,loginid,password);
+        MailUtils sendMail = new MailUtils(mailSender);
+        sendMail.setSubject("[오늘뭐해!? 커뮤니티 임시 비밀번호 입니다.]"); //메일제목
+        sendMail.setText(
+                "<h1>임시비밀번호 발급</h1>" +
+                        "<br/>"+loginid+"님 "+
+                        "<br/>비밀번호 찾기를 통한 임시 비밀번호입니다."+
+                        "<br/>임시비밀번호 :   <h2>"+memberKey+"</h2>"+
+                        "<br/>로그인 후 비밀번호 변경을 해주세요."+
+                        "<a href='http://localhost:9000"+
+                        ">메인 페이지</a>");
+        sendMail.setFrom("[dmltk1717@naver.com]", "오늘뭐해!?");
+        sendMail.setTo(memberEmail);
+        sendMail.send();
+    };
+
+    @Override
+    public int findPasswordCheck(UserDto userdto){
+        return userDao.findPasswordCheck(userdto);
+    };*/
+
+
+
     @Override
     public UserDto findIdByName(String name){
         return userDao.findIdByName(name);

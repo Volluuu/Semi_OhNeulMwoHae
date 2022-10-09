@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInter {
+
+    public int findPassword(String password,String email,String loginid);
+    public int findPasswordCheck(UserDto userdto);
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
     public int getTotalCount();
