@@ -36,12 +36,30 @@ public class LoginController {
 		if (udto_old != null) {
 			udto = udto_old;
 		} else {  // 아니라면 새로운 유저를 생성한다
-			userService.insertUser(udto);
+			session.setMaxInactiveInterval(60*60*4);//4시간 유지
+			session.setAttribute("login_channel", "kakao_id");
+			session.setAttribute("kakao_id", udto.getKakao_id());
+			session.setAttribute("naver_id", udto.getNaver_id());
+			session.setAttribute("loginid", udto.getLoginid());
+			session.setAttribute("password", udto.getPassword());
+			session.setAttribute("loginname", udto.getName());
+			session.setAttribute("nickname", udto.getNickname());
+			session.setAttribute("age", udto.getAge());
+			session.setAttribute("gender", udto.getGender());
+			session.setAttribute("email", udto.getEmail());
+			session.setAttribute("profile", udto.getProfile());
+			session.setAttribute("loginphoto", udto.getProfilephoto());
+			session.setAttribute("loginhp", udto.getHp());
+			session.setAttribute("isadmin",udto.getIsadmin());
+			session.setAttribute("alarm", udto.getAlarm());
+			session.setAttribute("interest", udto.getInterest());
+			return "redirect:/user/userform?login_channel=kakao_id";
 		}
 
 		//유지 시간 설정
 		//session.setMaxInactiveInterval(result);
 		session.setMaxInactiveInterval(60*60*4);//4시간 유지
+
 		//로그인한 아이디에 대한 정보를 얻어서 세션에 저장
 		session.setAttribute("loginok", "yes");
 		session.setAttribute("user_num", udto.getUser_num());
@@ -51,6 +69,8 @@ public class LoginController {
 		session.setAttribute("password", udto.getPassword());
 		session.setAttribute("loginname", udto.getName());
 		session.setAttribute("nickname", udto.getNickname());
+		session.setAttribute("age", udto.getAge());
+		session.setAttribute("gender", udto.getGender());
 		session.setAttribute("email", udto.getEmail());
 		session.setAttribute("profile", udto.getProfile());
 		session.setAttribute("loginphoto", udto.getProfilephoto());
@@ -74,7 +94,24 @@ public class LoginController {
 		if (udto_old != null) {
 			udto = udto_old;
 		} else {  // 아니라면 새로운 유저를 생성한다
-			userService.insertUser(udto);
+			session.setMaxInactiveInterval(60*60*4);//4시간 유지
+			session.setAttribute("login_channel", "naver_id");
+			session.setAttribute("kakao_id", udto.getKakao_id());
+			session.setAttribute("naver_id", udto.getNaver_id());
+			session.setAttribute("loginid", udto.getLoginid());
+			session.setAttribute("password", udto.getPassword());
+			session.setAttribute("loginname", udto.getName());
+			session.setAttribute("nickname", udto.getNickname());
+			session.setAttribute("age", udto.getAge());
+			session.setAttribute("gender", udto.getGender());
+			session.setAttribute("email", udto.getEmail());
+			session.setAttribute("profile", udto.getProfile());
+			session.setAttribute("loginphoto", udto.getProfilephoto());
+			session.setAttribute("loginhp", udto.getHp());
+			session.setAttribute("isadmin",udto.getIsadmin());
+			session.setAttribute("alarm", udto.getAlarm());
+			session.setAttribute("interest", udto.getInterest());
+			return "redirect:/user/userform?login_channel=naver_id";
 		}
 
 		//유지 시간 설정
@@ -89,6 +126,8 @@ public class LoginController {
 		session.setAttribute("password", udto.getPassword());
 		session.setAttribute("loginname", udto.getName());
 		session.setAttribute("nickname", udto.getNickname());
+		session.setAttribute("age", udto.getAge());
+		session.setAttribute("gender", udto.getGender());
 		session.setAttribute("email", udto.getEmail());
 		session.setAttribute("profile", udto.getProfile());
 		session.setAttribute("loginphoto", udto.getProfilephoto());

@@ -276,12 +276,20 @@ public class UserService implements UserServiceInter{
 
             // 선택 동의 항목은 주어지지 않을 수도 있으므로 확인 후 가져옴
             JsonNode accessor;
+            accessor = jsonNode.get("kakao_account").get("profile");
+            result.setName(accessor != null ? (accessor.get("nickname") != null ? accessor.get("nickname").asText() : null) : null);
+            accessor = jsonNode.get("kakao_account").get("name");
+            result.setName(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("kakao_account").get("email");
             result.setEmail(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("kakao_account").get("age_range");
             result.setAge(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("kakao_account").get("gender");
             result.setGender(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("kakao_account").get("profile");
+            result.setProfile(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("kakao_account").get("phone_number");
+            result.setHp(accessor != null ? accessor.asText() : null);
 
             System.out.println(result);
 
@@ -321,6 +329,8 @@ public class UserService implements UserServiceInter{
 
             // 선택 동의 항목은 주어지지 않을 수도 있으므로 확인 후 가져옴
             JsonNode accessor;
+            accessor = jsonNode.get("response").get("name");
+            result.setName(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("response").get("nickname");
             result.setNickname(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("response").get("email");
@@ -329,6 +339,8 @@ public class UserService implements UserServiceInter{
             result.setAge(accessor != null ? accessor.asText() : null);
             accessor = jsonNode.get("response").get("gender");
             result.setGender(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("response").get("mobile");
+            result.setHp(accessor != null ? accessor.asText() : null);
 
             System.out.println(result);
 
