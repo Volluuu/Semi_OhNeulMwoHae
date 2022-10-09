@@ -16,6 +16,10 @@ public interface UserServiceInter {
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
 
+    public UserDto getUserByKakaoId(long kakao_id);
+
+    public UserDto getUserByNaverId(String naver_id);
+
     public int getTotalCount();
 
     public int getLoginIdSearch(String loginid);
@@ -41,7 +45,11 @@ public interface UserServiceInter {
 
     public String getKakaoAccessToken(String code);
 
+    public String getNaverAccessToken(String code, String state);
+
     public UserDto getUserInfo(String access_token);
+
+    public UserDto getNaverUserInfo(String access_token);
 
     public UserDto getAgreementInfo(String access_token);
 

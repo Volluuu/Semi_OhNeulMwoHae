@@ -12,6 +12,8 @@ public interface UserDaoInter {
     public int findPasswordCheck(UserDto userdto);
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
+    public UserDto getUserByKakaoId(long kakao_id);
+    public UserDto getUserByNaverId(String naver_id);
     public int getTotalCount();
     public int getLoginIdSearch(String loginid);
     public int loginNicknameCheck(String nickname);

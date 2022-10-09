@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 @Data
 public class UserDto {
 	private int user_num;
+	private long kakao_id;
+	private String naver_id;
 	private String loginid;
 	private String password;
 	private String name;

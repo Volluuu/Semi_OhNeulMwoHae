@@ -42,6 +42,16 @@ public class UserDao implements UserDaoInter{
     }
 
     @Override
+    public UserDto getUserByKakaoId(long kakao_id) {
+        return session.selectOne(ns+"getUserByKakaoId", kakao_id);
+    }
+
+    @Override
+    public UserDto getUserByNaverId(String naver_id) {
+        return session.selectOne(ns+"getUserByNaverId", naver_id);
+    }
+
+    @Override
     public int getTotalCount() {
         // TODO Auto-generated method stub
         //원래는 앞에 namespace.id인대 생략가능

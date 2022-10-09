@@ -62,6 +62,16 @@ public class UserService implements UserServiceInter{
     }
 
     @Override
+    public UserDto getUserByKakaoId(long kakao_id) {
+        return userDao.getUserByKakaoId(kakao_id);
+    }
+
+    @Override
+    public UserDto getUserByNaverId(String naver_id) {
+        return userDao.getUserByNaverId(naver_id);
+    }
+
+    @Override
     public int getTotalCount() {
         // TODO Auto-generated method stub
         return userDao.getTotalCount();
@@ -193,6 +203,54 @@ public class UserService implements UserServiceInter{
         return access_Token;
     }
 
+    public String getNaverAccessToken(String code, String state) {
+        String access_Token = "";
+        String refresh_Token = "";
+        String reqURL = "https://nid.naver.com/oauth2.0/token";
+        try {
+
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+
+
+            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
+            sb.append("&client_id=h329mamXhLqa2E3NXaS3"); // TODO REST_API_KEY 입력
+            sb.append("&client_secret=2hUWbMmbPj"); // TODO 비밀 키 제거 및 갱신 필요
+            sb.append("&state=" + state);
+            sb.append("&code=" + code);
+            bw.write(sb.toString());
+            bw.flush();
+
+            //결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(br);
+
+            access_Token = jsonNode.get("access_token").toString();
+            refresh_Token = jsonNode.get("refresh_token").toString();
+
+            br.close();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return access_Token;
+    }
+
     public UserDto getUserInfo(String access_token) {
         String host = "https://kapi.kakao.com/v2/user/me";
         UserDto result = new UserDto();
@@ -213,10 +271,65 @@ public class UserService implements UserServiceInter{
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(br);
 
+            result.setKakao_id(jsonNode.get("id").asLong());
             result.setNickname(jsonNode.get("properties").get("nickname").asText());
-            result.setEmail(jsonNode.get("kakao_account").get("email").asText());
-            result.setAge(jsonNode.get("kakao_account").get("age_range").asText());
-            result.setGender(jsonNode.get("kakao_account").get("gender").asText());
+
+            // 선택 동의 항목은 주어지지 않을 수도 있으므로 확인 후 가져옴
+            JsonNode accessor;
+            accessor = jsonNode.get("kakao_account").get("email");
+            result.setEmail(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("kakao_account").get("age_range");
+            result.setAge(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("kakao_account").get("gender");
+            result.setGender(accessor != null ? accessor.asText() : null);
+
+            System.out.println(result);
+
+            br.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public UserDto getNaverUserInfo(String access_token) {
+        String host = "https://openapi.naver.com/v1/nid/me";
+        UserDto result = new UserDto();
+        try {
+            URL url = new URL(host);
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestProperty("Authorization", "Bearer " + access_token);
+            urlConnection.setRequestMethod("GET");
+
+            int responseCode = urlConnection.getResponseCode();
+            System.out.println("responseCode = " + responseCode);
+
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(br);
+
+            System.out.println(jsonNode.toPrettyString());
+
+            result.setNaver_id(jsonNode.get("response").get("id").asText());
+
+            // 선택 동의 항목은 주어지지 않을 수도 있으므로 확인 후 가져옴
+            JsonNode accessor;
+            accessor = jsonNode.get("response").get("nickname");
+            result.setNickname(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("response").get("email");
+            result.setEmail(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("response").get("age");
+            result.setAge(accessor != null ? accessor.asText() : null);
+            accessor = jsonNode.get("response").get("gender");
+            result.setGender(accessor != null ? accessor.asText() : null);
+
             System.out.println(result);
 
             br.close();
