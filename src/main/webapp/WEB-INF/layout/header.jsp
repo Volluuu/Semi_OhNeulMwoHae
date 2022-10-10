@@ -163,7 +163,7 @@
 				<a href="${root}/board/form">장소 목록</a>
 				<a href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
 				<c:if test="${sessionScope.isadmin=='admin'}">
-				<a href="${root}/board/list">관리자페이지</a>
+				<a href="${root}/admin/list">관리자페이지</a>
 				</c:if>
 			</div>
 		</div>

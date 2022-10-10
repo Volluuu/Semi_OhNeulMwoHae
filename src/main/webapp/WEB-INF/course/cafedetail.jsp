@@ -111,7 +111,7 @@
 <div class="dPuFYu" id="contents" style="margin-bottom: 66px;" media="web">
     <section direction="vertical" class="hj_mainimg">
         <img src="${dto.photo}">
-    </section>
+
     <div class="hj_bmain">
         <div class="hj_bhead">
             <div class="hj_bbody">
@@ -233,11 +233,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="dg_container">
-
-</div>
-
 
 <%--footer--%>
 <footer id="footer" class="efLSbp">
@@ -286,7 +281,7 @@
         </div>
     </div>
 </footer>
-
-
+</section>
+</div>
 </body>
 </html>

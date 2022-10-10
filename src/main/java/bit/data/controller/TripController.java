@@ -93,6 +93,7 @@ public class TripController {
         map.put("totalPage", totalPage);
         map.put("findcolumn",tc);
         map.put("findword",tw);
+        map.put("gu",gu);
         return map;
     }
 

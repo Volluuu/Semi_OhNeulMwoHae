@@ -46,7 +46,7 @@ public class CafeController {
         //페이징 처리에 필요한 변수들
         //전체 갯수
         int CafetotalCount=cafeService.selectTotalCount(cc, cw, gu);
-        int perPage=12;//한페이지당 보여질 글의 갯수
+        int perPage=20;//한페이지당 보여질 글의 갯수
         int perBlock=10;//한블럭당 보여질 페이지의 갯수
         int CafestartNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
         int CafestartPage;//각블럭당 보여질 시작페이지

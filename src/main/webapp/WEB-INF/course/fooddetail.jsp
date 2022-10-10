@@ -75,7 +75,7 @@
             data: {"food_num": food_num, "user_num": user_num},
             success: function (res) {
                 $("#answer").html("댓글 갯수 : " + res.list.length);
-                $.each(res.ist, function (i, elt) {
+                $.each(res.list, function (i, elt) {
                     s += "<div class='cafestar'>";
                     s += "닉네임 : " + elt.nickname;
                     if (loginok == 'yes' && user_num == elt.user_num) {
