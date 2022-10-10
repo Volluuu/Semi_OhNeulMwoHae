@@ -26,7 +26,8 @@ public class MyPageController {
 
         System.out.println("userDto: " + userDto);
 
-        model.addAttribute("profilephoto", "/resources/upload/" + userDto.getProfilephoto());
+        //model.addAttribute("profilephoto", "/resources/upload/" + userDto.getProfilephoto());
+        model.addAttribute("profilephoto", "/resources/upload/noimage.png");
         model.addAttribute("nickname", userDto.getNickname());
         model.addAttribute("hp", userDto.getHp());
         model.addAttribute("age", userDto.getAge());
