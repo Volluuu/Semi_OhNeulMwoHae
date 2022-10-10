@@ -30,7 +30,7 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
-	public int getTotalCount(Map<String, String> map) {
+	public int getTotalCount(Map<String, Object> map) {
 		return session.selectOne(ns+"getTotalCount",map);
 	}
 
