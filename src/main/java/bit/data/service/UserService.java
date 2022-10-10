@@ -50,7 +50,11 @@ public class UserService implements UserServiceInter{
         return userDao.findPasswordCheck(userdto);
     };*/
 
+    @Override
+    public UserDto findPasswordById(String loginid){return userDao.findPasswordById(loginid);}
 
+    @Override
+    public int findPasswordCheckById(String loginid){return userDao.findPasswordCheckById(loginid);}
 
     @Override
     public UserDto findIdByName(String name){

@@ -8,11 +8,9 @@ import java.util.List;
 
 public interface UserServiceInter {
 
-/*    public int findPasswordCheck(UserDto userdto);
 
-
-    public void findPassword(String email,String loginid);*/
-
+    public UserDto findPasswordById(String loginid);
+    public int findPasswordCheckById(String loginid);
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
 

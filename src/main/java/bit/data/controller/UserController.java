@@ -110,6 +110,18 @@ public class UserController {
         }
     }
 
+    @PostMapping("/findpassword")
+    public String findpassword(UserDto userdto,Model model){
+        System.out.println("loginid="+ userdto.getLoginid());
+        if(userService.findPasswordCheckById(userdto.getLoginid())==0) {
+            model.addAttribute("msg", "아이디를 확인해주세요");
+            return "/bit/user/userpassword";
+        }else {
+            model.addAttribute("user", userService.findPasswordById(userdto.getLoginid()));
+            return "/bit/user/findpassword";
+        }
+    }
+
     @PostMapping("/insert")
     public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto, HttpSession session)// MemberDto dto은 모델앤뷰 생략
     {

@@ -8,8 +8,11 @@ import java.util.Map;
 
 public interface UserDaoInter {
 
-    public int findPassword(String password,String email,String loginid);
-    public int findPasswordCheck(UserDto userdto);
+
+
+    public UserDto findPasswordById(String loginid);
+
+    public int findPasswordCheckById(String loginid);
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
     public UserDto getUserByKakaoId(long kakao_id);
