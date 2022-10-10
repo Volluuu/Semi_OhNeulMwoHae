@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SubsController {
@@ -74,6 +76,65 @@ public class SubsController {
         CafeDto dto=subsService.selectCafeData(cafe_num);
 
         return dto;
+    }
+
+    @GetMapping("/cafedetail/insertsubs")
+    @ResponseBody
+    public Map<String, Integer> cafeInsertSubs(int user_num, int cafe_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.insertCafeSubs(user_num, cafe_num);
+        int totalsubs=subsService.selectTotalSubsCafe(cafe_num);
+        map.put("totalsubs",totalsubs);
+        return map;
+    }
+
+    @GetMapping("/cafedetail/deletesubs")
+    @ResponseBody
+    public Map<String, Integer> cafeDeleteSubs(int user_num, int cafe_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.deleteCafeSubs(user_num, cafe_num);
+        int totalsubs=subsService.selectTotalSubsCafe(cafe_num);
+        map.put("totalsubs",totalsubs);
+        return map;
+    }
+
+    @GetMapping("/fooddetail/insertsubs")
+    @ResponseBody
+    public Map<String, Integer> foodInsertSubs(int user_num, int food_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.insertFoodSubs(user_num, food_num);
+        int totalsubs=subsService.selectTotalSubsFood(food_num);
+        map.put("totalsubs",totalsubs);
+        return map;
+    }
+
+    @GetMapping("/fooddetail/deletesubs")
+    @ResponseBody
+    public Map<String, Integer> foodDeleteSubs(int user_num, int food_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.deleteFoodSubs(user_num, food_num);
+        int totalsubs=subsService.selectTotalSubsFood(food_num);
+        map.put("totalsubs",totalsubs);
+        return map;
+    }
+
+    @GetMapping("/tripdetail/insertsubs")
+    @ResponseBody
+    public Map<String, Integer> tripInsertSubs(int user_num, int trip_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.insertTripSubs(user_num, trip_num);
+        int totalsubs=subsService.selectTotalSubsTrip(trip_num);
+        map.put("totalsubs",totalsubs);
+        return map;
+    }
+    @GetMapping("/tripdetail/deletesubs")
+    @ResponseBody
+    public Map<String, Integer> tripDeleteSubs(int user_num, int trip_num){
+        Map<String, Integer> map=new HashMap<>();
+        subsService.deleteTripSubs(user_num, trip_num);
+        int totalsubs=subsService.selectTotalSubsTrip(trip_num);
+        map.put("totalsubs",totalsubs);
+        return map;
     }
 
 }

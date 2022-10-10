@@ -13,8 +13,9 @@ public interface QnaServiceInter {
 	public List<QnaDto> getPagingList(String searchcolumn,String searchword,int startnum,int perpage);
 	public void insertQna(QnaDto dto);
 	public QnaDto getUser(int user_num);
+	public List<QnaDto> getUserData(int user_num);
 	public void updateQna(QnaDto dto);
-	public void updateAnswer(QnaDto dto);
-	public void deleteQna(int num);
+	public void updateAnswer();
+	public void deleteQna(int qna_num);
 
 }

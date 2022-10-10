@@ -14,7 +14,8 @@ public interface QnaDaoInter {
 	public List<QnaDto> getPagingList(Map<String, Object> map);
 	public void insertQna(QnaDto dto);
 	public QnaDto getUser(int user_num);
+	public List<QnaDto> getUserData(int user_num);
 	public void updateQna(QnaDto dto);
-	public void updateAnswer(QnaDto dto);
-	public void deleteQna(int num);
+	public void updateAnswer();
+	public void deleteQna(int qna_num);
 }

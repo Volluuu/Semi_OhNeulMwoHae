@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../css/cafedetail.css">
 <link rel="stylesheet" href="../css/star.css">
 <link rel="stylesheet" href="../css/footer.css">
+<script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <style>
 
     * {
@@ -45,11 +46,15 @@
     button.fr {
         float: right;
     }
-    .dg_container{
+
+    .dg_container {
         width: 100%;
         height: 200px;
     }
 
+    i.fa-heart {
+        cursor: pointer;
+    }
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <html>
@@ -71,23 +76,28 @@
             type: "get",
             url: root + "/course/cafedetailanswer",
             dataType: "json",
-            data: {"cafe_num": cafe_num},
+            data: {"cafe_num": cafe_num, "user_num": user_num},
             success: function (res) {
-                $("#answer").html("댓글 갯수 : " + res.length);
-                $.each(res, function (i, elt) {
+                $("#answer").html("댓글 갯수 : " + res.list.length);
+                $.each(res.list, function (i, elt) {
                     s += "<div class='cafestar'>";
                     s += "닉네임 : " + elt.nickname;
                     if (loginok == 'yes' && user_num == elt.user_num) {
                         s += '<button class="btn btn-outline-dark adel fr" course_num="' + elt.course_num + '">삭제</button>';
                         s += '<button class="btn btn-outline-dark aupd fr" course_num="' + elt.course_num + '">수정</button>';
                     }
-                    s +="<p><pre class='cafecontent'>" + elt.content + "</pre>";
-                    s+="<span class='day'> 작성일 : " + elt.writeday + "</span>";
-                    s+="<span class='star'> 별점 : "+elt.star+"</span>";
-                    s+="</p>";
+                    s += "<p><pre class='cafecontent'>" + elt.content + "</pre>";
+                    s += "<span class='day'> 작성일 : " + elt.writeday + "</span>";
+                    s += "<span class='star'> 별점 : " + elt.star + "</span>";
+                    s += "</p>";
                     s += "</div>";
 
                 });
+                if (res.subs == 0) {
+                    $("span.subs").html("<i class='fa-regular fa-heart'></i>");
+                } else {
+                    $("span.subs").html("<i class='fa-solid fa-heart' style='color:red;'></i>");
+                }
                 $("#review").html(s);
             }
         });
@@ -124,36 +134,73 @@
                         </div>
                     </div>
                     <div>
+                        <span class="subs"></span>
+                        <br>
                         <b id="answer"></b>
                         <div id="review"></div>
                     </div>
                 </div>
-
+                <script type="text/javascript">
+                    $("span.subs").click(function () {
+                        var loginok = "${sessionScope.loginok}";
+                        var user_num = "${sessionScope.user_num}";
+                        var cafe_num = "${dto.cafe_num}";
+                        if (loginok != "yes") {
+                            alert("로그인 후 이용가능합니다");
+                            return;
+                        } else {
+                            var heart = $(this).find("i").attr("class");
+                            if (heart == 'fa-regular fa-heart') {
+                                $(this).find("i").attr("class", "fa-solid fa-heart").css("color", "red");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/cafedetail/insertsubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "cafe_num": cafe_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            } else {
+                                $(this).find("i").attr("class", "fa-regular fa-heart").css("color", "black");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/cafedetail/deletesubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "cafe_num": cafe_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            }
+                        }
+                        //ajax이용해서 좋아요 수 증가 후 출력
+                    });
+                </script>
                 <%--------------------------------------------------------------------------- 별점--%>
                 <c:if test="${sessionScope.loginok!=null}">
-                <form class="mb-3" id="myform">
-                    <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                    <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
-                    <fieldset>
-                        <span class="text-bold">별점을 선택해주세요</span>
-                        <input type="radio" name="star" value="5" id="rate1"><label
-                            for="rate1">★</label>
-                        <input type="radio" name="star" value="4" id="rate2"><label
-                            for="rate2">★</label>
-                        <input type="radio" name="star" value="3" id="rate3" checked><label
-                            for="rate3">★</label>
-                        <input type="radio" name="star" value="2" id="rate4"><label
-                            for="rate4">★</label>
-                        <input type="radio" name="star" value="1" id="rate5"><label
-                            for="rate5">★</label>
-                    </fieldset>
-                    <div>
+                    <form class="mb-3" id="myform">
+                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+                        <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
+                        <fieldset>
+                            <span class="text-bold">별점을 선택해주세요</span>
+                            <input type="radio" name="star" value="5" id="rate1"><label
+                                for="rate1">★</label>
+                            <input type="radio" name="star" value="4" id="rate2"><label
+                                for="rate2">★</label>
+                            <input type="radio" name="star" value="3" id="rate3" checked><label
+                                for="rate3">★</label>
+                            <input type="radio" name="star" value="2" id="rate4"><label
+                                for="rate4">★</label>
+                            <input type="radio" name="star" value="1" id="rate5"><label
+                                for="rate5">★</label>
+                        </fieldset>
+                        <div>
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
+                        </div>
+                        <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button>
+                        <br>
 
-                </form>
+                    </form>
                 </c:if>
 
 

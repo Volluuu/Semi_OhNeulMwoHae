@@ -60,4 +60,6 @@ public class CommentCourseDao implements CommentCourseDaoInter {
     public double selectTripStarAvg(int trip_num) {
         return session.selectOne(ns+"selectTripStarAvg",trip_num);
     }
+
+
 }
