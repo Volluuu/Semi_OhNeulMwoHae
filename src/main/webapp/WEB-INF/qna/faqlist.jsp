@@ -68,6 +68,7 @@
     }
     .faq_content_list{
       background-color: lightgray;
+      min-height: 150px;
     }
   </style>
   <script>
