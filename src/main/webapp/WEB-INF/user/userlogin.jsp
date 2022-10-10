@@ -55,9 +55,9 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <button type="button" class="btn btn-success"  id="btnsocial1" >네이버</button>
+                    <button type="button" onclick="location.href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver'" class="btn btn-success"  id="btnsocial1" >네이버</button>
                     &nbsp;&nbsp;
-                    <button type="button" class="btn btn-success"  id="btnsocial2" style="background-color: yellow; color:black;">카카오</button>
+                    <button type="button" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code'" class="btn btn-success"  id="btnsocial2" style="background-color: yellow; color:black;">카카오</button>
                 </div>
             </td>
         </tr>

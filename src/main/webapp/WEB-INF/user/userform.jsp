@@ -222,13 +222,45 @@
         <table class="table table-bordered" style="width: 600px">
             <caption align="top">
                 <h1 style="text-align: center;"><b>회원가입</b></h1>
+                <%
+                    Object loginChannelObj = session.getAttribute("login_channel");
+                    if (loginChannelObj != null) {
+                        String loginChannel = (String) loginChannelObj;
+                        switch (loginChannel) {
+                            case "kakao_id":
+                                out.println("<h2 style='font-size: 1em; color: red;'>카카오 ID로 회원가입 중입니다.</h2>");
+                                break;
+                            case "naver_id":
+                                out.println("<h2 style='font-size: 1em; color: red;'>네이버 ID로 회원가입 중입니다.</h2>");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                %>
             </caption>
             <tr>
                 <td>
                     <div>아이디</div>
                     <div class="input-group">
                         <input placeholder="영문소문자, 숫자 2-10자" id="loginid2" name="loginid"
-                               class="form-control" style="width: 120px;" required="required">
+                               class="form-control" style="width: 120px;" required="required"
+                               <%
+                                if (loginChannelObj != null) {
+                                 String loginChannel = (String) loginChannelObj;
+                                 switch (loginChannel) {
+                                      case "kakao_id":
+                                          out.println("value=\"kakao_" + (int)(Math.random() * 10000000) + "\"");
+                                          break;
+                                      case "naver_id":
+                                          out.println("value=\"naver_" + (int)(Math.random() * 10000000) + "\"");
+                                          break;
+                                     default:
+                                          break;
+                                    }
+                                 }
+                               %>
+                        >
                         <button type="button" class="btn btn-danger btn-sm"
                                 id="btnidcheck">중복체크</button>
                     </div>
@@ -238,14 +270,44 @@
             <tr>
                 <td>
                     <div>비밀번호</div>
+                    <%
+                        boolean randomPassword = false;
+                        String randomPasswordValue = "rnd";
+                        if (loginChannelObj != null) {
+                            String loginChannel = (String) loginChannelObj;
+                            switch (loginChannel) {
+                                case "kakao_id":
+                                case "naver_id":
+                                    randomPassword = true;
+                                    for (int i=0; i<10; ++i) {
+                                        randomPasswordValue += (int) (Math.random() * 10);
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    %>
                     <div class="input-group">
                         <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
                                name="password" id="pass" placeholder="영문, 숫자 8-20자" maxlength="20"
-                               required="required">
+                               required="required"
+                               <%
+                                    if (randomPassword) {
+                                        out.println("value=\"" + randomPasswordValue + "\"");
+                                    }
+                               %>
+                        >
 
                         <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
                                id="pass2" placeholder="비밀번호 확인" maxlength="20"
-                               required="required">
+                               required="required"
+                                <%
+                                    if (randomPassword) {
+                                        out.println("value=\"" + randomPasswordValue + "\"");
+                                    }
+                                %>
+                        >
                     </div>
                     <div id="passwordSuccess"></div>
                 </td>
@@ -254,7 +316,15 @@
                 <td>
                     <div>이름</div>
                     <input type="text" name="name" class="form-control"
-                           style="width: 180px;" placeholder="이름" required="required">
+                           style="width: 180px;" placeholder="이름" required="required"
+                           <%
+                            Object nameObj = session.getAttribute("loginname");
+                            if (nameObj != null) {
+                                String name = (String) nameObj;
+                                out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(name) + "\"");
+                            }
+                            %>
+                    >
                 </td>
             </tr>
 
@@ -262,10 +332,32 @@
                 <td>
                     <div>이메일</div>
                     <div class="input-group">
+                        <%
+                            Object emailObj = session.getAttribute("email");
+                            String[] emailSplitted = null;
+                            boolean emailValid = false;
+                            if (emailObj != null) {
+                                String email = (String) emailObj;
+                                emailSplitted = email.split("@");
+                                if (emailSplitted.length == 2) {
+                                    emailValid = true;
+                                }
+                            }
+                        %>
                         <input  id="email" name="email" class="form-control"
-                                style="width: 150px;" placeholder="이메일" required="required">
+                                style="width: 150px;" placeholder="이메일" required="required"
+                                <%
+                                if (emailValid)
+                                    out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(emailSplitted[0]) + "\"");
+                                %>
+                        >
                         <input  id="emailDomain" name="emailDomain" class="form-control"
-                                style="width: 150px;" required="required">
+                                style="width: 150px;" required="required"
+                                <%
+                                if (emailValid)
+                                    out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(emailSplitted[1]) + "\"");
+                                %>
+                        >
                         <select id="emailSelect">
                             <option value="">직접입력</option>
                             <option value="@naver.com">@naver.com</option>
@@ -281,7 +373,15 @@
                     <div>휴대폰 번호</div>
                     <div class="input-group">
                         <input type="text" id="hp" name="hp" placeholder="(-) 포함해서 입력"
-                               class="form-control" style="width: 200px;" required="required">
+                               class="form-control" style="width: 200px;" required="required"
+                                <%
+                                Object loginHpObj = session.getAttribute("loginhp");
+                                if (loginHpObj != null) {
+                                    String loginHp = (String) loginHpObj;
+                                    out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(loginHp) + "\"");
+                                }
+                                %>
+                        >
                         <button type="button" class="btn btn-danger btn-sm"
                                 id="btnRequstCheck">인증요청</button>
                     </div>
@@ -300,7 +400,15 @@
                     <div>닉네임</div>
                     <div class="input-group">
                         <input type="text" id="nickname" name="nickname" placeholder="한글 2-8자"
-                               class="form-control" style="width: 120px;" required="required">
+                               class="form-control" style="width: 120px;" required="required"
+                                <%
+                                Object nicknameObj = session.getAttribute("nickname");
+                                if (nicknameObj != null) {
+                                    String nickname = (String) nicknameObj;
+                                    out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(nickname) + "\"");
+                                }
+                                %>
+                               >
                         <button type="button" class="btn btn-danger btn-sm"
                                 id="btnNicknameCheck">중복체크</button>
                     </div>
@@ -311,16 +419,42 @@
                 <td>
                     성별
                     <select name="gender" type="">
-                        <option value="F">여자</option>
-                        <option value="M">남자</option>
+                        <%
+                            Object genderObj = session.getAttribute("gender");
+                            String gender = "";
+                            if (genderObj != null) {
+                                gender = (String) genderObj;
+                            }
+                        %>
+                        <option value="F"
+                                <%
+                                    if (gender.equalsIgnoreCase("F") || gender.equalsIgnoreCase("female")) {
+                                        out.println("selected");
+                                    }
+                                %>
+                        >여자</option>
+                        <option value="M"
+                                <%
+                                    if (gender.equalsIgnoreCase("M") || gender.equalsIgnoreCase("male")) {
+                                        out.println("selected");
+                                    }
+                                %>
+                        >남자</option>
                     </select>
 
                     연령대
                     <select name="age">
-                        <option value="10">10대</option>
-                        <option value="20">20대</option>
-                        <option value="30">30대</option>
-                        <option value="40">40대</option>
+                        <%
+                            Object ageObj = session.getAttribute("age");
+                            String age = "10";
+                            if (ageObj != null) {
+                                age = (String) ageObj;
+                            }
+                        %>
+                        <option value="10" <% if (age.length() >= 2 && age.substring(0,2).equals("10")) out.println("selected"); %> >10대</option>
+                        <option value="20" <% if (age.length() >= 2 && age.substring(0,2).equals("20")) out.println("selected"); %> >20대</option>
+                        <option value="30" <% if (age.length() >= 2 && age.substring(0,2).equals("30")) out.println("selected"); %> >30대</option>
+                        <option value="40" <% if (age.length() >= 2 && age.substring(0,2).equals("40")) out.println("selected"); %> >40대</option>
                     </select>
                 </td>
 
@@ -334,5 +468,34 @@
         </table>
     </form>
 </div>
+<script>
+    <%
+    if (loginChannelObj != null) {
+        String loginChannel = (String) loginChannelObj;
+        if (loginChannel.equals("kakao_id") || loginChannel.equals("naver_id")) {
+            out.println(
+                    "window.addEventListener('load', function (e) {" +
+                    "let checkSecondPassword = function () {" +
+                    "var p1 = $('#pass').val();" +
+                    "var p2 = $('#pass2').val();" +
+                "const regex = /^[a-zA-Z0-9]{8,20}$/;" +
+                "if (!regex.test(p1)) { " +
+                "    $('#passwordSuccess').text('조건에 맞게 입력해주세요'); "+
+                "} else if (p2 == '') { " +
+                "    $('#passwordSuccess').text('조건에 맞게 채워주세요.');" +
+                "} else if (!regex.test(p2) || p1 != p2) {" +
+                "    $('#passwordSuccess').text('비밀번호가 일치하지 않습니다');"+
+                "} else {"+
+                "    $('#passwordSuccess').text('사용가능한 비밀번호입니다');"+
+                "}"+
+            "}; checkSecondPassword();"+
+            "document.getElementById('btnidcheck').click();"+
+            "document.getElementById('btnNicknameCheck').click();"+
+                    "});"
+            );
+        }
+    }
+    %>
+</script>
 </body>
 </html>
