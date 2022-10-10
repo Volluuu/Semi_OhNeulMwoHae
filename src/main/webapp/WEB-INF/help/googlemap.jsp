@@ -144,6 +144,9 @@
             strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
             strokeStyle  : 'solid' // 선의 스타일입니다
         });
+        var latArr = new Array(5);
+        var lngArr = new Array(5);
+        var isAdd = [false, false, false, false, false];
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -185,10 +188,19 @@
                 var thiscnt = $(this).siblings("div.i").children("input.in1").attr("cnt");
                 if (customArr[thiscnt - 1]) { //삭제하려는 경로가 아직 설정되어있지 않은 경우 에러 발생, 예외처리
                     customArr[thiscnt - 1].setMap(null);
+                    console.log("set NULL : " + thiscnt);
+                    console.log(customArr);
                 }
+                isAdd[thiscnt -1] = false;
+                var endpoint = 0;
+                for(var i = 0; i < isAdd.length-1; i++) {
+                    if(isAdd[i]) {
+                        endpoint = i;
+                    }
+                }
+                console.log("endpoint : " + endpoint);
                 customArr[thiscnt - 1] = null;
                 stepArr[thiscnt - 1] = null;
-                mapBound[thiscnt - 1] = null;
 
                 //customArr 배열의 순서를 삭제한것과 동일하게 설정
                 var newCustomArr = new Array(5);
@@ -203,39 +215,59 @@
                         continue;
                     }
                     newStepArr[n] = stepArr[i];
-                    newCustomArr[n++] = customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + n + '</span>');
+                    customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n+1) + '</span>');
+                    newCustomArr[n++] = customArr[i];
                 }
-                customArr = newCustomArr;
+               // customArr = newCustomArr;
+                for(var i = 0; i < customArr.length; i++) {
+                    customArr[i] = newCustomArr[i];
+                }
+
                 stepArr = newStepArr;
                 //지도범위 재설정
+                console.log(isAdd);
+                console.log("delete before mapBound");
+                console.log(mapBound);
+                n = 0;
                 var bounds = new kakao.maps.LatLngBounds();
                 for (var i = 0; i < mapBound.length; i++) {
-                    if (!mapBound[i]) {
+                    if (i == (thiscnt - 1) || !mapBound[i]) {
                         continue;
                     }
-                    bounds.extend(mapBound[i]);
+                    mapBound[n] = mapBound[i];
+                    bounds.extend(mapBound[n++]);
                 }
+                mapBound[4] = mapBound[endpoint];
+                bounds.extend(mapBound[4]);
+                console.log("delete after mapBound : ")
+                console.log(mapBound);
                 map.setBounds(bounds);
-                //삭제한 경로를 제외한 폴리라인 다시 그리기
-                polyline.setMap(null);
-                var new_linePath = new Array(5);
-                for (var i = 0; i < new_linePath.length; i++) {
-                    if (i == (thiscnt - 1) || !linePath[i]) {
-                        continue;
-                    }
-                    new_linePath[i] = linePath[i];
-                }
-                linePath = new_linePath;
+                // 삭제한 경로를 제외한 폴리라인 다시 그리기
 
-                var new_polyline = new kakao.maps.Polyline({
-                    endArrow     : true,
-                    path         : new_linePath, // 선을 구성하는 좌표배열 입니다
-                    strokeWeight : 5, // 선의 두께 입니다
-                    strokeColor  : '#FF0000', // 선의 색깔입니다
-                    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle  : 'solid' // 선의 스타일입니다
-                });
-                polyline = new_polyline;
+                n = 0;
+                // for (var i = 0; i < new_linePath.length; i++) {
+                //     if (i == (thiscnt - 1)) {
+                //         continue;
+                //     }
+                //     new_linePath[n++] = linePath[i];
+                // }
+                // new_linePath[4] = undefined;
+                // linePath = new_linePath;
+
+                for(var i = 0; i < linePath.length; i++) {
+                    if(i == (thiscnt - 1)) { continue;}
+                    if(isAdd[i]) {
+                        latArr[n] = latArr[i];
+                        lngArr[n] = lngArr[i];
+                        linePath[n++] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
+                    } else {
+                        n++;
+                    }
+                }
+                latArr[4] = lngArr[4] = null;
+
+                linePath[4] =  new kakao.maps.LatLng(latArr[endpoint], lngArr[endpoint]);
+                polyline.setPath(linePath);
                 polyline.setMap(map);
             });
 
@@ -326,6 +358,7 @@
             }); // $(document).on("click", "input.in1", function end
 
             //마커에 넣을 위도와 경도를 가져오는 이벤트
+            // 추가했을 때 추가된 경로인것을 나타내는 문구 추가 하면 좋을 듯 *****************************************************
             $(document).on("click", ".insert_course_button", function () {
                 var button = $(this);
                 var thiscnt = button.siblings("input.in1").attr("cnt");
@@ -395,9 +428,9 @@
                         var bounds = new kakao.maps.LatLngBounds();
                         var latlng = new kakao.maps.LatLng(res.lat, res.lon);
                         mapBound[thiscnt - 1] = latlng;
+                        console.log(mapBound);
                         linePath[thiscnt - 1] = latlng;
                         polyline.setPath(linePath);
-                        polyline.setMap(map);
                         for (var i = 0; i < mapBound.length; i++) {
                             if (!mapBound[i]) {
                                 continue;
@@ -406,12 +439,16 @@
                         }
                         map.setBounds(bounds);
                         polyline.setMap(map);
-                        console.log(polyline.getPath());
                         $(document).on("click", "span.step", function () {
                             if ($(this).attr("cnt") == thiscnt) {
                                 iwArr[thiscnt - 1].open(map);
                             }
                         });
+                        //위도 경도 값을 배열에 저장
+                        latArr[thiscnt-1] = res.lat;
+                        lngArr[thiscnt-1] = res.lon;
+                        isAdd[thiscnt-1] = true;
+                        console.log(isAdd);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
@@ -424,7 +461,6 @@
 
             //코스를 저장하는 이벤트 : 저장 시 경로들 사이에 null이 있으면 채워달라는 alert 문구 출력
             $(".cosbtnsave").click(function () {
-                console.log(stepArr);
                 for (var i = 0; i < stepArr.length; i++) {
                     if (!stepArr[i]) {
                         for (var j = i + 1; j < stepArr.length; j++) {
@@ -439,21 +475,21 @@
                 }
                 if (confirm("경로를 [나만의 경로]에 추가하시겠습니까?")) {
                     //페이지 이동하는 부분
-                    $.ajax({
-                        type    : "post",
-                        url     : "../course/insertcourse",
-                        dataType: "json",
-                        data    : {
-                            "step1" : stepArr[0],
-                            "step2" : stepArr[1],
-                            "step3" : stepArr[2],
-                            "step4" : stepArr[3],
-                            "step5" : stepArr[4]
-                        },
-                        success : function (res) {
-
-                        }//sucess
-                    });//ajax
+                    // $.ajax({
+                    //     type    : "post",
+                    //     url     : "../course/insertcourse",
+                    //     dataType: "json",
+                    //     data    : {
+                    //         "step1" : stepArr[0],
+                    //         "step2" : stepArr[1],
+                    //         "step3" : stepArr[2],
+                    //         "step4" : stepArr[3],
+                    //         "step5" : stepArr[4]
+                    //     },
+                    //     success : function (res) {
+                    //
+                    //     }//sucess
+                    // });//ajax
                 } else {
                     alert("저장이 취소되었습니다.");
                 }
