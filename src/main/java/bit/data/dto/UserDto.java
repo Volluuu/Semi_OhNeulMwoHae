@@ -3,6 +3,7 @@ package bit.data.dto;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 public class UserDto {

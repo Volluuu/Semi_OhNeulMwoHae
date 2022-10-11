@@ -1,11 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dmltk
-  Date: 2022-10-06
-  Time: 오후 3:03
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,23 +19,19 @@
 <div class="usermain">
     <table class="table table-bordered" style="width: 530px">
         <caption align="top">
-            <h1 style="text-align: center;"><b>아이디 찾기</b></h1>
+            <h1 style="text-align: center;"><b>비밀번호 찾기</b></h1>
         </caption>
         <tr>
             <td>
                 <div style="text-align: center;">
-                    <h7>아이디</h7>
+                    <h7>비밀번호</h7>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div>
-                    <ol>
-                <c:forEach items="${user}" var="user">
-                    <li>${user.loginid}</li>
-                </c:forEach>
-                    </ol>
+                <div style="text-align: center;">
+                    ${user.password}
                 </div>
             </td>
         </tr>
