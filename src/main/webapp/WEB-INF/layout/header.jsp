@@ -168,15 +168,15 @@
 			</div>
 		</div>
 		<div class="search_bar">
-			<div class="input-group search1">
-				<select class="form-control sel1">
+			<%--<div class="input-group search1">
+				&lt;%&ndash;<select class="form-control sel1">
 					<option selected disabled hidden class="op1">게시판 선택</option>
 					<option class="op1">경로 추천</option>
 					<option class="op1">친구 찾기</option>
 				</select>
 				<input type="text" class="form-control in1" placeholder="원하는 장소를 검색하든지 말든지">
-				<button class="form-control btn1"><i class='fas fa-search'></i></button>
-			</div>
+				<button class="form-control btn1"><i class='fas fa-search'></i></button>&ndash;%&gt;
+			</div>--%>
 		</div>
 	<div class="myinfo">
 		<div class="input-group my1">
@@ -197,7 +197,7 @@
 		</c:if>
 
 			<c:if test="${sessionScope.loginok!=null}">
-				<b>${sessionScope.nickname}님</b>
+				<b>${sessionScope.loginname}님</b>
 				&nbsp;&nbsp;
 				<button type="button" class="btn btn-danger" id="btnlogout" style="background-color: white; color:black;">로그아웃</button>
 			</c:if>
@@ -268,7 +268,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.reload();
+							location.href = "${root}/";
 						}
 					}//success
 					
@@ -284,7 +284,7 @@
 				url:root+"/user/logout",
 				dataType:"text",
 				success:function(res){
-					location.reload();
+					location.href = "${root}/";
 					
 				}//success
 				
@@ -310,7 +310,8 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.reload();
+							location.href = "${root}/";
+
 						}
 					}//success
 
