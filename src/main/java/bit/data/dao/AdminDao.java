@@ -1,6 +1,7 @@
 package bit.data.dao;
 
 import bit.data.dto.QnaDto;
+import bit.data.dto.UserDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,11 +15,11 @@ public class AdminDao implements AdminDaoInter{
     @Autowired
     SqlSession session;
 
-    String ns="bit.data.dao.CafeDao.";
+    String ns="bit.data.dao.AdminDao.";
 
     @Override
-    public int getTotalCount(Map<String, String> qnamap) {
-        return session.selectOne(ns+"getTotalCount", qnamap);
+    public int getTotalCount() {
+        return session.selectOne(ns+"getTotalCount");
     }
 
     @Override
@@ -27,17 +28,32 @@ public class AdminDao implements AdminDaoInter{
     }
 
     @Override
-    public int selectCafeTotalCount(Map<String, String> cafemap) {
-        return session.selectOne(ns+"selectCafeTotalCount", cafemap);
+    public int selectCafeTotalCount() {
+        return session.selectOne(ns+"selectCafeTotalCount");
     }
 
     @Override
-    public int selectFoodTotalCount(Map<String, String> foodmap) {
-        return session.selectOne(ns+"selectFoodTotalCount", foodmap);
+    public int selectFoodTotalCount() {
+        return session.selectOne(ns+"selectFoodTotalCount");
     }
 
     @Override
-    public int selectTripTotalCount(Map<String, String> tripmap) {
-        return session.selectOne(ns+"selectTripTotalCount", tripmap);
+    public int selectTripTotalCount() {
+        return session.selectOne(ns+"selectTripTotalCount");
+    }
+
+    @Override
+    public int qnaNotAnswer() {
+        return session.selectOne(ns+"qnaNotAnswer");
+    }
+
+    @Override
+    public int todayReview() {
+        return session.selectOne(ns+"todayReview");
+    }
+
+    @Override
+    public List<UserDto> userInfo() {
+        return session.selectList(ns+"userInfo");
     }
 }

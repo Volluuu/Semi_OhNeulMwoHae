@@ -162,9 +162,9 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            총 회원수
+                                            총 회원 수
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">명</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${userTotal}명</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-user fa-2x text-gray-300"></i>
@@ -180,9 +180,9 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            총 코스수
+                                            총 코스 수
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">??개</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${cft}개</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-plane fa-2x text-gray-300"></i>
@@ -198,11 +198,11 @@
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">최근리뷰
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">오늘 작성된 리뷰
                                         </div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">??개</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${review}개</div>
                                             </div>
                                             <div class="col">
 
@@ -226,7 +226,7 @@
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                             새로운 문의사항
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">새문의사항 수</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${qna}개</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-question fa-2x text-gray-300"></i>

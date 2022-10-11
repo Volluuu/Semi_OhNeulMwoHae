@@ -3,35 +3,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bit.data.dao.AdminDao">
-<!--	 유저 수-->
-	<select id="getTotalCount" resultType="int">
-		select count(*) from user
-	</select>
+    <!--	 유저 수-->
+    <select id="getTotalCount" resultType="int">
+        select count(*)
+        from user
+    </select>
 
-<!--	코스수-->
-	<select id="selectCafeTotalCount" parameterType="Map" resultType="int">
-		select count(*) from cafe
-	</select>
+    <!--	코스수-->
+    <select id="selectCafeTotalCount" resultType="int">
+        select count(*)
+        from cafe
+    </select>
 
-	<select id="selectFoodTotalCount" parameterType="Map" resultType="int">
-		select count(*) from food
-	</select>
+    <select id="selectFoodTotalCount" resultType="int">
+        select count(*)
+        from food
+    </select>
 
-	<select id="selectTripTotalCount" parameterType="Map" resultType="int">
-		select count(*) from trip
-	</select>
-	<!--    문의사항-->
-	<select id="getAllData" resultType="QnaDto">
-		select * from qna order by qna_num desc
-	</select>
+    <select id="selectTripTotalCount" resultType="int">
+        select count(*)
+        from trip
+    </select>
+    <!--    답변안된 문의사항 -->
+    <select id="qnaNotAnswer" resultType="int">
+        select count(*) from qna where answer="not"
+    </select>
 
+    <!--오늘 작성된 리뷰-->
+    <select id="todayReview" resultType="int">
+        select count(*) from comment_course where DATE_FORMAT(writeday, "%Y-%m-%d")=curdate()
+    </select>
 
+    <!--회원관리-->
+    <select id="userInfo" resultType="udto">
+        select * from user order by gaipday desc
+    </select>
 
-
-
-
-
-	
 </mapper>
 
 

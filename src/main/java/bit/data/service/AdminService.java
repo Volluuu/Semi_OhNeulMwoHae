@@ -3,6 +3,7 @@ package bit.data.service;
 
 import bit.data.dao.*;
 import bit.data.dto.QnaDto;
+import bit.data.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,12 @@ public class AdminService implements AdminServiceInter{
     @Autowired
     FoodDaoInter Fooddao;
 
-    @Override
-    public int getTotalCount(Map<String, String> qnamap) {
-        Map<String, String> map=new HashMap<String, String>();
+    @Autowired
+    AdminDaoInter admindao;
 
-        return qnadao.getTotalCount(qnamap);
+    @Override
+    public int getTotalCount() {
+        return admindao.getTotalCount();
     }
 
     @Override
@@ -38,17 +40,32 @@ public class AdminService implements AdminServiceInter{
     }
 
     @Override
-    public int selectCafeTotalCount(Map<String, String> cafemap) {
-        return 0;
+    public int selectCafeTotalCount() {
+        return admindao.selectCafeTotalCount();
     }
 
     @Override
-    public int selectFoodTotalCount(Map<String, String> foodmap) {
-        return 0;
+    public int selectFoodTotalCount() {
+        return admindao.selectFoodTotalCount();
     }
 
     @Override
-    public int selectTripTotalCount(Map<String, String> tripmap) {
-        return 0;
+    public int selectTripTotalCount() {
+        return admindao.selectTripTotalCount();
+    }
+
+    @Override
+    public int qnaNotAnswer() {
+        return admindao.qnaNotAnswer();
+    }
+
+    @Override
+    public int todayReview() {
+        return admindao.todayReview();
+    }
+
+    @Override
+    public List<UserDto> userInfo() {
+        return admindao.userInfo();
     }
 }
