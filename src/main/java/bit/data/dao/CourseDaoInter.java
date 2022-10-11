@@ -12,7 +12,7 @@ import java.util.Map;
 public interface CourseDaoInter {
 	public List<CourseDto> getAllCourses(int user_num);
 	public CourseDto getCourse();
-	public void insertCourse(CourseDto dto);
+	public void insertCourse(Map<String, Object> map);
 	public void deleteCourse(int num);
 	public void updateStep(Map<String, String> map);
 	public List<CourseDto> getSearchList(Map<String, String> map);

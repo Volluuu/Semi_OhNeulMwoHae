@@ -31,8 +31,8 @@ public class CourseService implements CourseServiceInter{
 	}
 
 	@Override
-	public void insertCourse(CourseDto dto) {
-		daoInter.insertCourse(dto);
+	public void insertCourse(Map<String, Object> map) {
+		daoInter.insertCourse(map);
 	}
 
 	@Override

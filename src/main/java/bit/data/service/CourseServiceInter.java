@@ -11,7 +11,7 @@ import java.util.Map;
 public interface CourseServiceInter {
 	public List<CourseDto> getAllCourses(int user_num);
 	public CourseDto getCourse();
-	public void insertCourse(CourseDto dto);
+	public void insertCourse(Map<String, Object> map);
 	public void deleteCourse(int num);
 	public void updateStep(String num, String newStep);
 	public List<CourseDto> getSearchList(String searchcolumn,String searchword);

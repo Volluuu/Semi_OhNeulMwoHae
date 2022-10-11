@@ -27,9 +27,7 @@ public class AdminService implements AdminServiceInter{
 
     @Override
     public int getTotalCount(Map<String, String> qnamap) {
-        Map<String, String> map=new HashMap<String, String>();
-
-        return qnadao.getTotalCount(qnamap);
+        return 0;
     }
 
     @Override

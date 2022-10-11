@@ -191,11 +191,11 @@
                     console.log("set NULL : " + thiscnt);
                     console.log(customArr);
                 }
-                isAdd[thiscnt -1] = false;
+                isAdd[thiscnt - 1] = false;
                 var endpoint = 0;
-                for(var i = 0; i < isAdd.length; i++) {
-                    if(isAdd[i] && thiscnt -1 != i) {
-                        endpoint = i-1;
+                for (var i = 0; i < isAdd.length; i++) {
+                    if (isAdd[i] && thiscnt - 1 != i) {
+                        endpoint = i - 1;
                     }
                 }
                 console.log("endpoint : " + endpoint);
@@ -215,11 +215,11 @@
                         continue;
                     }
                     newStepArr[n] = stepArr[i];
-                    customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n+1) + '</span>');
+                    customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n + 1) + '</span>');
                     newCustomArr[n++] = customArr[i];
                 }
-               // customArr = newCustomArr;
-                for(var i = 0; i < customArr.length; i++) {
+                // customArr = newCustomArr;
+                for (var i = 0; i < customArr.length; i++) {
                     customArr[i] = newCustomArr[i];
                 }
 
@@ -236,8 +236,8 @@
                     }
                     mapBound[n++] = mapBound[i];
                 }
-                for(var i = 0; i < mapBound.length-1; i ++) {
-                    if(mapBound[i]) {
+                for (var i = 0; i < mapBound.length - 1; i++) {
+                    if (mapBound[i]) {
                         bounds.extend(mapBound[i]);
                     }
                 }
@@ -256,9 +256,11 @@
                 // new_linePath[4] = undefined;
                 // linePath = new_linePath;
 
-                for(var i = 0; i < linePath.length; i++) {
-                    if(i == (thiscnt - 1)) { continue;}
-                    if(isAdd[i]) {
+                for (var i = 0; i < linePath.length; i++) {
+                    if (i == (thiscnt - 1)) {
+                        continue;
+                    }
+                    if (isAdd[i]) {
                         latArr[n] = latArr[i];
                         lngArr[n] = lngArr[i];
                         linePath[n++] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
@@ -268,7 +270,7 @@
                 }
                 latArr[4] = lngArr[4] = null;
 
-                linePath[4] =  new kakao.maps.LatLng(latArr[endpoint], lngArr[endpoint]);
+                linePath[4] = new kakao.maps.LatLng(latArr[endpoint], lngArr[endpoint]);
                 polyline.setPath(linePath);
                 polyline.setMap(map);
             });
@@ -447,9 +449,9 @@
                             }
                         });
                         //위도 경도 값을 배열에 저장
-                        latArr[thiscnt-1] = res.lat;
-                        lngArr[thiscnt-1] = res.lon;
-                        isAdd[thiscnt-1] = true;
+                        latArr[thiscnt - 1] = res.lat;
+                        lngArr[thiscnt - 1] = res.lon;
+                        isAdd[thiscnt - 1] = true;
                         console.log(isAdd);
                     }//sucess
                 });//ajax
@@ -468,36 +470,94 @@
                         for (var j = i + 1; j < stepArr.length; j++) {
                             if (stepArr[j]) {
                                 alert((i + 1) + "번째 경로가 비어있습니다. 경로삭제 혹은 경로를 추가해주세요.")
-                                $("select.sel1").eq(i+1).focus(); // 헤더부분 검색기능 빠지면 i수정
+                                $("select.sel1").eq(i + 1).focus(); // 헤더부분 검색기능 빠지면 i수정
                                 return;
                             }
                         }
 
                     }
                 }
+                if (!$("#cos_title").val()) {
+                    alert("코스 제목을 입력해주세요")
+                    $("#cos_title").focus();
+                    return;
+                }
                 if (confirm("경로를 [나만의 경로]에 추가하시겠습니까?")) {
                     //페이지 이동하는 부분
-                    // $.ajax({
-                    //     type    : "post",
-                    //     url     : "../course/insertcourse",
-                    //     dataType: "json",
-                    //     data    : {
-                    //         "step1" : stepArr[0],
-                    //         "step2" : stepArr[1],
-                    //         "step3" : stepArr[2],
-                    //         "step4" : stepArr[3],
-                    //         "step5" : stepArr[4]
-                    //     },
-                    //     success : function (res) {
-                    //
-                    //     }//sucess
-                    // });//ajax
+                    $.ajax({
+                        type    : "post",
+                        url     : "../course/insertcourse",
+                        dataType: "text",
+                        data    : {
+                            "step1"   : stepArr[0],
+                            "step2"   : stepArr[1],
+                            "step3"   : stepArr[2],
+                            "step4"   : stepArr[3],
+                            "step5"   : stepArr[4],
+                            "user_num": ${user_num},
+                            "cnt"     : cnt,
+                            "title"   : $("#cos_title").val()
+                        },
+                        success : function (res) {
+                            alert("경로가 저장되었습니다.");
+                            location.reload();
+                            //똑같은 제목을 가진 장바구니 목록이 있으면 return *********************************
+                        }//sucess
+                    });//ajax
                 } else {
                     alert("저장이 취소되었습니다.");
                 }
             });
 
+            $(document).on("click", ".call_course_button", function (){
+                $(".cos2").empty();
+                var thiscnt = Number($(this).attr("cnt"));
+                for(var i = 1; i < $(this).attr("cnt"); i++) {
+                    s="";
+                    cosSelectAdd();
+                    $("div.cos2").append(s);
+                }
+                $("#cos_title").val($(this).attr("title"));
 
+                for(let j = 1; j < thiscnt+1; j++) { // 헤더 부분 수정되면 변경 **************************************
+                    var course_type = $(this).attr("step" + j).substr(0, 4);
+                    var course_num = Number($(this).attr("step" + j).substr(5));
+                    var repeat = j;
+                    console.log("thiscnt : " + thiscnt);
+                    console.log(j+"번째 : " + "course_type : " + course_type + " course_num : " + course_num);
+                    if(course_type == "cafe") {
+                        $("select.sel1").eq(j).val("cafe");
+                        console.log( $("select.sel1").eq(j).val());
+                    }
+                    if(course_type == "food") {
+                        $("select.sel1").eq(j).val("food");
+                        console.log( $("select.sel1").eq(j).val());
+                    }
+                    if(course_type == "trip") {
+                        $("select.sel1").eq(j).val("trip");
+                        console.log( $("select.sel1").eq(j).val());
+                    }
+                    $.ajax({
+                        type    : "get",
+                        url     : "../course/getlatlon",
+                        dataType: "json",
+                        data    : {
+                            "course_type": course_type,
+                            "course_num" : course_num
+                        },
+                        success : function (res) {
+                            alert("success");
+                            $("input.in1").eq(j).val(res.title);
+                            $("input.in1").eq(j).attr("isSelect", "yes");
+                            $("input.in1").eq(j).attr("course_num", course_num);
+                            $("input.in1").eq(j).attr("cnt", j);
+                            console.log($("input.in1").eq(j).val());
+                            $("button.insert_course_button").eq(j-1).trigger("click");
+                        }//sucess
+                    });//ajax
+                }
+
+            });
         }); //$function end
 
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
@@ -529,7 +589,15 @@
     <div class="input-group">
         <!-- 저장된 경로 -->
         <div class="savehistory">
-            History
+            <c:forEach var="dto" items="${list}" varStatus="i">
+                <div style="border: 1px solid yellow">
+                    <div>제목 : ${dto.title}</div>
+                    <div>작성날짜 : ${dto.writeday}</div>
+                    <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}" user_num="${dto.user_num}"
+                    step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}" step5="${dto.step5}"
+                    writeday="${dto.writeday}">불러오기</button>
+                </div>
+            </c:forEach>
         </div>
 
         <!-- map -->
@@ -571,7 +639,6 @@
                     <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
-
             </div>
             <div class="cos2"></div>
             <button type="button" class="cosselectadd" style="margin:auto; display: block;">경로추가<i
