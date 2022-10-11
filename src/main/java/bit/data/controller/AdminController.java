@@ -30,6 +30,41 @@ public class AdminController {
     @Autowired
     FoodServiceInter foodService;
 
+    @GetMapping("/admin/mainhome")//관리자페이지 생성하면 수정필요~!
+    public String main() {
+        return "/bit/layout/main";
+
+    }
+
+    @GetMapping("/admin/userinfo")//관리자페이지 생성하면 수정필요~!
+    public String userInfo() {
+        return "userInfo";
+
+    }
+
+    @GetMapping("/admin/cafecourse")//관리자페이지 생성하면 수정필요~!
+    public String cafeCourse() {
+        return "cafeCourse";
+
+    }
+
+    @GetMapping("/admin/foodcourse")//관리자페이지 생성하면 수정필요~!
+    public String foodCourse() {
+        return "foodCourse";
+
+    }
+    @GetMapping("/admin/tripcourse")//관리자페이지 생성하면 수정필요~!
+    public String tripCourse() {
+        return "tripCourse";
+
+    }
+    @GetMapping("/admin/question")//관리자페이지 생성하면 수정필요~!
+    public String question() {
+        return "question";
+    }
+
+
+
     @GetMapping("/admin/list")//관리자페이지 생성하면 수정필요~!
     public String Dashboard(){
 //            @RequestParam(defaultValue = "1") int currentPage,
