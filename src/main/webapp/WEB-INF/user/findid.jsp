@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: dmltk
@@ -37,7 +38,11 @@
         <tr>
             <td>
                 <div style="text-align: center;">
-                        ${user.loginid}
+                    <ol>
+                <c:forEach items="${user}" var="user">
+                    <li>${user.loginid}</li>
+                </c:forEach>
+                    </ol>
                 </div>
             </td>
         </tr>

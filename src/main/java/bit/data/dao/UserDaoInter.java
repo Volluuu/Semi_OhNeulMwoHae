@@ -13,8 +13,8 @@ public interface UserDaoInter {
     public UserDto findPasswordById(String loginid);
 
     public int findPasswordCheckById(String loginid);
-    public UserDto findIdByName(String name);
-    public int findIdCheckByName(String name);
+    public List<UserDto> findIdByName(String name)throws Exception;
+    public int findIdCheckByName(String name)throws Exception;
     public UserDto getUserByKakaoId(long kakao_id);
     public UserDto getUserByNaverId(String naver_id);
     public int getTotalCount();

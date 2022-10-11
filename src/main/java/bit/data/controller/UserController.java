@@ -99,7 +99,7 @@ public class UserController {
 
 
     @PostMapping("/findid")
-    public String findid(UserDto userdto,Model model){
+    public String findid(UserDto userdto,Model model)throws Exception{
         System.out.println("name="+ userdto.getName());
         if(userService.findIdCheckByName(userdto.getName())==0) {
             model.addAttribute("msg", "이름을 확인해주세요");

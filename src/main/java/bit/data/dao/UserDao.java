@@ -28,12 +28,12 @@ public class UserDao implements UserDaoInter{
 
 
     @Override
-    public UserDto findIdByName(String name){
-        return session.selectOne(ns+"findIdByName", name);
+    public List<UserDto> findIdByName(String name)throws Exception{
+        return session.selectList(ns+"findIdByName", name);
     }
 
     @Override
-    public int findIdCheckByName(String name){
+    public int findIdCheckByName(String name)throws Exception{
         return session.selectOne(ns+"findIdCheckByName", name);
     }
 
