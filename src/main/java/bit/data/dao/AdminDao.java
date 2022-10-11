@@ -1,7 +1,6 @@
 package bit.data.dao;
 
-import bit.data.dto.QnaDto;
-import bit.data.dto.UserDto;
+import bit.data.dto.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,8 +17,13 @@ public class AdminDao implements AdminDaoInter{
     String ns="bit.data.dao.AdminDao.";
 
     @Override
-    public int getTotalCount() {
-        return session.selectOne(ns+"getTotalCount");
+    public int getTotalCount(Map<String, String> map) {
+        return session.selectOne(ns+"getTotalCount",map);
+    }
+
+    @Override
+    public void deleteUserByNum(int user_num) { session.delete(ns+"deleteUserByNum",user_num);
+
     }
 
     @Override
@@ -55,5 +59,40 @@ public class AdminDao implements AdminDaoInter{
     @Override
     public List<UserDto> userInfo() {
         return session.selectList(ns+"userInfo");
+    }
+
+    @Override
+    public List<UserDto> getUserPaging(Map<String, Object> map) {
+        return session.selectList(ns+"getUserPaging",map);
+    }
+
+    @Override
+    public List<CafeDto> getCafePaging(Map<String, Object> map) {
+        return session.selectList(ns+"getCafePaging",map);
+    }
+
+    @Override
+    public int getCafeTotal(Map<String, String> map) {
+        return session.selectOne(ns+"getCafeTotal",map);
+    }
+
+    @Override
+    public List<FoodDto> getFoodPaging(Map<String, Object> map) {
+        return session.selectList(ns+"getFoodPaging",map);
+    }
+
+    @Override
+    public int getFoodTotal(Map<String, String> map) {
+        return session.selectOne(ns+"getFoodTotal",map);
+    }
+
+    @Override
+    public List<TripDto> getTripPaging(Map<String, Object> map) {
+        return session.selectList(ns+"getTripPaging",map);
+    }
+
+    @Override
+    public int getTripTotal(Map<String, String> map) {
+        return session.selectOne(ns+"getTripTotal",map);
     }
 }

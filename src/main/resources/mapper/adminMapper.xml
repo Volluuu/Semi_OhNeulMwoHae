@@ -4,10 +4,15 @@
 
 <mapper namespace="bit.data.dao.AdminDao">
     <!--	 유저 수-->
-    <select id="getTotalCount" resultType="int">
-        select count(*)
-        from user
+    <select id="getTotalCount" parameterType="Map" resultType="int">
+        select count(*) from user
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
     </select>
+    <delete id="deleteUserByNum" parameterType="int">
+        delete from user where user_num=#{user_num}
+    </delete>
 
     <!--	코스수-->
     <select id="selectCafeTotalCount" resultType="int">
@@ -39,26 +44,54 @@
         select * from user order by gaipday desc
     </select>
 
+    <!--유저 정보 페이징-->
+    <select id="getUserPaging" parameterType="Map" resultType="udto">
+        select * from user
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+        order by gaipday desc limit #{startnum},#{perpage}
+    </select>
+
+    <select id="getCafePaging" parameterType="Map" resultType="cafedto">
+        select * from cafe
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+        order by title asc limit #{startnum},#{perpage}
+    </select>
+    <select id="getCafeTotal" parameterType="Map" resultType="int">
+        select count(*) from cafe
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+    <select id="getFoodPaging" parameterType="Map" resultType="fooddto">
+        select * from food
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+        order by title asc limit #{startnum},#{perpage}
+    </select>
+    <select id="getFoodTotal" parameterType="Map" resultType="int">
+        select count(*) from food
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+
+    <select id="getTripPaging" parameterType="Map" resultType="tripdto">
+        select * from trip
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+        order by title asc limit #{startnum},#{perpage}
+    </select>
+    <select id="getTripTotal" parameterType="Map" resultType="int">
+        select count(*) from trip
+        <if test="searchcolumn!=null and searchword!=null">
+            where ${searchcolumn} like concat('%',#{searchword},'%')
+        </if>
+    </select>
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

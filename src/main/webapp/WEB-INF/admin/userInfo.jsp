@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: hyeongjoon
@@ -7,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <html>
 <head>
@@ -20,6 +20,7 @@
     <link href="../css/sb-admin-02.css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin.css">
     <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <title>AdminPage</title>
 </head>
 
@@ -108,9 +109,30 @@
     }
 
     .fa-trash {
+        cursor: pointer;
         color: red;
     }
 </style>
+<script>
+    var root="${root}";
+    $(document).on("click",".fa-trash",function (){
+       var user_num=$(this).attr("user_num");
+       var name=$(this).attr("name");
+       var yes=confirm(user_num+":"+name+"님을 탈퇴시키겠습니까?");
+       if(yes){
+           $.ajax({
+               type:"get",
+               url:root+"/admin/userdelete",
+               dataType:"text",
+               data:{"user_num":user_num},
+               success:function(res){
+                   alert("탈퇴하였습니다");
+                   location.reload();
+               }
+           });
+       }
+    });
+</script>
 <body id="page-top">
 
 <!-- Page Wrapper -->
@@ -225,18 +247,38 @@
 
             </nav>
             <br>
+            <div class="searcharea" style="width:100%;text-align:center;">
+                <!-- 검색창 -->
+                <form action="${root}/admin/userinfo">
+                    <div class="input-group" style="width:450px;">
+                        <select class="form-select" name="searchcolumn">
+                            <option value="loginid">아이디</option>
+                            <option value="name">이름</option>
+                            <option value="nickname">닉네임</option>
+                            <option value="hp">핸드폰</option>
+                            <option value="email">이메일</option>
+                        </select>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="text" name="searchword" class="form-control" style="width:140px;" placeholder="검색 단어" value="${param.searchword}">
 
+                        <button type="submit" class="btn btn-success" style="margin-left:10px;">검색</button>
+                        <button type="button" class="btn btn-primary" style="margin-left:10px;" onclick="location.href='${root}/admin/userinfo'">전체보기</button>
+                    </div>
+                </form>
+            </div>
             <%--10명까지 나오게 수정~!~!~!~!~!~!~!~!~!~!~~#@$@#%#$@^$#&#$*#%^*%^#*$--%>
             <div class="container-fluid">
 
 
                 <%--회원정보에 시작은 여기부터입니다~~~~~~~~~~~~~~~~~~~~~~~~!--%>
                 <div class="row">
+                    <h7>총 ${totalCount}명 검색되었습니다</h7>
                     <table>
                         <thead>
                         <tr>
                             <th>아이디</th>
                             <th>이름</th>
+                            <th>닉네임</th>
                             <th>핸드폰번호</th>
                             <th>이메일</th>
                             <th>가입일</th>
@@ -248,16 +290,39 @@
                             <tr>
                                 <td>${dto.loginid}</td>
                                 <td>${dto.name}</td>
+                                <td>${dto.nickname}</td>
                                 <td>${dto.hp}</td>
                                 <td>${dto.email}</td>
-                                <td>${dto.gaipday}&emsp;<i class="fa-sharp fa-solid fa-trash"></i></td>
+                                <td>${dto.gaipday}&emsp;<i class="fa-sharp fa-solid fa-trash" user_num="${dto.user_num}" name="${dto.name}"></i></td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
+                    <div class="paging">
+                        <ul class="pagination">
+                            <c:if test="${startPage>1}">
+                                <li class="page-item"><a href="${root}/admin/userinfo?currentPage=${startPage-1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">이전</a></li>
+                            </c:if>
+                            <!-- 페이지 번호 -->
+                            <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+                                <c:if test="${pp==currentPage}">
+                                    <li class="page-item active"><a class="page-link" href="${root}/admin/userinfo?currentPage=${pp}&searchcolumn=${searchcolumn}&searchword=${searchword}">${pp}</a></li>
+                                </c:if>
+                                <c:if test="${pp!=currentPage}">
+                                    <li class="page-item"><a class="page-link" href="${root}/admin/userinfo?currentPage=${pp}&searchcolumn=${searchcolumn}&searchword=${searchword}">${pp}</a></li>
+                                </c:if>
+
+                            </c:forEach>
+
+                            <c:if test="${totalPage>endPage}">
+                                <li class="page-item"><a href="${root}/admin/userinfo?currentPage=${endPage+1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">다음</a></li>
+                            </c:if>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
