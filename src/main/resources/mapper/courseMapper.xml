@@ -47,4 +47,7 @@
     <select id="getTripLatLon" parameterType="int" resultType="TripDto">
         select * from trip where trip_num = ${course_num}
     </select>
+<!--    <insert id="insertCourse" parameterType="Map">-->
+
+<!--    </insert>-->
 </mapper>
