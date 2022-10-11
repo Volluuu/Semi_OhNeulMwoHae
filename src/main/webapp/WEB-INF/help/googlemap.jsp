@@ -193,9 +193,9 @@
                 }
                 isAdd[thiscnt -1] = false;
                 var endpoint = 0;
-                for(var i = 0; i < isAdd.length-1; i++) {
-                    if(isAdd[i]) {
-                        endpoint = i;
+                for(var i = 0; i < isAdd.length; i++) {
+                    if(isAdd[i] && thiscnt -1 != i) {
+                        endpoint = i-1;
                     }
                 }
                 console.log("endpoint : " + endpoint);
@@ -231,14 +231,16 @@
                 n = 0;
                 var bounds = new kakao.maps.LatLngBounds();
                 for (var i = 0; i < mapBound.length; i++) {
-                    if (i == (thiscnt - 1) || !mapBound[i]) {
+                    if (i == (thiscnt - 1)) {
                         continue;
                     }
-                    mapBound[n] = mapBound[i];
-                    bounds.extend(mapBound[n++]);
+                    mapBound[n++] = mapBound[i];
                 }
-                mapBound[4] = mapBound[endpoint];
-                bounds.extend(mapBound[4]);
+                for(var i = 0; i < mapBound.length-1; i ++) {
+                    if(mapBound[i]) {
+                        bounds.extend(mapBound[i]);
+                    }
+                }
                 console.log("delete after mapBound : ")
                 console.log(mapBound);
                 map.setBounds(bounds);
