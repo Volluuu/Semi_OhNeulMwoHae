@@ -14,10 +14,11 @@
 <link rel="stylesheet" href="../css/cafedetail.css">
 <link rel="stylesheet" href="../css/star.css">
 <link rel="stylesheet" href="../css/footer.css">
+<script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <style>
 
     * {
-        font-size: 24px;
+
         font-family: Dongle;
     }
 
@@ -40,15 +41,38 @@
 
     section {
         display: block;
+        box-shadow: 5px 1px 20px lightgray;
+        padding: 8px 12px;
     }
 
     button.fr {
         float: right;
     }
-    .dg_container{
-        width: 100%;
-        height: 200px;
+
+
+    i.fa-heart {
+        cursor: pointer;
     }
+
+    .hj_bmain
+    {
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        margin: 40px 0px 0px;
+    }
+
+    .efLSbp {
+        display: flex;
+        position: relative;
+        width: 100%;
+        min-width: 1000px;
+        box-sizing: border-box;
+        border-top: 1px solid rgb(233, 233, 233);
+        padding-bottom: 49px;
+        background: rgb(255, 255, 255);
+    }
+
 
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
@@ -71,23 +95,29 @@
             type: "get",
             url: root + "/course/cafedetailanswer",
             dataType: "json",
-            data: {"cafe_num": cafe_num},
+            data: {"cafe_num": cafe_num, "user_num": user_num},
             success: function (res) {
-                $("#answer").html("댓글 갯수 : " + res.length);
-                $.each(res, function (i, elt) {
+                $("#answer").html("댓글 갯수 : " + res.list.length);
+                $.each(res.list, function (i, elt) {
+                    s += "<hr>";
                     s += "<div class='cafestar'>";
                     s += "닉네임 : " + elt.nickname;
-                    if (loginok == 'yes' && user_num == elt.user_num) {
-                        s += '<button class="btn btn-outline-dark adel fr" course_num="' + elt.course_num + '">삭제</button>';
-                        s += '<button class="btn btn-outline-dark aupd fr" course_num="' + elt.course_num + '">수정</button>';
+                    s += "<span class='day'> 작성일 : " + elt.writeday + "</span>&ensp;";
+                    s += "<span class='star'>별점 : ";
+                    for(var i=0;i<elt.star;i++){
+                     s+="<span style='color: #fad00d; font-size: 24px;'>★</span>";
                     }
-                    s +="<p><pre class='cafecontent'>" + elt.content + "</pre>";
-                    s+="<span class='day'> 작성일 : " + elt.writeday + "</span>";
-                    s+="<span class='star'> 별점 : "+elt.star+"</span>";
-                    s+="</p>";
+                         s+="</span>";
+                    s += "<p><pre class='cafecontent'>" + elt.content + "</pre>";
+                    s += "</p>";
                     s += "</div>";
 
                 });
+                if (res.subs == 0) {
+                    $("span.subs").html("<i class='fa-regular fa-heart fa-xl'></i>");
+                } else {
+                    $("span.subs").html("<i class='fa-solid fa-heart fa-xl' style='color:red;'></i>");
+                }
                 $("#review").html(s);
             }
         });
@@ -98,15 +128,14 @@
 <body>
 
 <%---------------------------------------------------------------------------------body--%>
-<div class="dPuFYu" id="contents" style="margin-bottom: 66px;" media="web">
+<div class="dPuFYu" id="contents" style="margin-top: 40px;margin-bottom: 66px;" media="web">
     <section direction="vertical" class="hj_mainimg">
         <img src="${dto.photo}">
-    </section>
     <div class="hj_bmain">
         <div class="hj_bhead">
             <div class="hj_bbody">
                 <div id="title">
-                    <h2>${dto.title}</h2>
+                    <h2>${dto.title} <span class="subs"></span></h2>
 
                 </div>
                 <div id="topinfo" type="companion" class="iYZztd">
@@ -124,36 +153,72 @@
                         </div>
                     </div>
                     <div>
+                        <br>
                         <b id="answer"></b>
                         <div id="review"></div>
                     </div>
                 </div>
-
+                <script type="text/javascript">
+                    $("span.subs").click(function () {
+                        var loginok = "${sessionScope.loginok}";
+                        var user_num = "${sessionScope.user_num}";
+                        var cafe_num = "${dto.cafe_num}";
+                        if (loginok != "yes") {
+                            alert("로그인 후 이용가능합니다");
+                            return;
+                        } else {
+                            var heart = $(this).find("i").attr("class");
+                            if (heart == 'fa-regular fa-heart fa-xl') {
+                                $(this).find("i").attr("class", "fa-solid fa-heart fa-xl").css("color", "red");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/cafedetail/insertsubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "cafe_num": cafe_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            } else {
+                                $(this).find("i").attr("class", "fa-regular fa-heart fa-xl").css("color", "black");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/cafedetail/deletesubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "cafe_num": cafe_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            }
+                        }
+                        //ajax이용해서 좋아요 수 증가 후 출력
+                    });
+                </script>
                 <%--------------------------------------------------------------------------- 별점--%>
                 <c:if test="${sessionScope.loginok!=null}">
-                <form class="mb-3" id="myform">
-                    <input type="hidden" name="user_num" value="${sessionScope.user_num}">
-                    <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
-                    <fieldset>
-                        <span class="text-bold">별점을 선택해주세요</span>
-                        <input type="radio" name="star" value="5" id="rate1"><label
-                            for="rate1">★</label>
-                        <input type="radio" name="star" value="4" id="rate2"><label
-                            for="rate2">★</label>
-                        <input type="radio" name="star" value="3" id="rate3" checked><label
-                            for="rate3">★</label>
-                        <input type="radio" name="star" value="2" id="rate4"><label
-                            for="rate4">★</label>
-                        <input type="radio" name="star" value="1" id="rate5"><label
-                            for="rate5">★</label>
-                    </fieldset>
-                    <div>
+                    <form class="mb-3" id="myform">
+                        <input type="hidden" name="user_num" value="${sessionScope.user_num}">
+                        <input type="hidden" name="cafe_num" value="${dto.cafe_num}">
+                        <fieldset>
+                            <span class="text-bold">별점을 선택해주세요</span>
+                            <input type="radio" name="star" value="5" id="rate1"><label
+                                for="rate1">★</label>
+                            <input type="radio" name="star" value="4" id="rate2"><label
+                                for="rate2">★</label>
+                            <input type="radio" name="star" value="3" id="rate3" checked><label
+                                for="rate3">★</label>
+                            <input type="radio" name="star" value="2" id="rate4"><label
+                                for="rate4">★</label>
+                            <input type="radio" name="star" value="1" id="rate5"><label
+                                for="rate5">★</label>
+                        </fieldset>
+                        <div>
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-outline-dark" id="cafestarbtn">등록</button><br>
+                        </div>
+                        <button type="button" class="btn btn-outline-green" id="cafestarbtn" style="float: right; margin-top: 6px">등록</button>
+                        <br>
 
-                </form>
+                    </form>
                 </c:if>
 
 
@@ -186,11 +251,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="dg_container">
-
-</div>
-
 
 <%--footer--%>
 <footer id="footer" class="efLSbp">
@@ -209,7 +269,7 @@
                 <em>상담가능시간: 매일 9:00~24:00</em>
             </p>
         </div>
-        <%--            -----------------------주식회사 Start--%>
+        <%------------------------주식회사 Start--%>
         <div class="Footer__FoldWrapper-sc-190uiip-1 dRbhKq footer_info grey_6A">
                 <span>
                     <em>주식회사: 오늘뭐해</em>
@@ -225,7 +285,7 @@
                 </span>
         </div>
 
-        <%--            ----------------------------------------------개인정보Start--%>
+        <%------------------------------------------------개인정보Start--%>
         <div class="info_wrap_horizontal vertical_line info_regular grey_6A small_gap font_fix_320">
             <p class="info_bold">개인정보 처리방침</p>
             <p> | 이용약관</p>
@@ -239,7 +299,7 @@
         </div>
     </div>
 </footer>
-
-
+    </section>
+</div>
 </body>
 </html>

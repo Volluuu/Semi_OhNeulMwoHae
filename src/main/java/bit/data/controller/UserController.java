@@ -35,6 +35,8 @@ public class UserController {
         this.messageService = NurigoApp.INSTANCE.initialize("NCSNEBVIMIQMPMQO", "VDFIF8POOXXQVXHVYZ7OJTIA6NKMYBUW", "https://api.coolsms.co.kr");
     }
 
+    
+
     @GetMapping("/list")
     public String ulist(Model model)
     {
@@ -52,8 +54,28 @@ public class UserController {
     }
 
     @GetMapping("/userform")
-    public String uform()
+    public String uform(@RequestParam(required = false) String login_channel, HttpSession session)
     {
+        // 카카오/네이버 로그인 시도 후 일반 회원가입할 때 꼬이는 것 방지
+        if (login_channel == null) {
+            session.setMaxInactiveInterval(60*60*4);//4시간 유지
+            session.setAttribute("login_channel", "none");
+            session.setAttribute("kakao_id", null);
+            session.setAttribute("naver_id", null);
+            session.setAttribute("loginid", null);
+            session.setAttribute("password", null);
+            session.setAttribute("loginname", null);
+            session.setAttribute("nickname", null);
+            session.setAttribute("age", null);
+            session.setAttribute("gender", null);
+            session.setAttribute("email", null);
+            session.setAttribute("profile", null);
+            session.setAttribute("loginphoto", null);
+            session.setAttribute("loginhp", null);
+            session.setAttribute("isadmin",null);
+            session.setAttribute("alarm", null);
+            session.setAttribute("interest", null);
+        }
         return "/bit/user/userform";
     }
 
@@ -77,7 +99,7 @@ public class UserController {
 
 
     @PostMapping("/findid")
-    public String findid(UserDto userdto,Model model){
+    public String findid(UserDto userdto,Model model)throws Exception{
         System.out.println("name="+ userdto.getName());
         if(userService.findIdCheckByName(userdto.getName())==0) {
             model.addAttribute("msg", "이름을 확인해주세요");
@@ -88,8 +110,20 @@ public class UserController {
         }
     }
 
+    @PostMapping("/findpassword")
+    public String findpassword(UserDto userdto,Model model){
+        System.out.println("loginid="+ userdto.getLoginid());
+        if(userService.findPasswordCheckById(userdto.getLoginid())==0) {
+            model.addAttribute("msg", "아이디를 확인해주세요");
+            return "/bit/user/userpassword";
+        }else {
+            model.addAttribute("user", userService.findPasswordById(userdto.getLoginid()));
+            return "/bit/user/findpassword";
+        }
+    }
+
     @PostMapping("/insert")
-    public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto)// MemberDto dto은 모델앤뷰 생략
+    public String insert(HttpServletRequest request, UserDto dto, MultipartFile myphoto, HttpSession session)// MemberDto dto은 모델앤뷰 생략
     {
         try {
             // Tom cat에 올라간upload 폴더 경로
@@ -99,7 +133,6 @@ public class UserController {
             String fileName = ChangeName.getChangeFileName(myphoto.getOriginalFilename());
             //dto에 photo에 저장
             dto.setProfilephoto(fileName);
-
             //upload try/catch
             myphoto.transferTo(new File(path + "/" + fileName));
         } catch (Exception e) {
@@ -109,6 +142,23 @@ public class UserController {
         try {
             System.out.println("dto: " + dto);
 
+            // 네이버/카카오 로그인 시 각각의 고유 ID 반영
+            Object loginChannelObj = session.getAttribute("login_channel");
+            if (loginChannelObj != null)
+            {
+                String loginChannel = (String) loginChannelObj;
+                if (loginChannel.equals("kakao_id")) {
+                    Object kakaoIdObj = session.getAttribute("kakao_id");
+                    if (kakaoIdObj != null) {
+                        dto.setKakao_id((long) kakaoIdObj);
+                    }
+                } else if (loginChannel.equals("naver_id")) {
+                    Object naverIdObj = session.getAttribute("naver_id");
+                    if (naverIdObj != null) {
+                        dto.setNaver_id((String) naverIdObj);
+                    }
+                }
+            }
             //db insert (성공했을때만 업로드되도록 try에 배치)
             userService.insertUser(dto);
         } catch (IllegalStateException e) {
@@ -147,6 +197,30 @@ public class UserController {
         System.out.println("nickname : " + nickname + ", count : " + count);
         map.put("count", count);//조회된 id에 값을 저장
 
+        return map;
+    }
+
+    @GetMapping("/loginPasswordCheck")
+    @ResponseBody //json 반환 annotation
+    public Map<String, Object> loginPasswordCheck(@RequestParam Map<String, String> param, HttpSession session) {
+        int user_num = (int) session.getAttribute("user_num");
+
+        String originPassword = param.get("originPassword");
+        Map<String, Object> map = new HashMap<>();
+
+
+        UserDto userDto = userService.getDataByUserNum(user_num);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
+
+        if (userDto == null) {
+            map.put("code", 1);//결과 코드
+            map.put("msg", "해당 유저가 존재하지 않습니다.");//결과 메세지
+        } else if (!userDto.getPassword().equals(originPassword)) {
+            map.put("code", 2);//결과 코드
+            map.put("msg", "비밀번호가 일치하지 않습니다.");//결과 메세지
+        } else {
+            map.put("code", 0);//결과 코드
+            map.put("msg", "성공입니다.");//결과 메세지
+        }
         return map;
     }
 

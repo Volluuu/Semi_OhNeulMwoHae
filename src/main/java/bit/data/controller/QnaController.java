@@ -1,6 +1,5 @@
 package bit.data.controller;
 
-import bit.data.dto.FindDto;
 import bit.data.dto.QnaDto;
 import bit.data.service.QnaAnswerServiceInter;
 import bit.data.service.QnaServiceInter;
@@ -14,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class QnaController {
@@ -30,53 +30,48 @@ public class QnaController {
 	QnaAnswerServiceInter qnaAnswerServiceInter;
 
 
-	/*@GetMapping("/qna/qnalist")
-	public String getQnaData(Model model) {
-		QnaDto dto = new QnaDto();
-		dto = serviceInter.getQna(1);
-		System.out.println(dto.getContent());
-		model.addAttribute("subject", dto.getSubject());
-		model.addAttribute("content", dto.getContent());
-
-		return "/bit/qna/qnalist";
-	}*/
 
 	@GetMapping("/qna/qnalist")
 	public String getAllData(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
-							 @RequestParam(value = "searchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
-							 @RequestParam(value = "searchword" ,required = false) String sw,
-							 Model model)
-	{
-		int totalCount=serviceInter.getTotalCount(sc,sw);
-		int perPage=10;//한페이지당 보여질 글의 갯수
-		int perBlock=5;//한블럭당 보여질 페이지의 갯수
+							 @RequestParam(value = "user_num" ,required = false) String user_num,
+							 @RequestParam(value = "qnasearchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
+							 @RequestParam(value = "qnasearchword" ,required = false) String sw,
+								   Model model) {
+
+		if(user_num==null){
+			user_num="0";
+		}
+
+		int totalCount = serviceInter.getTotalCount(sc, sw,Integer.parseInt(user_num));
+		int perPage = 10;//한페이지당 보여질 글의 갯수
+		int perBlock = 5;//한블럭당 보여질 페이지의 갯수
 		int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
 		int startPage;//각블럭당 보여질 시작페이지
 		int endPage;//각 블럭당 보여질 끝페이지
 		int totalPage;//총 페이지수
 		int no;//각 페이지당 출력할 시작번호
 
-		totalPage=totalCount/perPage+(totalCount%perPage==0?0:1);
-		startPage=(currentPage-1)/perBlock*perBlock+1;
-		endPage=startPage+perBlock-1;
 
-		if(endPage>totalPage)
-			endPage=totalPage;
+		totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
 
-		startNum=(currentPage-1)*perPage;
+		startPage = (currentPage - 1) / perBlock * perBlock + 1;
 
-		no=totalCount-(currentPage-1)*perPage;
+		endPage = startPage + perBlock - 1;
 
-		//List<QnaDto> list=serviceInter.getAllData();
-		List<QnaDto> list=serviceInter.getPagingList(sc,sw,startNum,perPage);
+		if (endPage > totalPage)
+			endPage = totalPage;
 
-		for(QnaDto dto:list)
-		{
-			int acount=qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
+		startNum = (currentPage - 1) * perPage;
+
+		no = totalCount - (currentPage - 1) * perPage;
+
+		List<QnaDto> list = serviceInter.getPagingList(sc, sw,Integer.parseInt(user_num), startNum, perPage);
+
+		for (QnaDto dto : list) {
+			int acount = qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
 			dto.setAcount(acount);
 		}
 
-		model.addAttribute("list",list);
 		model.addAttribute("totalCount",totalCount);
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("startPage",startPage);
@@ -85,7 +80,229 @@ public class QnaController {
 		model.addAttribute("totalPage",totalPage);
 
 		return "/bit/qna/qnalist";
+
 	}
+
+	@GetMapping("/qna/qnalist2")
+	public String getAllData2(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+							 @RequestParam(value = "user_num" ,required = false) String user_num,
+							 @RequestParam(value = "qnasearchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
+							 @RequestParam(value = "qnasearchword" ,required = false) String sw,
+							 Model model) {
+
+		if(user_num==null){
+			user_num="0";
+		}
+
+		int totalCount = serviceInter.getTotalCount(sc, sw,Integer.parseInt(user_num));
+		int perPage = 10;//한페이지당 보여질 글의 갯수
+		int perBlock = 5;//한블럭당 보여질 페이지의 갯수
+		int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+		int startPage;//각블럭당 보여질 시작페이지
+		int endPage;//각 블럭당 보여질 끝페이지
+		int totalPage;//총 페이지수
+		int no;//각 페이지당 출력할 시작번호
+
+
+		totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+
+		startPage = (currentPage - 1) / perBlock * perBlock + 1;
+
+		endPage = startPage + perBlock - 1;
+
+		if (endPage > totalPage)
+			endPage = totalPage;
+
+		startNum = (currentPage - 1) * perPage;
+
+		no = totalCount - (currentPage - 1) * perPage;
+
+		List<QnaDto> list = serviceInter.getPagingList(sc, sw,Integer.parseInt(user_num), startNum, perPage);
+
+		for (QnaDto dto : list) {
+			int acount = qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
+			dto.setAcount(acount);
+		}
+
+		model.addAttribute("totalCount",totalCount);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("no",no);
+		model.addAttribute("totalPage",totalPage);
+
+		return "/bit/qna/qnalist2";
+
+	}
+
+	@GetMapping("/qna/qnaAnswerList")
+	@ResponseBody
+	public Map<String, Object> getSearchAnswer(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+											   @RequestParam(value = "user_num" ,required = false) String user_num,
+											   @RequestParam(value = "qnasearchcolumn" ,required = false) String qnasearchcolumn,/*required = false : 값이 없을 경우 null */
+											   @RequestParam(value = "qnasearchword" ,required = false) String qnasearchword,
+											   Model model) {
+
+		if(user_num==null){
+			user_num="0";
+		}
+
+		int totalCount = serviceInter.getAnswerCount(qnasearchcolumn, qnasearchword,Integer.parseInt(user_num));
+		int perPage = 10;//한페이지당 보여질 글의 갯수
+		int perBlock = 5;//한블럭당 보여질 페이지의 갯수
+		int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+		int startPage;//각블럭당 보여질 시작페이지
+		int endPage;//각 블럭당 보여질 끝페이지
+		int totalPage;//총 페이지수
+		int no;//각 페이지당 출력할 시작번호
+
+
+		totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+
+		startPage = (currentPage - 1) / perBlock * perBlock + 1;
+
+		endPage = startPage + perBlock - 1;
+
+		if (endPage > totalPage)
+			endPage = totalPage;
+
+		startNum = (currentPage - 1) * perPage;
+
+		no = totalCount - (currentPage - 1) * perPage;
+
+		List<QnaDto> list = serviceInter.getAnswerList(qnasearchcolumn, qnasearchword,Integer.parseInt(user_num), startNum, perPage);
+
+
+		for (QnaDto dto : list) {
+			int acount = qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
+			dto.setAcount(acount);
+			String loginid = userServiceInter.getDataByUserNum(dto.getUser_num()).getLoginid();
+			dto.setLoginid(loginid);
+		}
+
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("list",list);
+		/*	map.put("user_num",user_num);*/
+		map.put("currentPage",currentPage);
+		map.put("startPage",startPage);
+		map.put("endPage",endPage);
+		map.put("no",no);
+		map.put("totalPage",totalPage);
+
+		return map;
+	}
+
+
+	@GetMapping("/qna/qnaAllList")
+	@ResponseBody
+	public Map<String, Object> getAllList(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+										  @RequestParam(value = "user_num",required = false) String user_num,
+										  @RequestParam(value = "qnasearchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
+										  @RequestParam(value = "qnasearchword" ,required = false) String sw){
+		//	public String getAllData(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+//							/* @RequestParam(value = "user_num") int user_num,*/
+//							 @RequestParam(value = "searchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
+//							 @RequestParam(value = "searchword" ,required = false) String sw,
+//								   Model model) {
+		if(user_num==null){
+			user_num="0";
+		}
+
+		int totalCount = serviceInter.getTotalCount(sc, sw,Integer.parseInt(user_num));
+		int perPage = 10;//한페이지당 보여질 글의 갯수
+		int perBlock = 5;//한블럭당 보여질 페이지의 갯수
+		int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+		int startPage;//각블럭당 보여질 시작페이지
+		int endPage;//각 블럭당 보여질 끝페이지
+		int totalPage;//총 페이지수
+		int no;//각 페이지당 출력할 시작번호
+
+		totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+		startPage = (currentPage - 1) / perBlock * perBlock + 1;
+		endPage = startPage + perBlock - 1;
+
+		if (endPage > totalPage)
+			endPage = totalPage;
+
+		startNum = (currentPage - 1) * perPage;
+
+		no = totalCount - (currentPage - 1) * perPage;
+
+		List<QnaDto> list = serviceInter.getPagingList(sc, sw, Integer.parseInt(user_num),startNum, perPage);
+
+
+		for (QnaDto dto : list) {
+			int acount = qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
+			dto.setAcount(acount);
+		}
+
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("list",list);
+	/*	map.put("user_num",user_num);*/
+		map.put("currentPage",currentPage);
+		map.put("startPage",startPage);
+		map.put("endPage",endPage);
+		map.put("no",no);
+		map.put("totalPage",totalPage);
+
+		return map;
+	}
+
+	@GetMapping("/qna/qnaSearchList")
+	@ResponseBody
+	public Map<String, Object> getSearchList(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+											 @RequestParam(value = "user_num",required = false) String user_num,
+											 @RequestParam(value = "qnasearchcolumn" ,required = false) String qnasearchcolumn,/*required = false : 값이 없을 경우 null */
+											 @RequestParam(value = "qnasearchword" ,required = false) String qnasearchword){
+		//	public String getAllData(@RequestParam(defaultValue = "1") int currentPage,/*null일경우 기본 페이지를 1로*/
+//							/* @RequestParam(value = "user_num") int user_num,*/
+//							 @RequestParam(value = "searchcolumn" ,required = false) String sc,/*required = false : 값이 없을 경우 null */
+//							 @RequestParam(value = "searchword" ,required = false) String sw,
+//								   Model model) {
+		if(user_num==null){
+			user_num="0";
+		}
+		int totalCount = serviceInter.getTotalCount(qnasearchcolumn, qnasearchword,Integer.parseInt(user_num));
+		int perPage = 10;//한페이지당 보여질 글의 갯수
+		int perBlock = 5;//한블럭당 보여질 페이지의 갯수
+		int startNum;//db에서 가져올 글의 시작번호(mysql은 첫글이 0번,오라클은 1번)
+		int startPage;//각블럭당 보여질 시작페이지
+		int endPage;//각 블럭당 보여질 끝페이지
+		int totalPage;//총 페이지수
+		int no;//각 페이지당 출력할 시작번호
+
+		totalPage = totalCount / perPage + (totalCount % perPage == 0 ? 0 : 1);
+		startPage = (currentPage - 1) / perBlock * perBlock + 1;
+		endPage = startPage + perBlock - 1;
+
+		if (endPage > totalPage)
+			endPage = totalPage;
+
+		startNum = (currentPage - 1) * perPage;
+
+		no = totalCount - (currentPage - 1) * perPage;
+
+		List<QnaDto> list = serviceInter.getPagingList(qnasearchcolumn, qnasearchword, Integer.parseInt(user_num),startNum, perPage);
+
+		System.out.println(list.size());
+		for (QnaDto dto : list) {
+			int acount = qnaAnswerServiceInter.getAllAnswerList(dto.getQna_num()).size();
+			dto.setAcount(acount);
+		}
+
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("list",list);
+		map.put("currentPage",currentPage);
+		map.put("startPage",startPage);
+		map.put("endPage",endPage);
+		map.put("no",no);
+		map.put("totalPage",totalPage);
+		map.put("qnasearchcolumn",qnasearchcolumn);
+		map.put("qnasearchword",qnasearchword);
+
+		return map;
+	}
+
 
 	@GetMapping("/qna/qnadetail")
 	public ModelAndView detailQna(int qna_num, int currentPage) {
@@ -102,6 +319,8 @@ public class QnaController {
 		mview.setViewName("/bit/qna/qnadetail");
 		return mview;
 	}
+
+
 
 	@GetMapping("/qna/qnaform")
 	public String qnainsert(int user_num,int currentPage,Model model){
@@ -135,7 +354,7 @@ public class QnaController {
 	{
 		//db에 update
 		serviceInter.updateQna(dto);
-		serviceInter.updateAnswer(dto);
+		serviceInter.updateAnswer();
 
 		return "redirect:qnadetail?currentPage="+currentPage+"&qna_num="+dto.getQna_num();
 	}

@@ -72,10 +72,10 @@
             type: "get",
             url: root + "/course/fooddetailanswer",
             dataType: "json",
-            data: {"food_num": food_num},
+            data: {"food_num": food_num, "user_num": user_num},
             success: function (res) {
-                $("#answer").html("댓글 갯수 : " + res.length);
-                $.each(res, function (i, elt) {
+                $("#answer").html("댓글 갯수 : " + res.list.length);
+                $.each(res.list, function (i, elt) {
                     s += "<div class='cafestar'>";
                     s += "닉네임 : " + elt.nickname;
                     if (loginok == 'yes' && user_num == elt.user_num) {
@@ -89,6 +89,11 @@
                     s += "</div>";
 
                 });
+                if (res.subs == 0) {
+                    $("span.subs").html("<i class='fa-regular fa-heart'></i>");
+                } else {
+                    $("span.subs").html("<i class='fa-solid fa-heart' style='color:red;'></i>");
+                }
                 $("#review").html(s);
             }
         });
@@ -125,10 +130,47 @@
                         </div>
                     </div>
                     <div>
-                    <b id="answer"></b>
-                    <div id="review"></div>
+                        <span class="subs"></span>
+                        <br>
+                        <b id="answer"></b>
+                        <div id="review"></div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $("span.subs").click(function () {
+                        var loginok = "${sessionScope.loginok}";
+                        var user_num = "${sessionScope.user_num}";
+                        var food_num = "${dto.food_num}";
+                        if (loginok != "yes") {
+                            alert("로그인 후 이용가능합니다");
+                            return;
+                        } else {
+                            var heart = $(this).find("i").attr("class");
+                            if (heart == 'fa-regular fa-heart') {
+                                $(this).find("i").attr("class", "fa-solid fa-heart").css("color", "red");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/fooddetail/insertsubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "food_num": food_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            } else {
+                                $(this).find("i").attr("class", "fa-regular fa-heart").css("color", "black");
+                                $.ajax({
+                                    type: "get",
+                                    url: root + "/fooddetail/deletesubs",
+                                    dataType: "text",
+                                    data: {"user_num": user_num, "food_num": food_num},
+                                    success: function (res) {
+                                    }
+                                });
+                            }
+                        }
+                        //ajax이용해서 좋아요 수 증가 후 출력
+                    });
+                </script>
 
                 <%--------------------------------------------------------------------------- 별점--%>
                 <c:if test="${sessionScope.loginok!=null}">

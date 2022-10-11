@@ -1,13 +1,22 @@
 package bit.data.service;
 
 import bit.data.dto.UserDto;
+import com.fasterxml.jackson.databind.JsonNode;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface UserServiceInter {
 
-    public UserDto findIdByName(String name);
-    public int findIdCheckByName(String name);
+
+    public UserDto findPasswordById(String loginid);
+    public int findPasswordCheckById(String loginid);
+    public List<UserDto> findIdByName(String name)throws Exception;
+    public int findIdCheckByName(String name)throws Exception;
+
+    public UserDto getUserByKakaoId(long kakao_id);
+
+    public UserDto getUserByNaverId(String naver_id);
 
     public int getTotalCount();
 
@@ -31,4 +40,15 @@ public interface UserServiceInter {
     public void updateUser(UserDto dto);
 
     public void deleteUser(int user_num);
+
+    public String getKakaoAccessToken(String code);
+
+    public String getNaverAccessToken(String code, String state);
+
+    public UserDto getUserInfo(String access_token);
+
+    public UserDto getNaverUserInfo(String access_token);
+
+    public UserDto getAgreementInfo(String access_token);
+
 }

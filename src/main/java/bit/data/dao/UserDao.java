@@ -15,16 +15,36 @@ public class UserDao implements UserDaoInter{
     SqlSession session;
     String ns="bit.data.dao.UserDao.";
 
+    @Override
+    public UserDto findPasswordById(String loginid){
+        return session.selectOne(ns+"findPasswordById",loginid);
+    }
+
+    //메일확인
+    @Override
+    public int findPasswordCheckById(String loginid){
+        return session.selectOne(ns+"findPasswordCheckById", loginid);
+    }
 
 
     @Override
-    public UserDto findIdByName(String name){
-        return session.selectOne(ns+"findIdByName", name);
+    public List<UserDto> findIdByName(String name)throws Exception{
+        return session.selectList(ns+"findIdByName", name);
     }
 
     @Override
-    public int findIdCheckByName(String name){
+    public int findIdCheckByName(String name)throws Exception{
         return session.selectOne(ns+"findIdCheckByName", name);
+    }
+
+    @Override
+    public UserDto getUserByKakaoId(long kakao_id) {
+        return session.selectOne(ns+"getUserByKakaoId", kakao_id);
+    }
+
+    @Override
+    public UserDto getUserByNaverId(String naver_id) {
+        return session.selectOne(ns+"getUserByNaverId", naver_id);
     }
 
     @Override
@@ -35,6 +55,7 @@ public class UserDao implements UserDaoInter{
         return session.selectOne(ns+"getTotalCount");
     }
 
+    //회원이 있는지 여부 확인
     @Override
     public int getLoginIdSearch(String loginid) {
         // TODO Auto-generated method stub

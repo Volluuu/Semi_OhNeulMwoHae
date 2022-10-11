@@ -4,6 +4,16 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
+
+    <select id="findPasswordById" parameterType="String" resultType="udto">
+        select rpad(substr(password,1,char_length(password)/2),char_length(password),"*") as password from user where loginid=#{loginid}
+    </select>
+
+
+    <select id="findPasswordCheckById" parameterType="String" resultType="int">
+        select count(*) from user where loginid=#{loginid}
+    </select>
+
     <select id="findIdByName" parameterType="String" resultType="udto">
         select * from user where name=#{name}
     </select>
@@ -12,11 +22,20 @@
         select count(*) from user where name=#{name}
     </select>
 
+    <select id="getUserByKakaoId" parameterType="long" resultType="udto">
+        select * from user where kakao_id=#{kakao_id}
+    </select>
+
+    <select id="getUserByNaverId" parameterType="String" resultType="udto">
+        select * from user where naver_id=#{naver_id}
+    </select>
+
     <select id="getTotalCount" resultType="int">
         select count(*) from user
     </select>
 
-    <select id="getLoginIdSearch" parameterType="String" resultType="int">
+    <!-- 회원이 있는지 여부 확인 -->
+    <select id="getLoginIdSearch" parameterType="udto" resultType="int">
         select count(*) from user where loginid=#{loginid}
     </select>
 
@@ -25,8 +44,8 @@
     </select>
 
     <insert id="insertUser" parameterType="udto">
-        insert into user (loginid,password,name,nickname,age,gender,email,hp,gaipday)
-        values (#{loginid},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
+        insert into user (loginid,kakao_id,naver_id,password,name,nickname,age,gender,email,hp,gaipday)
+        values (#{loginid},#{kakao_id},#{naver_id},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
     </insert>
 
     <select id="getAllUsers" resultType="udto">
@@ -50,11 +69,11 @@
     </select>
 
     <update id="updateProfilePhoto" parameterType="Map">
-        update member set profilephoto=#{profilephoto} where user_num=#{user_num}
+        update user set profilephoto=#{profilephoto} where user_num=#{user_num}
     </update>
 
     <update id="updateUser" parameterType="udto">
-        update user set nickname=#{nickname},age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
+        update user set nickname=#{nickname},password=#{password}, age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
     </update>
 
     <delete id="deleteUser" parameterType="int">

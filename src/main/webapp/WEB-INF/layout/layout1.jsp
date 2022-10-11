@@ -61,10 +61,10 @@
    #info{
 
     }
-    
-    #main{
-		margin-top: 5%;
-    }
+
+    /*#main{*/
+	/*	margin-top: 5%;*/
+    /*}*/
 </style>
 </head>
 <body>

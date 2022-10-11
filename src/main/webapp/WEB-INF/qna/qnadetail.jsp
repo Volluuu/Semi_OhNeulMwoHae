@@ -83,18 +83,19 @@
      console.log("user_num:"+user_num);
      list(); // 처음시작 시 댓글 출력
 
+      /* 댓글 입력 이벤트 */
       $(document).on("click","#btnsave",function() {
         var fdata=$("#aform").serialize();
         fdata=decodeURIComponent(fdata);
         //alert(fdata);
         $.ajax({
-          type:"post",
+          type:"get",
           url:"answerInsert",
           dataType:"text",
           data:fdata,
           success:function(res){
-           //location.reload();
-            list();
+           location.reload();
+            /*list();*/
             $("#message").val("");
           }//success
         }); //ajax
@@ -103,9 +104,7 @@
       //삭제 이벤트
       $(document).on("click",".adel",function() {
         var answer_num=$(this).attr("answer_num");
-        alert(answer_num);
         var ans=confirm("정말 삭제하시겠습니까?");
-        console.log(ans);
         if(ans){
           $.ajax({
             type:"get",
@@ -164,12 +163,14 @@
         <tr>
           <td>
             <h2><b>${dto.subject}</b></h2>
-            <c:if test="${dto.acount>0 && dto.answer eq 'yes'}">
-              <span class="answercntsuc">[답변 완료]</span>
-            </c:if>
-            <c:if test="${dto.acount==0}">
-              <span class="answercntfail">[답변 대기중]</span>
-            </c:if>
+            <c:choose>
+              <c:when test="${dto.answer eq 'yes'}">
+                <span class="answercntsuc">[답변 완료]</span>
+              </c:when>
+              <c:otherwise>
+                <span class="answercntfail">[답변 대기중]</span>
+              </c:otherwise>
+            </c:choose>
             <span style="color: #ccc; font-size: 13px; text-align: left;">
               <fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
             </span>
@@ -186,13 +187,13 @@
               <div class="aform">
                 <form id="aform">
                   <input type="hidden" name="qna_num" value="${dto.qna_num}">
-                  <input type="hidden" name="user_num" value="${dto.user_num}">
+                  <input type="hidden" name="user_num" value="${user_num}">
                  <%-- <input type="hidden" name="id" value="${sessionScope.loginid}">
                   <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
                   <c:if test="${sessionScope.isadmin eq 'admin'}">
                   <div class="input-group">
                     <textarea name="message" id="message" class="form-control"></textarea>
-                    <button type="button" class="btn btn-dark btn-sm" id="btnsave" user_num="${user_num}">등록</button>
+                    <button type="button" class="btn btn-dark btn-sm" id="btnsave">등록</button>
                   </div>
                   </c:if>
                 </form>
@@ -205,8 +206,10 @@
             <button type="button" class="btn btn-dark" onclick="location.href='qnalist?currentPage=${currentPage}'">목록</button>
             <!-- 로그인중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
            <%-- <c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.id}">--%>
+            <c:if test="${sessionScope.isadmin eq 'admin' or sessionScope.user_num eq user_num}">
               <button type="button" class="btn btn-dark" onclick="location.href='qnaupdateform?qna_num=${dto.qna_num}&currentPage=${currentPage}'">수정</button>
               <button type="button" class="btn btn-dark" onclick="location.href='qnadelete?qna_num=${dto.qna_num}&currentPage=${currentPage}'">삭제</button>
+            </c:if>
            <%-- </c:if>--%>
           </td>
         </tr>

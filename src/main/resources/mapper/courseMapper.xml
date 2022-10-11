@@ -12,8 +12,8 @@
 
     </select>
 <!--유저가 작성한 경로를 테이블에 저장-->
-    <insert id="insertCourse" parameterType="coursedto">
-        insert into course values(null, 0, #{title}, #{user_num}, #{step1}, #{step2}, #{step3}, #{step4}, #{step5}, now())
+    <insert id="insertCourse" parameterType="Map">
+        insert into course values(null, #{cnt}, #{title}, #{user_num}, #{step1}, #{step2}, #{step3}, #{step4}, #{step5}, now())
     </insert>
 
     <delete id="deleteCourse" parameterType="int">
@@ -47,4 +47,5 @@
     <select id="getTripLatLon" parameterType="int" resultType="TripDto">
         select * from trip where trip_num = ${course_num}
     </select>
+
 </mapper>

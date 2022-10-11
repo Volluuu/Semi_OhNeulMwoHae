@@ -30,13 +30,23 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
-	public int getTotalCount(Map<String, String> map) {
+	public int getTotalCount(Map<String, Object> map) {
 		return session.selectOne(ns+"getTotalCount",map);
 	}
 
 	@Override
 	public List<QnaDto> getPagingList(Map<String, Object> map) {
 		return session.selectList(ns+"getPagingList",map);
+	}
+
+	@Override
+	public int getAnswerCount(Map<String, Object> map) {
+		return session.selectOne(ns+"getAnswerCount",map);
+	}
+
+	@Override
+	public List<QnaDto> getAnswerList(Map<String, Object> map) {
+		return session.selectList(ns+"getAnswerList",map);
 	}
 
 	@Override
@@ -55,12 +65,17 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
-	public void updateAnswer(QnaDto dto) {
-		session.update(ns+"updateAnswer",dto);
+	public void updateAnswer() {
+		session.update(ns+"updateQnaAnswer");
 	}
 
 	@Override
-	public void deleteQna(int num) {
-		session.delete(ns+"deleteQna",num);
+	public List<QnaDto> getUserData(int user_num) {
+		return session.selectList(ns+"getUserData",user_num);
+	}
+
+	@Override
+	public void deleteQna(int qna_num) {
+		session.delete(ns+"deleteQna",qna_num);
 	}
 }

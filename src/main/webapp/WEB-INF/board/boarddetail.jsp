@@ -23,12 +23,12 @@
     span.likes{
     	cursor: pointer;
     }
-    
+
     span.day{
     	color: #333;
     	float: right;
     }
-    
+
     span.writer {
 		color: red;
 		border: 1px solid red;
@@ -42,12 +42,12 @@
 		cursor: pointer;
 		margin-left: 5px;
 	}
-	
+
 	div.alist pre{
 		text-indent: 10px;
 		color: gray;
 	}
-	
+
 	div.alist img{
 		width: 40px;
 		height: 40px;
@@ -59,14 +59,14 @@
 	}
 </style>
 <script type="text/javascript">
-    var num=${dto.num};  	
-    	
+    var num=${dto.num};
+
     $(function() {
 		console.log("num="+num);
-			
+
 		list();// 처음시작 시 댓글 출력
-    	
-		//삭제 이벤트 
+
+		//삭제 이벤트
 		$(document).on("click",".adel",function() {
 			var idx=$(this).attr("idx");
 			var ans=confirm("정말 삭제하시겠습니까?");
@@ -84,14 +84,14 @@
 		   };
 		});//click
 	});
-    
+
     function list() {
 		var loginok='${sessionScope.loginok}';
 		var loginid='${sessionScope.loginid}';
 		var writerid='${dto.id}';
 		//alert(loginok+","+loginid);
 		//alert(writerid);
-		
+
 		var s="";
 		$.ajax({
 			type:"get",
@@ -121,9 +121,9 @@
 				$("div.alist").html(s);
 			}//success
 		}); //ajax
-		
+
 	};//function
-    
+
 </script>
 </head>
 <body>
@@ -135,7 +135,7 @@
 					<img src="../upload/${memphoto}" width="50" height="50" class="rounded-circle" align="left" onerror="this.src='../image/noimage.png'" hspace="20">
 				</c:if>
 					<b style="text-align: left;">${dto.name}(${dto.id})</b><br>
-			
+
 				<span style="color: #ccc; font-size: 13px; text-align: left;">
 					<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
 					&nbsp;&nbsp;
@@ -162,7 +162,7 @@
 				&nbsp;&nbsp;
 				<i class='far fa-comment-dots'></i>
 				&nbsp;<b class="banswer">0</b>
-				
+
 				<hr>
 				<div class="alist">
 					댓글목록
@@ -173,10 +173,10 @@
 						<input type="hidden" name="num" value="${dto.num}">
 						<input type="hidden" name="id" value="${sessionScope.loginid}">
 						<input type="hidden" name="name" value="${sessionScope.loginname}">
-						
+
 						<input type="file" id="upload" style="display: none;">
 						<button type="button" class="btn btn-dark btn-sm" id="btnphoto"><i class="fa fa-camera"></i></button>
-						
+
 						<img src="" id="aphoto" width="50px;" height="50px;" onerror="this.style.display='none'">
 						<br>
 						<div class="input-group">
@@ -193,7 +193,7 @@
 				<button type="button" class="btn btn-dark" onclick="location.href='form'">새글</button>
 				<button type="button" class="btn btn-dark" onclick="location.href='form?num=${dto.num}&regroup=${dto.regroup}&restep=${dto.restep}&relevel=${dto.relevel}&currentPage=${currentPage}'">답글</button>
 				<button type="button" class="btn btn-dark" onclick="location.href='list?currentPage=${currentPage}'">목록</button>
-				
+
 				<!-- 로그인중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
 				<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.id}">
 				<button type="button" class="btn btn-dark" onclick="location.href='updateform?num=${dto.num}&currentPage=${currentPage}'">수정</button>
@@ -209,7 +209,7 @@
 		var heart=$(this).find("i").attr("class");//하트 속성 클래스 얻음
 		if(heart=='far fa-heart'){
 			$(this).find("i").attr("class",'fas fa-heart').css("color","red");
-			
+
 			//ajax 이용하여 빨간색 하트일때만 조회수 증가
 			var num=${dto.num};
 			console.log(num);
@@ -218,13 +218,13 @@
 				url:"likes",
 				dataType:"json",
 				data:{"num":num},
-				success:function(res){		
+				success:function(res){
 					$("span.likes").find("b").text(res.likes);
 				}//success
 			}); //ajax
 		}else{
 			$(this).find("i").attr("class",'far fa-heart').css("color","black");
-			
+
 			//ajax 이용하여 빨간색 하트일때만 조회수 증가
 			var num=${dto.num};
 			console.log(num);
@@ -233,23 +233,23 @@
 				url:"dislikes",
 				dataType:"json",
 				data:{"num":num},
-				success:function(res){		
+				success:function(res){
 					$("span.likes").find("b").text(res.likes);
 				}//success
 			}); //ajax
 		}
-		
+
 	});
-	
+
 	//사진 버튼
 	$("#btnphoto").click(function() {
 		$("#upload").trigger("click");
 	});
-	
+
 	$("#upload").change(function() {
 		var form=new FormData();
 		form.append("photo",$("#upload")[0].files[0]);//선택한 1개만 추가
-		
+
 		$.ajax({
 			type:"post",
 			url:"../answer/updatephoto",
@@ -261,10 +261,10 @@
 				$("#aphoto").attr("src","../upload/"+res.aphoto);
 				$("#aphoto").css("display","inline-block");
 			}//success
-			
+
 		}); //ajax
 	});
-	
+
 	//댓글저장
 	$("#btnsave").click(function() {
 		var fdata=$("#aform").serialize();//form태그안의 name을 쿼리 스트링 형태로 읽어온다
@@ -276,7 +276,7 @@
 			data:fdata,
 			success:function(res){
 				list();//댓글 내용만 바뀐다.location.reload();도 가능함, 댓글 목록을 다시 db에서 가져와 출력
-				
+
 				//입력값이랑 사진 안보이게 처리
 				$("#message").val("");
 				$("#aphoto").attr("src","").css("display","none");
