@@ -40,6 +40,16 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
+	public int getAnswerCount(Map<String, Object> map) {
+		return session.selectOne(ns+"getAnswerCount",map);
+	}
+
+	@Override
+	public List<QnaDto> getAnswerList(Map<String, Object> map) {
+		return session.selectList(ns+"getAnswerList",map);
+	}
+
+	@Override
 	public void insertQna(QnaDto dto) {
 		session.insert(ns+"insertQna",dto);
 	}

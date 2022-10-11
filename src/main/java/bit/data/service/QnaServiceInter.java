@@ -10,6 +10,8 @@ public interface QnaServiceInter {
 	public int getMaxNum();
 	public int getTotalCount(String searchcolumn,String searchword,int user_num);
 	public List<QnaDto> getPagingList(String searchcolumn,String searchword,int user_num,int startnum,int perpage);
+	public int getAnswerCount(String searchcolumn,String searchword,int user_num);
+	public List<QnaDto> getAnswerList(String searchcolumn,String searchword,int user_num,int startnum,int perpage);
 	public void insertQna(QnaDto dto);
 	public QnaDto getUser(int user_num);
 	public List<QnaDto> getUserData(int user_num);

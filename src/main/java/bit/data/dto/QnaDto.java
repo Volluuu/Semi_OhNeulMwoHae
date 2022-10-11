@@ -15,4 +15,5 @@ public class QnaDto {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "Asia/Seoul")
 	private Timestamp writeday;
 	private int acount;
+	private String loginid;
 }

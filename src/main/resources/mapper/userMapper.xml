@@ -4,12 +4,14 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
-    <update id="findPassword" >
-        update user set password=#{password} where loginid=#{loginid} and email=#{email}
-    </update>
 
-    <select id="findPasswordCheck" resultType="int">
-        select count(*) from user where email=#{email} and loginid=#{loginid}
+    <select id="findPasswordById" parameterType="String" resultType="udto">
+        select rpad(substr(password,1,char_length(password)/2),char_length(password),"*") as password from user where loginid=#{loginid}
+    </select>
+
+
+    <select id="findPasswordCheckById" parameterType="String" resultType="int">
+        select count(*) from user where loginid=#{loginid}
     </select>
 
     <select id="findIdByName" parameterType="String" resultType="udto">
@@ -32,7 +34,8 @@
         select count(*) from user
     </select>
 
-    <select id="getLoginIdSearch" parameterType="String" resultType="int">
+    <!-- 회원이 있는지 여부 확인 -->
+    <select id="getLoginIdSearch" parameterType="udto" resultType="int">
         select count(*) from user where loginid=#{loginid}
     </select>
 
@@ -66,11 +69,11 @@
     </select>
 
     <update id="updateProfilePhoto" parameterType="Map">
-        update member set profilephoto=#{profilephoto} where user_num=#{user_num}
+        update user set profilephoto=#{profilephoto} where user_num=#{user_num}
     </update>
 
     <update id="updateUser" parameterType="udto">
-        update user set nickname=#{nickname},age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
+        update user set nickname=#{nickname},password=#{password}, age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
     </update>
 
     <delete id="deleteUser" parameterType="int">

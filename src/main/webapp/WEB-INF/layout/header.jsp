@@ -168,15 +168,15 @@
 			</div>
 		</div>
 		<div class="search_bar">
-			<div class="input-group search1">
-				<select class="form-control sel1">
+			<%--<div class="input-group search1">
+				&lt;%&ndash;<select class="form-control sel1">
 					<option selected disabled hidden class="op1">게시판 선택</option>
 					<option class="op1">경로 추천</option>
 					<option class="op1">친구 찾기</option>
 				</select>
 				<input type="text" class="form-control in1" placeholder="원하는 장소를 검색하든지 말든지">
-				<button class="form-control btn1"><i class='fas fa-search'></i></button>
-			</div>
+				<button class="form-control btn1"><i class='fas fa-search'></i></button>&ndash;%&gt;
+			</div>--%>
 		</div>
 	<div class="myinfo">
 		<div class="input-group my1">
@@ -197,7 +197,7 @@
 		</c:if>
 
 			<c:if test="${sessionScope.loginok!=null}">
-				<b>${sessionScope.nickname}님</b>
+				<b>${sessionScope.loginname}님</b>
 				&nbsp;&nbsp;
 				<button type="button" class="btn btn-danger" id="btnlogout" style="background-color: white; color:black;">로그아웃</button>
 			</c:if>
@@ -232,9 +232,14 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<div class="input-group">
+
 						<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok" style="background-color: black; color: white; width:260px;">로그인</button>
-					</div>
+						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver">
+							<img src="${root}/image/naverlogin.png" style="width: 260px;">
+						</a>
+						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code">
+							<img src="${root}/image/kakaologin.png" style="width: 260px;">
+						</a>
 						<button type="button" onclick="location.href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver'" class="btn btn-success"  id="btnsocial1" style="width: 260px;">네이버</button>
 						<button type="button" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code'" class="btn btn-success"  id="btnsocial2" style="width: 260px; background-color: yellow; color:black;">카카오</button>
 					<button type="button" onclick="location.href='${root}/user/userform'" class="btn btn-success"  id="btnjoin" style="border-radius:30px; background-color: white; width:260px; color:black;">간편 회원가입</button>
@@ -268,7 +273,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.reload();
+							location.href = "${root}/";
 						}
 					}//success
 					
@@ -284,7 +289,7 @@
 				url:root+"/user/logout",
 				dataType:"text",
 				success:function(res){
-					location.reload();
+					location.href = "${root}/";
 					
 				}//success
 				
@@ -310,7 +315,8 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.reload();
+							location.href = "${root}/";
+
 						}
 					}//success
 

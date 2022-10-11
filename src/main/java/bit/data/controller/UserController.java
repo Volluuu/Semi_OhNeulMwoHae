@@ -99,7 +99,7 @@ public class UserController {
 
 
     @PostMapping("/findid")
-    public String findid(UserDto userdto,Model model){
+    public String findid(UserDto userdto,Model model)throws Exception{
         System.out.println("name="+ userdto.getName());
         if(userService.findIdCheckByName(userdto.getName())==0) {
             model.addAttribute("msg", "이름을 확인해주세요");
@@ -107,6 +107,18 @@ public class UserController {
         }else {
             model.addAttribute("user", userService.findIdByName(userdto.getName()));
             return "/bit/user/findid";
+        }
+    }
+
+    @PostMapping("/findpassword")
+    public String findpassword(UserDto userdto,Model model){
+        System.out.println("loginid="+ userdto.getLoginid());
+        if(userService.findPasswordCheckById(userdto.getLoginid())==0) {
+            model.addAttribute("msg", "아이디를 확인해주세요");
+            return "/bit/user/userpassword";
+        }else {
+            model.addAttribute("user", userService.findPasswordById(userdto.getLoginid()));
+            return "/bit/user/findpassword";
         }
     }
 
@@ -185,6 +197,30 @@ public class UserController {
         System.out.println("nickname : " + nickname + ", count : " + count);
         map.put("count", count);//조회된 id에 값을 저장
 
+        return map;
+    }
+
+    @GetMapping("/loginPasswordCheck")
+    @ResponseBody //json 반환 annotation
+    public Map<String, Object> loginPasswordCheck(@RequestParam Map<String, String> param, HttpSession session) {
+        int user_num = (int) session.getAttribute("user_num");
+
+        String originPassword = param.get("originPassword");
+        Map<String, Object> map = new HashMap<>();
+
+
+        UserDto userDto = userService.getDataByUserNum(user_num);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
+
+        if (userDto == null) {
+            map.put("code", 1);//결과 코드
+            map.put("msg", "해당 유저가 존재하지 않습니다.");//결과 메세지
+        } else if (!userDto.getPassword().equals(originPassword)) {
+            map.put("code", 2);//결과 코드
+            map.put("msg", "비밀번호가 일치하지 않습니다.");//결과 메세지
+        } else {
+            map.put("code", 0);//결과 코드
+            map.put("msg", "성공입니다.");//결과 메세지
+        }
         return map;
     }
 

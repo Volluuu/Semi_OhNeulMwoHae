@@ -22,6 +22,18 @@
     </style>
 </head>
 <body>
+<script type="text/javascript">
+
+
+
+    var msg = "${msg}";
+
+    if (msg != "") {
+        alert(msg);
+    }
+
+
+</script>
 <c:set var="root" value="<%=request.getContextPath()%>" />
 <form class="user" action="/user/findid" method="POST">
 <div class="usermain">
@@ -51,17 +63,6 @@
     </table>
 </div>
 </form>
-<script type="text/javascript">
 
-
-
-    var msg = "${msg}";
-
-    if (msg != "") {
-        alert(msg);
-    }
-
-
-</script>
 </body>
 </html>
