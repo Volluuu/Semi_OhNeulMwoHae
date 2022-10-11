@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CourseController {
@@ -34,6 +36,7 @@ public class CourseController {
 		List<CourseDto> list = courseService.getAllCourses(user_num);
 
 		model.addAttribute("list", list);
+
 		return "/bit/help/googlemap";
 	}
 
@@ -82,5 +85,27 @@ public class CourseController {
 
 	}
 
-	;
+	@PostMapping("/course/insertcourse")
+	@ResponseBody
+	public void insertCourse(@RequestParam(value = "user_num" , required = false) int user_num,
+	                         @RequestParam(value = "cnt" , required = false) int cnt,
+	                         @RequestParam(value = "title" , required = false) String title,
+	                         @RequestParam(value = "step1" , required = false) String step1,
+	                         @RequestParam(value = "step2" , required = false) String step2,
+	                         @RequestParam(value = "step3" , required = false) String step3,
+	                         @RequestParam(value = "step4" , required = false) String step4,
+	                         @RequestParam(value = "step5" , required = false) String step5) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_num", user_num);
+		map.put("cnt", cnt);
+		map.put("title", title);
+		map.put("step1", step1);
+		map.put("step2", step2);
+		map.put("step3", step3);
+		map.put("step4", step4);
+		map.put("step5", step5);
+
+		courseService.insertCourse(map);
+	}
+
 }

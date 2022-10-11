@@ -30,8 +30,8 @@ public class CourseDao implements CourseDaoInter{
 	}
 
 	@Override
-	public void insertCourse(CourseDto dto) {
-		session.insert(ns+"insertCourse", dto);
+	public void insertCourse(Map<String, Object> map) {
+		session.insert(ns+"insertCourse", map);
 	}
 
 	@Override

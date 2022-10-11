@@ -29,6 +29,7 @@ public class AdminService implements AdminServiceInter{
     AdminDaoInter admindao;
 
     @Override
+
     public int getTotalCount(String searchcolumn, String searchword) {
         Map<String, String> map=new HashMap<>();
         map.put("searchcolumn",searchcolumn);
@@ -39,6 +40,7 @@ public class AdminService implements AdminServiceInter{
     @Override
     public void deleteUserByNum(int user_num) {
         admindao.deleteUserByNum(user_num);
+
     }
 
     @Override
