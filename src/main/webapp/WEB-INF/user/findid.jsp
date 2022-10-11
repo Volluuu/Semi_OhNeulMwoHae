@@ -23,6 +23,7 @@
     </style>
 </head>
 <body>
+<c:set var="root" value="<%=request.getContextPath()%>" />
 <div class="usermain">
     <table class="table table-bordered" style="width: 530px">
         <caption align="top">
@@ -37,7 +38,7 @@
         </tr>
         <tr>
             <td>
-                <div style="text-align: center;">
+                <div>
                     <ol>
                 <c:forEach items="${user}" var="user">
                     <li>${user.loginid}</li>
