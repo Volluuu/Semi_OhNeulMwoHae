@@ -113,10 +113,113 @@
         justify-content: center;
     }
 
+    .wboard{
+        margin-right: 100px;
+    }
+
 
     #svg_1{
         width: 100%;
         max-width: 1000px;
+    }
+
+    #footer{
+        padding: 8px 12px;
+    }
+    #footer .inner {
+        padding: 50px 280px 0 0;
+        box-sizing: border-box;
+    }
+    .inner {
+        position: relative;
+        width: 1200px;
+        /*margin: 0 auto;*/
+    }
+    .efLSbp {
+        display: flex;
+        position: relative;
+        width: 50%;
+        min-width: 1000px;
+        box-sizing: border-box;
+        border-top: 1px solid rgb(233, 233, 233);
+        padding-bottom: 49px;
+        background: rgb(255, 255, 255);
+    }
+
+    h1{
+        display: block;
+        font-size: 2em;
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+    .bjBbfw
+    {
+        width: 146px;
+        user-select: none;
+        -webkit-user-drag: none;
+        cursor: pointer;
+    }
+
+    .efLSbp{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+    .efLSbp .info_wrap_horizontal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+    .efLSbp .big_gap {
+        margin-top: 26px;
+    }
+
+    .efLSbp .grey_6A {
+        color: rgb(106, 106, 106);
+    }
+
+    .efLSbp .info_wrap_horizontal > div {
+        display: inline-flex;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+    #footer .footer_info {
+        /*position: relative;*/
+        margin-top: 15px;
+    }
+    #footer .footer_info span, #footer .footer_info address, #footer .footer_info a {
+        display: inline-block;
+        font-size: 15px;
+        line-height: 1.5em;
+        color: #6a6a6a;
+        vertical-align: top;
+        margin: 0 24px 6px 0;
+    }
+    .efLSbp .info_regular {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 22px;
+    }
+    .efLSbp .small_gap {
+        margin-top: 16px;
+    }
+    .efLSbp .middle_gap {
+        margin-top: 24px;
+    }
+    #footer .copyright {
+        margin-top: 10px;
+        font-size: 15px;
+        color: lightgray;
+    }
+    .icons{
+        color: #70D9F2;
     }
 
 </style>
@@ -126,13 +229,12 @@
 </head>
 <body>
 
-
 <%--------------------------------------------------------------지도--%>
 <div class="map_weather">
 
     <div class="map">
 <svg version="1.1" id="svg_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-     y="0px" viewBox="100 100 2000 1100" xml:space="preserve">
+     y="0px" viewBox="100 100 2500 1100" xml:space="preserve">
 
     <%--    전체--%>
     <path class="st0" d="M1466.9,1237c-320,0-639.5,0-959,0c0-412,0-824,0-1236c513.3,0,1026.7,0,1540,0c0,412,0,824,0,1236
@@ -725,14 +827,14 @@
     </text>
     <g id="레이어_2_1_">
     </g>
-</svg>
-
         <div style="width:300px;" class="wboard">
             <div id="h2gu">서울 날씨</div>
             <div class="lowtemp1">최고온도:ctemp </div>
             <div class="maxtemp1">최저온도:mtemp </div>
             <div class="hicon1"></div>
         </div>
+</svg>
+
     </div>
     </div>
 
@@ -1327,6 +1429,53 @@
         </c:if>
     </ul>
 </div>
+
+<footer id="footer" class="efLSbp">
+    <div class="inner">
+        <%--            ----------------logo--%>
+        <h6 class="h_logo bjBbfw"><i class="fa-sharp fa-solid fa-car-side icons"></i> 오늘뭐해?</h6>
+        <%--    ----------------------------info start--%>
+        <div class="finfo info_wrap_horizontal big_gap grey_6A">
+            <div>
+                <p class="info_bold info_large grey_6A_only">
+                    고객센터: 070-8835-2626
+
+                </p>
+            </div>
+            <p class="info_regular grey_6A_only">
+                <em>상담가능시간: 매일 9:00~24:00</em>
+            </p>
+        </div>
+        <%------------------------주식회사 Start--%>
+        <div class="Footer__FoldWrapper-sc-190uiip-1 dRbhKq footer_info grey_6A">
+                <span>
+                    <em>주식회사: 오늘뭐해</em>
+                </span>
+            <span>
+                    <em>대표: 이동건</em>
+                </span>
+            <span>
+                    <em>개인정보보호책임자: 이동건</em>
+                </span>
+            <span>
+                    <em>사업자 등록번호: 010-4154-8185</em>
+                </span>
+        </div>
+
+        <%------------------------------------------------개인정보Start--%>
+        <div class="info_wrap_horizontal vertical_line info_regular grey_6A small_gap font_fix_320">
+            <p class="info_bold">개인정보 처리방침</p>
+            <p> | 이용약관</p>
+            <p> | 취소 및 환불정책</p>
+            <p> | 파트너 입점</p>
+        </div>
+
+        <%--            ------------------------------copyright--%>
+        <div class="middle_gap">
+            <p class="copyright">Copyright © 오늘뭐해 Inc. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
 
 
 </body>
