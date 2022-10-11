@@ -18,4 +18,5 @@ public interface CommentCourseServiceInter {
     public List<CommentCourseDto> selectTripstar(int trip_num);
     public void insertTripStar(int user_num,int star, int trip_num, String content);
     public double selectTripStarAvg(int trip_num);
+
 }

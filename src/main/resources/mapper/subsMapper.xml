@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="bit.data.dao.SubsDao">
+
    <select id="selectAllSubs" parameterType="int" resultType="subsdto">
        select * from subs where user_num=#{user_num}
    </select>
@@ -18,4 +19,57 @@
     <select id="selectCafeData" parameterType="int" resultType="cafedto">
         select * from cafe where cafe_num=#{cafe_num}
     </select>
+
+    <insert id="insertFoodSubs" parameterType="Map">
+        insert into subs values (null,#{user_num},#{food_num},0,0,now())
+    </insert>
+
+    <insert id="insertTripSubs" parameterType="Map">
+        insert into subs values (null,#{user_num},0,#{trip_num},0,now())
+    </insert>
+
+    <insert id="insertCafeSubs" parameterType="Map">
+        insert into subs values (null,#{user_num},0,0,#{cafe_num},now())
+    </insert>
+
+    <delete id="deleteFoodSubs" parameterType="Map">
+        delete from subs where user_num=#{user_num} and food_num=#{food_num}
+    </delete>
+
+    <delete id="deleteTripSubs" parameterType="Map">
+        delete from subs where user_num=#{user_num} and trip_num=#{trip_num}
+    </delete>
+
+    <delete id="deleteCafeSubs" parameterType="Map">
+        delete from subs where user_num=#{user_num} and cafe_num=#{cafe_num}
+    </delete>
+
+    <select id="selectTotalSubsCafe" parameterType="int" resultType="int">
+        select count(*) from subs where cafe_num=#{cafe_num}
+    </select>
+
+    <select id="selectTotalSubsFood" parameterType="int" resultType="int">
+        select count(*) from subs where food_num=#{food_num}
+    </select>
+
+    <select id="selectTotalSubsTrip" parameterType="int" resultType="int">
+        select count(*) from subs where trip_num=#{trip_num}
+    </select>
+
+<!--    즐겨찾기 했는지 안했는지 1이상이면 즐겨찾기 한 것 -->
+    <select id="selectCafeSubs" parameterType="Map" resultType="int">
+        select count(*) from subs where user_num=#{user_num} and cafe_num=#{cafe_num}
+    </select>
+
+    <select id="selectFoodSubs" parameterType="Map" resultType="int">
+        select count(*) from subs where user_num=#{user_num} and food_num=#{food_num}
+    </select>
+
+    <select id="selectTripSubs" parameterType="Map" resultType="int">
+        select count(*) from subs where user_num=#{user_num} and trip_num=#{trip_num}
+    </select>
+
+
+
+
 </mapper>

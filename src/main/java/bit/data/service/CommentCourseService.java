@@ -75,4 +75,5 @@ public class CommentCourseService implements CommentCourseServiceInter {
     public double selectTripStarAvg(int trip_num) {
         return commentCourseDao.selectTripStarAvg(trip_num);
     }
+
 }

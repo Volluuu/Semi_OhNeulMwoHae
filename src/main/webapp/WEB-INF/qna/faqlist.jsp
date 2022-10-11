@@ -68,6 +68,7 @@
     }
     .faq_content_list{
       background-color: lightgray;
+      min-height: 150px;
     }
   </style>
   <script>
@@ -99,7 +100,9 @@
       <input type="hidden" name="user_num" value="${dto.user_num}">
       <input type="hidden" name="notice_num" value="${dto.faq_num}">
       <input type="hidden" name="currentPage" value="${currentPage}">
+      <c:if test="${sessionScope.isadmin eq 'admin'}">
       <button type="button" class="btn btn-secondary addfaq" onclick="location.href='faqform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+      </c:if>
       <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
       <div class="faq_title_main">
         <c:forEach var="dto" items="${list}">

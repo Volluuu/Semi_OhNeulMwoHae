@@ -19,12 +19,13 @@
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/font/**" location="/resources/font/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<!-- <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/admin/"/>
 		<beans:property name="suffix" value=".jsp" />
-	</beans:bean> -->
-	
+		<beans:property name="order" value="2"/>
+	</beans:bean>
+
 	<!-- Tiles Resolver -->
 	<beans:bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
@@ -41,9 +42,11 @@
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" 
 			value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<beans:property name="order" value="1"/>
 	</beans:bean>
-	
+
 	<context:component-scan base-package="com.bit.semi,bit.data.*,util" />
+
 	
 	
 	<!-- file upload setting -->
@@ -51,7 +54,5 @@
 		<beans:property name="maxUploadSize" value="10485760"/>
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
-	
-	
-	
+
 </beans:beans>
