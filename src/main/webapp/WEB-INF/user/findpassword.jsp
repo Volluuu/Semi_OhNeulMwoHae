@@ -15,6 +15,7 @@
     </style>
 </head>
 <body>
+<c:set var="root" value="<%=request.getContextPath()%>" />
 <div class="usermain">
     <table class="table table-bordered" style="width: 530px">
         <caption align="top">
@@ -31,6 +32,13 @@
             <td>
                 <div style="text-align: center;">
                     ${user.password}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="input-group">
+                    <button type="button" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone" onClick="location.href='${root}/'">메인페이지로 이동</button>
                 </div>
             </td>
         </tr>
