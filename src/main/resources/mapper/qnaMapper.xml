@@ -11,7 +11,7 @@
         select * from qna order by qna_num desc
     </select>
 
-    <select id="getTotalCount" parameterType="Map" resultType="int">
+   <!-- <select id="getTotalCount" parameterType="Map" resultType="int">
         select count(*) from qna
         <if test="searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
@@ -24,14 +24,86 @@
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
         order by qna_num desc limit #{startnum},#{perpage}
+    </select>-->
+
+    <select id="getTotalCount" parameterType="Map" resultType="int">
+            select count(*) from qna Q
+            <if test="qnasearchcolumn!=null and qnasearchword!=null">
+                inner join user U on Q.user_num = U.user_num where Q.${qnasearchcolumn} like concat('%',#{qnasearchword},'%')
+                <if test="user_num==0">
+                   AND Q.user_num=${user_num}
+                </if>
+                <if test="user_num>1">
+                   AND Q.user_num=${user_num}
+                </if>
+            </if>
+            <if test="qnasearchcolumn==null and qnasearchword==null">
+                <if test="user_num==0">
+                    WHERE Q.user_num=${user_num}
+                </if>
+                <if test="user_num>1">
+                    WHERE Q.user_num=${user_num}
+                </if>
+            </if>
+
+
+       <!-- <if test="user_num==0 or user_num>1">
+            select count(*) from qna Q
+            <if test="searchcolumn!=null and searchword!=null">
+                inner join user U on Q.user_num = U.user_num where ${searchcolumn} like concat('%',#{searchword},'%') and Q.user_num=#{user_num}
+            </if>
+            <if test="searchcolumn==null and searchword==null">
+                inner join user U on Q.user_num = U.user_num where Q.user_num=#{user_num}
+            </if>
+        </if>-->
+    </select>
+
+
+    <select id="getPagingList" parameterType="Map" resultType="qnadto">
+       <!-- <if test="user_num==1">-->
+            select * from qna Q
+            <if test="qnasearchcolumn!=null and qnasearchword!=null">
+                inner join user U on Q.user_num = U.user_num where Q.${qnasearchcolumn} like concat('%',#{qnasearchword},'%')
+                <if test="user_num==0">
+                    AND Q.user_num=${user_num}
+                </if>
+                <if test="user_num>1">
+                    AND Q.user_num=${user_num}
+                </if>
+            </if>
+            <if test="qnasearchcolumn==null and qnasearchword==null">
+                inner join user U on Q.user_num = U.user_num
+                <if test="user_num==0">
+                    WHERE Q.user_num=${user_num}
+                </if>
+                <if test="user_num>1">
+                    WHERE Q.user_num=${user_num}
+                </if>
+            </if>
+        order by Q.qna_num desc limit #{startnum},#{perpage}
+      <!--  </if>
+        <if test="user_num==0 or user_num>1">
+            select count(*) from qna Q
+            <if test="searchcolumn!=null and searchword!=null">
+                inner join user U on Q.user_num = U.user_num where ${searchcolumn} like concat('%',#{searchword},'%') and Q.user_num=#{user_num}
+            </if>
+            <if test="searchcolumn==null and searchword==null">
+                inner join user U on Q.user_num = U.user_num where Q.user_num=#{user_num}
+            </if>
+            order by Q.qna_num desc limit #{startnum},#{perpage}
+        </if>-->
     </select>
 
     <select id="selectUser_num" parameterType="int" resultType="qnadto">
-        select * from qna where user_num=#{user_num}
+        select * from qna where user_num=#{user_num} order by qna_num desc
     </select>
 
     <insert id="insertQna" parameterType="qnadto">
         insert into qna values (null,#{user_num},#{subject},#{content},'not',now(),0)
+    </insert>
+
+    <insert id="insertQnaAnswer" parameterType="qnadto">
+        insert into qna Q values (null,#{user_num},#{subject},#{content},'not',now(),0)
     </insert>
 
     <delete id="deleteQna" parameterType="int">
@@ -42,7 +114,7 @@
         update qna set subject=#{subject},content=#{content} where qna_num=#{qna_num}
     </update>
 
-    <update id="updateQnaAnswer" parameterType="qnadto">
-        update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'yes' WHERE A.user_num = #{user_num}
+    <update id="updateQnaAnswer">
+        update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'yes' WHERE A.user_num = 1
     </update>
 </mapper>

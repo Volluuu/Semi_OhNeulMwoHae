@@ -10,9 +10,13 @@ body {
     background: #323c41;
 }
 
+.item{
+    width: 250px;
+}
+
 .blog-card {
-    width: 350px;
-    height: 500px;
+    width: 250px;
+    height: 400px;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
@@ -25,10 +29,10 @@ body {
 .blog-card .color-overlay {
     /* Rectangle 11: */
     background: rgba(84, 104, 110, 0.4);
-    width: 350px;
-    height: 500px;
+    width: 250px;
+    height: 400px;
     position: absolute;
-    z-index: 10;
+    /*z-index: 5;*/
     top: 0;
     left: 0;
     transition: background 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
@@ -39,16 +43,16 @@ body {
     background-image: -moz-linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
     background-image: -o-linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
     background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 21%);
-    width: 350px;
-    height: 500px;
+    width: 200px;
+    height: 250px;
     position: absolute;
     top: 350px;
     left: 0;
-    z-index: 15;
+    /*z-index: 15;*/
 }
 .blog-card:hover .card-info {
     opacity: 1;
-    bottom: 120px;
+    bottom: 70px;
 }
 .blog-card:hover .color-overlay {
     background: rgba(84, 104, 110, 0.8);
@@ -104,31 +108,36 @@ hr {
     z-index: 20;
     opacity: 0;
     transition: bottom 0.3s, opacity 0.3s cubic-bezier(0.33, 0.66, 0.66, 1);
+    font-size: 14px;
 }
 
 .utility-info {
     position: absolute;
+    width: 100%;
     bottom: 0px;
     left: 0;
     z-index: 20;
 }
 
+
 .utility-list {
     list-style-type: none;
-    margin: 0 0 30px 20px;
+    /*margin: 0 0 30px 20px;*/
     padding: 0;
     width: 100%;
 }
 .utility-list li {
     margin: 0 15px 0 0;
-    padding: 0 0 0 22px;
-    display: inline-block;
+    padding: 0 0 17px 19px;
+    /*display: inline-block;*/
     color: #DCE3E7;
+    display: flex;
     font-family: "Roboto", sans-serif;
+    font-size: 8px;
+    align-items: center;
+    float: left;
 }
-.utility-list li.comments {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-chat.svg) no-repeat 0 0.1em;
-}
-.utility-list li.date {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1765/icon-calendar.svg) no-repeat 0 0.1em;
+
+i{
+    font-size: 12px;
 }

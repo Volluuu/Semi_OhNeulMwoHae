@@ -1,6 +1,5 @@
 package bit.data.service;
 
-import bit.data.dao.QnaDao;
 import bit.data.dao.QnaDaoInter;
 import bit.data.dto.QnaDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,10 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
-	public int getTotalCount(String searchcolumn, String searchword) {
-		Map<String, String> map=new HashMap<String, String>();
+	public int getTotalCount(String searchcolumn, String searchword,int user_num) {
+		Map<String, Object> map=new HashMap<String, Object>();
 
+		map.put("user_num",user_num);
 		map.put("searchcolumn",searchcolumn);
 		map.put("searchword",searchword);
 
@@ -42,11 +42,12 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
-	public List<QnaDto> getPagingList(String searchcolumn, String searchword, int startnum, int perpage) {
+	public List<QnaDto> getPagingList(String searchcolumn, String searchword,int user_num, int startnum, int perpage) {
 		Map<String, Object> map=new HashMap<String, Object>();
 
 		map.put("searchcolumn", searchcolumn);
 		map.put("searchword", searchword);
+		map.put("user_num", user_num);
 		map.put("startnum", startnum);
 		map.put("perpage", perpage);
 
@@ -72,12 +73,17 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
-	public void updateAnswer(QnaDto dto) {
-		daoInter.updateAnswer(dto);
+	public void updateAnswer() {
+		daoInter.updateAnswer();
 	}
 
 	@Override
-	public void deleteQna(int num) {
-		daoInter.deleteQna(num);
+	public List<QnaDto> getUserData(int user_num) {
+		return daoInter.getUserData(user_num);
+	}
+
+	@Override
+	public void deleteQna(int qna_num) {
+		daoInter.deleteQna(qna_num);
 	}
 }
