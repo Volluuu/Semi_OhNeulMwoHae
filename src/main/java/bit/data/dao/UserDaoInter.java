@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDaoInter {
+
+    public int findPassword(String password,String email,String loginid);
+    public int findPasswordCheck(UserDto userdto);
     public UserDto findIdByName(String name);
     public int findIdCheckByName(String name);
+    public UserDto getUserByKakaoId(long kakao_id);
+    public UserDto getUserByNaverId(String naver_id);
     public int getTotalCount();
     public int getLoginIdSearch(String loginid);
     public int loginNicknameCheck(String nickname);

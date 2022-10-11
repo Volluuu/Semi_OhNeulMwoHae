@@ -4,12 +4,28 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
+    <update id="findPassword" >
+        update user set password=#{password} where loginid=#{loginid} and email=#{email}
+    </update>
+
+    <select id="findPasswordCheck" resultType="int">
+        select count(*) from user where email=#{email} and loginid=#{loginid}
+    </select>
+
     <select id="findIdByName" parameterType="String" resultType="udto">
         select * from user where name=#{name}
     </select>
 
     <select id="findIdCheckByName" parameterType="String" resultType="int">
         select count(*) from user where name=#{name}
+    </select>
+
+    <select id="getUserByKakaoId" parameterType="long" resultType="udto">
+        select * from user where kakao_id=#{kakao_id}
+    </select>
+
+    <select id="getUserByNaverId" parameterType="String" resultType="udto">
+        select * from user where naver_id=#{naver_id}
     </select>
 
     <select id="getTotalCount" resultType="int">
@@ -25,8 +41,8 @@
     </select>
 
     <insert id="insertUser" parameterType="udto">
-        insert into user (loginid,password,name,nickname,age,gender,email,hp,gaipday)
-        values (#{loginid},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
+        insert into user (loginid,kakao_id,naver_id,password,name,nickname,age,gender,email,hp,gaipday)
+        values (#{loginid},#{kakao_id},#{naver_id},#{password},#{name},#{nickname},#{age},#{gender},#{email},#{hp},now())
     </insert>
 
     <select id="getAllUsers" resultType="udto">
