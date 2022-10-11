@@ -1,7 +1,10 @@
 package bit.data.dto;
 
+import lombok.Data;
+
 import java.sql.Timestamp;
 
+@Data
 public class AdminDto {
     private int user_num;
     private int cafe_num;

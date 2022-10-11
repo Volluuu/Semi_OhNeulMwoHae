@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <html>
 <head>
@@ -19,6 +20,7 @@
     <link href="../css/sb-admin-02.css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin.css">
     <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
     <title>AdminPage</title>
 </head>
@@ -263,12 +265,32 @@
 
             </nav>
             <br>
+            <div class="searcharea" style="width:100%;text-align:center;">
+                <!-- 검색창 -->
+                <form action="${root}/admin/foodcourse">
+                    <div class="input-group" style="width:450px;">
+                        <select class="form-select" name="searchcolumn">
+                            <option value="title">이름</option>
+                            <option value="addr">주소</option>
+                            <option value="category">종류</option>
+                            <option value="menu">메뉴</option>
+                            <option value="tel">전화번호</option>
+                            <option value="gu">구</option>
+                        </select>
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="text" name="searchword" class="form-control" style="width:140px;" placeholder="검색 단어" value="${param.searchword}">
 
+                        <button type="submit" class="btn btn-success" style="margin-left:10px;">검색</button>
+                        <button type="button" class="btn btn-primary" style="margin-left:10px;" onclick="location.href='${root}/admin/foodcourse'">전체보기</button>
+                    </div>
+                </form>
+            </div>
             <div class="container-fluid">
 
 
                 <%--테이블 시작은 여기부터입니다~~~~~~~~~~~~~~~~~~~~~~~~!--%>
                 <div class="row">
+                    <h7>총 ${totalCount}개 검색되었습니다</h7>
                     <table>
                         <thead>
                         <tr>
@@ -285,74 +307,41 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>가마로강정 신길삼거리</td>
-                            <td>서울특별시 영등포구 영등포로64길 11</td>
-                            <td>한식</td>
-                            <td>닭강정</td>
-                            <td>02-849-9288</td>
-                            <td>37.5142</td>
-                            <td>126.9172</td>
-                            <td>20</td>
-                        </tr>
-                        <tr>
-                            <td>Johnny</td>
-                            <td>Smith</td>
-                            <td>(713) 584-9614</td>
-                            <td><a href="mailto:jsmith@stewart.com">jsmith@stewart.com</a></td>
-                            <td>06/09/1971</td>
-                        </tr>
-                        <tr>
-                            <td>Susan</td>
-                            <td>Johnson</td>
-                            <td>(713) 847-1124</td>
-                            <td><a href="mailto:sjohnson@stewart.com">sjohnson@stewart.com</a></td>
-                            <td>08/25/1965</td>
-                        </tr>
-                        <tr>
-                            <td>Tracy</td>
-                            <td>Richardson</td>
-                            <td>(713) 245-4821</td>
-                            <td><a href="mailto:trichard@stewart.com">trichard@stewart.com</a></td>
-                            <td>03/13/1980</td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Matman</td>
-                            <td>(713) 123-8965</td>
-                            <td><a href="mailto:jmatman@stewart.com">jmatman@stewart.com</a></td>
-                            <td>01/13/1979</td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Matman</td>
-                            <td>(713) 123-8965</td>
-                            <td><a href="mailto:jmatman@stewart.com">jmatman@stewart.com</a></td>
-                            <td>01/13/1979</td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Matman</td>
-                            <td>(713) 123-8965</td>
-                            <td><a href="mailto:jmatman@stewart.com">jmatman@stewart.com</a></td>
-                            <td>01/13/1979</td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Matman</td>
-                            <td>(713) 123-8965</td>
-                            <td><a href="mailto:jmatman@stewart.com">jmatman@stewart.com</a></td>
-                            <td>01/13/1979</td>
-                        </tr>
-                        <tr>
-                            <td>James</td>
-                            <td>Matman</td>
-                            <td>(713) 123-8965</td>
-                            <td><a href="mailto:jmatman@stewart.com">jmatman@stewart.com</a></td>
-                            <td>01/13/1979</td>
-                        </tr>
+                        <c:forEach var="dto" items="${list}" varStatus="i">
+                            <tr>
+                                <td>${dto.title}</td>
+                                <td>${dto.addr}</td>
+                                <td>${dto.category}</td>
+                                <td>${dto.menu}</td>
+                                <td>${dto.tel}</td>
+                                <td>${dto.lat}</td>
+                                <td>${dto.lon}</td>
+                                <td>${dto.gu}</td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
+                    <div class="paging">
+                        <ul class="pagination">
+                            <c:if test="${startPage>1}">
+                                <li class="page-item"><a href="${root}/admin/foodcourse?currentPage=${startPage-1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">이전</a></li>
+                            </c:if>
+                            <!-- 페이지 번호 -->
+                            <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+                                <c:if test="${pp==currentPage}">
+                                    <li class="page-item active"><a class="page-link" href="${root}/admin/foodcourse?currentPage=${pp}&searchcolumn=${searchcolumn}&searchword=${searchword}">${pp}</a></li>
+                                </c:if>
+                                <c:if test="${pp!=currentPage}">
+                                    <li class="page-item"><a class="page-link" href="${root}/admin/foodcourse?currentPage=${pp}&searchcolumn=${searchcolumn}&searchword=${searchword}">${pp}</a></li>
+                                </c:if>
+
+                            </c:forEach>
+
+                            <c:if test="${totalPage>endPage}">
+                                <li class="page-item"><a href="${root}/admin/foodcourse?currentPage=${endPage+1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">다음</a></li>
+                            </c:if>
+                        </ul>
+                    </div>
                 </div>
                 <div class="btndiv">
                     <button class="w-btn w-btn-green" type="button">추가</button>
