@@ -7,95 +7,86 @@
         select * from qna where qna_num=#{qna_num}
     </select>
 
+    <!-- 전체 데이터 조회 -->
     <select id="getAllData" resultType="QnaDto">
         select * from qna order by qna_num desc
     </select>
 
-   <!-- <select id="getTotalCount" parameterType="Map" resultType="int">
-        select count(*) from qna
-        <if test="searchcolumn!=null and searchword!=null">
-            where ${searchcolumn} like concat('%',#{searchword},'%')
-        </if>
-    </select>
-
-    <select id="getPagingList" parameterType="Map" resultType="qnadto">
-        select * from qna
-        <if test="searchcolumn!=null and searchword!=null">
-            where ${searchcolumn} like concat('%',#{searchword},'%')
-        </if>
-        order by qna_num desc limit #{startnum},#{perpage}
-    </select>-->
-
+    <!-- user num에 대한 데이터 숫자 조회 -->
     <select id="getTotalCount" parameterType="Map" resultType="int">
             select count(*) from qna Q
             <if test="qnasearchcolumn!=null and qnasearchword!=null">
                 inner join user U on Q.user_num = U.user_num where Q.${qnasearchcolumn} like concat('%',#{qnasearchword},'%')
                 <if test="user_num==0">
-                   AND Q.user_num=${user_num}
+                   AND Q.user_num=#{user_num}
                 </if>
                 <if test="user_num>1">
-                   AND Q.user_num=${user_num}
+                   AND Q.user_num=#{user_num}
                 </if>
             </if>
             <if test="qnasearchcolumn==null and qnasearchword==null">
                 <if test="user_num==0">
-                    WHERE Q.user_num=${user_num}
+                    WHERE Q.user_num=#{user_num}
                 </if>
                 <if test="user_num>1">
-                    WHERE Q.user_num=${user_num}
+                    WHERE Q.user_num=#{user_num}
                 </if>
             </if>
-
-
-       <!-- <if test="user_num==0 or user_num>1">
-            select count(*) from qna Q
-            <if test="searchcolumn!=null and searchword!=null">
-                inner join user U on Q.user_num = U.user_num where ${searchcolumn} like concat('%',#{searchword},'%') and Q.user_num=#{user_num}
-            </if>
-            <if test="searchcolumn==null and searchword==null">
-                inner join user U on Q.user_num = U.user_num where Q.user_num=#{user_num}
-            </if>
-        </if>-->
     </select>
 
-
     <select id="getPagingList" parameterType="Map" resultType="qnadto">
-       <!-- <if test="user_num==1">-->
-            select * from qna Q
-            <if test="qnasearchcolumn!=null and qnasearchword!=null">
-                inner join user U on Q.user_num = U.user_num where Q.${qnasearchcolumn} like concat('%',#{qnasearchword},'%')
-                <if test="user_num==0">
-                    AND Q.user_num=${user_num}
-                </if>
-                <if test="user_num>1">
-                    AND Q.user_num=${user_num}
-                </if>
+        <!-- <if test="user_num==1">-->
+        select * from qna Q
+        <if test="qnasearchcolumn!=null and qnasearchword!=null">
+            inner join user U on Q.user_num = U.user_num where Q.${qnasearchcolumn} like concat('%',#{qnasearchword},'%')
+            <if test="user_num==0">
+                AND Q.user_num=#{user_num}
             </if>
-            <if test="qnasearchcolumn==null and qnasearchword==null">
-                inner join user U on Q.user_num = U.user_num
-                <if test="user_num==0">
-                    WHERE Q.user_num=${user_num}
-                </if>
-                <if test="user_num>1">
-                    WHERE Q.user_num=${user_num}
-                </if>
+            <if test="user_num>1">
+                AND Q.user_num=#{user_num}
             </if>
+        </if>
+        <if test="qnasearchcolumn==null and qnasearchword==null">
+            inner join user U on Q.user_num = U.user_num
+            <if test="user_num==0">
+                WHERE Q.user_num=#{user_num}
+            </if>
+            <if test="user_num>1">
+                WHERE Q.user_num=#{user_num}
+            </if>
+        </if>
         order by Q.qna_num desc limit #{startnum},#{perpage}
-      <!--  </if>
-        <if test="user_num==0 or user_num>1">
-            select count(*) from qna Q
-            <if test="searchcolumn!=null and searchword!=null">
-                inner join user U on Q.user_num = U.user_num where ${searchcolumn} like concat('%',#{searchword},'%') and Q.user_num=#{user_num}
+    </select>
+
+    <!-- 미 답변 수량 조회 -->
+    <select id="getAnswerCount" parameterType="Map" resultType="int">
+        select count(*) from qna Q inner join user U on Q.user_num = U.user_num where Q.answer like concat('%','not','%')
+            <if test="user_num==0">
+                AND Q.user_num=#{user_num}
             </if>
-            <if test="searchcolumn==null and searchword==null">
-                inner join user U on Q.user_num = U.user_num where Q.user_num=#{user_num}
+            <if test="user_num>1">
+                AND Q.user_num=#{user_num}
             </if>
-            order by Q.qna_num desc limit #{startnum},#{perpage}
-        </if>-->
+    </select>
+
+    <!-- 미 답변 리스트 조회 -->
+    <select id="getAnswerList" parameterType="Map" resultType="qnadto">
+            select * from qna Q inner join user U on Q.user_num = U.user_num where Q.answer like concat('%','not','%')
+                <if test="user_num==0">
+                    AND Q.user_num=${user_num}
+                </if>
+                <if test="user_num>1">
+                    AND Q.user_num=${user_num}
+                </if>
+        order by Q.qna_num desc limit #{startnum},#{perpage}
     </select>
 
     <select id="selectUser_num" parameterType="int" resultType="qnadto">
         select * from qna where user_num=#{user_num} order by qna_num desc
+    </select>
+
+    <select id="selectAnswer" parameterType="String" resultType="qnadto">
+        select * from qna where answer='not' order by qna_num desc
     </select>
 
     <insert id="insertQna" parameterType="qnadto">
