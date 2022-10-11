@@ -66,11 +66,11 @@
     </select>
 
     <update id="updateProfilePhoto" parameterType="Map">
-        update member set profilephoto=#{profilephoto} where user_num=#{user_num}
+        update user set profilephoto=#{profilephoto} where user_num=#{user_num}
     </update>
 
     <update id="updateUser" parameterType="udto">
-        update user set nickname=#{nickname},age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
+        update user set nickname=#{nickname},password=#{password}, age=#{age},hp=#{hp},profile=#{profile},interest=#{interest},mycourse=#{mycourse} where user_num=#{user_num}
     </update>
 
     <delete id="deleteUser" parameterType="int">
