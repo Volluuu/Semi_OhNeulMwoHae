@@ -35,8 +35,8 @@ public class QnaService implements QnaServiceInter{
 		Map<String, Object> map=new HashMap<String, Object>();
 
 		map.put("user_num",user_num);
-		map.put("searchcolumn",searchcolumn);
-		map.put("searchword",searchword);
+		map.put("qnasearchcolumn",searchcolumn);
+		map.put("qnasearchword",searchword);
 
 		return daoInter.getTotalCount(map);
 	}
@@ -45,13 +45,37 @@ public class QnaService implements QnaServiceInter{
 	public List<QnaDto> getPagingList(String searchcolumn, String searchword,int user_num, int startnum, int perpage) {
 		Map<String, Object> map=new HashMap<String, Object>();
 
-		map.put("searchcolumn", searchcolumn);
-		map.put("searchword", searchword);
+		map.put("qnasearchcolumn", searchcolumn);
+		map.put("qnasearchword", searchword);
 		map.put("user_num", user_num);
 		map.put("startnum", startnum);
 		map.put("perpage", perpage);
 
 		return daoInter.getPagingList(map);
+	}
+
+	@Override
+	public int getAnswerCount(String searchcolumn, String searchword, int user_num) {
+		Map<String, Object> map=new HashMap<String, Object>();
+
+		map.put("user_num",user_num);
+		map.put("qnasearchcolumn",searchcolumn);
+		map.put("qnasearchword",searchword);
+
+		return daoInter.getAnswerCount(map);
+	}
+
+	@Override
+	public List<QnaDto> getAnswerList(String searchcolumn, String searchword, int user_num, int startnum, int perpage) {
+		Map<String, Object> map=new HashMap<String, Object>();
+
+		map.put("qnasearchcolumn", searchcolumn);
+		map.put("qnasearchword", searchword);
+		map.put("user_num", user_num);
+		map.put("startnum", startnum);
+		map.put("perpage", perpage);
+
+		return daoInter.getAnswerList(map);
 	}
 
 	@Override
