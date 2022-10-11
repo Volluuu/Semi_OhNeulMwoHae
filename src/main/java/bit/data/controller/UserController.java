@@ -200,6 +200,30 @@ public class UserController {
         return map;
     }
 
+    @GetMapping("/loginPasswordCheck")
+    @ResponseBody //json 반환 annotation
+    public Map<String, Object> loginPasswordCheck(@RequestParam Map<String, String> param, HttpSession session) {
+        int user_num = (int) session.getAttribute("user_num");
+
+        String originPassword = param.get("originPassword");
+        Map<String, Object> map = new HashMap<>();
+
+
+        UserDto userDto = userService.getDataByUserNum(user_num);//아이디가 있을 경우 1, 아니면 0을 반환하는 메서드
+
+        if (userDto == null) {
+            map.put("code", 1);//결과 코드
+            map.put("msg", "해당 유저가 존재하지 않습니다.");//결과 메세지
+        } else if (!userDto.getPassword().equals(originPassword)) {
+            map.put("code", 2);//결과 코드
+            map.put("msg", "비밀번호가 일치하지 않습니다.");//결과 메세지
+        } else {
+            map.put("code", 0);//결과 코드
+            map.put("msg", "성공입니다.");//결과 메세지
+        }
+        return map;
+    }
+
     //수정
     @PostMapping("/updateprofilephoto")
     @ResponseBody
