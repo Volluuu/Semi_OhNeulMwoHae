@@ -43,7 +43,7 @@ public class FindController {
             @RequestParam(value = "findword", required = false) String findword,
             Model model) {
         int totalCount = findService.selectTotalCount(findcolumn, findword); // 검색한 글의 갯수
-        int perPage = 8; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
+        int perPage = 20; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
         int perBlock = 5; // 한 블럭당 보여질 페이지의 갯수
         int startNum; // db에서 가져올 글의 시작번호 (mysql은 첫 글이 0번)
         int startPage; // 각 블럭당 보여질 시작 페이지
