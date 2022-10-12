@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <title>Insert title here</title>
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <style type="text/css">
     .qna_main{
       width: 1500px;
@@ -97,13 +98,13 @@
       float: right;
       width: 600px;
     }
-    .qnasearchcolumn{
+    #qnasearchcolumn{
       width: 80px;
     }
-    .qnasearchword{
+    #qnasearchword{
       width: 300px;
     }
-    .qna_search{
+    #qna_search{
       width: 30px;
     }
     .qna_search1{
@@ -433,21 +434,7 @@
 </head>
 <body>
 <div class="qna_main">
-  <!-- 검색 -->
-  <div class="qna_searcharea" >
-    <div class="input-group">
-      <select class="form-control qnasearchcolumn" name="qnasearchcolumn" id="qnasearchcolumn">
-        <option value="subject">제목</option>
-        <option value="content">내용</option>
-      </select>
-      <%--        <input type="text" name="qnasearchword" id="qnasearchword" class="form-control" placeholder="검색단어" value="${param.qnasearchword}">--%>
-      <input type="text" name="qnasearchword" id="qnasearchword" class="form-control qnasearchword" placeholder="검색단어" value="${param.qnasearchword}">
 
-      <button type="button" class="form-control qna_search"><i class='fas fa-search qna_search1'></i></button>
-      &nbsp;&nbsp;<button type="button" class="btn btn-secondary qnaanswelist">미 답변</button>
-
-    </div>
-  </div>
   <!-- 리스트 출력 -->
   <div class="qna_info">
     <h1>고객센터</h1>
@@ -458,12 +445,27 @@
   <div class="qna_list">
     <h3>1:1 문의사항</h3>
     <hr>
+    <!-- 검색 -->
+    <div class="qna_searcharea" >
+      <div class="input-group">
+        <select class="form-select qnasearchcolumn" name="qnasearchcolumn" id="qnasearchcolumn">
+          <option value="subject">제목</option>
+          <option value="content">내용</option>
+        </select>
+        <%--        <input type="text" name="qnasearchword" id="qnasearchword" class="form-control" placeholder="검색단어" value="${param.qnasearchword}">--%>
+        <input type="text" name="qnasearchword" id="qnasearchword" class="form-control qnasearchword" placeholder="검색단어" value="${param.qnasearchword}">
+
+        <button type="button" class="form-control qna_search" id="qna_search"><i class='fas fa-search qna_search1'></i></button>
+        &nbsp;&nbsp;<button type="button" class="btn btn-outline-secondary qnaanswelist">미 답변</button>
+
+      </div>
+    </div>
 
     <input type="hidden" name="user_num" value="${dto.user_num}">
     <input type="hidden" name="qna_num" value="${dto.qna_num}">
     <input type="hidden" name="currentPage" value="${currentPage}">
     <c:if test="${sessionScope.loginok!=null}">
-      <button type="button" class="btn btn-secondary addqna" onclick="location.href='qnaform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+      <button type="button" class="btn btn-outline-secondary addqna" onclick="location.href='qnaform?user_num=${user_num}&currentPage=${currentPage}'"><i class='fas fa-edit'>글쓰기</i></button>
     </c:if>
     <div class="qna_list_main">
 
