@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <html>
@@ -15,12 +16,14 @@
     <title>Title</title>
 </head>
 <style>
-    div.dg_container{
+    div.dg_container {
         display: flex;
     }
-    div.place{
+
+    div.place {
         display: flex;
     }
+
     span.day {
         float: right;
         color: gray;
@@ -82,11 +85,11 @@
 
                     }
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
-                    if(elt.relevel<2){
-                    s += '<button class="btn btn-outline-dark adap fr" ' +
-                        'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
-                        ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
-                    s += '</p>';
+                    if (elt.relevel < 2) {
+                        s += '<button class="btn btn-outline-dark adap fr" ' +
+                            'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
+                            ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
+                        s += '</p>';
                     }
                     s += '</c:if>';
 
@@ -192,131 +195,145 @@
     </div>
     <div class="place">
         <c:if test="${dto.find1photo!=null}">
-            <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
-                    src="${dto.find1photo}" width="250" height="250">
-                <figcaption><span class="txt">1. ${dto.find1title}</span</figcaption>
-            </figure>
+            <a href="${root}/course/${fn:split(dto.find1,',')[0]}detail?${fn:split(dto.find1,',')[0]}_num=${fn:split(dto.find1,',')[1]}&currentPage=1">
+                <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
+                        src="${dto.find1photo}" width="250" height="250">
+            </a>
+                    <figcaption><span class="txt">1. ${dto.find1title}</span</figcaption>
+                </figure>
         </c:if>
         <c:if test="${dto.find2photo!=null}">
-            <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
-                    src="${dto.find2photo}" width="250" height="250">
-                <figcaption><span class="txt">2. ${dto.find2title}</span></figcaption>
-            </figure>
+            <a href="${root}/course/${fn:split(dto.find2,',')[0]}detail?${fn:split(dto.find2,',')[0]}_num=${fn:split(dto.find2,',')[1]}&currentPage=1">
+                <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
+                        src="${dto.find2photo}" width="250" height="250">
+            </a>
+                    <figcaption><span class="txt">2. ${dto.find2title}</span></figcaption>
+                </figure>
+
         </c:if>
         <c:if test="${dto.find3photo!=null}">
-            <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
-                    src="${dto.find3photo}" width="250" height="250">
-                <figcaption><span class="txt">3. ${dto.find3title}</span></figcaption>
-            </figure>
+            <a href="${root}/course/${fn:split(dto.find3,',')[0]}detail?${fn:split(dto.find3,',')[0]}_num=${fn:split(dto.find3,',')[1]}&currentPage=1">
+                <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
+                        src="${dto.find3photo}" width="250" height="250">
+            </a>
+                    <figcaption><span class="txt">3. ${dto.find3title}</span></figcaption>
+                </figure>
+
         </c:if>
         <c:if test="${dto.find4photo!=null}">
-            <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
-                    src="${dto.find4photo}" width="250" height="250">
-                <figcaption><span class="txt">4. ${dto.find4title}</span></figcaption>
-            </figure>
+            <a href="${root}/course/${fn:split(dto.find4,',')[0]}detail?${fn:split(dto.find4,',')[0]}_num=${fn:split(dto.find4,',')[1]}&currentPage=1">
+                <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
+                        src="${dto.find4photo}" width="250" height="250">
+            </a>
+                    <figcaption><span class="txt">4. ${dto.find4title}</span></figcaption>
+                </figure>
+
         </c:if>
         <c:if test="${dto.find5photo!=null}">
-            <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
-                    src="${dto.find5photo}" width="250" height="250">
-                <figcaption><span class="txt">5. ${dto.find5title}</span></figcaption>
-            </figure>
+            <a href="${root}/course/${fn:split(dto.find5,',')[0]}detail?${fn:split(dto.find5,',')[0]}_num=${fn:split(dto.find5,',')[1]}&currentPage=1">
+                <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
+                        src="${dto.find5photo}" width="250" height="250">
+            </a>
+                    <figcaption><span class="txt">5. ${dto.find5title}</span></figcaption>
+                </figure>
+
         </c:if>
     </div>
 </div>
 <script type="text/javascript">
     var find_num =${dto.find_num};
     var root = "${root}";
-        console.log("find_num=" + find_num);
+    console.log("find_num=" + find_num);
 
-        list();//처음 시작시 댓글 출력
+    list();//처음 시작시 댓글 출력
 
-        $(document).on("click", ".adel", function () {
-            var friend_num = $(this).attr("friend_num");
-            var yes = confirm("삭제하시겠습니까?");
-            if (yes) {
-                $.ajax({
-                    type: "get",
-                    url: root + "/commentfriend/delete",
-                    dataType: "text",
-                    data: {"friend_num": friend_num},
-                    success: function (res) {
-                        list();
-                    }
-                });
-            }
-        });
-
-        $(document).on("click", ".adap", function () {
-            var ti = $(this);
-            var friend_num = ti.attr("friend_num");
-            var user_num = '${sessionScope.user_num}';
-            var regroup = ti.attr("regroup");
-            var restep = ti.attr("restep");
-            var relevel = ti.attr("relevel");
-            var diff = ti.attr("diff");
-
-            $(".aform").remove();
-            ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
-                '<input type="hidden" name="friend_num" value="' + friend_num + '">' +
-                '<input type="hidden" name="find_num" value="' + find_num + '">' +
-                '<input type="hidden" name="user_num" value="' + user_num + '">' +
-                '<input type="hidden" name="regroup" value="' + regroup + '">' +
-                '<input type="hidden" name="restep" value="' + restep + '">' +
-                '<input type="hidden" name="relevel" value="' + relevel + '">' +
-                '<input type="hidden" name="diff" value="' + diff + '">' +
-                '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
-                '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
-
-        });
-
-        $(document).on("click", ".aupd", function () {
-            var ti = $(this);
-            var friend_num = ti.attr("friend_num");
+    $(document).on("click", ".adel", function () {
+        var friend_num = $(this).attr("friend_num");
+        var yes = confirm("삭제하시겠습니까?");
+        if (yes) {
             $.ajax({
                 type: "get",
-                url: root + "/commentfriend/updateform",
-                dataType: "json",
-                data: {"friend_num": friend_num},
-                success: function (res) {
-                    ti.parent().siblings("pre.precontent").remove();
-                    ti.parent().siblings(".eltcontent").html("<textarea class='form-control' name='content'" +
-                        "required='required'  style='width:400px;height:60px;'>" + res.content +
-                        "</textarea><button class='btn btn-outline-dark aupdok' friend_num='" + res.friend_num + "'>확인</button>");
-                }
-            });
-        });
-
-        $(document).on("click", ".aupdok", function () {
-            var friend_num = $(this).attr("friend_num");
-            var aupdtxt = $(this).prev().val();
-            console.log(aupdtxt);
-            $.ajax({
-                type: "get",
-                url: root + "/commentfriend/updateok",
+                url: root + "/commentfriend/delete",
                 dataType: "text",
-                data: {"friend_num": friend_num, "content": aupdtxt},
+                data: {"friend_num": friend_num},
                 success: function (res) {
                     list();
                 }
             });
-        });
+        }
+    });
 
-        $(document).on("click", "#btnasave", function () {
-            var root = "${root}";
-            var fdata = $("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
-            $.ajax({
-                type: "get",
-                url: root + "/commentfriend/insert",
-                dataType: "text",
-                data: fdata,
-                success: function (res) {
-                    list();//댓글 목록을 다시 db에서 가져와서 출력
+    $(document).on("click", ".adap", function () {
+        var ti = $(this);
+        var friend_num = ti.attr("friend_num");
+        var user_num = '${sessionScope.user_num}';
+        var regroup = ti.attr("regroup");
+        var restep = ti.attr("restep");
+        var relevel = ti.attr("relevel");
+        var diff = ti.attr("diff");
 
-                    //입력값이랑 사진 안보이게 처리
-                    $("#content").val("");
-                }
-            });
+        $(".aform").remove();
+        ti.parents(".eltnickname").append('<div class="aform"><form id="aform">' +
+            '<input type="hidden" name="friend_num" value="' + friend_num + '">' +
+            '<input type="hidden" name="find_num" value="' + find_num + '">' +
+            '<input type="hidden" name="user_num" value="' + user_num + '">' +
+            '<input type="hidden" name="regroup" value="' + regroup + '">' +
+            '<input type="hidden" name="restep" value="' + restep + '">' +
+            '<input type="hidden" name="relevel" value="' + relevel + '">' +
+            '<input type="hidden" name="diff" value="' + diff + '">' +
+            '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea>' +
+            '<button type="button" class="btn btn-outline-dark" id="btnasave">등록</button></form></div>');
+
+    });
+
+    $(document).on("click", ".aupd", function () {
+        var ti = $(this);
+        var friend_num = ti.attr("friend_num");
+        $.ajax({
+            type: "get",
+            url: root + "/commentfriend/updateform",
+            dataType: "json",
+            data: {"friend_num": friend_num},
+            success: function (res) {
+                ti.parent().siblings("pre.precontent").remove();
+                ti.parent().siblings(".eltcontent").html("<textarea class='form-control' name='content'" +
+                    "required='required'  style='width:400px;height:60px;'>" + res.content +
+                    "</textarea><button class='btn btn-outline-dark aupdok' friend_num='" + res.friend_num + "'>확인</button>");
+            }
         });
+    });
+
+    $(document).on("click", ".aupdok", function () {
+        var friend_num = $(this).attr("friend_num");
+        var aupdtxt = $(this).prev().val();
+        console.log(aupdtxt);
+        $.ajax({
+            type: "get",
+            url: root + "/commentfriend/updateok",
+            dataType: "text",
+            data: {"friend_num": friend_num, "content": aupdtxt},
+            success: function (res) {
+                list();
+            }
+        });
+    });
+
+    $(document).on("click", "#btnasave", function () {
+        var root = "${root}";
+        var fdata = $("#aform").serialize();//form태그 안의 name을 쿼리 스트링 형태로 읽어온다
+        $.ajax({
+            type: "get",
+            url: root + "/commentfriend/insert",
+            dataType: "text",
+            data: fdata,
+            success: function (res) {
+                list();//댓글 목록을 다시 db에서 가져와서 출력
+
+                //입력값이랑 사진 안보이게 처리
+                $("#content").val("");
+            }
+        });
+    });
 
 </script>
 </body>
