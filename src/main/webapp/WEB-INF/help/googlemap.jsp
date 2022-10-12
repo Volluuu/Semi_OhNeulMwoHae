@@ -27,18 +27,19 @@
         /* history */
         .savehistory {
             border: 1px solid red;
-            width: 300px;
+            width: 250px;
         }
 
         /* 지도 */
+
         #map {
-            width: 700px;
+            width : 750px;
             height: 750px;
         }
 
         /* 코스 제목 */
         #cos_title {
-            width: 400px;
+            width: 300px;
             margin: 0 auto;
             font-size: 15px;
         }
@@ -53,7 +54,7 @@
         .cosselect_main {
             /*border: 1px solid red;*/
             width: 500px;
-            margin: 0 auto;
+            margin-bottom: 10px;
             font-size: 10px;
         }
 
@@ -109,20 +110,24 @@
         }
 
         /* 버튼 */
+        .cosselectadd {
+            margin:auto;
+            display:block;
+        }
         .cosselectbtn {
-            bottom: 0%;
+            position: absolute;
+            bottom: 5%;
+            left:50%;
+            transform:translate(-50%, -50%);
         }
 
-        .cosbtnupdate {
+        .cosselectsubstract {
 
         }
-
-        .cosbtndelete {
-
-        }
-
         .cosbtnsave {
 
+            display: inline-block;
+            right:0;
         }
 
     </style>
@@ -489,6 +494,7 @@
                 let course_type;
                 let course_num;
                 for (let j = 1; j < thiscnt + 1; j++) { // 헤더 부분 수정되면 변경 **************************************
+                    stepArr[j-1] = $(this).attr("step"+j);
                     course_type = $(this).attr("step" + j).substr(0, 4);
                     course_num = Number($(this).attr("step" + j).substr(5));
                     console.log("thiscnt : " + thiscnt);
@@ -574,23 +580,6 @@
 <body>
 <div class="mapandselect">
     <div class="input-group">
-        <!-- 저장된 경로 -->
-        <div class="savehistory">
-            <c:forEach var="dto" items="${list}" varStatus="i">
-                <div style="border: 1px solid yellow">
-                    <span>제목 : ${dto.title}</span>
-                    <button class="delete_saved_course" style="display:inline-block"> X </button>
-                    <div>작성날짜 : ${dto.writeday}</div>
-                    <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}"
-                            user_num="${dto.user_num}"
-                            step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}"
-                            step5="${dto.step5}"
-                            writeday="${dto.writeday}">불러오기
-                    </button>
-                </div>
-            </c:forEach>
-        </div>
-
         <!-- map -->
         <div id="map"></div>
 
@@ -603,7 +592,6 @@
 
             var map = new kakao.maps.Map(container, options);
         </script>
-
         <!-- 경로설정 -->
         <div class="cosselect">
             <h2>경로설정</h2>
@@ -635,12 +623,27 @@
 
 
             <!-- 경로설정 버튼 -->
-            <div class="toorlist"></div>
             <div class="cosselectbtn">
-                <button type="button" class="cosbtnupdate">경로수정</button>
-                <button type="button" class="cosbtndelete">경로삭제</button>
                 <button type="button" class="cosbtnsave">경로저장</button>
             </div>
+        </div>
+
+        <!-- 저장된 경로 -->
+        <div class="savehistory">
+            <c:forEach var="dto" items="${list}" varStatus="i">
+                <div style="border: 1px solid yellow">
+                    <span>제목 : ${dto.title}</span>
+                    <button class="delete_saved_course" style="display:inline-block"> X </button>
+
+                    <div>작성날짜 : <fmt:formatDate value="${dto.writeday}" type="date" pattern="yyyy-MM-dd"/></div>
+                    <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}"
+                            user_num="${dto.user_num}"
+                            step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}"
+                            step5="${dto.step5}"
+                            writeday="${dto.writeday}">불러오기
+                    </button>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </div>
