@@ -18,11 +18,62 @@
     />
     <style type="text/css">
         div.usermain{
-            position: absolute;
-            margin: -100px 0px 0px -200px;
-            top: 50%;
-            left: 50%;
-            padding: 5px;
+            width: 1500px;
+            height: 90vh;
+            /*border: 2px solid black;*/
+            margin: 0 auto;
+        }
+        .user_main{
+            width: 50%;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
+        }
+        #useraddbtn{
+            width: 100%;
+            height: 50px;
+            -webkit-font-smoothing: antialiased;
+        }
+        #useraddbtn span{
+            position: relative;
+            top: 5px;
+            display: inline-block;
+            animation: bounce .5s ease infinite alternate;
+            font-size: 20px;
+            color: #FFF;
+            text-shadow: 0 1px 0 #CCC,
+            0 2px 0 #CCC,
+            0 3px 0 #CCC,
+            0 4px 0 #CCC,
+            0 5px 0 #CCC,
+            0 6px 0 transparent,
+            0 7px 0 transparent,
+            0 8px 0 transparent,
+            0 9px 0 transparent,
+            0 10px 10px rgba(0, 0, 0, .4);
+        }
+
+        #useraddbtn span:nth-child(2) { animation-delay: .1s; }
+        #useraddbtn span:nth-child(3) { animation-delay: .2s; }
+        #useraddbtn span:nth-child(4) { animation-delay: .3s; }
+        #useraddbtn span:nth-child(5) { animation-delay: .4s; }
+        #useraddbtn span:nth-child(6) { animation-delay: .5s; }
+        #useraddbtn span:nth-child(7) { animation-delay: .6s; }
+        #useraddbtn span:nth-child(8) { animation-delay: .7s; }
+
+        @keyframes bounce {
+            100% {
+                top: -10px;
+                text-shadow: 0 1px 0 #CCC,
+                0 2px 0 #CCC,
+                0 3px 0 #CCC,
+                0 4px 0 #CCC,
+                0 5px 0 #CCC,
+                0 6px 0 #CCC,
+                0 7px 0 #CCC,
+                0 8px 0 #CCC,
+                0 9px 0 #CCC,
+                0 50px 25px rgba(0, 0, 0, .2);
+            }
         }
     </style>
     <script type="text/javascript">
@@ -217,11 +268,11 @@
 </head>
 <body>
 <div class="usermain">
+    <div class="user_main">
+        <h1>회원가입</h1>
     <input type="hidden" id="correctAuthNum">
     <form action="insert" method="post" enctype="multipart/form-data" onsubmit="return check()">
-        <table class="table table-bordered" style="width: 600px">
-            <caption align="top">
-                <h1 style="text-align: center;"><b>회원가입</b></h1>
+        <table class="table table-hover">
                 <%
                     Object loginChannelObj = session.getAttribute("login_channel");
                     if (loginChannelObj != null) {
@@ -238,13 +289,12 @@
                         }
                     }
                 %>
-            </caption>
             <tr>
                 <td>
                     <div>아이디</div>
                     <div class="input-group">
                         <input placeholder="영문소문자, 숫자 2-10자" id="loginid2" name="loginid"
-                               class="form-control" style="width: 120px;" required="required"
+                               class="form-control" required="required"
                                <%
                                 if (loginChannelObj != null) {
                                  String loginChannel = (String) loginChannelObj;
@@ -261,7 +311,7 @@
                                  }
                                %>
                         >
-                        <button type="button" class="btn btn-danger btn-sm"
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
                                 id="btnidcheck">중복체크</button>
                     </div>
                     <div id="idSuccess"></div>
@@ -288,8 +338,8 @@
                             }
                         }
                     %>
-                    <div class="input-group">
-                        <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
+
+                        <input type="password" style="font-family: 'Jua';" class="form-control"
                                name="password" id="pass" placeholder="영문, 숫자 8-20자" maxlength="20"
                                required="required"
                                <%
@@ -298,8 +348,9 @@
                                     }
                                %>
                         >
-
-                        <input type="password" style="width: 80px; font-family: 'Jua';" class="form-control"
+                    <br>
+                    <div>비밀번호 확인</div>
+                        <input type="password" style="font-family: 'Jua';" class="form-control"
                                id="pass2" placeholder="비밀번호 확인" maxlength="20"
                                required="required"
                                 <%
@@ -308,7 +359,6 @@
                                     }
                                 %>
                         >
-                    </div>
                     <div id="passwordSuccess"></div>
                 </td>
             </tr>
@@ -316,7 +366,7 @@
                 <td>
                     <div>이름</div>
                     <input type="text" name="name" class="form-control"
-                           style="width: 180px;" placeholder="이름" required="required"
+                           placeholder="이름" required="required"
                            <%
                             Object nameObj = session.getAttribute("loginname");
                             if (nameObj != null) {
@@ -345,20 +395,20 @@
                             }
                         %>
                         <input  id="email" name="email" class="form-control"
-                                style="width: 150px;" placeholder="이메일" required="required"
+                                 placeholder="이메일" required="required"
                                 <%
                                 if (emailValid)
                                     out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(emailSplitted[0]) + "\"");
                                 %>
                         >
                         <input  id="emailDomain" name="emailDomain" class="form-control"
-                                style="width: 150px;" required="required"
+                                placeholder="ex) @naver.com" required="required"
                                 <%
                                 if (emailValid)
                                     out.println("value=\"" + org.springframework.web.util.HtmlUtils.htmlEscapeHex(emailSplitted[1]) + "\"");
                                 %>
                         >
-                        <select id="emailSelect">
+                        <select id="emailSelect" class="form-select">
                             <option value="">직접입력</option>
                             <option value="@naver.com">@naver.com</option>
                             <option value="@daum.net">@daum.net</option>
@@ -372,8 +422,8 @@
                 <td colspan="2">
                     <div>휴대폰 번호</div>
                     <div class="input-group">
-                        <input type="text" id="hp" name="hp" placeholder="(-) 포함해서 입력"
-                               class="form-control" style="width: 200px;" required="required"
+                        <input type="text" id="hp" name="hp" placeholder="핸드폰 번호 (-) 포함해서 입력"
+                               class="form-control" required="required"
                                 <%
                                 Object loginHpObj = session.getAttribute("loginhp");
                                 if (loginHpObj != null) {
@@ -382,13 +432,14 @@
                                 }
                                 %>
                         >
-                        <button type="button" class="btn btn-danger btn-sm"
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
                                 id="btnRequstCheck">인증요청</button>
                     </div>
+                    <br>
                     <div class="input-group">
                         <input type="text" id="authNum"
-                               class="form-control" style="width: 200px;" required="required">
-                        <button type="button" class="btn btn-danger btn-sm"
+                               class="form-control" placeholder="인증번호 입력" required="required">
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
                                 id="btnAuthNumCheck">인증</button>
                     </div>
                     <div id="hpSuccess"></div>
@@ -400,7 +451,7 @@
                     <div>닉네임</div>
                     <div class="input-group">
                         <input type="text" id="nickname" name="nickname" placeholder="한글 2-8자"
-                               class="form-control" style="width: 120px;" required="required"
+                               class="form-control" required="required"
                                 <%
                                 Object nicknameObj = session.getAttribute("nickname");
                                 if (nicknameObj != null) {
@@ -409,7 +460,7 @@
                                 }
                                 %>
                                >
-                        <button type="button" class="btn btn-danger btn-sm"
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
                                 id="btnNicknameCheck">중복체크</button>
                     </div>
                     <div id="nicknameSuccess"></div>
@@ -418,7 +469,7 @@
             <tr>
                 <td>
                     성별
-                    <select name="gender" type="">
+                    <select name="gender" class="form-select">
                         <%
                             Object genderObj = session.getAttribute("gender");
                             String gender = "";
@@ -441,9 +492,9 @@
                                 %>
                         >남자</option>
                     </select>
-
+                    <br>
                     연령대
-                    <select name="age">
+                    <select name="age" class="form-select">
                         <%
                             Object ageObj = session.getAttribute("age");
                             String age = "10";
@@ -461,12 +512,21 @@
             </tr>
 
             <tr>
-                <td colspan="2" align="center">
-                    <button type="submit" class="btn btn-info" style="width: 180px;">회원가입</button>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-secondary" id="useraddbtn">
+                        <span>회</span>
+                        <span>원</span>
+                        <span>가</span>
+                        <span>입</span>
+                        <span>G</span>
+                        <span>O</span>
+                        <span>!</span>
+                    </button>
                 </td>
             </tr>
         </table>
     </form>
+    </div>
 </div>
 <script>
     <%
