@@ -153,7 +153,7 @@
 <c:set var="root" value="<%=request.getContextPath()%>" />
 <div class="title">
 		<div class="logo">
-			<a href="${root}/"><img src="${root}/image/logo1.jpg"></a>
+			<a href="${root}/home"><img src="${root}/image/logo1.jpg"></a>
 		</div>
 		<div class="menu">
 			<div class="input-group menu1">

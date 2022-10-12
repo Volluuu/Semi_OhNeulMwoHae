@@ -91,7 +91,7 @@
 	<!-- 로그인한 상태에서는 로그인한 멤버의 사진이 나오도록한다 -->
 
 	<c:if test="${sessionScope.loginok==null}">
-		<a href="#"><img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg" onerror="this.src='${root}/image/noimage.jpg';"></a>
+		<a href="${root}/mypage/mypagedetail"><img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg" onerror="this.src='${root}/image/noimage.jpg';"></a>
 	</c:if>
 	<c:if test="${sessionScope.loginok!=null}">
 	<a href="#"><img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg"></a>
