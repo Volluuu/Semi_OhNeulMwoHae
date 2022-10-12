@@ -36,8 +36,8 @@ public class CourseService implements CourseServiceInter{
 	}
 
 	@Override
-	public void deleteCourse(int num) {
-		daoInter.deleteCourse(num);
+	public void deleteCourse(int course_num) {
+		daoInter.deleteCourse(course_num);
 	}
 
 	@Override

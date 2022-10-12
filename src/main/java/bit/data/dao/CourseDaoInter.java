@@ -13,7 +13,7 @@ public interface CourseDaoInter {
 	public List<CourseDto> getAllCourses(int user_num);
 	public CourseDto getCourse();
 	public void insertCourse(Map<String, Object> map);
-	public void deleteCourse(int num);
+	public void deleteCourse(int course_num);
 	public void updateStep(Map<String, String> map);
 	public List<CourseDto> getSearchList(Map<String, String> map);
 	public List<CafeDto> getSearchCafe(Map<String, String> map);
