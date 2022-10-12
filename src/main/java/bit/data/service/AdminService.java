@@ -107,6 +107,16 @@ public class AdminService implements AdminServiceInter{
     }
 
     @Override
+    public void cafeUpdAct(CafeDto dto) {
+        admindao.cafeUpdAct(dto);
+    }
+
+    @Override
+    public void deleteCafeByNum(int cafe_num) {
+        admindao.deleteCafeByNum(cafe_num);
+    }
+
+    @Override
     public List<FoodDto> getFoodPaging(String searchcolumn, String searchword, int startnum, int perpage) {
         Map<String, Object> map=new HashMap<>();
         map.put("searchcolumn",searchcolumn);
@@ -125,6 +135,16 @@ public class AdminService implements AdminServiceInter{
     }
 
     @Override
+    public void foodUpdAct(FoodDto dto) {
+        admindao.foodUpdAct(dto);
+    }
+
+    @Override
+    public void deleteFoodByNum(int food_num) {
+        admindao.deleteFoodByNum(food_num);
+    }
+
+    @Override
     public List<TripDto> getTripPaging(String searchcolumn, String searchword, int startnum, int perpage) {
         Map<String, Object> map=new HashMap<>();
         map.put("searchcolumn",searchcolumn);
@@ -140,5 +160,31 @@ public class AdminService implements AdminServiceInter{
         map.put("searchcolumn",searchcolumn);
         map.put("searchword",searchword);
         return admindao.getTripTotal(map);
+    }
+
+    @Override
+    public void tripUpdAct(TripDto dto) {
+        admindao.tripUpdAct(dto);
+    }
+
+    @Override
+    public void deleteTripByNum(int trip_num) {
+        admindao.deleteTripByNum(trip_num);
+    }
+
+    @Override
+    public void cafeInsertAct(CafeDto dto) {
+        admindao.cafeInsertAct(dto);
+    }
+
+    @Override
+    public void foodInsertAct(FoodDto dto) {
+        admindao.foodInsertAct(dto);
+
+    }
+
+    @Override
+    public void tripInsertAct(TripDto dto) {
+        admindao.tripInsertAct(dto);
     }
 }
