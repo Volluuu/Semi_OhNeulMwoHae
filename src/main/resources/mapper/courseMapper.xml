@@ -17,7 +17,7 @@
     </insert>
 
     <delete id="deleteCourse" parameterType="int">
-        delete from course where course_num=#{num}
+        delete from course where cos_num=#{course_num}
     </delete>
 
     <update id="updateStep" parameterType="Map" >

@@ -34,7 +34,6 @@
         #map {
             width: 700px;
             height: 750px;
-        "
         }
 
         /* 코스 제목 */
@@ -531,7 +530,23 @@
 
             });
         }); //$function end
-
+        $(document).on("click", "button.delete_saved_course", function (){
+            var cos_num = Number($(this).siblings(".call_course_button").attr("cos_num"));
+            if(confirm("저장되어있는 경로를 삭제하시겠습니까?")) {
+                $.ajax({
+                    type    : "post",
+                    url     : "../course/deletecourse",
+                    dataType: "text",
+                    data    : {
+                        "course_num" : cos_num
+                    },
+                    success : function (res) {
+                        alert("저장된 경로가 삭제되었습니다.");
+                        location.reload();
+                    }//sucess
+                });//ajax
+            }
+        });
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd() {
             s += "<div class='cosselect_main'>";
@@ -563,7 +578,8 @@
         <div class="savehistory">
             <c:forEach var="dto" items="${list}" varStatus="i">
                 <div style="border: 1px solid yellow">
-                    <div>제목 : ${dto.title}</div>
+                    <span>제목 : ${dto.title}</span>
+                    <button class="delete_saved_course" style="display:inline-block"> X </button>
                     <div>작성날짜 : ${dto.writeday}</div>
                     <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}"
                             user_num="${dto.user_num}"
@@ -590,8 +606,6 @@
 
         <!-- 경로설정 -->
         <div class="cosselect">
-
-            <%-- <form action="cosInsert" method="post">--%>
             <h2>경로설정</h2>
             <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title"
                    required="required">
@@ -627,7 +641,6 @@
                 <button type="button" class="cosbtndelete">경로삭제</button>
                 <button type="button" class="cosbtnsave">경로저장</button>
             </div>
-            <%-- </form>--%>
         </div>
     </div>
 </div>
