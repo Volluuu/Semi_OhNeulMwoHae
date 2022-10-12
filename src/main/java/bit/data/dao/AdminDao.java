@@ -77,6 +77,16 @@ public class AdminDao implements AdminDaoInter{
     }
 
     @Override
+    public void cafeUpdAct(CafeDto dto) {
+        session.update(ns+"cafeUpdAct",dto);
+    }
+
+    @Override
+    public void deleteCafeByNum(int cafe_num) {
+        session.delete(ns+"deleteCafeByNum",cafe_num);
+    }
+
+    @Override
     public List<FoodDto> getFoodPaging(Map<String, Object> map) {
         return session.selectList(ns+"getFoodPaging",map);
     }
@@ -87,6 +97,16 @@ public class AdminDao implements AdminDaoInter{
     }
 
     @Override
+    public void foodUpdAct(FoodDto dto) {
+        session.update(ns+"foodUpdAct",dto);
+    }
+
+    @Override
+    public void deleteFoodByNum(int food_num) {
+        session.delete(ns+"deleteFoodByNum",food_num);
+    }
+
+    @Override
     public List<TripDto> getTripPaging(Map<String, Object> map) {
         return session.selectList(ns+"getTripPaging",map);
     }
@@ -94,5 +114,30 @@ public class AdminDao implements AdminDaoInter{
     @Override
     public int getTripTotal(Map<String, String> map) {
         return session.selectOne(ns+"getTripTotal",map);
+    }
+
+    @Override
+    public void tripUpdAct(TripDto dto) {
+        session.update(ns+"tripUpdAct",dto);
+    }
+
+    @Override
+    public void deleteTripByNum(int trip_num) {
+        session.delete(ns+"deleteTripByNum",trip_num);
+    }
+
+    @Override
+    public void cafeInsertAct(CafeDto dto) {
+        session.insert(ns+"cafeInsertAct",dto);
+    }
+
+    @Override
+    public void foodInsertAct(FoodDto dto) {
+        session.insert(ns+"foodInsertAct",dto);
+    }
+
+    @Override
+    public void tripInsertAct(TripDto dto) {
+        session.insert(ns+"tripInsertAct",dto);
     }
 }

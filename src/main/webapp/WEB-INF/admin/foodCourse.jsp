@@ -146,8 +146,73 @@
     .btndiv {
         float: right;
     }
+    .contentdot {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        margin-top: 1px;
+        max-height: 20px;
+        overflow: hidden;
+        vertical-align: top;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        width:200px;
+    }
+    .fa-wrench{
+        color: #6aafe6;
+        float: right;
+        display: none;
+    }
+    .fa-wrench:hover{
+        cursor: pointer;
+    }
 </style>
 <body id="page-top">
+<script>
+    var root="${root}";
+    var currentPage="${currentPage}";
+    $(document).ready(function() {
+        $("#cbx_chkAll").click(function() {
+            if($("#cbx_chkAll").is(":checked")) $("input[name=fooddel]").prop("checked", true);
+            else $("input[name=fooddel]").prop("checked", false);
+        });
+
+        $("input[name=fooddel]").click(function() {
+            var total = $("input[name=fooddel]").length;
+            var checked = $("input[name=fooddel]:checked").length;
+
+            if(total != checked) $("#cbx_chkAll").prop("checked", false);
+            else $("#cbx_chkAll").prop("checked", true);
+        });
+    });
+    $(document).on("click",".w-btn-red",function (){
+        var length=$("input[name=fooddel]:checked").length;
+        var food_num=[];
+        $("input[name=fooddel]:checked").each(function(){
+            food_num.push($(this).val());
+        })
+        if(length>0)
+            var yes=confirm("선택한 "+length+"개의 여행지를 삭제하시겠습니까?");
+        if(yes){
+            $.ajax({
+                type:"get",
+                url:root+"/admin/fooddelete",
+                dataType:"text",
+                data:{"food_num":food_num,"currentPage":currentPage},
+                success:function(res){
+                    alert("삭제했습니다");
+                    location.reload();
+                }
+            });
+        }
+    });
+    $(document).on("click",".w-btn-blue",function (){
+        $(".fa-wrench").toggle("slow");
+    });
+
+
+</script>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -294,6 +359,7 @@
                     <table>
                         <thead>
                         <tr>
+                            <th class="chkbox"><input type="checkbox" id="cbx_chkAll"/></th>
                             <th>이름</th>
                             <th>주소</th>
                             <th>종류</th>
@@ -309,14 +375,15 @@
                         <tbody>
                         <c:forEach var="dto" items="${list}" varStatus="i">
                             <tr>
+                                <td class="chkbox"><input type="checkbox" name="fooddel" value="${dto.food_num}"/></td>
                                 <td>${dto.title}</td>
                                 <td>${dto.addr}</td>
                                 <td>${dto.category}</td>
-                                <td>${dto.menu}</td>
+                                <td><span class="contentdot">${dto.menu}</span></td>
                                 <td>${dto.tel}</td>
                                 <td>${dto.lat}</td>
                                 <td>${dto.lon}</td>
-                                <td>${dto.gu}</td>
+                                <td>${dto.gu}&emsp;<a href="${root}/admin/foodupdform?food_num=${dto.food_num}&currentPage=${currentPage}"><i class="fa-solid fa-wrench"></i></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
@@ -344,7 +411,7 @@
                     </div>
                 </div>
                 <div class="btndiv">
-                    <button class="w-btn w-btn-green" type="button">추가</button>
+                    <button class="w-btn w-btn-green" type="button" onclick="location.href='${root}/admin/foodinsert'">추가</button>
                     <button class="w-btn w-btn-blue" type="button">수정</button>
                     <button class="w-btn w-btn-red" type="button">삭제</button>
                 </div>
