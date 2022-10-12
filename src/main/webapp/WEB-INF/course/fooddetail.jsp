@@ -50,6 +50,9 @@
         width: 100%;
         height: 200px;
     }
+    .pointer{
+        cursor: pointer;
+    }
 
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
@@ -98,6 +101,13 @@
             }
         });
 
+
+    }
+    function starcheck(){
+        if($("input[name=star]:checked").length==0){
+            alert("별점을 체크해주세요");
+            return false;
+        }
 
     }
 </script>
@@ -183,7 +193,7 @@
                             for="rate1">★</label>
                         <input type="radio" name="star" value="4" id="rate2"><label
                             for="rate2">★</label>
-                        <input type="radio" name="star" value="3" id="rate3" checked><label
+                        <input type="radio" name="star" value="3" id="rate3"><label
                             for="rate3">★</label>
                         <input type="radio" name="star" value="2" id="rate4"><label
                             for="rate4">★</label>
@@ -194,7 +204,7 @@
 		                <textarea class="col-auto form-control" type="text" name="content" id="reviewContents"
                                   placeholder="댓글을 남겨보세요!"></textarea>
                     </div>
-                    <button type="button" class="btn btn-outline-dark" id="foodstarbtn">등록</button><br>
+                    <button type="button" class="btn btn-outline-dark" id="foodstarbtn" onclick="starcheck()">등록</button><br>
 
                 </form>
                 </c:if>
