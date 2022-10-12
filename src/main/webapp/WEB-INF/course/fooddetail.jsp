@@ -50,9 +50,6 @@
         width: 100%;
         height: 200px;
     }
-    .pointer{
-        cursor: pointer;
-    }
 
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>

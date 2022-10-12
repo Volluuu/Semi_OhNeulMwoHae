@@ -72,10 +72,6 @@
         padding-bottom: 49px;
         background: rgb(255, 255, 255);
     }
-    .pointer{
-        cursor: pointer;
-    }
-
 
 </style>
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
@@ -124,8 +120,6 @@
                 $("#review").html(s);
             }
         });
-
-
     }
 
     function starcheck(){
