@@ -273,7 +273,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.href = "${root}/";
+							location.href = "${root}/home";
 						}
 					}//success
 					
@@ -315,7 +315,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.href = "${root}/";
+							location.href = "${root}/home";
 
 						}
 					}//success
