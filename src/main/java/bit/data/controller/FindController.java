@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -392,8 +391,13 @@ public class FindController {
         }
         UserDto udto=findService.selectUserByfindNum(find_num);
 
+        System.out.println("gd"+udto.getNickname());
         dto.setNickname(udto.getNickname());
-
+        /*if(udto.getNickname()==null || udto.getNickname()=="" || udto.getNickname().equals(""))
+        {dto.setNickname("탈퇴한 회원입니다");
+        }else{
+            dto.setNickname(udto.getNickname());
+        }*/
         mview.addObject("dto", dto);
         mview.addObject("currentPage", currentPage);
 //        mview.addObject("memphoto", memphoto);
