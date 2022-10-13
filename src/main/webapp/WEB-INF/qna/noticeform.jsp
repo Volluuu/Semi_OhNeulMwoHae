@@ -15,6 +15,7 @@
             height: 90vh;
             /*border: 2px solid black;*/
             margin: 0 auto;
+            padding-top: 20px;
         }
         .notice_info{
             width: 200px;
@@ -35,10 +36,16 @@
             margin-left: 45px;
             display: inline-block;
         }
+        .notice_list_main{
+            box-shadow: 5px 5px 10px gray;
+        }
         .notice_list ul{
         }
         .notice_list li{
             list-style: circle;
+        }
+        #noticecontent{
+            min-height: 200px;
         }
     </style>
     <script>
@@ -60,7 +67,7 @@
     </div>
     <div class="notice_list">
         <h3>공지사항 작성</h3>
-        <div>
+        <div class="notice_list_main">
             <form action="noticeinsert" method="post">
                 <input type="hidden" name="user_num" value="${user_num}">
                 <%--<input type="hidden" name="id" value="${sessionScope.loginid}">
@@ -76,7 +83,7 @@
                     <tr>
                         <th>공지내용</th>
                         <td>
-                            <textarea name="content" class="form-control" required="required"></textarea>
+                            <textarea name="content" id="noticecontent" class="form-control" required="required"></textarea>
                         </td>
                     </tr>
                     <tr>

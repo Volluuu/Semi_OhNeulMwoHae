@@ -43,7 +43,8 @@
 	}
 
 	.menu{
-		width: 40%;
+		/*width: 40%;*/
+		min-width: 700px;
 		margin: 0 auto;
 		text-align: center;
 		font-weight: bold;
@@ -70,33 +71,9 @@
 		width: 450px;
 	}
 
-	.search1{
-		width: 20%;
-		height: 15px;
-		margin-top: 40px;
-	}
-
-	div.search1 .sel1{
-		width: 90px;
-		font-size: 13px;
-		color: gray;
-	}
-
-	div.search1 .op1{
-		width: 90px;
-		font-size: 15px;
-		color: black;
-	}
-
-	div.search1 .in1{
-		width: 250px;
-		font-size: 12px;
-	}
-	div.search1 .btn1{
-		width: 40px;
-	}
 
 	.myinfo{
+		min-width: 200px;
 		margin-left: 20px;
 		font-weight: bold;
 	}

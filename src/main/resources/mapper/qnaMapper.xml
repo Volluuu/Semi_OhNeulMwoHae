@@ -108,4 +108,8 @@
     <update id="updateQnaAnswer">
         update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'yes' WHERE A.user_num = 1
     </update>
+
+    <update id="updateQnaNotAnswer">
+        update qna Q inner join qna_answer A on Q.qna_num = A.qna_num set Q.answer = 'not' WHERE A.user_num = 1
+    </update>
 </mapper>
