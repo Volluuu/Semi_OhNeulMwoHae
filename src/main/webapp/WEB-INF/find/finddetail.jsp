@@ -139,7 +139,9 @@
                     }
                     s += ' <c:if test="${sessionScope.loginok!=null}">';
                     if (elt.relevel < 2) {
+
                         s += '<button class="btn btn-outline-dark adap fr" style="font-size: 10px;" ' +
+
                             'regroup="' + elt.regroup + '" restep="' + elt.restep + '" relevel="' + elt.relevel + '"' +
                             ' friend_num="' + elt.friend_num + '" diff="' + elt.diff + '">답글</button>';
                         s += '</p>';
@@ -323,6 +325,7 @@
             '<input type="hidden" name="restep" value="' + restep + '">' +
             '<input type="hidden" name="relevel" value="' + relevel + '">' +
             '<input type="hidden" name="diff" value="' + diff + '">' +
+
             '<textarea name="content" id="content" style="width:400px;height:60px;"></textarea><br><button class="w-btn w-btn-green" type="button" id="btnasave" style="font-size: 14px; margin-left: 347px;">등록</button></form></div>'
             );
 
@@ -340,7 +343,9 @@
                 ti.parent().siblings("pre.precontent").remove();
                 ti.parent().siblings(".eltcontent").html("<textarea class='form-control' name='content'" +
                     "required='required'  style='width:400px;height:60px;'>" + res.content +
+
                     "</textarea><button class='btn btn-outline-dark aupdok' style='font-size: 10px' friend_num='" + res.friend_num + "'>확인</button>");
+
             }
         });
     });
