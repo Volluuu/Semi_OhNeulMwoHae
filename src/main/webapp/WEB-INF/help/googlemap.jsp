@@ -33,7 +33,7 @@
         /* 지도 */
 
         #map {
-            width : 750px;
+            width : 730px;
             height: 750px;
         }
 
@@ -46,16 +46,24 @@
 
         /* 테마 선택 */
         .cosselect {
-            width: 500px;
+            width: 520px;
             position: relative;
             border: 1px solid black;
         }
 
         .cosselect_main {
-            /*border: 1px solid red;*/
+            border: 1px solid red;
             width: 500px;
             margin-bottom: 10px;
             font-size: 10px;
+            /* border-top: solid #ccc 1px; */
+            margin-top: 10px;
+            position: relative;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            border-radius: 30px;
+            margin-left: 10px;
         }
 
         .cosselect_thema {
@@ -66,8 +74,6 @@
         }
 
         #cossearch_insert {
-            /*border: 1px solid magenta;*/
-            width: 370px;
             display: inline-block;
             vertical-align: top;
         }
@@ -84,7 +90,7 @@
         }
 
         input.in1 {
-            width: 300px;
+            width: 280px;
             display: inline-block;
             vertical-align: top;
         }
@@ -105,29 +111,38 @@
             background-color: gray;
             cursor: pointer;
         }
-
-        .cosadd_btn {
+        .coscnt {
+            margin-bottom: 10px;
         }
-
         /* 버튼 */
         .cosselectadd {
             margin:auto;
             display:block;
+            border-radius: 50%;
+            background-color: #3db8fa;
+            color: white;
+            border : none;
+            width:50px;
+            height:50px;
         }
         .cosselectbtn {
             position: absolute;
-            bottom: 5%;
-            left:50%;
-            transform:translate(-50%, -50%);
+            bottom: 0%;
+            right:0%;
+            transform:translate(-20%, -50%);
         }
 
         .cosselectsubstract {
-
+            position: absolute;
+            right: 3%;
+            border : none;
+            border-radius: 50% ;
+            background-color: white;
+            color: #ccc;
         }
         .cosbtnsave {
-
             display: inline-block;
-            right:0;
+            right:0%;
         }
 
     </style>
@@ -146,11 +161,14 @@
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
             $(document).on("click", ".cosselectadd", function () {
-                if ($("div.cosselect_main").length == 5) {
+                if ($("div.cosselect_main").length >= 5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
+                    btnChange();
                     return;
                 }
                 cnt++;
+                btnChange();
+                s="";
                 cosSelectAdd();
                 $("div.cos2").append(s);
                 s = "";
@@ -171,6 +189,7 @@
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
+                    btnChange();
                 } else {
                     return;
                 }
@@ -203,7 +222,6 @@
                     customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n + 1) + '</span>');
                     newCustomArr[n++] = customArr[i];
                 }
-                // customArr = newCustomArr;
                 for (var i = 0; i < customArr.length; i++) {
                     customArr[i] = newCustomArr[i];
                 }
@@ -445,6 +463,12 @@
                     $("#cos_title").focus();
                     return;
                 }
+                for(var i = 0; i < stepArr.length; i++) {
+                    if(!stepArr[i]) {
+                        alert("추가된 경로가 없습니다. 경로를 추가해 주세요.");
+                        return;
+                    }
+                }
                 if (confirm("경로를 [나만의 경로]에 추가하시겠습니까?")) {
                     //페이지 이동하는 부분
                     $.ajax({
@@ -553,7 +577,7 @@
                 });//ajax
             }
         });
-        /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
+        /* 더하기 버d튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd() {
             s += "<div class='cosselect_main'>";
             s += "<span class='coscnt'></span>";
@@ -573,6 +597,15 @@
             s += "<button class='form-control insert_course_button'><i class='fas fa-plus' aria-hidden='true'></i></button>";
             s += "</div>";
             s += "</div>";
+        }
+        function btnChange() {
+            let btn = $("button.cosselectadd");
+            if (cnt >=5) {
+                btn.css("background-color", "#ccc");
+            } else {
+                btn.css("background-color", "#3bd8fa");
+            }
+
         }
 
     </script>
@@ -610,16 +643,14 @@
                     </select>
                 </div>
                 <div class="i" id="cossearch_insert">
-                    <input type="text" class="form-control in1" placeholder="검색어를 입력"
-                           required="required" name="searchword" cnt="1" isSelect="no">
+                    <input type="text" class="form-control in1" placeholder="검색어를 입력" required="required" name="searchword" cnt="1" isSelect="no">
                     <div class="searchlist"></div>
                     <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
             <div class="cos2"></div>
-            <button type="button" class="cosselectadd" style="margin:auto; display: block;">경로추가<i
-                    class='fas fa-angle-down'></i></button>
+            <button type="button" class="cosselectadd"><i class='fas fa-angle-down'></i></button>
 
 
             <!-- 경로설정 버튼 -->
