@@ -36,12 +36,16 @@
     }
 
     html, body {
+        width: 100%;
+        height: 100%;
         font-size: 50px;
-        margin-top: 100px;
+        margin: 0 auto;
+        cursor: none;
+        padding-top: 20px;
     }
-
     body {
-        width: 21%;
+        width: 100%;
+        height: 100%;
         background-color: var(--color-background);
         align-items: center;
         justify-content: center;
@@ -51,7 +55,6 @@
         position: relative;
 
     }
-
     .c-rainbow {
         counter-reset: rainbow;
         position: relative;
@@ -159,16 +162,55 @@
         text-align: center;
         padding-top: 80px;
     }
+    div.clickEffect{
+        position:fixed;
+        box-sizing:border-box;
+        border-style:solid;
+        border-color:#4C4C4C;
+        border-radius:50%;
+        animation:clickEffect 0.4s ease-out;
+        z-index:99999;
+    }
+    @keyframes clickEffect{
+        0%{
+            opacity:1;
+            width:0.5em;
+            height:0.5em;
+            margin:-0.25em;
+            border-width:0.5rem;
+        }
+        100%{
+            opacity:0.2;
+            width:15em;
+            height:15em;
+            margin:-7.5em;
+            border-width:0.03rem;
+        }
+    }
+
+    .circle {
+    /*// 마우스를 따라다니는 원 설정*/
+    position: absolute;
+    top: 0; /*// 초기 위치값을 설정해줍니다.*/
+    left: 0; /*// 초기 위치값을 설정해줍니다.*/
+    width: 80px; /*//원 사이즈*/
+    height: 80px; /*//원 사이즈*/
+    border-radius: 50%; /*// 원의 형태설정*/
+    background-color: #9bf50b; /* // 원 컬러설정*/
+    transform: translate(-50%, -50%); /*// 원을 정가운데로 맞추기위해서 축을-50%이동해줍니다.*/
+    z-index: -1;
+    }
 
 </style>
   <script>
       // @mtsgenerso
       // Ignore JS
-      new Sign().print(document.body)
+      //new Sign().print(document.body);
   </script>
 </head>
 <body>
 <div class="index_main">
+    <div class="circle"></div>
     <c:set var="root" value="<%=request.getContextPath()%>"/>
     <ul class="c-rainbow">
         <li class="c-rainbow__layer c-rainbow__layer--white">오늘 뭐해!?</li>
@@ -185,6 +227,41 @@
       시작하기
     </button>
 </div>
+<script>
+    $(document).ready(function(){
+        $(document).mousemove(function(e){
+            var mouseX = e.pageX;
+            var mouseY = e.pageY;
+
+            $('.circle').css({
+                left: mouseX + "px",
+                top : mouseY + "px"
+            });
+        });
+    });
+</script>
+<%--<script>
+    const circle = document.querySelector(".circle");
+    document.addEventListener("mousemove", (e) => { // mousemove이벤트를 이용해 움
+        // 마우스의 좌표는 clientX와 clientY를 이용해 알수 있다. -> 브라우저 window의 좌표값 위치를 전달한다.
+        // pageX, pageY와는 다름.
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        circle.style.left = mouseX + 'px';
+        circle.style.top = mouseY + 'px';
+    });
+</script>--%>
+<script type="text/javascript">
+    function clickEffect(e){
+        var d=document.createElement("div");
+        d.className="clickEffect";
+        d.style.top=e.clientY+"px";d.style.left=e.clientX+"px";
+        document.body.appendChild(d);
+        d.addEventListener('animationend',function(){d.parentElement.removeChild(d);}.bind(this));
+    }
+    document.addEventListener('click',clickEffect);
+
+</script>
 
 </body>
 </html>
