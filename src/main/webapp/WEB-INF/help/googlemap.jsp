@@ -24,12 +24,6 @@
             margin: 0 auto;
         }
 
-        /* history */
-        .savehistory {
-            border: 1px solid red;
-            width: 250px;
-        }
-
         /* 지도 */
 
         #map {
@@ -48,11 +42,11 @@
         .cosselect {
             width: 520px;
             position: relative;
-            border: 1px solid black;
+            /*border: 1px solid black;*/
         }
 
         .cosselect_main {
-            border: 1px solid red;
+            /*border: 1px solid red;*/
             width: 500px;
             margin-bottom: 10px;
             font-size: 10px;
@@ -64,6 +58,7 @@
             padding-left: 20px;
             border-radius: 30px;
             margin-left: 10px;
+            box-shadow: 5px 5px #ccc;
         }
 
         .cosselect_thema {
@@ -79,7 +74,7 @@
         }
 
         .searchlist {
-            border: 1px solid crimson;
+           /* border: 1px solid crimson;*/
             width: 370px;
             max-height: 300px;
             display: none;
@@ -96,7 +91,7 @@
         }
 
         button.insert_course_button {
-            border: 1px solid orange;
+            /*border: 1px solid orange;*/
             width: 50px;
             display: inline-block;
             vertical-align: top;
@@ -105,6 +100,7 @@
 
         .searchwordlist {
             list-style: none;
+            margin-bottom: 5px;
         }
 
         .searchwordlist:hover {
@@ -124,6 +120,12 @@
             border : none;
             width:50px;
             height:50px;
+            font-size: 20px;
+            transition: all 0.05s linear;
+
+        }
+        .cosselectadd:hover {
+            transform: scale(1.1);
         }
         .cosselectbtn {
             position: absolute;
@@ -143,8 +145,70 @@
         .cosbtnsave {
             display: inline-block;
             right:0%;
+            width: 150px;
+            border : none;
+            background-color: #3db8fa;
+            color: white;
+            border-radius: 20px;
+            transition: all 0.05s linear;
+        }
+        .cosbtnsave:hover {
+            transform: scale(1.1);
         }
 
+        .set_line {
+            display: inline-block;
+            left:0%;
+            width: 150px;
+            border : none;
+            background-color: #3db8fa;
+            color: white;
+            border-radius: 20px;
+            transition: all 0.05s linear;
+        }
+        .set_line:hover {
+            transform: scale(1.1);
+        }
+
+    .delete_saved_course {
+        border : 3px solid #ccc;
+        border-left:none;
+        background-color: white;
+        color: #ccc;
+        height: 50px;
+        margin-left:-6px;
+        font-size: 15px;
+        width:40px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+        display: inline-block;
+    }
+
+        .call_course_button {
+            border:none;
+            width: 200px;
+            background-color: #3db8fa;
+            font-size: 15px;
+            height:50px;
+            color:white;
+            border-bottom-left-radius: 20px;
+            border-top-left-radius: 20px;
+            margin-left:5px;
+        }
+        .save_course_list {
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.05s linear;
+        }
+        .save_course_list:hover {
+            transform: scale(1.05);
+        }
+        .savehistory {
+            border: none;
+            width: 250px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 5px 5px #ccc;
+        }
     </style>
     <script>
         var cnt = 1;
@@ -157,6 +221,9 @@
         var latArr = new Array(5);
         var lngArr = new Array(5);
         var isAdd = [false, false, false, false, false];
+        let polyline;
+        // 지도에 표시할 선을 생성합니다
+
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
@@ -219,7 +286,7 @@
                         continue;
                     }
                     newStepArr[n] = stepArr[i];
-                    customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n + 1) + '</span>');
+                    customArr[i].setContent('<span style="cursor:pointer; font-size: 10px" class="step" cnt=' + (n+1) + '>step' + (n + 1) + '<br><i class="bi bi-pin-fill" style="color:#3db8fa; font-size: 30px"></i></span>');
                     newCustomArr[n++] = customArr[i];
                 }
                 for (var i = 0; i < customArr.length; i++) {
@@ -282,21 +349,21 @@
                             if (word.parent().parent().find("select.sel1").val() == "cafe") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'cafe_num': elt.cafe_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'cafe_num': elt.cafe_num})
                                     );
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "trip") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'trip_num': elt.trip_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'trip_num': elt.trip_num})
                                     );
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "food") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'food_num': elt.food_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'food_num': elt.food_num})
                                     );
                                 });
                             }
@@ -393,11 +460,11 @@
                     success : function (res) {
                         //인포 윈도우 생성
                         var iwContent =
-                                '<div style="padding:5px; width:200px;">' + res.title + ' <br><a href="https://map.kakao.com/link/map/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
-                                '<br><a href="https://map.kakao.com/link/to/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                                '<div style="padding:5px; width:200px;">' + res.title + ' <br><a href="https://map.kakao.com/link/map/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue; font-size: 12px;" target="_blank; ">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue; font-size: 12px;" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
                             iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
                         iwRemoveable = true;
-                        var customContent = '<span style="background: skyblue;" class="step" cnt=' + thiscnt + '>step' + thiscnt + '</span>'
+                        var customContent = '<span style="cursor:pointer; font-size: 10px;" class="step" cnt=' + thiscnt + '>step' + thiscnt + '<br><i class="bi bi-pin-fill" style="color:#3db8fa; font-size: 30px"></i></span>'
                         // 인포윈도우를 생성합니다
                         var custom = new kakao.maps.CustomOverlay({
                             position: iwPosition,
@@ -458,14 +525,27 @@
 
                     }
                 }
+                console.log($("#cos_title").val().length);
+                if ($("#cos_title").val().length > 10) {
+                    alert("코스 제목을 10글자 이하로 입력해주세요.")
+                    $("#cos_title").focus();
+                    return;
+                }
                 if (!$("#cos_title").val()) {
                     alert("코스 제목을 입력해주세요")
                     $("#cos_title").focus();
                     return;
                 }
-                for(var i = 0; i < stepArr.length; i++) {
+                for(var i = 0; i < cnt; i++) {
                     if(!stepArr[i]) {
                         alert("추가된 경로가 없습니다. 경로를 추가해 주세요.");
+                        return;
+                    }
+                }
+                console.log($(".call_course_button").length);
+                for(var i = 0; i < $(".call_course_button").length; i++) {
+                    if($(".call_course_button").eq(i).attr("title") ==$("#cos_title").val()) {
+                        alert("똑같은 이름의 경로는 등록할 수 없습니다.");
                         return;
                     }
                 }
@@ -497,6 +577,9 @@
             });
 
             $(document).on("click", ".call_course_button", function () {
+                if(!confirm("["+$(this).attr("title") + "]에 저장된 경로들을 불러올까요?")) {
+                    return;
+                }
                 //불러오기전 초기화
                 $(".cos2").empty();
                 cnt = 1;
@@ -512,6 +595,7 @@
                     s = "";
                     cosSelectAdd();
                     cnt++;
+                    btnChange();
                     $("div.cos2").append(s);
                 }
                 $("#cos_title").val($(this).attr("title"));
@@ -545,7 +629,6 @@
                             "course_num" : course_num
                         },
                         success : function (res) {
-                            alert("success");
                             $(".cosselect_main").eq(j - 1).find(".coscnt").text("경로 " + j);
                             $("input.in1").eq(j - 1).val(res.title);
                             $("input.in1").eq(j - 1).attr("isSelect", "yes");
@@ -553,9 +636,20 @@
                             $("input.in1").eq(j - 1).attr("cnt", j);
                             console.log($("input.in1").eq(j - 1).val());
                             $("button.insert_course_button").eq(j - 1).trigger("click");
+                            for (var i = 0; i < mapBound.length; i++) {
+                                if (!latArr[i]) {
+                                    mapBound[i] = null;
+                                    continue;
+                                }
+                                mapBound[i] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
+                            }
+                            for (var i = 0; i < mapBound.length; i++) {
+                                if (mapBound[i]) {
+                                    bounds.extend(mapBound[i]);
+                                }
+                            }
                         }//sucess
                     });//ajax
-                    console.log("roof " + j + "is end");
                 }
 
             });
@@ -577,7 +671,28 @@
                 });//ajax
             }
         });
-        /* 더하기 버d튼 추가 시, 입력창 추가 메서드 */
+        //경로 그리기
+       $(document).on("mouseover", "button.set_line", function (){
+           var linePath = new Array(5);
+           for(var i = 0; i < lngArr.length; i++) {
+               if(lngArr[i]) {
+                   linePath[i] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
+               }
+           }
+          polyline = new kakao.maps.Polyline({
+               path: linePath, // 선을 구성하는 좌표배열 입니다
+               strokeWeight: 6, // 선의 두께 입니다
+               strokeColor: '#3c9f47', // 선의 색깔입니다
+               strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+               strokeStyle: 'solid' // 선의 스타일입니다
+           });
+
+           polyline.setMap(map);
+       });
+       $(document).on("mouseout", "button.set_line", function (){
+           polyline.setMap(null);
+       });
+        /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd() {
             s += "<div class='cosselect_main'>";
             s += "<span class='coscnt'></span>";
@@ -612,7 +727,7 @@
 </head>
 <body>
 <div class="mapandselect">
-    <div class="input-group">
+    <div class="input-group" style="margin-top:10px;">
         <!-- map -->
         <div id="map"></div>
 
@@ -627,8 +742,8 @@
         </script>
         <!-- 경로설정 -->
         <div class="cosselect">
-            <h2>경로설정</h2>
-            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title"
+            <h2 style="text-align: center;">경로설정</h2>
+            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목을 10글자 이하로 입력해주세요" name="title"
                    required="required">
             <div class="cosselect_main">
                 <span class="coscnt">경로 1</span>
@@ -655,24 +770,23 @@
 
             <!-- 경로설정 버튼 -->
             <div class="cosselectbtn">
+                <button type="button" class="set_line">경로보기</button>
                 <button type="button" class="cosbtnsave">경로저장</button>
             </div>
         </div>
 
         <!-- 저장된 경로 -->
         <div class="savehistory">
+            <p style="text-align: center; font-size: 18px; margin-top:10px;">저장된 경로들이에요</p>
             <c:forEach var="dto" items="${list}" varStatus="i">
-                <div style="border: 1px solid yellow">
-                    <span>제목 : ${dto.title}</span>
-                    <button class="delete_saved_course" style="display:inline-block"> X </button>
-
-                    <div>작성날짜 : <fmt:formatDate value="${dto.writeday}" type="date" pattern="yyyy-MM-dd"/></div>
+                <div class="save_course_list">
                     <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}"
                             user_num="${dto.user_num}"
                             step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}"
                             step5="${dto.step5}"
-                            writeday="${dto.writeday}">불러오기
+                            writeday="${dto.writeday}">${dto.title}
                     </button>
+                    <button class="delete_saved_course" style="display:inline-block">X</button>
                 </div>
             </c:forEach>
         </div>

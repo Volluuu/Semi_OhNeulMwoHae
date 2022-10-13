@@ -61,7 +61,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <button type="submit" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone">비밀번호 확인하기</button>
+                    <button type="submit" class="btn btn-success" style="background-color: #00AAFF; width:530px;" id="btncellphone">비밀번호 확인하기</button>
                 </div>
             </td>
         </tr>

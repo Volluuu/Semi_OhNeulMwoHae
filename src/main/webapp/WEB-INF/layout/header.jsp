@@ -31,6 +31,7 @@
 		/*background-color: #38B6FF;*/
 	}
 
+
 	.logo {
 		width: 150px;
 		height: 150px;
@@ -43,7 +44,8 @@
 	}
 
 	.menu{
-		width: 40%;
+		/*width: 40%;*/
+		min-width: 600px;
 		margin: 0 auto;
 		text-align: center;
 		font-weight: bold;
@@ -70,33 +72,9 @@
 		width: 450px;
 	}
 
-	.search1{
-		width: 20%;
-		height: 15px;
-		margin-top: 40px;
-	}
-
-	div.search1 .sel1{
-		width: 90px;
-		font-size: 13px;
-		color: gray;
-	}
-
-	div.search1 .op1{
-		width: 90px;
-		font-size: 15px;
-		color: black;
-	}
-
-	div.search1 .in1{
-		width: 250px;
-		font-size: 12px;
-	}
-	div.search1 .btn1{
-		width: 40px;
-	}
 
 	.myinfo{
+		min-width: 100px;
 		margin-left: 20px;
 		font-weight: bold;
 	}
@@ -160,7 +138,6 @@
 				<a href="${root}/qna/qnalist">고객센터</a>
 				<a href="${root}/courseboard/list">추천 코스</a>
 				<a href="${root}/findboard/list">친구 찾기</a>
-				<a href="${root}/board/form">장소 목록</a>
 				<a href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
 				<c:if test="${sessionScope.isadmin=='admin'}">
 				<a href="${root}/admin/list">관리자페이지</a>
@@ -186,7 +163,6 @@
 			<c:if test="${sessionScope.loginok==null}">
 			<a href="${root}/user/userform">회원가입</a>
 			</c:if>
-			<a href="${root}/user/userlist">회원목록</a>
 		</div>
 	</div>
 
@@ -208,23 +184,22 @@
 
 	<!-- 로그인창 -->
 	<div class="modal" id="myLoginModal" >
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog">
 			<div class="modal-content">
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">회원 로그인</h4>
+					<h4 class="modal-title" style="margin-left: 180px;">로그인</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="input-group mb-3 input-group-sm">
+					<div class="input-group mb-3 input-group">
 						<span class="input-group-text">아이디</span>
 						<input type="text" class="form-control" id="loginid">
 					</div>
-
-					<div class="input-group mb-3 input-group-sm" style="font-family: Jua;">
+					<div class="input-group mb-3 input-group" style="font-family: Jua;">
 						<span class="input-group-text">비밀번호</span>
 						<input type="password" class="form-control" id="loginpass">
 					</div>
@@ -233,18 +208,26 @@
 				<!-- Modal footer -->
 				<div class="modal-footer">
 
-						<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok" style="background-color: black; color: white; width:260px;">로그인</button>
-						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver">
-							<img src="${root}/image/naverlogin.png" style="width: 260px;">
+						<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok" style="background-color: #00AAFF; color: white; width:480px;">로그인</button>
+						<div class="input-group" style="width:65%; text-align: center; margin: 0 auto;">
+						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver" style="width: 150px;">
+							<img src="${root}/image/naverlogin2.png" style="width: 100px; margin-top: 24px;">
 						</a>
-						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code">
-							<img src="${root}/image/kakaologin.png" style="width: 260px;">
+						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code" style="width: 150px;">
+							<img src="${root}/image/kakaologin3.png" style="width: 100px; margin-top: 24px;">
 						</a>
-						<button type="button" onclick="location.href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver'" class="btn btn-success"  id="btnsocial1" style="width: 260px;">네이버</button>
-						<button type="button" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code'" class="btn btn-success"  id="btnsocial2" style="width: 260px; background-color: yellow; color:black;">카카오</button>
-					<button type="button" onclick="location.href='${root}/user/userform'" class="btn btn-success"  id="btnjoin" style="border-radius:30px; background-color: white; width:260px; color:black;">간편 회원가입</button>
+						</div>
+						<div class="input-group" style="text-align: center;">
+							<a href="${root}/user/userid" style="width: 140px;text-decoration: none;color:gray;">아이디 찾기</a>
+							<a href="${root}/user/userpassword" style="width: 140px;text-decoration: none;color:gray; margin-left: 20px;">비밀번호 찾기</a>
+							<a href="${root}/user/userform" style="width: 140px;text-decoration: none;color:gray; margin-left: 10px;">회원가입</a>
+
+						</div>
+						<%--<button type="button" onclick="location.href='https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver'" class="btn btn-success"  id="btnsocial1" style="width: 260px;">네이버</button>
+						<button type="button" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code'" class="btn btn-success"  id="btnsocial2" style="width: 260px; background-color: yellow; color:black;">카카오</button>--%>
+					<%--<button type="button" onclick="location.href='${root}/user/userform'" class="btn btn-success"  id="btnjoin" style="border-radius:30px; background-color: white; width:260px; color:black;">간편 회원가입</button>
 					<button type="button" onclick="location.href='${root}/user/userid'" class="btn btn-success"  id="btnid" style="border-radius:30px; background-color: white; width:260px; color:black;">아이디 찾기</button>
-					<button type="button" onclick="location.href='${root}/user/userpassword'" class="btn btn-success"  id="btnpassword" style="border-radius:30px; background-color: white; width:260px; color:black;">비밀번호 찾기</button>
+					<button type="button" onclick="location.href='${root}/user/userpassword'" class="btn btn-success"  id="btnpassword" style="border-radius:30px; background-color: white; width:260px; color:black;">비밀번호 찾기</button>--%>
 				</div>
 			</div>
 		</div>
@@ -289,7 +272,7 @@
 				url:root+"/user/logout",
 				dataType:"text",
 				success:function(res){
-					location.href = "${root}/";
+					location.href = "${root}/home";
 					
 				}//success
 				

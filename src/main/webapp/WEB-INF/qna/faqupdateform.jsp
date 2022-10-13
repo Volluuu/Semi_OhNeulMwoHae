@@ -10,41 +10,41 @@
   <title>Insert title here</title>
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <style type="text/css">
-    .qna_main{
+    .faq_main{
       width: 1500px;
       height: 90vh;
       /*border: 2px solid black;*/
       margin: 0 auto;
       padding-top: 20px;
     }
-    .qna_info{
+    .faq_info{
       width: 200px;
       height: 90vh;
       /*border: 1px solid black;*/
       float: left;
     }
-    .qna_info a{
+    .faq_info a{
       text-decoration: none;
       color: gray;
       font-size: 15px;
     }
-    .qna_info a:hover{
+    .faq_info a:hover{
       text-shadow: 10px 10px 10px gray;
     }
-    .qna_list{
+    .faq_list{
       width: 1200px;
       margin-left: 45px;
       display: inline-block;
     }
-    .qna_list_main{
+    .faq_list_main{
       box-shadow: 5px 5px 10px gray;
     }
-    .qna_list ul{
+    .faq_list ul{
     }
-    .qna_list li{
+    .faq_list li{
       list-style: circle;
     }
-    #qnacontent{
+    #faqcontent{
       min-height: 200px;
     }
   </style>
@@ -58,18 +58,19 @@
     history.back();
   </script>
 </c:if>--%>
-<div class="qna_main">
-  <div class="qna_info">
+<div class="faq_main">
+  <div class="faq_info">
     <h1>고객센터</h1>
     <a href="${root}/qna/noticelist"><p>공지사항</p></a>
-    <a href="${root}/qna/faqlist"><p>자주묻는 질문</p></a>
+    <a href="${root}/qna//faqlist"><p>자주묻는 질문</p></a>
     <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
   </div>
-  <div class="qna_list">
-    <h3>1:1 문의 게시글 작성</h3>
-    <div class="qna_list_main">
-      <form action="qnainsert" method="post">
-        <input type="hidden" name="user_num" value="${user_num}">
+  <div class="faq_list">
+    <h3>자주 묻는 질문 수정</h3>
+    <div class="faq_list_main">
+      <form action="faqupdate" method="post">
+        <input type="hidden" name="faq_num" value="${dto.faq_num}">
+        <input type="hidden" name="user_num" value="${dto.user_num}">
         <%--<input type="hidden" name="id" value="${sessionScope.loginid}">
         <input type="hidden" name="name" value="${sessionScope.loginname}">--%>
         <input type="hidden" name="currentPage" value="${currentPage}">
@@ -77,19 +78,19 @@
           <tr>
             <th>제목</th>
             <td>
-              <input type="text" name="subject" class="form-control" required="required" value="${subject}">
+              <input type="text" name="subject" class="form-control" required="required" value="${dto.subject}">
             </td>
           </tr>
           <tr>
             <th>문의 사항</th>
             <td>
-              <textarea name="content" id="qnacontent" class="form-control" required="required"></textarea>
+              <textarea name="content" id="faqcontent" class="form-control" required="required">${dto.content}</textarea>
             </td>
           </tr>
           <tr>
             <td colspan="2" align="center">
-              <button type="submit" class="btn btn-secondary addqna">게시글 저장</button>
-              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='qnalist?currentPage=${currentPage}'">이전</button>
+              <button type="submit" class="btn btn-secondary">게시글 수정</button>
+              <button type="button" class="btn btn-secondary prevqna" onclick="location.href='faqlist'">이전</button>
             </td>
           </tr>
         </table>

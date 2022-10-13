@@ -1,7 +1,6 @@
 package bit.data.dao;
 
 import bit.data.dto.NoticeDto;
-import bit.data.dto.QnaDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,7 +46,7 @@ public class NoticeDao implements NoticeDaoInter {
 	}
 
 	@Override
-	public void deleteNotice(int num) {
-		session.delete(ns+"deleteNotice",num);
+	public void deleteNotice(int notice_num) {
+		session.delete(ns+"deleteNotice",notice_num);
 	}
 }

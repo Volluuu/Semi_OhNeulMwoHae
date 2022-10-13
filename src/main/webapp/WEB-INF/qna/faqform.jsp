@@ -15,6 +15,7 @@
             height: 90vh;
             /*border: 2px solid black;*/
             margin: 0 auto;
+            padding-top: 20px;
         }
         .faq_info{
             width: 200px;
@@ -35,10 +36,16 @@
             margin-left: 45px;
             display: inline-block;
         }
+        .faq_list_main{
+            box-shadow: 5px 5px 10px gray;
+        }
         .faq_list ul{
         }
         .faq_list li{
             list-style: circle;
+        }
+        #faqcontent{
+            min-height: 200px;
         }
     </style>
     <script>
@@ -59,8 +66,8 @@
         <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
     </div>
     <div class="faq_list">
-        <h3>공지사항 작성</h3>
-        <div>
+        <h3>자주 묻는 질문 작성</h3>
+        <div class="faq_list_main">
             <form action="faqinsert" method="post">
                 <input type="hidden" name="user_num" value="${user_num}">
                 <%--<input type="hidden" name="id" value="${sessionScope.loginid}">
@@ -76,7 +83,7 @@
                     <tr>
                         <th>공지내용</th>
                         <td>
-                            <textarea name="content" class="form-control" required="required"></textarea>
+                            <textarea name="content" id="faqcontent" class="form-control" required="required"></textarea>
                         </td>
                     </tr>
                     <tr>

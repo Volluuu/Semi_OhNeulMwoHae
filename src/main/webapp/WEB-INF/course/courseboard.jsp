@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
-<link rel="stylesheet" href="${root}/resources/css/coursecss.css">
+<link rel="stylesheet" href="../css/coursecss.css">
 <link rel="stylesheet" href="../css/map.css">
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
 <style>
@@ -832,8 +832,8 @@
     </g>
         <div style="width:300px;" class="wboard">
             <div id="h2gu">서울 날씨</div>
-            <div class="lowtemp1">최고온도:mtemp </div>
-            <div class="maxtemp1">최저온도:ctemp </div>
+            <div class="maxtemp1">최고온도:xtemp </div>
+            <div class="lowtemp1">최저온도:mtemp </div>
             <div class="hicon1"></div>
         </div>
 </svg>
@@ -968,7 +968,7 @@
                             <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
                             f += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
                             f += '<div class="title-content">';
-                            f += '<h3>' + res.title + '</h3>';
+                            f += '<h4>' + res.title + '</h4>';
                             f += '<hr/>';
                             f += '<div class="intro">' + res.addr + '</div>';
                             f += '</div>';
@@ -1788,8 +1788,8 @@
 <script>
     $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=44714b1973a73780b4840a89a5f87c7e&units=metric", function (result) {
         // alert(result.main.temp);
-        $(".lowtemp1").html("최고 온도" + result.main.temp_max + "°C");
-        $(".maxtemp1").html("최저 온도" + result.main.temp_min + "°C");
+        $(".maxtemp1").html("최고 온도" + result.main.temp_max + "°C");
+        $(".lowtemp1").html("최저 온도" + result.main.temp_min + "°C");
         var wicon = "<img src='http://openweathermap.org/img/wn/" + result.weather[0].icon + ".png' alt='" + result.weather[0].discription + "'>"// 날씨에 따른 아이콘 변수 선언 https://openweathermap.org/weather-conditions 참조
         $(".hicon1").html(wicon);
     });
@@ -1896,8 +1896,9 @@
                     var wicon = "<img src='http://openweathermap.org/img/wn/" + result.weather[0].icon + ".png'>"
 
 
-                $(".lowtemp1").html("최저 온도" + ctemp + "°C");
-                $(".maxtemp1").html("최고 온도" + mtemp + "°C");
+
+                $(".maxtemp1").html("최고 온도 " + xtemp + "°C");
+                $(".lowtemp1").html("최저 온도 " + mtemp + "°C");
                 $(".hicon1").html(wicon);
 
 
@@ -1931,7 +1932,7 @@
                             <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
                             c += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
                             c += '<div class="title-content">';
-                            c += '<h3>' + res.title + '</h3>';
+                            c += '<h4>' + res.title + '</h4>';
                             c += '<hr/>';
                             c += '<div class="intro">' + res.addr + '</div>';
                             c += '</div>';
@@ -2013,7 +2014,7 @@
                             <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
                             f += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
                             f += '<div class="title-content">';
-                            f += '<h3>' + res.title + '</h3>';
+                            f += '<h4>' + res.title + '</h4>';
                             f += '<hr/>';
                             f += '<div class="intro">' + res.addr + '</div>';
                             f += '</div>';
@@ -2091,7 +2092,7 @@
                             <%--c+='<c:set var="photo" value="'+res.photo+'"/>';--%>
                             t += '<img src="' + res.photo + '" style="width:100%; height: 100%;">';
                             t += '<div class="title-content">';
-                            t += '<h3>' + res.title + '</h3>';
+                            t += '<h4>' + res.title + '</h4>';
                             t += '<hr/>';
                             t += '<div class="intro">' + res.addr + '</div>';
                             t += '</div>';

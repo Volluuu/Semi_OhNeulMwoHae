@@ -32,7 +32,7 @@ public class HomeController {
     @GetMapping("/")
     public ModelAndView index(Model model) throws Exception {
         ModelAndView mview = new ModelAndView();
-        mview.setViewName("/bit/layout/index");
+        mview.setViewName("/bit3/layout/index");
         return mview;
     }
 

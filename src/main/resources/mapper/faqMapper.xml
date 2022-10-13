@@ -4,7 +4,7 @@
 
 <mapper namespace="bit.data.dao.FaqDao">
     <select id="getFaq" parameterType="int" resultType="faqdto">
-        select * from notice where notice_num=#{notice_num}
+        select * from faq where faq_num=#{faq_num}
     </select>
     <select id="getAllData" resultType="faqdto">
         select * from faq order by faq_num desc
@@ -28,7 +28,7 @@
         select * from faq where user_num=#{user_num}
     </select>
 
-    <insert id="insertFaq" parameterType="noticedto">
+    <insert id="insertFaq" parameterType="faqdto">
         insert into faq values (null,#{user_num},#{subject},#{content},'not',now())
     </insert>
 

@@ -11,7 +11,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/cafedetail.css">
+<link rel="stylesheet" href="${root}/resources/css/cafedetail.css">
 <link rel="stylesheet" href="../css/star.css">
 <link rel="stylesheet" href="../css/footer.css">
 <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>

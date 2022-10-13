@@ -23,6 +23,7 @@
             height: 90vh;
             /*border: 2px solid black;*/
             margin: 0 auto;
+            padding-top: 20px;
         }
         /* 정보란 */
         div.mypagemain2 {

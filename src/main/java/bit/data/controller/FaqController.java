@@ -1,7 +1,6 @@
 package bit.data.controller;
 
 import bit.data.dto.FaqDto;
-import bit.data.dto.NoticeDto;
 import bit.data.service.FaqServiceInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -103,7 +101,7 @@ public class FaqController {
 		//db에 update
 		faqserviceInter.updateFaq(dto);
 
-		return "redirect:faqdetail?currentPage=" + currentPage + "&faq_num=" + dto.getFaq_num();
+		return "redirect:faqlist?currentPage=" + currentPage;
 	}
 
 

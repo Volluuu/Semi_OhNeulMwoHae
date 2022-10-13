@@ -57,12 +57,12 @@ public class UserService implements UserServiceInter{
     public int findPasswordCheckById(String loginid){return userDao.findPasswordCheckById(loginid);}
 
     @Override
-    public List<UserDto> findIdByName(String name)throws Exception{
-        return userDao.findIdByName(name);
+    public List<UserDto> findIdByEmail(String email)throws Exception{
+        return userDao.findIdByEmail(email);
     }
     @Override
-    public int findIdCheckByName(String name)throws Exception{
-        return userDao.findIdCheckByName(name);
+    public int findIdCheckByEmail(String email)throws Exception{
+        return userDao.findIdCheckByEmail(email);
     }
 
     @Override

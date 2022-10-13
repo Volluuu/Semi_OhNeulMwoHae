@@ -1,7 +1,6 @@
 package bit.data.service;
 
 import bit.data.dto.FaqDto;
-import bit.data.dto.NoticeDto;
 
 import java.util.List;
 
@@ -12,6 +11,6 @@ public interface FaqServiceInter {
 	public void insertFaq(FaqDto dto);
 	public FaqDto getUser_num(int user_num);
 	public void updateFaq(FaqDto dto);
-	public void deleteFaq(int num);
+	public void deleteFaq(int faq_num);
 
 }

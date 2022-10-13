@@ -15,6 +15,7 @@
       height: 90vh;
       /*border: 2px solid black;*/
       margin: 0 auto;
+      padding-top: 20px;
     }
     .qna_info{
       width: 200px;
@@ -35,10 +36,16 @@
       margin-left: 45px;
       display: inline-block;
     }
+    .qna_list_main{
+      box-shadow: 5px 5px 10px gray;
+    }
     .qna_list ul{
     }
     .qna_list li{
       list-style: circle;
+    }
+    #qnacontent{
+      min-height: 200px;
     }
   </style>
   <script>
@@ -60,7 +67,7 @@
   </div>
   <div class="qna_list">
     <h3>1:1 문의 게시글 수정</h3>
-    <div>
+    <div class="qna_list_main">
       <form action="qnaupdate" method="post">
         <input type="hidden" name="qna_num" value="${dto.qna_num}">
         <input type="hidden" name="user_num" value="${dto.user_num}">
@@ -77,7 +84,7 @@
           <tr>
             <th>문의 사항</th>
             <td>
-              <textarea name="content" class="form-control" required="required">${dto.content}</textarea>
+              <textarea name="content" id="qnacontent" class="form-control" required="required">${dto.content}</textarea>
             </td>
           </tr>
           <tr>
