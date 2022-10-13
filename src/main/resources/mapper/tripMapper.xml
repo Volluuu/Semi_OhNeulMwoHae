@@ -75,6 +75,13 @@
 	<update id="likesUpdate" parameterType="int">
 		update likes set likes=likes-1 where trip_num=#{trip_num}
 	</update>
+
+	<select id="selectTopList" parameterType="int" resultType="tripdto">
+		SELECT *
+		FROM trip
+		ORDER BY readcount DESC
+		LIMIT 0, #{count}
+	</select>
 	
 </mapper>
 

@@ -65,4 +65,9 @@ public class TripDao implements TripDaoInter{
     public TripDto selectByNum(int trip_num) {
         return session.selectOne(ns+"selectByNum",trip_num);
     }
+
+    @Override
+    public List<TripDto> selectTopList(int count) {
+        return session.selectList(ns+"selectTopList", count);
+    }
 }

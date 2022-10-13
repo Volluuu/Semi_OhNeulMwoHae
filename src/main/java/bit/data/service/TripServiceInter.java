@@ -17,4 +17,6 @@ public interface TripServiceInter{
     public void likesUpdate(int trip_num);
 
     public TripDto selectByNum(int trip_num);
+
+    public List<TripDto> selectTopList(int count);
 }

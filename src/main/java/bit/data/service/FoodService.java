@@ -69,4 +69,9 @@ public class FoodService implements FoodServiceInter {
     public FoodDto selectByNum(int food_num) {
         return fooddao.selectByNum(food_num);
     }
+
+    @Override
+    public List<FoodDto> selectTopList(int count) {
+        return fooddao.selectTopList(count);
+    }
 }

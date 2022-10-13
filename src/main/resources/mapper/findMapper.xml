@@ -121,6 +121,12 @@
         select * from food where food_num=#{food_num}
     </select>
 
+    <select id="selectTopList" parameterType="int" resultType="finddto">
+        SELECT *
+        FROM find
+        ORDER BY writeday DESC
+        LIMIT 0, #{count};
+    </select>
 
 
 </mapper>

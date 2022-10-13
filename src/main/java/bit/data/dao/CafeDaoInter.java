@@ -18,4 +18,6 @@ public interface CafeDaoInter {
     public void likesUpdate(int cafe_num);
 
     public CafeDto selectByNum(int cafe_num);
+
+    public List<CafeDto> selectTopList(int count);
 }

@@ -24,4 +24,6 @@ public interface FindServiceInter {
     public CafeDto selectCafeByNum(int cafe_num);
     public TripDto selectTripByNum(int trip_num);
     public FoodDto selectFoodByNum(int food_num);
+
+    public List<FindDto> selectTopList(int count);
 }
