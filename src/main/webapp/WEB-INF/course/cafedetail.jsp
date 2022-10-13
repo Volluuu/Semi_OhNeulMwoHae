@@ -128,6 +128,7 @@
 <body>
 
 <%---------------------------------------------------------------------------------body--%>
+<div class="container">
 <div class="dPuFYu" id="contents" style="margin-top: 40px;margin-bottom: 66px;" media="web">
     <section direction="vertical" class="hj_mainimg">
         <img src="${dto.photo}">
@@ -300,6 +301,7 @@
     </div>
 </footer>
     </section>
+</div>
 </div>
 </body>
 </html>

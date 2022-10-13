@@ -390,6 +390,9 @@ public class FindController {
                 dto.setFind5title(fdto.getTitle());
             }
         }
+        UserDto udto=findService.selectUserByfindNum(find_num);
+
+        dto.setNickname(udto.getNickname());
 
         mview.addObject("dto", dto);
         mview.addObject("currentPage", currentPage);
