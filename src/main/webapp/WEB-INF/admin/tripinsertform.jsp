@@ -9,18 +9,292 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="../css/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="../resources/css/admin.css">
+    <link href="../css/sb-admin-02.css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="https://kit.fontawesome.com/93e75e33a3.js" crossorigin="anonymous"></script>
+
 </head>
-<body>
-  <h1>trip insert form</h1>
-  <form action="tripinsertact" method="post" enctype="multipart/form-data">
-      <div>이름<input type="text" name="title" class="form-control" required="required"></div>
-      <div>주소<input type="text" name="addr" class="form-control" required="required"></div>
-      <div>설명<input type="text" name="content" class="form-control" required="required"></div>
-      <div>위도<input type="text" name="lat" class="form-control" required="required" placeholder="36.12839182"></div>
-      <div>경도<input type="text" name="lon" class="form-control" required="required" placeholder="126.283194237"></div>
-      <div>구<input type="text" name="gu" class="form-control" required="required" placeholder="1~25"></div>
-      <div><input type="file" name="upload" class="form-control"></div>
-      <button type="submit" class="btn btn-outline-secondary">트립코스 추가</button>
-  </form>
+
+<style>
+    :before,
+    :after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    ol{
+        color: #FFFFFF;
+        padding: 4px 20px;
+        font-size: 12px;
+    }
+    .button {
+        width: 200px;
+        display: inline-block;
+        position: relative;
+        margin: 1em;
+        padding: 0.67em;
+        border: 1px solid #44A3F7;
+        overflow: hidden;
+        text-decoration: none;
+        font-size: 2em;
+        outline: none;
+        color: #44A3F7;
+        background: transparent;
+        font-weight: bold;
+        border-radius: 30px;
+
+    }
+    .button:hover{
+        box-shadow: 5px 5px 10px #44A3F7;
+    }
+
+    .button span {
+        -webkit-transition: 0.6s;
+        -moz-transition: 0.6s;
+        -o-transition: 0.6s;
+        transition: 0.6s;
+        -webkit-transition-delay: 0.2s;
+        -moz-transition-delay: 0.2s;
+        -o-transition-delay: 0.2s;
+        transition-delay: 0.2s;
+    }
+
+    .button:before,
+    .button:after {
+        content: '';
+        position: absolute;
+        top: 0.67em;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        opacity: 0;
+        -webkit-transition: .4s,opacity .6s;
+        -moz-transition: .4s,opacity .6s;
+        -o-transition: .4s,opacity .6s;
+        transition: .4s,opacity .6s;
+    }
+
+    /* :before */
+
+    .button:before {
+        content: attr(data-hover);
+        -webkit-transform: translate(-150%,0);
+        -moz-transform: translate(-150%,0);
+        -ms-transform: translate(-150%,0);
+        -o-transform: translate(-150%,0);
+        transform: translate(-150%,0);
+    }
+
+    /* :after */
+
+    .button:after {
+        content: attr(data-active);
+        -webkit-transform: translate(150%,0);
+        -moz-transform: translate(150%,0);
+        -ms-transform: translate(150%,0);
+        -o-transform: translate(150%,0);
+        transform: translate(150%,0);
+    }
+
+    /* Span on :hover and :active */
+
+    .button:hover span,
+    .button:active span {
+        opacity: 0;
+        -webkit-transform: scale(0.3);
+        -moz-transform: scale(0.3);
+        -ms-transform: scale(0.3);
+        -o-transform: scale(0.3);
+        transform: scale(0.3);
+
+    }
+
+    /*
+        We show :before pseudo-element on :hover
+        and :after pseudo-element on :active
+    */
+
+    .button:hover:before,
+    .button:active:after {
+        opacity: 1;
+        -webkit-transform: translate(0,0);
+        -moz-transform: translate(0,0);
+        -ms-transform: translate(0,0);
+        -o-transform: translate(0,0);
+        transform: translate(0,0);
+        -webkit-transition-delay: .4s;
+        -moz-transition-delay: .4s;
+        -o-transition-delay: .4s;
+        transition-delay: .4s;
+    }
+
+    /*
+      We hide :before pseudo-element on :active
+    */
+
+    .button:active:before {
+        -webkit-transform: translate(-150%,0);
+        -moz-transform: translate(-150%,0);
+        -ms-transform: translate(-150%,0);
+        -o-transform: translate(-150%,0);
+        transform: translate(-150%,0);
+        -webkit-transition-delay: 0s;
+        -moz-transition-delay: 0s;
+        -o-transition-delay: 0s;
+        transition-delay: 0s;
+    }
+</style>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #38B6FF">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/home">
+            <img src="${root}/image/logo1.jpg" style="width: 80px;height: 80px">
+            <%--<div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>--%>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="${root}/admin/list">
+                <i class="fa-solid fa-table-columns"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Menu
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="${root}/admin/userinfo" data-target="#collapseTwo"
+               aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fa-solid fa-user"></i>
+                <span>회원관리</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="${root}/admin/cafecourse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fa-solid fa-mug-hot"></i>
+                <span>카페코스</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="${root}/admin/foodcourse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fa-solid fa-bowl-food"></i>
+                <span>푸드코스</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="${root}/admin/tripcourse" data-target="#collapseUtilities"
+               aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fa-solid fa-plane"></i>
+                <span>트립코스</span>
+            </a>
+        </li>
+
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="${root}/qna/qnalist" data-target="#collapsePages"
+               aria-expanded="true" aria-controls="collapsePages">
+                <i class="fa-solid fa-question"></i>
+                <span>문의사항</span>
+            </a>
+        </li>
+
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow"
+                 style="background-color: #38B6FF">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <ul class="navbar-nav ml-auto">
+                    <!-- Dropdown - Alerts -->
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-address-card"></i>&nbsp;
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 large">관리자</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <br>
+            <div class="container-fluid">
+                <div class="row">
+                    <div style="width: 1100px;margin: 0 auto;">
+                        <div style="background-color: white; width: 80%; margin: 0 auto;padding: 5%;box-shadow: 5px 5px 10px gray">
+                            <h1 style="color: #44A3F7">Trip Insert</h1>
+                            <form action="tripinsertact" method="post" enctype="multipart/form-data">
+                                <div>이름<input type="text" name="title" class="form-control rounded-pill" required="required"></div>
+                                <div>주소<input type="text" name="addr" class="form-control rounded-pill" required="required"></div>
+                                <div>설명<input type="text" name="content" class="form-control rounded-pill" required="required"></div>
+                                <div>위도<input type="text" name="lat" class="form-control rounded-pill" required="required" placeholder="36.12839182"></div>
+                                <div>경도<input type="text" name="lon" class="form-control rounded-pill" required="required" placeholder="126.283194237"></div>
+                                <div>구
+                                    <div class="input-group">
+                                        <input type="text" name="gu" class="form-control rounded-pill" required="required" placeholder="1~25" style="width: 60%">
+                                        <input type="file" name="upload" class="form-control rounded-pill" style="width: 40%">
+                                    </div>
+                                </div>
+                                <br>
+                                <div style="text-align: center">
+                                    <button type="submit" class="button" data-hover="CLICK ME!!" data-active="I'M ACTIVE"><span>트립추가</span></button>
+                                    <button type="button" class="button" data-hover="BACK!!" data-active="I'M ACTIVE" onclick="location.href='${root}/admin/tripcourse'"><span>목록으로</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
