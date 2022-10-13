@@ -234,13 +234,12 @@
 				<div class="modal-footer">
 
 						<button type="button" class="btn btn-success" data-bs-dismiss="modal" id="btnloginok" style="background-color: #00AAFF; color: white; width:480px;">로그인</button>
-						<div class="input-group" style="text-align: center;">
-
-						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver" style="width: 110px;">
-							<img src="${root}/image/naverlogin2.png" style="width: 115px; margin-left: 60px;">
+						<div class="input-group" style="width:65%; text-align: center; margin: 0 auto;">
+						<a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=h329mamXhLqa2E3NXaS3&redirect_uri=http://localhost:9000/user/naver" style="width: 150px;">
+							<img src="${root}/image/naverlogin2.png" style="width: 115px;">
 						</a>
-						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code" style="width: 50px;">
-							<img src="${root}/image/kakaologin2.png" style="width: 130px; margin-left: 150px;">
+						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code" style="width: 150px;">
+							<img src="${root}/image/kakaologin2.png" style="width: 130px;">
 						</a>
 						</div>
 						<div class="input-group" style="text-align: center;">
