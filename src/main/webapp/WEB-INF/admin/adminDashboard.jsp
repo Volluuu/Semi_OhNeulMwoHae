@@ -39,11 +39,12 @@
     <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #38B6FF">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/admin/mainhome">
-            <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/home">
+            <img src="${root}/image/logo1.jpg" style="width: 80px;height: 80px">
+            <%--<div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>
+            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>--%>
         </a>
 
         <!-- Divider -->

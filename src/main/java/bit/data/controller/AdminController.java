@@ -1,6 +1,9 @@
 package bit.data.controller;
 
-import bit.data.dto.*;
+import bit.data.dto.CafeDto;
+import bit.data.dto.FoodDto;
+import bit.data.dto.TripDto;
+import bit.data.dto.UserDto;
 import bit.data.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import util.ChangeName;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,12 +55,12 @@ public class AdminController {
         model.addAttribute("qna",qna);
         return "adminDashboard";
     }
-
+/*
     @GetMapping("/admin/mainhome")//관리자페이지 생성하면 수정필요~!
     public String main() {
         return "/bit/layout/main";
 
-    }
+    }*/
 
     @GetMapping("/admin/userinfo")//관리자페이지 생성하면 수정필요~!
     public String userInfo( @RequestParam(defaultValue = "1") int currentPage,

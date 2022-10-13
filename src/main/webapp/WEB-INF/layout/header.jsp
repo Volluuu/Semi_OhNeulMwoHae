@@ -153,7 +153,7 @@
 <c:set var="root" value="<%=request.getContextPath()%>" />
 <div class="title">
 		<div class="logo">
-			<a href="${root}/"><img src="${root}/image/logo1.jpg"></a>
+			<a href="${root}/home"><img src="${root}/image/logo1.jpg"></a>
 		</div>
 		<div class="menu">
 			<div class="input-group menu1">
@@ -273,7 +273,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.href = "${root}/";
+							location.href = "${root}/home";
 						}
 					}//success
 					
@@ -315,7 +315,7 @@
 						if(res.result=='fail'){
 							alert("아이디나 비번이 맞지 않습니다");
 						}else{
-							location.href = "${root}/";
+							location.href = "${root}/home";
 
 						}
 					}//success

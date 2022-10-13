@@ -266,7 +266,8 @@
                         </div>
                         <div class="utility-info">
                             <ul class="utility-list">
-                                <li class="comments">${dto.readcount}</li>
+                                <li class="comments">${dto.answercount}</li>
+                                <li class="view"><i class="fa-regular fa-eye"></i> ${dto.readcount}</li>
                                 <li class="date"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/></li>
                             </ul>
                         </div>
@@ -286,15 +287,16 @@
         </div>
     </c:forEach>
         </c:if>
+        </div>
         <c:if test="${sessionScope.loginok!=null}">
             <button type="button" class="btn btn-outline-dark"
                     onclick="location.href='${root}/findboard/findform'">글쓰기
             </button>
         </c:if>
-        </div>
 
     <%------------------------------%>
-
+        <br>
+    <br>
         <div class="paging" id="paging">
             <ul class="pagination">
                 <c:if test="${startPage>1}">
