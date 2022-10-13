@@ -239,7 +239,7 @@
 							<img src="${root}/image/naverlogin2.png" style="width: 115px;">
 						</a>
 						<a href="https://kauth.kakao.com/oauth/authorize?client_id=3ed5690883b3d1e49474845d49aad6d5&redirect_uri=http://localhost:9000/user/kakao&response_type=code" style="width: 150px;">
-							<img src="${root}/image/kakaologin2.png" style="width: 130px;">
+							<img src="${root}/image/kakaologin3.png" style="width: 130px;">
 						</a>
 						</div>
 						<div class="input-group" style="text-align: center;">
