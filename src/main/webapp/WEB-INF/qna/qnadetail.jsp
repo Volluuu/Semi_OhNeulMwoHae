@@ -9,12 +9,14 @@
   <meta charset="UTF-8">
   <title>Insert title here</title>
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <style type="text/css">
     .qna_main{
       width: 1500px;
       height: 90vh;
       /*border: 2px solid black;*/
       margin: 0 auto;
+      padding-top: 20px;
     }
     .qna_info{
       width: 200px;
@@ -35,6 +37,9 @@
       margin-left: 45px;
       display: inline-block;
     }
+    .qna_detail_main{
+      box-shadow: 5px 5px 10px gray;
+    }
     .qna_list ul{
     }
     .qna_list li{
@@ -44,6 +49,10 @@
       width: 100%;
     }
     .answer_list{
+    }
+    .premain{
+      min-height: 200px;
+      font-family: "Dohyeon";
     }
     .adminans{
 
@@ -132,9 +141,9 @@
           $.each(res, function(i, elt){
               s += "<div class='answer_list'><span class='answermessage'>";
               s += "└"+elt.message+"</span>";
-              s += "<span class='day'>" + elt.writeday;
+              s += "<span class='day'>" + elt.writeday+"&nbsp;";
               if(admin == 'admin') {
-                s += "<i class='material-icons adel' style='font-size:17px;' id='adel' answer_num=" + elt.answer_num + ">close</i>";
+                s += "<i class='fas fa-trash-alt adel' style='font-size:17px;' id='adel' answer_num=" + elt.answer_num + "></i>";
               }
               s += "</span></div>";
           });
@@ -154,7 +163,7 @@
   </div>
   <div class="qna_list">
     <h3>1:1 문의 상세보기</h3>
-    <div>
+    <div class="qna_detail_main">
       <table class="table table-bordered" >
         <input type="hidden" name="qna_num" value="${dto.qna_num}">
         <input type="hidden" name="user_num" value="${user_num}">
@@ -178,7 +187,7 @@
         </tr>
         <tr height="300" valign="top">
           <td>
-            <pre>${dto.content}</pre>
+            <pre class="premain">${dto.content}</pre>
             <!-- 댓글 목록 -->
             <span>답변 내용</span>
             <div class="alist">
@@ -203,7 +212,7 @@
         </tr>
         <tr>
           <td>
-            <button type="button" class="btn btn-dark" onclick="location.href='qnalist?currentPage=${currentPage}'">목록</button>
+            <button type="button" class="btn btn-dark" onclick="location.href='qnalist'">목록</button>
             <!-- 로그인중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
            <%-- <c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.id}">--%>
             <c:if test="${sessionScope.isadmin eq 'admin' or sessionScope.user_num eq user_num}">

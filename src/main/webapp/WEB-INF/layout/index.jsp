@@ -25,10 +25,13 @@
         --delay: 10;
         --color-black: #000;
         --color-white: #f5f5f5;
-        --color-orange: #D49C3D;
-        --color-red: #D14B3D;
-        --color-violet: #CF52EB;
-        --color-blue: #f5f5f5;
+        --color-orange: #FF0068;
+        /*--color-orange: #D49C3D;*/
+        --color-red: #FF5E00;
+        /*--color-red: #D14B3D;*/
+        --color-violet: #fc00ff;
+        /*--color-violet: #CF52EB;*/
+        --color-blue: #008A5E;
         --color-green: #5ACB3C;
         --color-yellow: #DEBF40;
         --color-foreground: var(--color-white);

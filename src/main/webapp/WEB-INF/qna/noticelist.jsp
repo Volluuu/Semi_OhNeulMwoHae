@@ -10,6 +10,9 @@
   <title>Insert title here</title>
   <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <style type="text/css">
+    .notice1{
+      padding-top: 20px;
+    }
     .notice_main{
       width: 1500px;
       height: 90vh;
@@ -40,6 +43,7 @@
     }
     .notice_title_main{
       border: 1px solid lightgray;
+      box-shadow: 5px 5px 10px gray;
     }
     .paging{
       width: 100%;
@@ -86,64 +90,70 @@
   </script>
 </head>
 <body>
-<div class="notice_main">
-  <div class="notice_info">
-    <h1>고객센터</h1>
-    <a href="${root}/qna/noticelist"><p>공지사항</p></a>
-    <a href="${root}/qna/faqlist"><p>자주묻는 질문</p></a>
-    <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
-  </div>
-  <div class="notice_list">
-    <ul class="notice_title">
-      <h3>공지사항</h3>
-      <hr>
-      <input type="hidden" name="user_num" value="${dto.user_num}">
-      <input type="hidden" name="notice_num" value="${dto.notice_num}">
-      <input type="hidden" name="currentPage" value="${currentPage}">
-      <c:if test="${sessionScope.isadmin eq 'admin'}">
-      <button type="button" class="btn btn-secondary addnotice" onclick="location.href='noticeform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
-      </c:if>
-        <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
-      <div class="notice_title_main">
-        <c:forEach var="dto" items="${list}">
-          <div class="notice_title_subject" notice_num="${dto.notice_num}">
-            <li class="notice_title_subject_title">${dto.subject}&nbsp;&nbsp;</li>
-            <li class="notice_title_subject_content"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/></li>
-            <c:if test="${sessionScope.isadmin eq 'admin'}">
-            <button type="button" onclick="location.href='noticedelete?notice_num=${dto.notice_num}&currentPage=${currentPage}'">삭제</button>
-            </c:if>
-          </div>
-          <div class="notice_content" notice_num="${dto.notice_num}">
-            <li class="notice_content_list">
-              └${dto.content}
-            </li>
-          </div>
+<div class="notice1">
+  <div class="notice_main">
+    <div class="notice_info">
+      <h1>고객센터</h1>
+      <a href="${root}/qna/noticelist"><p>공지사항</p></a>
+      <a href="${root}/qna/faqlist"><p>자주묻는 질문</p></a>
+      <a href="${root}/qna/qnalist"><p>1:1 문의사항</p></a>
+    </div>
+    <div class="notice_list">
+      <ul class="notice_title">
+        <h3>공지사항</h3>
+        <hr>
+        <input type="hidden" name="user_num" value="${dto.user_num}">
+        <input type="hidden" name="notice_num" value="${dto.notice_num}">
+        <input type="hidden" name="currentPage" value="${currentPage}">
+        <c:if test="${sessionScope.isadmin eq 'admin'}">
+        <button type="button" class="btn btn-outline-secondary addnotice" onclick="location.href='noticeform?user_num=${user_num}&currentPage=${currentPage}'">글쓰기</button>
+        </c:if>
+          <%--<c:if test="${sessionScope.loginok!=null and sessionScope.loginid==dto.user_num}">--%>
+        <br>
+        <br>
+        <div class="notice_title_main">
+          <c:forEach var="dto" items="${list}">
+            <div class="notice_title_subject" notice_num="${dto.notice_num}">
+              <li class="notice_title_subject_title">${dto.subject}&nbsp;&nbsp;</li>
+              <li class="notice_title_subject_content"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
+              <c:if test="${sessionScope.isadmin eq 'admin'}">
+              <button type="button" class="btn btn-outline-danger" onclick="location.href='noticedelete?notice_num=${dto.notice_num}&currentPage=${currentPage}'">삭제</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='noticeupdateform?notice_num=${dto.notice_num}&currentPage=${currentPage}'">수정</button>
+              </c:if>
+              </li>
+            </div>
+            <div class="notice_content" notice_num="${dto.notice_num}">
+              <li class="notice_content_list">
+                └${dto.content}
+              </li>
+            </div>
+          </c:forEach>
+        </div>
+        <%--</c:if>--%>
+    </div><!-- -->
+    <!-- 페이징 처리 -->
+    <div class="paging">
+      <ul class="pagination">
+        <c:if test="${startPage>1}">
+          <li class="page-item"><a href="qnalist?currentPage=${startPage-1}" class="page-link">&lt;</a></li>
+        </c:if>
+
+        <!-- 페이지 번호 -->
+        <c:forEach var="pp" begin="${startPage}" end="${endPage}">
+          <c:if test="${pp==currentPage}">
+            <li class="page-item active"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
+          </c:if>
+          <c:if test="${pp!=currentPage}">
+            <li class="page-item"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
+          </c:if>
         </c:forEach>
-      </div>
-      <%--</c:if>--%>
-  </div><!-- -->
-  <!-- 페이징 처리 -->
-  <div class="paging">
-    <ul class="pagination">
-      <c:if test="${startPage>1}">
-        <li class="page-item"><a href="qnalist?currentPage=${startPage-1}" class="page-link">&lt;</a></li>
-      </c:if>
 
-      <!-- 페이지 번호 -->
-      <c:forEach var="pp" begin="${startPage}" end="${endPage}">
-        <c:if test="${pp==currentPage}">
-          <li class="page-item active"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
+        <c:if test="${endPage<totalPage}">
+          <li class="page-item"><a href="qnalist?currentPage=${endPage+1}" class="page-link">&gt;</a></li>
         </c:if>
-        <c:if test="${pp!=currentPage}">
-          <li class="page-item"><a href="qnalist?currentPage=${pp}" class="page-link">${pp}</a></li>
-        </c:if>
-      </c:forEach>
-
-      <c:if test="${endPage<totalPage}">
-        <li class="page-item"><a href="qnalist?currentPage=${endPage+1}" class="page-link">&gt;</a></li>
-      </c:if>
-    </ul>
-  </div><!-- paging -->
+      </ul>
+    </div><!-- paging -->
+  </div>
 </div>
 </body>
 </html>
