@@ -45,7 +45,7 @@
 
 	.menu{
 		/*width: 40%;*/
-		min-width: 700px;
+		min-width: 600px;
 		margin: 0 auto;
 		text-align: center;
 		font-weight: bold;
@@ -74,7 +74,7 @@
 
 
 	.myinfo{
-		min-width: 200px;
+		min-width: 100px;
 		margin-left: 20px;
 		font-weight: bold;
 	}
@@ -138,7 +138,6 @@
 				<a href="${root}/qna/qnalist">고객센터</a>
 				<a href="${root}/courseboard/list">추천 코스</a>
 				<a href="${root}/findboard/list">친구 찾기</a>
-				<a href="${root}/board/form">장소 목록</a>
 				<a href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
 				<c:if test="${sessionScope.isadmin=='admin'}">
 				<a href="${root}/admin/list">관리자페이지</a>
@@ -164,7 +163,6 @@
 			<c:if test="${sessionScope.loginok==null}">
 			<a href="${root}/user/userform">회원가입</a>
 			</c:if>
-			<a href="${root}/user/userlist">회원목록</a>
 		</div>
 	</div>
 
