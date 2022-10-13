@@ -35,13 +35,6 @@
                 </div>
             </td>
         </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <button type="button" class="btn btn-success" style="background-color: black; width:530px;" id="btncellphone" onClick="location.href='${root}/'">메인페이지로 이동</button>
-                </div>
-            </td>
-        </tr>
     </table>
 </div>
 </body>
