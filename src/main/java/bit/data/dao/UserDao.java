@@ -28,13 +28,13 @@ public class UserDao implements UserDaoInter{
 
 
     @Override
-    public List<UserDto> findIdByName(String name)throws Exception{
-        return session.selectList(ns+"findIdByName", name);
+    public List<UserDto> findIdByEmail(String email)throws Exception{
+        return session.selectList(ns+"findIdByEmail", email);
     }
 
     @Override
-    public int findIdCheckByName(String name)throws Exception{
-        return session.selectOne(ns+"findIdCheckByName", name);
+    public int findIdCheckByEmail(String email)throws Exception{
+        return session.selectOne(ns+"findIdCheckByEmail", email);
     }
 
     @Override

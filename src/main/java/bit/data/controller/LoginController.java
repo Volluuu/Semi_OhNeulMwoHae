@@ -79,7 +79,7 @@ public class LoginController {
 		session.setAttribute("alarm", udto.getAlarm());
 		session.setAttribute("interest", udto.getInterest());
 		// userDto = userService.getAgreementInfo(access_token);
-		return "redirect:/";
+		return "redirect:/home";
 	}
 
 	@GetMapping("/naver")
@@ -136,7 +136,7 @@ public class LoginController {
 		session.setAttribute("alarm", udto.getAlarm());
 		session.setAttribute("interest", udto.getInterest());
 		// userDto = userService.getAgreementInfo(access_token);
-		return "redirect:/";
+		return "redirect:/home";
 	}
 
 	@GetMapping("/login")
