@@ -14,12 +14,12 @@
         select count(*) from user where loginid=#{loginid}
     </select>
 
-    <select id="findIdByName" parameterType="String" resultType="udto">
-        select * from user where name=#{name}
+    <select id="findIdByEmail" parameterType="String" resultType="udto">
+        select * from user where email=#{email}
     </select>
 
-    <select id="findIdCheckByName" parameterType="String" resultType="int">
-        select count(*) from user where name=#{name}
+    <select id="findIdCheckByEmail" parameterType="String" resultType="int">
+        select count(*) from user where email=#{email}
     </select>
 
     <select id="getUserByKakaoId" parameterType="long" resultType="udto">

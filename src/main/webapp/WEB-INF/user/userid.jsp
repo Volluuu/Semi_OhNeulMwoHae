@@ -44,13 +44,13 @@
         <tr>
             <td>
                 <div style="text-align: center;">
-                    <h7>이름 입력을 통해 아이디를 확인합니다.</h7>
+                    <h7>이메일 입력을 통해 아이디를 확인합니다.</h7>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <input type="text" placeholder="이름을 입력해주세요" style="width: 530px;" name="name">
+                <input type="text" placeholder="이메일을 입력해주세요" style="width: 530px;" name="email">
             </td>
         </tr>
         <tr>

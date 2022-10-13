@@ -24,22 +24,15 @@
         <tr>
             <td>
                 <div style="text-align: center;">
-                    <h7>비밀번호</h7>
+                    <h7>이메일로 전송했습니다</h7>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div style="text-align: center;">
-                    ${user.password}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div  style="width: 460px; margin-left: 80px;">
-                    <button type="button" class="btn btn-success" id="btnlogin" data-bs-toggle="modal" data-bs-target="#myLoginModal" style="background-color: #00AAFF; color:white; width:200px; height:50px; font-size: 20px;">로그인</button>
-                    <button type="button" class="btn btn-success" style="background-color: #00AAFF; width:200px; font-size: 20px;" id="btncellphone" onClick="location.href='${root}/home'">목록</button>
+               <div  style="width: 460px; margin-left: 80px;">
+                   <button type="button" class="btn btn-success" id="btnlogin" data-bs-toggle="modal" data-bs-target="#myLoginModal" style="background-color: #00AAFF; color:white; width:200px; height:50px; font-size: 20px;">로그인</button>
+                   <button type="button" class="btn btn-success" style="background-color: #00AAFF; width:200px; font-size: 20px;" id="btncellphone" onClick="location.href='${root}/home'">목록</button>
 
                 </div>
             </td>
