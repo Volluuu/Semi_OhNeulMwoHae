@@ -82,7 +82,7 @@
             $("#loginid2").keyup(function() {
                 $("#idSuccess").text("");
                 var id = $("#loginid2").val();
-                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)) {
+                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)){
                     $("#idSuccess").text("조건에 맞게 입력해주세요");
                 }
             });//아이디 지움 event
@@ -91,6 +91,11 @@
             //중복체크 버튼 시 아이디 체크
             $("#btnidcheck").click(function() {
                 $("#idSuccess").text("");
+                var id = $("#loginid2").val();
+                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)){
+                    $("#idSuccess").text("조건에 맞게 입력해주세요");
+                    return;
+                }
                 $.ajax({
                     type:"GET",
                     dataType:"text",
@@ -107,9 +112,7 @@
                     }//success
                 });//ajax
             });//idcheck
-
             //아이디 유효성 체크
-
 
             //1번째 비밀번호 입력 시 체크
             $("#pass").keyup(function () {
@@ -118,6 +121,7 @@
                 const regex = /^[a-zA-Z0-9]{8,20}$/;
                 if (!regex.test(p1)) {
                     $("#passwordSuccess").text("조건에 맞게 입력해주세요");
+
                 } else if (p2 == '') {
                     $("#passwordSuccess").text("비밀번호 확인란을 입력해주세요.");
                 } else if (!regex.test(p2) || p1 != p2) {
@@ -234,34 +238,34 @@
             }
 
             if ($("#pass").val().includes(' ') || $("#pass2").val().includes(' ')) {
-                alert("비밀번호에 공백이 있습니다.");
-                return false;
-            }
+    alert("비밀번호에 공백이 있습니다.");
+    return false;
+    }
 
-            if ($("#nicknameSuccess").text() != '사용가능한 닉네임입니다') {
-                alert("닉네임 오류");
-                return false;
-            }
+    if ($("#nicknameSuccess").text() != '사용가능한 닉네임입니다') {
+    alert("닉네임 오류");
+    return false;
+    }
 
-            if($("#nickname").val().includes(' ')){
-                alert("닉네임에 공백이 있습니다.");
-                return false;
-            }
+    if($("#nickname").val().includes(' ')){
+    alert("닉네임에 공백이 있습니다.");
+    return false;
+    }
 
-            let email = $('#email').val();
-            let emailDomain = $('#emailDomain').val();
-            $('#email').val(email + emailDomain);
-            if($("#email").val().includes(' ')){
-                alert("이메일에 공백이 있습니다.");
-                return false;
-            }
+    let email = $('#email').val();
+    let emailDomain = $('#emailDomain').val();
+    $('#email').val(email + emailDomain);
+    if($("#email").val().includes(' ')){
+    alert("이메일에 공백이 있습니다.");
+    return false;
+    }
 
-            if ($("#hpSuccess").text() != '') {
-                alert("휴대폰 인증이 필요합니다.");
-                return false;
-            }
+    /*if ($("#hpSuccess").text() != '인증이 완료되었습니다.') {
+    alert($('#hpSuccess').text());
+    return false;
+    }*/
 
-        }//check()
+    }//check()
 
     </script>
 

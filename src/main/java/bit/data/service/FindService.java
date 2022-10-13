@@ -97,4 +97,9 @@ public class FindService implements FindServiceInter{
     public FoodDto selectFoodByNum(int food_num) {
         return findDao.selectFoodByNum(food_num);
     }
+
+    @Override
+    public List<FindDto> selectTopList(int count) {
+        return findDao.selectTopList(count);
+    }
 }

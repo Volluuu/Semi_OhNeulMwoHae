@@ -73,4 +73,9 @@ public class CafeService implements CafeServiceInter {
     public CafeDto selectByNum(int cafe_num) {
         return cafedao.selectByNum(cafe_num);
     }
+
+    @Override
+    public List<CafeDto> selectTopList(int count) {
+        return cafedao.selectTopList(count);
+    }
 }

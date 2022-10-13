@@ -64,4 +64,9 @@ public class CafeDao implements CafeDaoInter{
     public CafeDto selectByNum(int cafe_num) {
         return session.selectOne(ns+"selectByNum",cafe_num);
     }
+
+    @Override
+    public List<CafeDto> selectTopList(int count) {
+        return session.selectList(ns+"selectTopList", count);
+    }
 }
