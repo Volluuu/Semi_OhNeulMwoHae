@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import util.MailUtils;
-import util.TempKey;
+
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -57,7 +57,6 @@ public class UserService implements UserServiceInter{
 
 
     public void findPasswordByEmail(String email,String loginid)throws Exception{
-        String memberKey = new TempKey().getKey(8,false);
         String password = getDataByLoginId(loginid).getPassword();
         userDao.findPasswordByEmail(email,loginid,password);
        // JavaMailSender mailSender = null;

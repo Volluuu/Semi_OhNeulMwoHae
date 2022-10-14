@@ -50,7 +50,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <button type="button" class="btn btn-success" style="background-color: #00AAFF; width:530px;" id="btncellphone" onClick="location.href='${root}/user/userpassword'">비밀번호 찾기</button>
+                    <button type="button" class="btn btn-success" style="background-color: #00AAFF; width:530px;" id="btncellphone" onClick="location.href='${root}/user/findpwview'">비밀번호 찾기</button>
                 </div>
             </td>
         </tr>
