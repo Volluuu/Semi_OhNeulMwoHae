@@ -92,7 +92,7 @@
             $("#btnidcheck").click(function() {
                 $("#idSuccess").text("");
                 var id = $("#loginid2").val();
-                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)){
+                if (!id.match(/^[a-zA-Z0-9]{2,10}$/)){
                     $("#idSuccess").text("조건에 맞게 입력해주세요");
                     return;
                 }
