@@ -132,6 +132,16 @@
 
 
     </style>
+    <script>
+        $(function (){
+            $(document).on("click", "a.findroot", function (){
+                if(${sessionScope.loginok == null}) {
+                    alert("로그인을 해야 이용할 수 있는 서비스입니다.")
+                    $(this).attr("href", "javascript:void(0);");
+                }
+            })
+        })
+    </script>
 </head>
 <body>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
@@ -144,7 +154,7 @@
             <a class="headermenu" href="${root}/qna/qnalist">고객센터</a>
             <a class="headermenu" href="${root}/courseboard/list">추천 코스</a>
             <a class="headermenu" href="${root}/findboard/list">친구 찾기</a>
-            <a class="headermenu" href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
+            <a class="headermenu findroot" href="${root}/help/map?user_num=${sessionScope.user_num}">경로 설정</a>
             <c:if test="${sessionScope.isadmin=='admin'}">
                 <a class="headermenu" href="${root}/admin/list">관리자페이지</a>
             </c:if>
