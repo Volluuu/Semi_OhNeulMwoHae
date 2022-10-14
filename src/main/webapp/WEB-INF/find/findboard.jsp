@@ -24,7 +24,38 @@
     <title>Title</title>
 </head>
 <style>
+    button {
+        margin: 20px;
+    }
 
+    .w-btn {
+        position: relative;
+        border: none;
+        display: inline-block;
+        padding: 15px 30px;
+        border-radius: 15px;
+        font-family: "paybooc-Light", sans-serif;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .w-btn-outline {
+        position: relative;
+        padding: 15px 30px;
+        border-radius: 15px;
+        font-family: "paybooc-Light", sans-serif;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+    }
+
+    .w-btn-green {
+        background-color: #77af9c;
+        color: #d7fff1;
+    }
 </style>
 <div>
 <div class="dg_container">
@@ -203,7 +234,7 @@
     </div>
 <%-----------------------------카드변경--%>
 <div class="container">
-    <div class="search_hj" style="display: flex; float: right;">
+    <div class="search_hj" style="display: flex; float: right; margin-right: 42px;">
     <select name="findcolumn" class="sle" style="text-align: center; width: 100px; border: 1px solid #44a8fd; font-size: 12px" id="findcolumn">
         <option value="subject" selected>제목</option>
         <option value="content">내용</option>
@@ -250,11 +281,11 @@
                     <div class="blog-card spring-fever">
                         <c:if test="${dto.find1photo!=null}">
                             <img alt="" src="${dto.find1photo}" class="img-thumbnail"
-                                 style="width:100%; height: 100%;">
+                                 style="width:100%; height: 100%; padding: 0;">
                         </c:if>
                         <c:if test="${dto.find1photo==null}">
                             <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                                 style="width:100%; height: 100%;">
+                                 style="width:100%; height: 100%; padding: 0;"">
                         </c:if>
                         <div class="title-content">
                             <h3>제목 : ${dto.subject}</h3>
@@ -266,9 +297,9 @@
                         </div>
                         <div class="utility-info">
                             <ul class="utility-list">
-                                <li class="comments">${dto.answercount}</li>
+                                <li class="comment"><i class="fa-regular fa-comment"></i>&nbsp;${dto.answercount}</li>
                                 <li class="view"><i class="fa-regular fa-eye"></i> ${dto.readcount}</li>
-                                <li class="date"><fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/></li>
+                                <li class="writeday"><i class="fa-solid fa-calendar-days"></i>&nbsp;<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd"/></li>
                             </ul>
                         </div>
                         <div class="gradient-overlay"></div>
@@ -288,15 +319,14 @@
     </c:forEach>
         </c:if>
         </div>
-        <c:if test="${sessionScope.loginok!=null}">
-            <button type="button" class="btn btn-outline-dark"
-                    onclick="location.href='${root}/findboard/findform'">글쓰기
-            </button>
-        </c:if>
+    <c:if test="${sessionScope.loginok!=null}">
+        <button type="button" class="w-btn w-btn-green" style="float: right; margin-right: 38px;"
+                onclick="location.href='${root}/findboard/findform'">글쓰기
+        </button>
+    </c:if>
 
     <%------------------------------%>
-        <br>
-    <br>
+        <br><br><br><br>
         <div class="paging" id="paging">
             <ul class="pagination">
                 <c:if test="${startPage>1}">
@@ -323,55 +353,55 @@
                     </li>
                 </c:if>
             </ul>
+
         </div>
-</div>
+    <footer id="footer" class="efLSbp">
+        <div class="inner">
+            <%------------------logo--%>
+            <h6 class="h_logo bjBbfw"><i class="fa-sharp fa-solid fa-car-side icons"></i> 오늘뭐해?</h6>
+            <%------------------------------info start--%>
+            <div class="finfo info_wrap_horizontal big_gap grey_6A">
+                <div>
+                    <p class="info_bold info_large grey_6A_only">
+                        고객센터: 070-8835-2626
 
-        <footer id="footer" class="efLSbp">
-            <div class="inner">
-                <%------------------logo--%>
-                <h6 class="h_logo bjBbfw"><i class="fa-sharp fa-solid fa-car-side icons"></i> 오늘뭐해?</h6>
-                <%------------------------------info start--%>
-                <div class="finfo info_wrap_horizontal big_gap grey_6A">
-                    <div>
-                        <p class="info_bold info_large grey_6A_only">
-                            고객센터: 070-8835-2626
-
-                        </p>
-                    </div>
-                    <p class="info_regular grey_6A_only">
-                        <em>상담가능시간: 매일 9:00~24:00</em>
                     </p>
                 </div>
-                <%--            -----------------------주식회사 Start--%>
-                <div class="Footer__FoldWrapper-sc-190uiip-1 dRbhKq footer_info grey_6A">
+                <p class="info_regular grey_6A_only">
+                    <em>상담가능시간: 매일 9:00~24:00</em>
+                </p>
+            </div>
+            <%--            -----------------------주식회사 Start--%>
+            <div class="Footer__FoldWrapper-sc-190uiip-1 dRbhKq footer_info grey_6A">
                     <span>
                         <em>주식회사: 오늘뭐해</em>
                     </span>
-                    <span>
+                <span>
                         <em>대표: 이동건</em>
                     </span>
-                    <span>
+                <span>
                         <em>개인정보보호책임자: 이동건</em>
                     </span>
-                    <span>
+                <span>
                         <em>사업자 등록번호: 010-4154-8185</em>
                     </span>
-                </div>
-
-                <%--            ----------------------------------------------개인정보Start--%>
-                <div class="info_wrap_horizontal vertical_line info_regular grey_6A small_gap font_fix_320">
-                    <p class="info_bold">개인정보 처리방침</p>
-                    <p> | 이용약관</p>
-                    <p> | 취소 및 환불정책</p>
-                    <p> | 파트너 입점</p>
-                </div>
-
-                <%--            ------------------------------copyright--%>
-                <div class="middle_gap">
-                    <p class="copyright">Copyright © 오늘뭐해 Inc. All Rights Reserved.</p>
-                </div>
             </div>
-        </footer>
+
+            <%--            ----------------------------------------------개인정보Start--%>
+            <div class="info_wrap_horizontal vertical_line info_regular grey_6A small_gap font_fix_320">
+                <p class="info_bold">개인정보 처리방침</p>
+                <p> | 이용약관</p>
+                <p> | 취소 및 환불정책</p>
+                <p> | 파트너 입점</p>
+            </div>
+
+            <%--            ------------------------------copyright--%>
+            <div class="middle_gap">
+                <p class="copyright">Copyright © 오늘뭐해 Inc. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
 </div>
 </body>
 </html>
