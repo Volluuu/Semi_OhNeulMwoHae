@@ -8,7 +8,9 @@ import java.util.Map;
 
 public interface UserDaoInter {
 
+    public int findPasswordCheckByEmail(UserDto userdto)throws Exception;
 
+    public int findPasswordByEmail(String password,String email,String loginid)throws Exception;
 
     public UserDto findPasswordById(String loginid);
 

@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface UserServiceInter {
 
+    public void findPasswordByEmail(String email,String loginid)throws Exception;
+
+    public int findPasswordCheckByEmail(UserDto userdto)throws Exception;
 
     public UserDto findPasswordById(String loginid);
     public int findPasswordCheckById(String loginid);
