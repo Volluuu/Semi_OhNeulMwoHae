@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,19 @@ public class UserDao implements UserDaoInter{
     @Autowired
     SqlSession session;
     String ns="bit.data.dao.UserDao.";
+
+    @Override
+    public int findPasswordCheckByEmail(UserDto userdto)throws Exception{
+        return session.selectOne(ns+"findPasswordCheckByEmail",userdto);
+    }
+
+    public int findPasswordByEmail(String password,String email,String loginid)throws Exception{
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("password", password);
+        map.put("email", email);
+        map.put("loginid", loginid);
+        return session.update(ns+"findPasswordByEmail", map);
+    }
 
     @Override
     public UserDto findPasswordById(String loginid){

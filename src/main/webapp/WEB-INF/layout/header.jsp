@@ -219,7 +219,7 @@
 						</div>
 						<div class="input-group" style="text-align: center;">
 							<a href="${root}/user/userid" style="width: 140px;text-decoration: none;color:gray;">아이디 찾기</a>
-							<a href="${root}/user/userpassword" style="width: 140px;text-decoration: none;color:gray; margin-left: 20px;">비밀번호 찾기</a>
+							<a href="${root}/user/findpwview" style="width: 140px;text-decoration: none;color:gray; margin-left: 20px;">비밀번호 찾기</a>
 							<a href="${root}/user/userform" style="width: 140px;text-decoration: none;color:gray; margin-left: 10px;">회원가입</a>
 
 						</div>
