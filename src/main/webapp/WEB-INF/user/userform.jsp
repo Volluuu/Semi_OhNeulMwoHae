@@ -82,8 +82,9 @@
             $("#loginid2").keyup(function() {
                 $("#idSuccess").text("");
                 var id = $("#loginid2").val();
-                if (id != '' && !id.match(/^[a-zA-Z0-9]{2,10}$/)){
+                if (!id.match(/^[a-zA-Z0-9]{2,10}$/)){
                     $("#idSuccess").text("조건에 맞게 입력해주세요");
+                    return;
                 }
             });//아이디 지움 event
 
@@ -260,10 +261,11 @@
     return false;
     }
 
-    /*if ($("#hpSuccess").text() != '인증이 완료되었습니다.') {
+    /*휴대폰 인증번호 받기*/
+    if ($("#hpSuccess").text() != '인증이 완료되었습니다.') {
     alert($('#hpSuccess').text());
     return false;
-    }*/
+    }
 
     }//check()
 
