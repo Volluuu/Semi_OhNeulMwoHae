@@ -176,19 +176,20 @@
         <table style="width:100%;">
             <tr style="border-bottom: 1px solid lightgray;">
                 <td>
-                    <h4 style="margin-top: 12px;">${dto.subject}<sub style="font-size: 14px;" >&emsp;${dto.nickname}</sub></h4>
+                    <h4 style="margin-top: 12px;">${dto.subject}</h4>
+                    <div style="font-size: 14px;">&emsp;${dto.nickname}</div>
                     <!-- 로그인 중이면서 세션의 아이디와 글의 아이디가 같을 경우에만 수정,삭제 가능 -->
                     <c:if test="${sessionScope.loginok!=null && sessionScope.user_num==dto.user_num}">
                     <div class="de_ed" style="float: right">
                         <button class="w-btn w-btn-blue" style="font-size: 12px;" type="button" onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'"onclick="location.href='${root}/findboard/updatefind?find_num=${dto.find_num}&currentPage=${currentPage}'"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i>&nbsp;수정</button>
                         <button class="w-btn w-btn-red" style="font-size: 12px;" type="button" onclick="location.href='${root}/findboard/deletefind?find_num=${dto.find_num}&currentPage=${currentPage}'"><i style="font-size: 14px;" class="fa fa-times">&nbsp;삭제</i></button>
-                    </c:if>
+                        </c:if>
                     </div>
-                    <span style="color:#ccc;font-size:13px;">
+                    <div style="color:#ccc;font-size:13px; margin-top: 6px;">
 					<fmt:formatDate value="${dto.writeday}" pattern="yyyy-MM-dd HH:mm"/>
 					&nbsp;&nbsp;
 					조회&nbsp;${dto.readcount}
-				</span>
+				</div>
                 </td>
             </tr>
             <tr height="300">
@@ -198,44 +199,44 @@
                         <c:if test="${dto.find1photo!=null}">
                             <a href="${root}/course/${fn:split(dto.find1,',')[0]}detail?${fn:split(dto.find1,',')[0]}_num=${fn:split(dto.find1,',')[1]}&currentPage=1">
                                 <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
-                                        src="${dto.find1photo}" width="250" height="250">
+                                        src="${dto.find1photo}" width="250" height="250" style="border-radius: 6px;">
                             </a>
-                            <figcaption><span class="txt">1. ${dto.find1title}</span</figcaption>
+                            <figcaption><span style="font-size: 14px;" class="txt">1. ${dto.find1title}</span</figcaption>
                             </figure>
                         </c:if>
                         <c:if test="${dto.find2photo!=null}">
                             <a href="${root}/course/${fn:split(dto.find2,',')[0]}detail?${fn:split(dto.find2,',')[0]}_num=${fn:split(dto.find2,',')[1]}&currentPage=1">
                                 <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
-                                        src="${dto.find2photo}" width="250" height="250">
+                                        src="${dto.find2photo}" width="250" height="250" style="border-radius: 6px;">
                             </a>
-                            <figcaption><span class="txt">2. ${dto.find2title}</span></figcaption>
+                            <figcaption><span style="font-size: 14px;" class="txt">2. ${dto.find2title}</span></figcaption>
                             </figure>
 
                         </c:if>
                         <c:if test="${dto.find3photo!=null}">
                             <a href="${root}/course/${fn:split(dto.find3,',')[0]}detail?${fn:split(dto.find3,',')[0]}_num=${fn:split(dto.find3,',')[1]}&currentPage=1">
                                 <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
-                                        src="${dto.find3photo}" width="250" height="250">
+                                        src="${dto.find3photo}" width="250" height="250" style="border-radius: 6px;">
                             </a>
-                            <figcaption><span class="txt">3. ${dto.find3title}</span></figcaption>
+                            <figcaption><span style="font-size: 14px;" class="txt">3. ${dto.find3title}</span></figcaption>
                             </figure>
 
                         </c:if>
                         <c:if test="${dto.find4photo!=null}">
                             <a href="${root}/course/${fn:split(dto.find4,',')[0]}detail?${fn:split(dto.find4,',')[0]}_num=${fn:split(dto.find4,',')[1]}&currentPage=1">
                                 <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
-                                        src="${dto.find4photo}" width="250" height="250">
+                                        src="${dto.find4photo}" width="250" height="250" style="border-radius: 6px;">
                             </a>
-                            <figcaption><span class="txt">4. ${dto.find4title}</span></figcaption>
+                            <figcaption><span style="font-size: 14px;" class="txt">4. ${dto.find4title}</span></figcaption>
                             </figure>
 
                         </c:if>
                         <c:if test="${dto.find5photo!=null}">
                             <a href="${root}/course/${fn:split(dto.find5,',')[0]}detail?${fn:split(dto.find5,',')[0]}_num=${fn:split(dto.find5,',')[1]}&currentPage=1">
                                 <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
-                                        src="${dto.find5photo}" width="250" height="250">
+                                        src="${dto.find5photo}" width="250" height="250" style="border-radius: 6px;">
                             </a>
-                            <figcaption><span class="txt">5. ${dto.find5title}</span></figcaption>
+                            <figcaption><span style="font-size: 14px;" class="txt">5. ${dto.find5title}</span></figcaption>
                             </figure>
 
                         </c:if>
