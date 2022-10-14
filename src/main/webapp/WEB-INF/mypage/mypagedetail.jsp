@@ -370,7 +370,7 @@
                 <tr>
                     <td colspan="2">
                         <div class="mypage_main_btn">
-                            <button type="submit" class="btn btn-outline-secondary" onclick="alert('저장되었습니다.')">저장</button>
+                            <button type="submit" class="btn btn-outline-primary" onclick="alert('저장되었습니다.')">저장</button>
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#myModal1">
                                 비밀번호 변경
                             </button>
