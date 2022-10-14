@@ -21,12 +21,15 @@
 
     <style type="text/css">
         /* 배너 */
-        .slideimg img {
-            width: 1900px;
+        #demo{
+            width: 1300px;
             height: 300px;
             margin: 0 auto;
         }
-
+    .slideimg img {
+        width:1400px;
+        height: 300px;
+    }
         /* 추천 코스 */
         /* Title 영역*/
         .cosSection {
@@ -37,10 +40,15 @@
         }
 
         .cosSectionTitle {
+            font-size:50px;
+            letter-spacing: 5px;
+            margin-left: 80px;
         }
 
         .cosSectionTitle_p {
             font-weight: bold;
+            font-size: 50px;
+            margin-bottom: 0;
         }
 
         /* Button 영역 */
@@ -77,6 +85,7 @@
             color: gray;
             border: none;
             background-color: white;
+            text-decoration: none;
         }
 
         /* slide 영역*/
@@ -89,7 +98,6 @@
         }
 
         .swiper-slide {
-            text-align: center;
             display: flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
             align-items: center; /* 위아래 기준 중앙정렬 */
             justify-content: center; /* 좌우 기준 중앙정렬 */
@@ -101,6 +109,7 @@
             max-width: 400px;
             height: 250px; /* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
             /* 이 예제에서 필요해서 설정했습니다. 상황에따라 다를 수 있습니다. */
+            border-radius: 30px;
         }
 
         /* slide content */
@@ -117,7 +126,8 @@
         }
 
         .swiper-slide_title {
-            font-size: 15px;
+            font-size: 20px;
+            padding-left: 5px;
         }
 
         .cos_info {
@@ -152,7 +162,9 @@
             padding-top: 65px;
             margin: 0 auto;
         }
-
+        .mainphoto {
+            border-radius: 30px;
+        }
     </style>
 </head>
 <body>
@@ -199,6 +211,7 @@
 <section class="cosSection">
     <div class="cosSectionTitle">
         <p class="cosSectionTitle_p">추천코스</p>
+        <p style="font-size:15px; color: #ccc;">조회수가 가장 높은 장소들을 모아봤어요</p>
         <div class="cosAddButton">
             <button type="button" class="cosRecommendBtn">카페</button>
             <button type="button" class="cosStarsBtn">음식점</button>
@@ -216,7 +229,7 @@
                     <div class="swiper-slide">
                         <div class="swiper-slide_content1">
                             <a href="/course/cafedetail?cafe_num=${cafe.cafe_num}&currentPage=1">
-                                    <img src="${cafe.photo}">
+                                    <img class="mainphoto" src="${cafe.photo}">
                                     <p class="swiper-slide_title">${cafe.title}</p>
 
                                     <div class="input-group cos_info">
@@ -283,8 +296,9 @@
 
     <!-- 친구 찾기 -->
     <section class="findSection">
-        <div class="findSectionTitle">
-            <p class="findSectionTitle_p">친구 찾기</p>
+        <div class="cosSectionTitle">
+            <p class="cosSectionTitle_p">친구 찾기</p>
+            <p style="font-size:15px; color: #ccc;">같이 놀러 갈 친구를 찾아봐요</p>
             <div class="cosAddButton">
                 <a href="findboard/list" class="cosAddBtn">더보기</a>
             </div>

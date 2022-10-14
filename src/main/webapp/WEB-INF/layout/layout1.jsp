@@ -45,9 +45,9 @@
     #header{
 		padding: 0px 12px;
     	width: 100%;
-    	height: 150px;
+    	height: 120px;
     	text-align: center;
-    	line-height: 130px;
+    	line-height: 120px;
 		box-shadow: 1px 1px 20px lightgray;
     }
     
