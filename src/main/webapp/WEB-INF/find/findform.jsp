@@ -16,66 +16,66 @@
 
 <style>
 
-    div.dg_container {
-        display: flex;
+    /*div.dg_container {*/
+    /*    display: flex;*/
 
-    }
+    /*}*/
 
-    .findlist {
-        background-color: ghostwhite;
-        width:700px;
-    }
+    /*.findlist {*/
+    /*    background-color: ghostwhite;*/
+    /*    width: 700px;*/
+    /*}*/
 
-    .courseinsertdiv{
-        background-color: ghostwhite;
-    }
+    /*.courseinsertdiv {*/
+    /*    background-color: ghostwhite;*/
+    /*}*/
 
 
-    .ainsertlist:hover {
-        background-color: darkgray;
-        cursor: pointer;
-    }
+    /*.ainsertlist:hover {*/
+    /*    background-color: darkgray;*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    .courseinsertlist:hover {
-        background-color: darkgray;
-        cursor: pointer;
-    }
+    /*.courseinsertlist:hover {*/
+    /*    background-color: darkgray;*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    #selectaword, #selectcword {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: center;
-    }
+    /*#selectaword, #selectcword {*/
+    /*    display: flex;*/
+    /*    flex-direction: row;*/
+    /*    flex-wrap: wrap;*/
+    /*    justify-content: space-evenly;*/
+    /*    align-items: center;*/
+    /*    align-content: center;*/
+    /*}*/
 
-    .radio_select {
-        cursor: pointer;
-    }
+    /*.radio_select {*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    .cancel {
-        float: right;
-        color: darkred;
-        margin-top: 5px;
-    }
+    /*.cancel {*/
+    /*    float: right;*/
+    /*    color: darkred;*/
+    /*    margin-top: 5px;*/
+    /*}*/
 
-    .cancel:hover {
-        cursor: pointer;
-    }
+    /*.cancel:hover {*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    #att_zone {
-        width: 660px;
-        min-height: 150px;
-        padding: 10px;
-        border: 1px solid black;
-    }
+    /*#att_zone {*/
+    /*    width: 660px;*/
+    /*    min-height: 150px;*/
+    /*    padding: 10px;*/
+    /*    border: 1px solid black;*/
+    /*}*/
 
-    #att_zone:empty:before {
-        content: attr(date-placeholder);
-        color: #999999;
-        font-size: .9em;
-    }
+    /*#att_zone:empty:before {*/
+    /*    content: attr(date-placeholder);*/
+    /*    color: #999999;*/
+    /*    font-size: .9em;*/
+    /*}*/
 
 
     .radio_search {
@@ -90,8 +90,96 @@
         display: none;
     }
 
-    label {
-        cursor: pointer;
+    /*label {*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    li {
+        list-style: none;
+    }
+
+    .sub {
+        display: inline-block;
+        width: 100%;
+        font-size: 13px;
+        padding: 16px 20px;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+
+    .hj_Content {
+        resize: none;
+        display: block;
+        width: 100%;
+        font-size: 14px;
+        padding: 16px 20px;
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+    }
+
+    .NeyNU {
+        position: relative;
+        width: 1000px;
+        margin: 0px auto;
+    }
+
+    .gepzXz {
+        margin-top: 12px;
+        position: relative;
+        height: 500px;
+        padding: 16px;
+        border-radius: 6px;
+        border: 1px solid rgb(233, 233, 233);
+        background-color: rgb(255, 255, 255);
+    }
+
+    .dnoOZq {
+        position: relative;
+        height: 450px;
+        border: 1px solid rgb(233, 233, 233);
+        border-radius: 3px;
+        display: flex;
+        max-height: 424px;
+    }
+
+    .iqqxRY {
+        position: relative;
+        border-width: 0px 1px 0px 0px;
+        border-style: solid;
+        border-color: rgb(233, 233, 233);
+        width: 150px;
+    }
+
+    .cjlsbp {
+        position: relative;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    #selectaword{
+        width: 70px;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+   .radio{
+       font-size: 15px;
+   }
+
+    .ul1:hover
+    {
+        background-color: #70D9F2;
+    }
+    .ul2:hover
+    {
+        background-color: #70D9F2;
+    }
+    .ul3:hover
+    {
+        background-color: #70D9F2;
     }
 </style>
 <c:if test="${sessionScope.loginok==null}">
@@ -101,8 +189,84 @@
     </script>
 </c:if>
 <body>
-<div class="dg_container">
-    <div class="insertfind">
+
+<%--------------------------------장소선택칸--%>
+<div class="container">
+    <section direction="vertical" class="WebSection__SectionWrapper-sc-ab4t1m-0 NeyNU">
+        <section direction="vertical" class="WebSection__SectionWrapper-sc-ab4t1m-0 etXdRD">
+            <div>
+                <div class="WebSection__AreaWebFilterWrapper-sc-ab4t1m-1 gepzXz">
+                    <div class="filter__WebItemWrapper-sc-1055oli-2 dnoOZq">
+                        <div class="filter__WebContinentFilter-sc-1055oli-3 iqqxRY">
+                            <div class="insertlist">
+                                <div class="dg_radio">
+                                    <ul style="margin: 0; padding: 4px 8px; font-size: 10px;" class="ul1">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_search">&nbsp;장소 검색
+                                        </label>
+
+                                    </ul>
+                                    <ul style="margin: 0; padding: 4px 8px;" class="ul2">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_myplace">좋아요 장소
+                                        </label>
+                                    </ul>
+                                    <ul style="margin: 0; padding: 4px 8px;" class="ul3">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_mycourse">&nbsp;내 경로&nbsp;
+                                        </label>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter__WebCountryFilter-sc-1055oli-4 cjlsbp" >
+                            <div class="radio_search">
+                                <div class="input-group">
+                                    <select class="form-control" name="ccolumn" id="ccolumn">
+                                        <option hidden selected disabled>테마 선택</option>
+                                        <option value="trip">여행</option>
+                                        <option value="cafe">카페</option>
+                                        <option value="food">식당</option>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="검색할 내용을 입력해주세요." id="cword" name="cword"
+                                           value="${param.cword}">
+                                    <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
+                                </div>
+
+                                <div class="findlist"></div>
+                                <%----------사진담기는곳--%>
+                                <div id="selectword">
+                                    <div id="selectaword"></div>
+                                    <div id="selectcword"></div>
+                                </div>
+
+                            </div>
+                            <%----------------------------------%>
+                            <%--        -----------------------즐겨찾기한 장소--%>
+                            <div class="radio_myplace">
+                                <ul class='foodlist'>식당 목록
+                                </ul>
+                                <ul class='triplist'>여행지 목록
+                                </ul>
+                                <ul class='cafelist'>카페 목록
+                                </ul>
+                            </div>
+                            <%---------------저장한경로--%>
+                            <div class="radio_mycourse">
+                                <p>저장한 경로</p>
+                                <div class='mycourselist'></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <form action="insertfind" method="post" enctype="multipart/form-data">
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="currentPage" value="${currentPage}">
@@ -116,92 +280,38 @@
 
                 </div>
                 <div class="cput"></div>
-
             </div>
 
-            <table class="table table-bordered">
-                <tr align="center" valign="middle">
-                    <th style="width:80px;">제목</th>
-                    <td style="width:900px;">
-                        <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"
-                               class="form-control"
-                               id="dg_subject" width="500">
-                    </td>
-                </tr>
-                <tr align="center" valign="middle">
-                    <th>장소</th>
-                    <td id="selectword">
-                        <div id="selectaword"></div>
-                        <div id="selectcword"></div>
-                    </td>
-                </tr>
-                <tr align="center" valign="middle">
-                    <th style="width:20%;">사진<br>첨부</th>
-                    <td>
-                        <div class="input-group">
-                            <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                            <div id='att_zone' data-placeholder='파일 선택 or 드래그 앤 드롭'></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-					<textarea name="content" required="required"
-                              style="width:100%;aspect-ratio: 10 / 3;" id="dg_content"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
-                    </td>
-                </tr>
-            </table>
+            <%------------------------------------제목--%>
+            <div style="margin-top: 12px;">
+                <input type="text" name="subject" required="required" placeholder="ex) 12월 3박4일 제주 바다 보러갈 동행 3명 구해요"
+                       class="sub">
+            </div>
+            <hr>
+            <%------------내용--%>
+            <div style="margin-top: 26px;">
+                <textarea style="min-height: 400px" class="hj_Content" name="content" id="desc" placeholder="1.장소를 검색해서 추가해주세요!
+
+2. 현재 동행이 있나요?
+ex) 혼자에요 / 동행 1명이 있어요
+
+3. 어떤 동행을 찾고 있나요?
+ex) 맛집 탐방을 좋아하는 20대 여성 동행을 찾아요!
+
+4. 원하는 여행 코스가 있다면 알려주세요
+(1000자 이내)"></textarea>
+            </div>
+            <br>
+            <button style="float: right;" type="submit" class="btn btn-outline-dark">게시글 저장</button>
+
+
         </form>
-    </div>
-    <div class="insertlist">
-        <div class="dg_radio">
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
-            </label>
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;
-            </label>
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
-            </label>
-        </div>
-        <div class="radio_search">
-            <div class="input-group">
-                <select class="form-control" name="ccolumn" id="ccolumn">
-                    <option hidden selected disabled>테마 선택</option>
-                    <option value="trip">여행</option>
-                    <option value="cafe">카페</option>
-                    <option value="food">식당</option>
-                </select>
-                <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"
-                       value="${param.cword}">
-                <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
-            </div>
-        </div>
-        <div class="radio_myplace">
-            <ul class='foodlist'>식당 목록
-
-            </ul>
-            <ul class='triplist'>여행지 목록
-
-            </ul>
-            <ul class='cafelist'>카페 목록
-            </ul>
-
-        </div>
-        <div class="radio_mycourse">
-            <p>저장한 경로</p>
-            <div class='mycourselist'>
-            </div>
-        </div>
-        <div class="findlist"></div>
-    </div>
+    </section>
 </div>
+
+</body>
+</html>
+
 
 <script>
     var root = "${root}";
@@ -230,14 +340,14 @@
             success: function (res) {
                 s += "<ul><br>";
                 $.each(res, function (i, elt) {
-                    if(elt.food_num!=null){
-                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='food,"+elt.food_num+"'>" + elt.title + "</li>";
+                    if (elt.food_num != null) {
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='food," + elt.food_num + "'>" + elt.title + "</li>";
                     }
-                    if(elt.trip_num!=null){
-                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='trip,"+elt.trip_num+"'>" + elt.title + "</li>";
+                    if (elt.trip_num != null) {
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='trip," + elt.trip_num + "'>" + elt.title + "</li>";
                     }
-                    if(elt.cafe_num!=null){
-                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='cafe,"+elt.cafe_num+"'>" + elt.title + "</li>";
+                    if (elt.cafe_num != null) {
+                        s += "<li class='ainsertlist' photo='" + elt.photo + "' ffind='cafe," + elt.cafe_num + "'>" + elt.title + "</li>";
                     }
                 });
                 s += "</ul>";
@@ -250,14 +360,14 @@
         var ti = $(this);
         var txt = ti.text();
         var photo = ti.attr("photo");
-        var ffind=ti.attr("ffind");
+        var ffind = ti.attr("ffind");
 
         if ($(".fig").length == 5) {
             alert("장소는 5개만 추가 가능합니다");
             return;
         }
-        for(var j=0;j<$(".fig").length;j++){
-            if($(".fig").eq(j).attr("ffind")==ffind){
+        for (var j = 0; j < $(".fig").length; j++) {
+            if ($(".fig").eq(j).attr("ffind") == ffind) {
                 alert("중복 불가");
                 return;
             }
@@ -265,14 +375,14 @@
         if ($("#selectaword").size == 0) {
             $("#selectword").append("<div id='selectaword'></div>");
         }
-        $("#selectaword").append("<figure style='margin: 10px;' class='fig' ffind='"+ffind+"'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
+        $("#selectaword").append("<figure style='margin: 10px;' class='fig' ffind='" + ffind + "'><img src='" + photo + "' width='250' height='250'><figcaption><span class='txt'>" + txt + "</span><i class='bi bi-x-circle cancel'></i></figcaption></figure>");
 
-        $(".inputfind").attr("value","");
+        $(".inputfind").attr("value", "");
         for (var i = 0; i < $(".fig").length; i++) {
 
-            var ffind=$(".fig").eq(i).attr("ffind");
+            var ffind = $(".fig").eq(i).attr("ffind");
             console.log(ffind);
-            $(".inputfind").eq(i).attr("value",ffind);
+            $(".inputfind").eq(i).attr("value", ffind);
         }
 
 
@@ -282,12 +392,12 @@
         var ti = $(this);
         ti.parents(".fig").remove();
 
-        $(".inputfind").attr("value","");
+        $(".inputfind").attr("value", "");
         for (var i = 0; i < $(".fig").length; i++) {
 
-            var ffind=$(".fig").eq(i).attr("ffind");
+            var ffind = $(".fig").eq(i).attr("ffind");
             console.log(ffind);
-            $(".inputfind").eq(i).attr("value",ffind);
+            $(".inputfind").eq(i).attr("value", ffind);
         }
     });
 
@@ -311,7 +421,6 @@
 
 
         $(".radio_search").show();
-
 
 
     });
@@ -362,7 +471,7 @@
                                 async: false,
                                 data: {"food_num": elt.food_num},
                                 success: function (resf) {
-                                    f += "<li class='ainsertlist' photo='" + resf.photo + "' ffind='food,"+resf.food_num+"'>" + resf.title + "</li>";
+                                    f += "<li class='ainsertlist' photo='" + resf.photo + "' ffind='food," + resf.food_num + "'>" + resf.title + "</li>";
                                     $(".foodlist").append(f);
 
                                 }
@@ -377,7 +486,7 @@
                                 async: false,
                                 data: {"trip_num": elt.trip_num},
                                 success: function (rest) {
-                                    t += "<li class='ainsertlist' photo='" + rest.photo + "' ffind='trip,"+rest.trip_num+"'>" + rest.title + "</li>";
+                                    t += "<li class='ainsertlist' photo='" + rest.photo + "' ffind='trip," + rest.trip_num + "'>" + rest.title + "</li>";
                                     $(".triplist").append(t);
                                 }
                             });
@@ -391,7 +500,7 @@
                                 async: false,
                                 data: {"cafe_num": elt.cafe_num},
                                 success: function (resc) {
-                                    c += "<li class='ainsertlist' photo='" + resc.photo + "' ffind='cafe,"+resc.cafe_num+"'>" + resc.title + "</li>";
+                                    c += "<li class='ainsertlist' photo='" + resc.photo + "' ffind='cafe," + resc.cafe_num + "'>" + resc.title + "</li>";
                                     $(".cafelist").append(c);
                                 }
                             });
@@ -510,9 +619,9 @@
                         });
                     }
                     mc = "";
-                    mc+="<div class='courseinsertdiv'>";
+                    mc += "<div class='courseinsertdiv'>";
                     mc += "<span class='courseinsertlist'>경로" + (i + 1) + " " + elt.title + "</span><br>";
-                    mc+="</div>";
+                    mc += "</div>";
                     $(".mycourselist").append(mc);
                     $(".courseinsertdiv").eq(i).append(st1);
                     $(".courseinsertdiv").eq(i).append(st2);
@@ -583,7 +692,7 @@
         //     $(".cput").append("<input type='hidden' name='find5' value='" + f5 + "'>");
         // }
 
-        if (ti.next().next(".st1").length!=0) {
+        if (ti.next().next(".st1").length != 0) {
             var st1 = ti.next().next(".st1").text();
             var f1 = ti.next().next(".st1").attr("step1");
             var photo1 = ti.next().next(".st1").attr("photo");
@@ -592,7 +701,7 @@
 
         }
 
-        if (ti.next().next(".st1").next().next(".st2").length!=0) {
+        if (ti.next().next(".st1").next().next(".st2").length != 0) {
             var st2 = ti.next().next(".st1").next().next(".st2").text();
             var f2 = ti.next().next(".st1").next().next(".st2").attr("step2");
             var photo2 = ti.next().next(".st1").next().next(".st2").attr("photo");
@@ -600,7 +709,7 @@
             $(".cput").append("<input type='hidden' name='find2' value='" + f2 + "'>");
         }
 
-        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").length!=0) {
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").length != 0) {
             var st3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").text();
             var f3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("step3");
             var photo3 = ti.next().next(".st1").next().next(".st2").next().next(".st3").attr("photo");
@@ -608,7 +717,7 @@
             $(".cput").append("<input type='hidden' name='find3' value='" + f3 + "'>");
         }
 
-        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length!=0) {
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").length != 0) {
             var st4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").text();
             var f4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("step4");
             var photo4 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").attr("photo");
@@ -616,7 +725,7 @@
             $(".cput").append("<input type='hidden' name='find4' value='" + f4 + "'>");
         }
 
-        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length!=0) {
+        if (ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").length != 0) {
             var st5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").text();
             var f5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("step5");
             var photo5 = ti.next().next(".st1").next().next(".st2").next().next(".st3").next().next(".st4").next().next(".st5").attr("photo");
@@ -728,5 +837,3 @@
 
 
 </script>
-</body>
-</html>

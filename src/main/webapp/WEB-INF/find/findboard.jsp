@@ -11,7 +11,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="<%=request.getContextPath()%>"/>
 <link rel="stylesheet" href="../css/coursecss.css">
-<link rel="stylesheet" href="${root}/resources/css/findboard.css">
+<link rel="stylesheet" href="../css/findboard.css">
 <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
 <link
         rel="stylesheet"
@@ -100,9 +100,9 @@
                                     } else {
                                         s += '<img src="' + root + '/upload/' + elt.photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
                                     }
-                                    s += '<p>제목 : ' + elt.subject + '</p>';
-                                    s += '<p>내용 : ' + elt.content + '</p>';
-                                    s += '<p>닉네임 : ' + elt.nickname + '</p>';
+                                    s += '<p>제목: ' + elt.subject + '</p>';
+                                    s += '<p>내용: ' + elt.content + '</p>';
+                                    s += '<p>닉네임: ' + elt.nickname + '</p>';
                                     s += '<p style="color: darkgray;">';
                                     s += '<span class="fr">';
                                     s += '<i class="bi bi-eye"></i>&nbsp;' + elt.readcount + '&nbsp;';
@@ -164,9 +164,9 @@
                                     } else {
                                         s += '<img src="' + root + '/upload/' + elt.photo + '" class="img-thumbnail" style="margin-bottom:7px;width:300px;aspect-ratio: 1/1;">';
                                     }
-                                    s += '<p>제목 : ' + elt.subject + '</p>';
-                                    s += '<p>내용 : ' + elt.content + '</p>';
-                                    s += '<p>닉네임 : ' + elt.nickname + '</p>';
+                                    s += '<p>제목: ' + elt.subject + '</p>';
+                                    s += '<p>내용: ' + elt.content + '</p>';
+                                    s += '<p>닉네임: ' + elt.nickname + '</p>';
                                     s += '<p style="color: darkgray;">';
                                     s += '<span class="fr">';
                                     s += '<i class="bi bi-eye"></i>&nbsp;' + elt.readcount + '&nbsp;';
@@ -234,7 +234,8 @@
     </div>
 <%-----------------------------카드변경--%>
 <div class="container">
-    <div class="search_hj" style="display: flex; float: right; margin-right: 42px;">
+    <br>
+    <div class="search_hj" style="display: flex; float: right; margin-right: 23px;">
     <select name="findcolumn" class="sle" style="text-align: center; width: 100px; border: 1px solid #44a8fd; font-size: 12px" id="findcolumn">
         <option value="subject" selected>제목</option>
         <option value="content">내용</option>
@@ -244,7 +245,7 @@
 
     <div class="search">
         <form>
-            <input type="text" name="findword" placeholder="검색해주세요~!" value="${param.findword}" id="findword">
+            <input type="text" style="font-size: 14px;" name="findword" placeholder="검색할 내용을 입력해주세요." value="${param.findword}" id="findword">
             <button type="button" id="searchbtn">
                 <i></i>
             </button>
@@ -285,10 +286,11 @@
                         </c:if>
                         <c:if test="${dto.find1photo==null}">
                             <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                                 style="width:100%; height: 100%; padding: 0;"">
+                                 style="width:100%; height: 100%; padding: 0;">
                         </c:if>
+
                         <div class="title-content">
-                            <h3>제목 : ${dto.subject}</h3>
+                            <h5>제목:${dto.subject}</h5>
                             <hr/>
                             <div class="intro">닉네임 : ${dto.nickname}</div>
                         </div>
@@ -326,7 +328,7 @@
     </c:if>
 
     <%------------------------------%>
-        <br><br><br><br>
+        <br><br>       <br><br>
         <div class="paging" id="paging">
             <ul class="pagination">
                 <c:if test="${startPage>1}">
@@ -353,7 +355,6 @@
                     </li>
                 </c:if>
             </ul>
-
         </div>
     <footer id="footer" class="efLSbp">
         <div class="inner">

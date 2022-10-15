@@ -14,70 +14,72 @@
 </head>
 
 <style>
-    div.dg_container {
-        display: flex;
 
-    }
+    /*div.dg_container {*/
+    /*    display: flex;*/
 
-    .findlist {
-        background-color: ghostwhite;
-        width: 700px;
-    }
+    /*}*/
 
-    .courseinsertdiv {
-        background-color: ghostwhite;
-    }
+    /*.findlist {*/
+    /*    background-color: ghostwhite;*/
+    /*    width: 700px;*/
+    /*}*/
+
+    /*.courseinsertdiv {*/
+    /*    background-color: ghostwhite;*/
+    /*}*/
 
 
-    .ainsertlist:hover {
-        background-color: darkgray;
-        cursor: pointer;
-    }
+    /*.ainsertlist:hover {*/
+    /*    background-color: darkgray;*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    .courseinsertlist:hover {
-        background-color: darkgray;
-        cursor: pointer;
-    }
+    /*.courseinsertlist:hover {*/
+    /*    background-color: darkgray;*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    #selectaword, #selectcword {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-        align-items: center;
-        align-content: center;
-    }
+    /*#selectaword, #selectcword {*/
+    /*    display: flex;*/
+    /*    flex-direction: row;*/
+    /*    flex-wrap: wrap;*/
+    /*    justify-content: space-evenly;*/
+    /*    align-items: center;*/
+    /*    align-content: center;*/
+    /*}*/
 
-    .radio_select {
-        cursor: pointer;
-    }
+    /*.radio_select {*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    .cancel {
-        float: right;
-        color: darkred;
-        margin-top: 5px;
-    }
+    /*.cancel {*/
+    /*    float: right;*/
+    /*    color: darkred;*/
+    /*    margin-top: 5px;*/
+    /*}*/
 
-    .cancel:hover {
-        cursor: pointer;
-    }
+    /*.cancel:hover {*/
+    /*    cursor: pointer;*/
+    /*}*/
 
-    #att_zone {
-        width: 660px;
-        min-height: 150px;
-        padding: 10px;
-        border: 1px solid black;
-    }
+    /*#att_zone {*/
+    /*    width: 660px;*/
+    /*    min-height: 150px;*/
+    /*    padding: 10px;*/
+    /*    border: 1px solid black;*/
+    /*}*/
 
-    #att_zone:empty:before {
-        content: attr(date-placeholder);
-        color: #999999;
-        font-size: .9em;
-    }
+    /*#att_zone:empty:before {*/
+    /*    content: attr(date-placeholder);*/
+    /*    color: #999999;*/
+    /*    font-size: .9em;*/
+    /*}*/
 
-    .radio_search {
-        display: none;
-    }
+
+    /*.radio_search {*/
+    /*    display: none;*/
+    /*}*/
 
     .radio_myplace {
         display: none;
@@ -87,14 +89,214 @@
         display: none;
     }
 
-    label {
-        cursor: pointer;
+    /*label {*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    li {
+        list-style: none;
+    }
+
+    .sub {
+        display: inline-block;
+        width: 100%;
+        font-size: 13px;
+        padding: 16px 20px;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+
+    .hj_Content {
+        resize: none;
+        display: block;
+        width: 100%;
+        font-size: 14px;
+        padding: 16px 20px;
+        box-sizing: border-box;
+        border: 1px solid lightgray;
+        border-radius: 4px;
+    }
+
+    .NeyNU {
+        position: relative;
+        width: 1000px;
+        margin: 0px auto;
+    }
+
+    .gepzXz {
+        margin-top: 12px;
+        position: relative;
+        height: 500px;
+        padding: 16px;
+        border-radius: 6px;
+        border: 1px solid rgb(233, 233, 233);
+        background-color: rgb(255, 255, 255);
+    }
+
+    .dnoOZq {
+        position: relative;
+        height: 450px;
+        border: 1px solid rgb(233, 233, 233);
+        border-radius: 3px;
+        display: flex;
+        max-height: 424px;
+    }
+
+    .iqqxRY {
+        position: relative;
+        border-width: 0px 1px 0px 0px;
+        border-style: solid;
+        border-color: rgb(233, 233, 233);
+        width: 150px;
+    }
+
+    .cjlsbp {
+        position: relative;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    #selectaword {
+        width: 70px;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .radio {
+        font-size: 15px;
+    }
+
+    .ul1:hover
+    {
+        background-color: #70D9F2;
+    }
+    .ul2:hover
+    {
+        background-color: #70D9F2;
+    }
+    .ul3:hover
+    {
+        background-color: #70D9F2;
     }
 </style>
 
 <body>
-<div class="dg_container">
-    <div class="insertfind">
+
+<%--------------------------------장소선택칸--%>
+<div class="container">
+    <section direction="vertical" class="WebSection__SectionWrapper-sc-ab4t1m-0 NeyNU">
+        <section direction="vertical" class="WebSection__SectionWrapper-sc-ab4t1m-0 etXdRD">
+            <div>
+                <div class="WebSection__AreaWebFilterWrapper-sc-ab4t1m-1 gepzXz">
+                    <div class="filter__WebItemWrapper-sc-1055oli-2 dnoOZq">
+                        <div class="filter__WebContinentFilter-sc-1055oli-3 iqqxRY">
+                            <div class="insertlist">
+                                <div class="dg_radio">
+                                    <ul style="margin: 0; padding: 4px 8px; font-size: 10px;" class="likess">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_search">&nbsp;장소 검색
+                                        </label>
+                                    </ul>
+                                    <ul style="margin: 0; padding: 4px 8px;">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_myplace">좋아요 장소
+                                        </label>
+                                    </ul>
+                                    <ul style="margin: 0; padding: 4px 8px;">
+                                        <label class="radio">
+                                            <input type="radio" name="radio_select" class="radio_select"
+                                                   id="radio_mycourse">&nbsp;내 경로&nbsp;
+                                        </label>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter__WebCountryFilter-sc-1055oli-4 cjlsbp">
+                            <div class="radio_search">
+                                <div class="input-group">
+                                    <select class="form-control" name="ccolumn" id="ccolumn">
+                                        <option hidden selected disabled>테마 선택</option>
+                                        <option value="trip">여행</option>
+                                        <option value="cafe">카페</option>
+                                        <option value="food">식당</option>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="검색할 내용을 입력해주세요." id="cword"
+                                           name="cword"
+                                           value="${param.cword}">
+                                    <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
+                                </div>
+
+                                <div class="findlist"></div>
+                                <%----------사진담기는곳--%>
+                                <div id="selectword">
+                                    <div id="selectaword">
+                                        <c:if test="${dto.find1photo!=null}">
+                                            <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
+                                                    src="${dto.find1photo}" width="250" height="250">
+                                                <figcaption><span class="txt">${dto.find1title}</span><i
+                                                        class="bi bi-x-circle cancel"></i></figcaption>
+                                            </figure>
+                                        </c:if>
+                                        <c:if test="${dto.find2photo!=null}">
+                                            <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
+                                                    src="${dto.find2photo}" width="250" height="250">
+                                                <figcaption><span class="txt">${dto.find2title}</span><i
+                                                        class="bi bi-x-circle cancel"></i></figcaption>
+                                            </figure>
+                                        </c:if>
+                                        <c:if test="${dto.find3photo!=null}">
+                                            <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
+                                                    src="${dto.find3photo}" width="250" height="250">
+                                                <figcaption><span class="txt">${dto.find3title}</span><i
+                                                        class="bi bi-x-circle cancel"></i></figcaption>
+                                            </figure>
+                                        </c:if>
+                                        <c:if test="${dto.find4photo!=null}">
+                                            <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
+                                                    src="${dto.find4photo}" width="250" height="250">
+                                                <figcaption><span class="txt">${dto.find4title}</span><i
+                                                        class="bi bi-x-circle cancel"></i></figcaption>
+                                            </figure>
+                                        </c:if>
+                                        <c:if test="${dto.find5photo!=null}">
+                                            <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
+                                                    src="${dto.find5photo}" width="250" height="250">
+                                                <figcaption><span class="txt">${dto.find5title}</span><i
+                                                        class="bi bi-x-circle cancel"></i></figcaption>
+                                            </figure>
+                                        </c:if>
+                                    </div>
+                                    <div id="selectcword"></div>
+                                </div>
+
+                            </div>
+                            <%----------------------------------%>
+                            <%--        -----------------------즐겨찾기한 장소--%>
+                            <div class="radio_myplace">
+                                <ul class='foodlist'>식당 목록
+                                </ul>
+                                <ul class='triplist'>여행지 목록
+                                </ul>
+                                <ul class='cafelist'>카페 목록
+                                </ul>
+                            </div>
+                            <%---------------저장한경로--%>
+                            <div class="radio_mycourse">
+                                <p>저장한 경로</p>
+                                <div class='mycourselist'></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <form action="updatefindaction" method="post" enctype="multipart/form-data">
             <input type="hidden" name="user_num" value="${sessionScope.user_num}">
             <input type="hidden" name="find_num" value="${dto.find_num}">
@@ -116,131 +318,178 @@
                             </c:if>
                         </c:if>
                     </c:if>
-
                 </div>
                 <div class="cput"></div>
             </div>
 
-            <table class="table table-bordered">
-                <tr align="center" valign="middle">
-                    <th style="width:20%;">제목</th>
-                    <td align="left">
-                        <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"
-                               class="form-control"
-                               id="dg_subject" width="500" value="${dto.subject}">
-                    </td>
-                </tr>
-                <tr align="center" valign="middle">
-                    <th>장소</th>
-                    <td id="selectword">
-                        <div id="selectaword">
-                            <c:if test="${dto.find1photo!=null}">
-                                <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img
-                                        src="${dto.find1photo}" width="250" height="250">
-                                    <figcaption><span class="txt">${dto.find1title}</span><i
-                                            class="bi bi-x-circle cancel"></i></figcaption>
-                                </figure>
-                            </c:if>
-                            <c:if test="${dto.find2photo!=null}">
-                                <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img
-                                        src="${dto.find2photo}" width="250" height="250">
-                                    <figcaption><span class="txt">${dto.find2title}</span><i
-                                            class="bi bi-x-circle cancel"></i></figcaption>
-                                </figure>
-                            </c:if>
-                            <c:if test="${dto.find3photo!=null}">
-                                <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img
-                                        src="${dto.find3photo}" width="250" height="250">
-                                    <figcaption><span class="txt">${dto.find3title}</span><i
-                                            class="bi bi-x-circle cancel"></i></figcaption>
-                                </figure>
-                            </c:if>
-                            <c:if test="${dto.find4photo!=null}">
-                                <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img
-                                        src="${dto.find4photo}" width="250" height="250">
-                                    <figcaption><span class="txt">${dto.find4title}</span><i
-                                            class="bi bi-x-circle cancel"></i></figcaption>
-                                </figure>
-                            </c:if>
-                            <c:if test="${dto.find5photo!=null}">
-                                <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img
-                                        src="${dto.find5photo}" width="250" height="250">
-                                    <figcaption><span class="txt">${dto.find5title}</span><i
-                                            class="bi bi-x-circle cancel"></i></figcaption>
-                                </figure>
-                            </c:if>
+            <%------------------------------------제목--%>
+            <div style="margin-top: 12px;">
+                <input type="text" name="subject" required="required" value="${dto.subject}"
+                       class="sub">
+            </div>
+            <hr>
+            <%------------내용--%>
+            <div style="margin-top: 26px;">
+                <textarea style="min-height: 400px" class="hj_Content" name="content"
+                          id="desc">${dto.content}</textarea>
+            </div>
 
-                        </div>
-                        <div id="selectcword"></div>
-                    </td>
-                </tr>
-                <tr align="center" valign="middle">
-                    <th style="width:20%;">사진<br>첨부</th>
-                    <td>
-                        <div class="input-group">
-                            <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-                            <div id='att_zone' data-placeholder='파일 선택 or 드래그 앤 드롭'></div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-					<textarea name="content" required="required"
-                              style="width:100%;aspect-ratio: 10 / 3;" id="dg_content">${dto.content}</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center">
-                        <button type="submit" class="btn btn-outline-dark">게시글 저장</button>
-                    </td>
-                </tr>
-            </table>
+            <br>
+            <button style="float: right;" type="submit" class="btn btn-outline-dark">게시글 저장</button>
+
+
         </form>
-    </div>
-    <div class="insertlist">
-        <div class="dg_radio">
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;
-            </label>
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;
-            </label>
-            <label>
-                <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;
-            </label>
-        </div>
-        <div class="radio_search">
-            <div class="input-group">
-                <select class="form-control" name="ccolumn" id="ccolumn">
-                    <option hidden selected disabled>테마 선택</option>
-                    <option value="trip">여행</option>
-                    <option value="cafe">카페</option>
-                    <option value="food">식당</option>
-                </select>
-                <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"
-                       value="${param.cword}">
-                <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>
-            </div>
-        </div>
-        <div class="radio_myplace">
-            <ul class='foodlist'>식당 목록
-
-            </ul>
-            <ul class='triplist'>여행지 목록
-
-            </ul>
-            <ul class='cafelist'>카페 목록
-            </ul>
-
-        </div>
-        <div class="radio_mycourse">
-            <p>저장한 경로</p>
-            <div class='mycourselist'>
-            </div>
-        </div>
-        <div class="findlist"></div>
-    </div>
+    </section>
 </div>
+<%-------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!기존 html--%>
+<%--<div class="dg_container">--%>
+<%--    <div class="insertfind">--%>
+<%--        <form action="updatefindaction" method="post" enctype="multipart/form-data">--%>
+<%--            <input type="hidden" name="user_num" value="${sessionScope.user_num}">--%>
+<%--            <input type="hidden" name="find_num" value="${dto.find_num}">--%>
+<%--            <input type="hidden" name="currentPage" value="${currentPage}">--%>
+<%--            <div id="put">--%>
+<%--                <div class="aput">--%>
+<%--                    <c:if test="${dto.find1!=null}">--%>
+<%--                        <input type='hidden' class='inputfind' name='find1' value='${dto.find1}'>--%>
+<%--                        <c:if test="${dto.find2!=null}">--%>
+<%--                            <input type='hidden' class='inputfind' name='find2' value='${dto.find2}'>--%>
+<%--                            <c:if test="${dto.find3!=null}">--%>
+<%--                                <input type='hidden' class='inputfind' name='find3' value='${dto.find3}'>--%>
+<%--                                <c:if test="${dto.find4!=null}">--%>
+<%--                                    <input type='hidden' class='inputfind' name='find4' value='${dto.find4}'>--%>
+<%--                                    <c:if test="${dto.find5!=null}">--%>
+<%--                                        <input type='hidden' class='inputfind' name='find5' value='${dto.find5}'>--%>
+<%--                                    </c:if>--%>
+<%--                                </c:if>--%>
+<%--                            </c:if>--%>
+<%--                        </c:if>--%>
+<%--                    </c:if>--%>
+
+<%--                </div>--%>
+<%--                <div class="cput"></div>--%>
+<%--            </div>--%>
+
+<%--            <table class="table table-bordered">--%>
+<%--                <tr align="center" valign="middle">--%>
+<%--                    <th style="width:20%;">제목</th>--%>
+<%--                    <td align="left">--%>
+<%--                        <input type="text" name="subject" required="required" placeholder="제목을 입력하세요"--%>
+<%--                               class="form-control"--%>
+<%--                               id="dg_subject" width="500" value="${dto.subject}">--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr align="center" valign="middle">--%>
+<%--                    <th>장소</th>--%>
+<%--                    <td id="selectword">--%>
+<%--                        <div id="selectaword">--%>
+<%--                            <c:if test="${dto.find1photo!=null}">--%>
+<%--                                <figure style="margin: 10px;" class="fig" ffind="${dto.find1}"><img--%>
+<%--                                        src="${dto.find1photo}" width="250" height="250">--%>
+<%--                                    <figcaption><span class="txt">${dto.find1title}</span><i--%>
+<%--                                            class="bi bi-x-circle cancel"></i></figcaption>--%>
+<%--                                </figure>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${dto.find2photo!=null}">--%>
+<%--                                <figure style="margin: 10px;" class="fig" ffind="${dto.find2}"><img--%>
+<%--                                        src="${dto.find2photo}" width="250" height="250">--%>
+<%--                                    <figcaption><span class="txt">${dto.find2title}</span><i--%>
+<%--                                            class="bi bi-x-circle cancel"></i></figcaption>--%>
+<%--                                </figure>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${dto.find3photo!=null}">--%>
+<%--                                <figure style="margin: 10px;" class="fig" ffind="${dto.find3}"><img--%>
+<%--                                        src="${dto.find3photo}" width="250" height="250">--%>
+<%--                                    <figcaption><span class="txt">${dto.find3title}</span><i--%>
+<%--                                            class="bi bi-x-circle cancel"></i></figcaption>--%>
+<%--                                </figure>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${dto.find4photo!=null}">--%>
+<%--                                <figure style="margin: 10px;" class="fig" ffind="${dto.find4}"><img--%>
+<%--                                        src="${dto.find4photo}" width="250" height="250">--%>
+<%--                                    <figcaption><span class="txt">${dto.find4title}</span><i--%>
+<%--                                            class="bi bi-x-circle cancel"></i></figcaption>--%>
+<%--                                </figure>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${dto.find5photo!=null}">--%>
+<%--                                <figure style="margin: 10px;" class="fig" ffind="${dto.find5}"><img--%>
+<%--                                        src="${dto.find5photo}" width="250" height="250">--%>
+<%--                                    <figcaption><span class="txt">${dto.find5title}</span><i--%>
+<%--                                            class="bi bi-x-circle cancel"></i></figcaption>--%>
+<%--                                </figure>--%>
+<%--                            </c:if>--%>
+
+<%--                        </div>--%>
+<%--                        <div id="selectcword"></div>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr align="center" valign="middle">--%>
+<%--                    <th style="width:20%;">사진<br>첨부</th>--%>
+<%--                    <td>--%>
+<%--                        <div class="input-group">--%>
+<%--                            <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">--%>
+<%--                            <div id='att_zone' data-placeholder='파일 선택 or 드래그 앤 드롭'></div>--%>
+<%--                        </div>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td colspan="2">--%>
+<%--					<textarea name="content" required="required"--%>
+<%--                              style="width:100%;aspect-ratio: 10 / 3;" id="dg_content">${dto.content}</textarea>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--                <tr>--%>
+<%--                    <td colspan="2" align="center">--%>
+<%--                        <button type="submit" class="btn btn-outline-dark">게시글 저장</button>--%>
+<%--                    </td>--%>
+<%--                </tr>--%>
+<%--            </table>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--    <div class="insertlist">--%>
+<%--        <div class="dg_radio">--%>
+<%--            <label>--%>
+<%--                <input type="radio" name="radio_select" class="radio_select" id="radio_search">&nbsp;장소 검색&nbsp;--%>
+<%--            </label>--%>
+<%--            <label>--%>
+<%--                <input type="radio" name="radio_select" class="radio_select" id="radio_myplace">&nbsp;즐겨찾기 한 장소&nbsp;--%>
+<%--            </label>--%>
+<%--            <label>--%>
+<%--                <input type="radio" name="radio_select" class="radio_select" id="radio_mycourse">&nbsp;내 경로&nbsp;--%>
+<%--            </label>--%>
+<%--        </div>--%>
+<%--        <div class="radio_search">--%>
+<%--            <div class="input-group">--%>
+<%--                <select class="form-control" name="ccolumn" id="ccolumn">--%>
+<%--                    <option hidden selected disabled>테마 선택</option>--%>
+<%--                    <option value="trip">여행</option>--%>
+<%--                    <option value="cafe">카페</option>--%>
+<%--                    <option value="food">식당</option>--%>
+<%--                </select>--%>
+<%--                <input type="text" class="form-control" placeholder="검색하시오" id="cword" name="cword"--%>
+<%--                       value="${param.cword}">--%>
+<%--                <button type="button" class="btn btn-outline-dark" id="cfind">검색</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="radio_myplace">--%>
+<%--            <ul class='foodlist'>식당 목록--%>
+
+<%--            </ul>--%>
+<%--            <ul class='triplist'>여행지 목록--%>
+
+<%--            </ul>--%>
+<%--            <ul class='cafelist'>카페 목록--%>
+<%--            </ul>--%>
+
+<%--        </div>--%>
+<%--        <div class="radio_mycourse">--%>
+<%--            <p>저장한 경로</p>--%>
+<%--            <div class='mycourselist'>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="findlist"></div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <script>
     var root = "${root}";
     var user_num = "${sessionScope.user_num}";
@@ -295,8 +544,8 @@
             return;
         }
 
-        for(var j=0;j<$(".fig").length;j++){
-            if($(".fig").eq(j).attr("ffind")==ffind){
+        for (var j = 0; j < $(".fig").length; j++) {
+            if ($(".fig").eq(j).attr("ffind") == ffind) {
                 alert("중복 불가");
                 return;
             }
