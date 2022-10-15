@@ -55,7 +55,7 @@ public class UserService implements UserServiceInter{
         return userDao.findPasswordCheck(userdto);
     };*/
 
-
+    @Override
     public void findPasswordByEmail(String email,String loginid)throws Exception{
         String password = getDataByLoginId(loginid).getPassword();
         userDao.findPasswordByEmail(email,loginid,password);
@@ -63,7 +63,7 @@ public class UserService implements UserServiceInter{
         MailUtils sendMail = new MailUtils(mailSender);
         sendMail.setSubject("[오늘뭐해!? 커뮤니티 비밀번호 입니다.]"); //메일제목
         sendMail.setText(
-                "<h1>임시 비밀번호 발급</h1>" +
+                "<h1>비밀번호 발급</h1>" +
                         "<br/>"+loginid+"님 "+
                         "<br/>비밀번호 찾기를 통한 "+loginid+"님의 비밀번호입니다."+
                         "<br/>비밀번호 :   <h2>"+password+"</h2>"+
