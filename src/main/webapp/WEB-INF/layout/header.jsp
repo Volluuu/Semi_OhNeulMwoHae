@@ -45,7 +45,7 @@
 
         .menu {
             /*width: 40%;*/
-            min-width: 600px;
+            min-width: 700px;
             margin: 0 auto;
             margin-left: 50px;
             text-align: center;
@@ -63,7 +63,7 @@
             margin-right: 20px;
             color: black;
             cursor: pointer;
-            width: 100px;
+            width: 120px;
             position: relative;
             transition: all 0.1s;
             overflow: hidden;
