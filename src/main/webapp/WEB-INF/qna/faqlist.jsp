@@ -73,6 +73,8 @@
     .faq_content_list{
       background-color: lightgray;
       min-height: 150px;
+      max-width: 100%;
+      font-family: "Dohyeon";
     }
   </style>
   <script>
@@ -122,7 +124,7 @@
               </li>
             </div>
             <div class="faq_content" faq_num="${dto.faq_num}">
-              <li class="faq_content_list">└${dto.content}</li>
+              <pre><li class="faq_content_list">└${dto.content}</li></pre>
             </div>
           </c:forEach>
         </div>
