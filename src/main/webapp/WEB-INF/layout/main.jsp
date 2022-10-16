@@ -165,6 +165,11 @@
         .mainphoto {
             border-radius: 30px;
         }
+        .img-thumbnail {
+            width:400px;
+            height: 300px;
+            border-radius: 30px;
+        }
     </style>
 </head>
 <body>
@@ -313,12 +318,10 @@
 
                                 <c:set var="photo" value="${find.photo}"/>
                                 <c:if test="${find.find1photo!=null}">
-                                    <img alt="" src="${find.find1photo}" class="img-thumbnail"
-                                         style="width:100%; height: 100%;">
+                                    <img  alt="" src="" class="img-thumbnail" course="${find.find1}">
                                 </c:if>
                                 <c:if test="${find.find1photo==null}">
-                                    <img alt="" src="${root}/upload/${fn:split(photo, ',')[0]}" class="img-thumbnail"
-                                         style="width:100%; height: 100%;">
+                                    <img alt="" src="" class="img-thumbnail" course="${find.find1}">
                                 </c:if>
 
                                 <p class="swiper-slide_title">${find.subject}</p>
@@ -378,6 +381,26 @@
                 prevEl: '.swiper-button-prev', // 이번 버튼 클래스명
             },
         });
+        let course_type = new Array(3);
+        let course_num = new Array(3);
+        for(var i = 0; i < $(".img-thumbnail").length; i++) {
+            course_type[i] = $(".img-thumbnail").eq(i).attr("course").substr(0, 4);
+            course_num[i] = Number($(".img-thumbnail").eq(i).attr("course").substr(5));
+
+            $.ajax({
+                type    : "get",
+                url     : "../course/getlatlon",
+                dataType: "json",
+                async   : false,
+                data    : {
+                    "course_type": course_type[i],
+                    "course_num" : course_num[i]
+                },
+                success : function (res) {
+                        $(".img-thumbnail").eq(i).attr("src", res.photo);
+                }//sucess
+            });//ajax
+        }
     })
 
 
