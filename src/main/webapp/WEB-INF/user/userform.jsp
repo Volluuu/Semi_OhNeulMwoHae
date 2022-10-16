@@ -306,10 +306,10 @@
                                  String loginChannel = (String) loginChannelObj;
                                  switch (loginChannel) {
                                       case "kakao_id":
-                                          out.println("value=\"kakao_" + (int)(Math.random() * 10000000) + "\"");
+                                          out.println("value=\"kakao" + (int)(Math.random() * 100000) + "\"");
                                           break;
                                       case "naver_id":
-                                          out.println("value=\"naver_" + (int)(Math.random() * 10000000) + "\"");
+                                          out.println("value=\"naver" + (int)(Math.random() * 100000) + "\"");
                                           break;
                                      default:
                                           break;
