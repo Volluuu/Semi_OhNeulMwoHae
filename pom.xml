@@ -199,7 +199,42 @@
 		<groupId>net.nurigo</groupId>
 		<artifactId>sdk</artifactId>
 		<version>4.2.3</version>
-	</dependency>
+		</dependency>
+
+
+		<!-- mail library-->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+
+		<!--mail support-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>3.1.2</version>
+		</dependency>-->
+
+
+
+
+
+
+
+
+
 	</dependencies>
     <build>
         <plugins>

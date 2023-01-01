@@ -97,15 +97,35 @@ public class UserController {
         return "/bit/user/userpassword";
     }
 
+    @GetMapping("/findpwview")
+    public String findpwview()
+    {
+        return "/bit/user/findpwview";
+    }
+
+    @PostMapping("/findpw")
+    public String findpw(UserDto userdto,Model model)throws Exception{
+        if(userService.findPasswordCheckByEmail(userdto)==0) {
+            model.addAttribute("msg", "아이디와 이메일를 확인해주세요");
+
+            return "/bit/user/findpwview";
+        }else {
+
+            userService.findPasswordByEmail(userdto.getEmail(),userdto.getLoginid());
+            model.addAttribute("user", userdto.getEmail());
+
+            return"/bit/user/findpw";
+        }
+    }
 
     @PostMapping("/findid")
     public String findid(UserDto userdto,Model model)throws Exception{
-        System.out.println("name="+ userdto.getName());
-        if(userService.findIdCheckByName(userdto.getName())==0) {
-            model.addAttribute("msg", "이름을 확인해주세요");
+        System.out.println("email="+ userdto.getEmail());
+        if(userService.findIdCheckByEmail(userdto.getEmail())==0) {
+            model.addAttribute("msg", "이메일를 확인해주세요");
             return "/bit/user/userid";
         }else {
-            model.addAttribute("user", userService.findIdByName(userdto.getName()));
+            model.addAttribute("user", userService.findIdByEmail(userdto.getEmail()));
             return "/bit/user/findid";
         }
     }

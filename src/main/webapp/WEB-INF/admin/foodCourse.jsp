@@ -104,6 +104,7 @@
 
         th {
             border-bottom: 1px solid #a39485;
+            font-size: 10px;
         }
 
         td {
@@ -146,8 +147,73 @@
     .btndiv {
         float: right;
     }
+    .contentdot {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        margin-top: 1px;
+        max-height: 20px;
+        overflow: hidden;
+        vertical-align: top;
+        text-overflow: ellipsis;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+        width:200px;
+    }
+    .fa-wrench{
+        color: #6aafe6;
+        float: right;
+        display: none;
+    }
+    .fa-wrench:hover{
+        cursor: pointer;
+    }
 </style>
 <body id="page-top">
+<script>
+    var root="${root}";
+    var currentPage="${currentPage}";
+    $(document).ready(function() {
+        $("#cbx_chkAll").click(function() {
+            if($("#cbx_chkAll").is(":checked")) $("input[name=fooddel]").prop("checked", true);
+            else $("input[name=fooddel]").prop("checked", false);
+        });
+
+        $("input[name=fooddel]").click(function() {
+            var total = $("input[name=fooddel]").length;
+            var checked = $("input[name=fooddel]:checked").length;
+
+            if(total != checked) $("#cbx_chkAll").prop("checked", false);
+            else $("#cbx_chkAll").prop("checked", true);
+        });
+    });
+    $(document).on("click",".w-btn-red",function (){
+        var length=$("input[name=fooddel]:checked").length;
+        var food_num=[];
+        $("input[name=fooddel]:checked").each(function(){
+            food_num.push($(this).val());
+        })
+        if(length>0)
+            var yes=confirm("선택한 "+length+"개의 여행지를 삭제하시겠습니까?");
+        if(yes){
+            $.ajax({
+                type:"get",
+                url:root+"/admin/fooddelete",
+                dataType:"text",
+                data:{"food_num":food_num,"currentPage":currentPage},
+                success:function(res){
+                    alert("삭제했습니다");
+                    location.reload();
+                }
+            });
+        }
+    });
+    $(document).on("click",".w-btn-blue",function (){
+        $(".fa-wrench").toggle("slow");
+    });
+
+
+</script>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -156,11 +222,12 @@
     <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #38B6FF">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/admin/mainhome">
-            <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/home">
+            <img src="${root}/image/logo1.jpg" style="width: 80px;height: 80px">
+            <%--<div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>
+            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>--%>
         </a>
 
         <!-- Divider -->
@@ -268,18 +335,16 @@
             <div class="searcharea" style="width:100%;text-align:center;">
                 <!-- 검색창 -->
                 <form action="${root}/admin/foodcourse">
-                    <div class="input-group" style="width:450px;">
-                        <select class="form-select" name="searchcolumn">
+                    <div class="input-group" style="width:450px; margin-left: 12px; align-items: center;">
+                        <select class="form-select" name="searchcolumn" style="border: 1px solid lightgray; font-size: 12px; height: 38px; width: 70px;">
                             <option value="title">이름</option>
                             <option value="addr">주소</option>
-                            <option value="category">종류</option>
+                            <option value="kind">종류</option>
                             <option value="menu">메뉴</option>
                             <option value="tel">전화번호</option>
                             <option value="gu">구</option>
                         </select>
-                        &nbsp;&nbsp;&nbsp;
                         <input type="text" name="searchword" class="form-control" style="width:140px;" placeholder="검색 단어" value="${param.searchword}">
-
                         <button type="submit" class="btn btn-success" style="margin-left:10px;">검색</button>
                         <button type="button" class="btn btn-primary" style="margin-left:10px;" onclick="location.href='${root}/admin/foodcourse'">전체보기</button>
                     </div>
@@ -294,6 +359,7 @@
                     <table>
                         <thead>
                         <tr>
+                            <th class="chkbox"><input type="checkbox" id="cbx_chkAll"/></th>
                             <th>이름</th>
                             <th>주소</th>
                             <th>종류</th>
@@ -309,6 +375,7 @@
                         <tbody>
                         <c:forEach var="dto" items="${list}" varStatus="i">
                             <tr>
+                                <td class="chkbox"><input type="checkbox" name="fooddel" value="${dto.food_num}"/></td>
                                 <td>${dto.title}</td>
                                 <td>${dto.addr}</td>
                                 <td>${dto.category}</td>
@@ -316,12 +383,12 @@
                                 <td>${dto.tel}</td>
                                 <td>${dto.lat}</td>
                                 <td>${dto.lon}</td>
-                                <td>${dto.gu}</td>
+                                <td>${dto.gu}&emsp;<a href="${root}/admin/foodupdform?food_num=${dto.food_num}&currentPage=${currentPage}"><i class="fa-solid fa-wrench"></i></a></td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div class="paging">
+                    <div class="paging" style="float: right; padding-top: 8px;">
                         <ul class="pagination">
                             <c:if test="${startPage>1}">
                                 <li class="page-item"><a href="${root}/admin/foodcourse?currentPage=${startPage-1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">이전</a></li>
@@ -344,7 +411,7 @@
                     </div>
                 </div>
                 <div class="btndiv">
-                    <button class="w-btn w-btn-green" type="button">추가</button>
+                    <button class="w-btn w-btn-green" type="button" onclick="location.href='${root}/admin/foodinsert'">추가</button>
                     <button class="w-btn w-btn-blue" type="button">수정</button>
                     <button class="w-btn w-btn-red" type="button">삭제</button>
                 </div>

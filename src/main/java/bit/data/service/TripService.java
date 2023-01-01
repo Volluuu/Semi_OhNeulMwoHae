@@ -74,4 +74,9 @@ public class TripService implements TripServiceInter{
     public TripDto selectByNum(int trip_num) {
         return tripdao.selectByNum(trip_num);
     }
+
+    @Override
+    public List<TripDto> selectTopList(int count) {
+        return tripdao.selectTopList(count);
+    }
 }

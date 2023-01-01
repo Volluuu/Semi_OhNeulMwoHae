@@ -12,7 +12,7 @@ public interface CourseServiceInter {
 	public List<CourseDto> getAllCourses(int user_num);
 	public CourseDto getCourse();
 	public void insertCourse(Map<String, Object> map);
-	public void deleteCourse(int num);
+	public void deleteCourse(int course_num);
 	public void updateStep(String num, String newStep);
 	public List<CourseDto> getSearchList(String searchcolumn,String searchword);
 	public List<CafeDto> getSearchCafe(String searchword);

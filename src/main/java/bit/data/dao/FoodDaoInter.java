@@ -18,4 +18,6 @@ public interface FoodDaoInter {
     public void likesUpdate(int food_num);
 
     public FoodDto selectByNum(int food_num);
+
+    public List<FoodDto> selectTopList(int count);
 }

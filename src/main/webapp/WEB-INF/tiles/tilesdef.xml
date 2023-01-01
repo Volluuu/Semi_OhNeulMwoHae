@@ -14,7 +14,7 @@
 	<definition name="/bit/*/*" extends="layout1">
 		<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
 	</definition>
-	
+
 	<!-- layout2 -->
 	<definition name="layout2" template="/WEB-INF/layout2/layout2.jsp">
 		<put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
@@ -24,6 +24,14 @@
 	</definition>
 	<!-- macro -->
 	<definition name="/bit2/*/*" extends="layout2">
+		<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
+	</definition>
+
+	<definition name="layout3" template="/WEB-INF/layout/layout3.jsp">
+		<put-attribute name="main" value="/WEB-INF/layout/index.jsp"/>
+	</definition>
+	<!-- macro -->
+	<definition name="/bit3/*/*" extends="layout3">
 		<put-attribute name="main" value="/WEB-INF/{1}/{2}.jsp"/>
 	</definition>
 </tiles-definitions>

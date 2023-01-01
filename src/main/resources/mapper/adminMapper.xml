@@ -6,7 +6,7 @@
     <!--	 유저 수-->
     <select id="getTotalCount" parameterType="Map" resultType="int">
         select count(*) from user
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
     </select>
@@ -47,7 +47,7 @@
     <!--유저 정보 페이징-->
     <select id="getUserPaging" parameterType="Map" resultType="udto">
         select * from user
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
         order by gaipday desc limit #{startnum},#{perpage}
@@ -55,43 +55,85 @@
 
     <select id="getCafePaging" parameterType="Map" resultType="cafedto">
         select * from cafe
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
         order by title asc limit #{startnum},#{perpage}
     </select>
     <select id="getCafeTotal" parameterType="Map" resultType="int">
         select count(*) from cafe
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
     </select>
+    <insert id="cafeInsertAct" parameterType="cafedto">
+        insert into cafe values (null,#{title},#{addr},#{menu},#{photo},#{tel},#{lat},#{lon},#{gu},0)
+    </insert>
+    <update id="cafeUpdAct" parameterType="cafedto">
+        update cafe set title=#{title},addr=#{addr},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon},gu=#{gu}
+        <if test="photo!=null">
+            ,photo=#{photo}
+        </if>
+        where cafe_num=#{cafe_num}
+    </update>
+    <delete id="deleteCafeByNum" parameterType="int">
+        delete from cafe where cafe_num=#{cafe_num}
+    </delete>
+
+
+
     <select id="getFoodPaging" parameterType="Map" resultType="fooddto">
         select * from food
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
         order by title asc limit #{startnum},#{perpage}
     </select>
     <select id="getFoodTotal" parameterType="Map" resultType="int">
         select count(*) from food
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
     </select>
+    <insert id="foodInsertAct" parameterType="fooddto">
+        insert into food values (null,#{title},#{addr},#{category},#{menu},#{photo},#{tel},#{lat},#{lon},#{gu},0)
+    </insert>
+    <update id="foodUpdAct" parameterType="fooddto">
+        update food set title=#{title},addr=#{addr},category=#{category},menu=#{menu},tel=#{tel},lat=#{lat},lon=#{lon},gu=#{gu}
+        <if test="photo!=null">
+            ,photo=#{photo}
+        </if>
+        where food_num=#{food_num}
+    </update>
+    <delete id="deleteFoodByNum" parameterType="int">
+        delete from food where food_num=#{food_num}
+    </delete>
 
     <select id="getTripPaging" parameterType="Map" resultType="tripdto">
         select * from trip
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
         order by title asc limit #{startnum},#{perpage}
     </select>
     <select id="getTripTotal" parameterType="Map" resultType="int">
         select count(*) from trip
-        <if test="searchcolumn!=null and searchword!=null">
+        <if test="searchcolumn!='' and searchcolumn!=null and searchword!=null">
             where ${searchcolumn} like concat('%',#{searchword},'%')
         </if>
     </select>
+    <insert id="tripInsertAct" parameterType="tripdto">
+        insert into trip values (null,#{title},#{addr},#{photo},#{content},#{lat},#{lon},#{gu},0)
+    </insert>
+    <update id="tripUpdAct" parameterType="tripdto">
+        update trip set title=#{title},addr=#{addr},content=#{content},lat=#{lat},lon=#{lon},gu=#{gu}
+        <if test="photo!=null">
+            ,photo=#{photo}
+        </if>
+        where trip_num=#{trip_num}
+    </update>
+    <delete id="deleteTripByNum" parameterType="int">
+        delete from trip where trip_num=#{trip_num}
+    </delete>
 
 </mapper>

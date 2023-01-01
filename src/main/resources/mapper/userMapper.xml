@@ -4,6 +4,13 @@
 
 <mapper namespace="bit.data.dao.UserDao">
 
+    <update id="findPasswordByEmail" >
+        update user set password = #{password} where email = #{email} and loginid = #{loginid}
+    </update>
+
+    <select id="findPasswordCheckByEmail" resultType="int">
+        select count(*) from user where email = #{email} and loginid = #{loginid}
+    </select>
 
     <select id="findPasswordById" parameterType="String" resultType="udto">
         select rpad(substr(password,1,char_length(password)/2),char_length(password),"*") as password from user where loginid=#{loginid}
@@ -14,12 +21,12 @@
         select count(*) from user where loginid=#{loginid}
     </select>
 
-    <select id="findIdByName" parameterType="String" resultType="udto">
-        select * from user where name=#{name}
+    <select id="findIdByEmail" parameterType="String" resultType="udto">
+        select * from user where email=#{email}
     </select>
 
-    <select id="findIdCheckByName" parameterType="String" resultType="int">
-        select count(*) from user where name=#{name}
+    <select id="findIdCheckByEmail" parameterType="String" resultType="int">
+        select count(*) from user where email=#{email}
     </select>
 
     <select id="getUserByKakaoId" parameterType="long" resultType="udto">

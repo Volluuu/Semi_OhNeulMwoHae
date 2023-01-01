@@ -65,4 +65,9 @@ public class FoodDao implements FoodDaoInter{
     public FoodDto selectByNum(int food_num) {
         return session.selectOne(ns+"selectByNum",food_num);
     }
+
+    @Override
+    public List<FoodDto> selectTopList(int count) {
+        return session.selectList(ns+"selectTopList",count);
+    }
 }

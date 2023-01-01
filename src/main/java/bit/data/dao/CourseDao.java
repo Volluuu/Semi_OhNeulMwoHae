@@ -35,8 +35,8 @@ public class CourseDao implements CourseDaoInter{
 	}
 
 	@Override
-	public void deleteCourse(int num) {
-		session.delete(ns+"deleteCourse", num);
+	public void deleteCourse(int course_num) {
+		session.delete(ns+"deleteCourse", course_num);
 	}
 
 	@Override

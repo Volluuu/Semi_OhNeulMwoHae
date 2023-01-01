@@ -102,6 +102,11 @@ public class QnaService implements QnaServiceInter{
 	}
 
 	@Override
+	public void updateNotAnswer() {
+		daoInter.updateNotAnswer();
+	}
+
+	@Override
 	public List<QnaDto> getUserData(int user_num) {
 		return daoInter.getUserData(user_num);
 	}

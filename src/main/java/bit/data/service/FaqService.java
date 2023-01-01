@@ -1,9 +1,7 @@
 package bit.data.service;
 
 import bit.data.dao.FaqDaoInter;
-import bit.data.dao.NoticeDaoInter;
 import bit.data.dto.FaqDto;
-import bit.data.dto.NoticeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +58,7 @@ public class FaqService implements FaqServiceInter {
 	}
 
 	@Override
-	public void deleteFaq(int num) {
-		daoInter.deleteFaq(num);
+	public void deleteFaq(int faq_num) {
+		daoInter.deleteFaq(faq_num);
 	}
 }

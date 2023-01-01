@@ -94,10 +94,10 @@
 		<a href="#"><img src="${root}/image/profile.jpg" class="rounded-circle" id="proimg" onerror="this.src='${root}/image/noimage.jpg';"></a>
 	</c:if>
 	<c:if test="${sessionScope.loginok!=null}">
-	<a href="#"><img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg"></a>
+	<a href="${root}/mypage/mypagedetail"><img src="${root}/upload/${sessionScope.loginphoto}" class="rounded-circle" id="proimg"></a>
 	</c:if>
 	<a href="#" class="up1"><i class='far fa-arrow-alt-circle-up top'></i></a>
-	<a href="${root}/"><i class='fas fa-home gohome'></i></a>
+	<a href="${root}/home"><i class='fas fa-home gohome'></i></a>
 <br><br>
 <%--
 	<div class="infotb">

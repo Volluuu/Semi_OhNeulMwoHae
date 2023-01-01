@@ -132,6 +132,7 @@
            });
        }
     });
+
 </script>
 <body id="page-top">
 
@@ -142,11 +143,12 @@
     <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #38B6FF">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/admin/mainhome">
-            <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${root}/home">
+            <img src="${root}/image/logo1.jpg" style="width: 80px;height: 80px">
+            <%--<div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>
+            <div class="sidebar-brand-text mx-3">오늘 뭐해 <sup>!?</sup></div>--%>
         </a>
 
         <!-- Divider -->
@@ -250,17 +252,15 @@
             <div class="searcharea" style="width:100%;text-align:center;">
                 <!-- 검색창 -->
                 <form action="${root}/admin/userinfo">
-                    <div class="input-group" style="width:450px;">
-                        <select class="form-select" name="searchcolumn">
+                    <div class="input-group" style="width:450px; margin-left: 12px;">
+                        <select class="form-select" name="searchcolumn" style="border: 1px solid lightgray; font-size: 12px; height: 38px;">
                             <option value="loginid">아이디</option>
                             <option value="name">이름</option>
                             <option value="nickname">닉네임</option>
                             <option value="hp">핸드폰</option>
                             <option value="email">이메일</option>
                         </select>
-                        &nbsp;&nbsp;&nbsp;
                         <input type="text" name="searchword" class="form-control" style="width:140px;" placeholder="검색 단어" value="${param.searchword}">
-
                         <button type="submit" class="btn btn-success" style="margin-left:10px;">검색</button>
                         <button type="button" class="btn btn-primary" style="margin-left:10px;" onclick="location.href='${root}/admin/userinfo'">전체보기</button>
                     </div>
@@ -298,7 +298,7 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <div class="paging">
+                    <div class="paging" style="float: right; padding-top: 8px;">
                         <ul class="pagination">
                             <c:if test="${startPage>1}">
                                 <li class="page-item"><a href="${root}/admin/userinfo?currentPage=${startPage-1}&searchcolumn=${searchcolumn}&searchword=${searchword}" class="page-link">이전</a></li>

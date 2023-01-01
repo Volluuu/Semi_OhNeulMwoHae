@@ -24,38 +24,41 @@
             margin: 0 auto;
         }
 
-        /* history */
-        .savehistory {
-            border: 1px solid red;
-            width: 300px;
-        }
-
         /* 지도 */
+
         #map {
-            width: 700px;
+            width : 730px;
             height: 750px;
-        "
         }
 
         /* 코스 제목 */
         #cos_title {
-            width: 400px;
+            width: 300px;
             margin: 0 auto;
             font-size: 15px;
         }
 
         /* 테마 선택 */
         .cosselect {
-            width: 500px;
+            width: 520px;
             position: relative;
-            border: 1px solid black;
+            /*border: 1px solid black;*/
         }
 
         .cosselect_main {
             /*border: 1px solid red;*/
             width: 500px;
-            margin: 0 auto;
+            margin-bottom: 10px;
             font-size: 10px;
+            /* border-top: solid #ccc 1px; */
+            margin-top: 10px;
+            position: relative;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            border-radius: 30px;
+            margin-left: 10px;
+            box-shadow: 5px 5px #ccc;
         }
 
         .cosselect_thema {
@@ -66,14 +69,12 @@
         }
 
         #cossearch_insert {
-            /*border: 1px solid magenta;*/
-            width: 370px;
             display: inline-block;
             vertical-align: top;
         }
 
         .searchlist {
-            border: 1px solid crimson;
+           /* border: 1px solid crimson;*/
             width: 370px;
             max-height: 300px;
             display: none;
@@ -84,13 +85,13 @@
         }
 
         input.in1 {
-            width: 300px;
+            width: 280px;
             display: inline-block;
             vertical-align: top;
         }
 
         button.insert_course_button {
-            border: 1px solid orange;
+            /*border: 1px solid orange;*/
             width: 50px;
             display: inline-block;
             vertical-align: top;
@@ -99,33 +100,115 @@
 
         .searchwordlist {
             list-style: none;
+            margin-bottom: 5px;
         }
 
         .searchwordlist:hover {
             background-color: gray;
             cursor: pointer;
         }
-
-        .cosadd_btn {
+        .coscnt {
+            margin-bottom: 10px;
         }
-
         /* 버튼 */
+        .cosselectadd {
+            margin:auto;
+            display:block;
+            border-radius: 50%;
+            background-color: #3db8fa;
+            color: white;
+            border : none;
+            width:50px;
+            height:50px;
+            font-size: 20px;
+            transition: all 0.05s linear;
+
+        }
+        .cosselectadd:hover {
+            transform: scale(1.1);
+        }
         .cosselectbtn {
+            position: absolute;
             bottom: 0%;
+            right:0%;
+            transform:translate(-20%, -50%);
         }
 
-        .cosbtnupdate {
-
+        .cosselectsubstract {
+            position: absolute;
+            right: 3%;
+            border : none;
+            border-radius: 50% ;
+            background-color: white;
+            color: #ccc;
         }
-
-        .cosbtndelete {
-
-        }
-
         .cosbtnsave {
-
+            display: inline-block;
+            right:0%;
+            width: 150px;
+            border : none;
+            background-color: #3db8fa;
+            color: white;
+            border-radius: 20px;
+            transition: all 0.05s linear;
+        }
+        .cosbtnsave:hover {
+            transform: scale(1.1);
         }
 
+        .set_line {
+            display: inline-block;
+            left:0%;
+            width: 150px;
+            border : none;
+            background-color: #3db8fa;
+            color: white;
+            border-radius: 20px;
+            transition: all 0.05s linear;
+        }
+        .set_line:hover {
+            transform: scale(1.1);
+        }
+
+    .delete_saved_course {
+        border : 3px solid #ccc;
+        border-left:none;
+        background-color: white;
+        color: #ccc;
+        height: 50px;
+        margin-left:-6px;
+        font-size: 15px;
+        width:40px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 20px;
+        display: inline-block;
+    }
+
+        .call_course_button {
+            border:none;
+            width: 200px;
+            background-color: #3db8fa;
+            font-size: 15px;
+            height:50px;
+            color:white;
+            border-bottom-left-radius: 20px;
+            border-top-left-radius: 20px;
+            margin-left:5px;
+        }
+        .save_course_list {
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.05s linear;
+        }
+        .save_course_list:hover {
+            transform: scale(1.05);
+        }
+        .savehistory {
+            border: none;
+            width: 250px;
+            border-radius: 20px;
+            box-shadow: 5px 5px 5px 5px #ccc;
+        }
     </style>
     <script>
         var cnt = 1;
@@ -135,27 +218,24 @@
         var customArr = new Array(5);
         var mapBound = new Array(5);
         var iwArr = new Array(5);
-        var linePath = new Array(5);
-        var polyline = new kakao.maps.Polyline({
-            endArrow     : true,
-            path         : linePath, // 선을 구성하는 좌표배열 입니다
-            strokeWeight : 5, // 선의 두께 입니다
-            strokeColor  : '#FF0000', // 선의 색깔입니다
-            strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-            strokeStyle  : 'solid' // 선의 스타일입니다
-        });
         var latArr = new Array(5);
         var lngArr = new Array(5);
         var isAdd = [false, false, false, false, false];
+        let polyline;
+        // 지도에 표시할 선을 생성합니다
+
         /* 더하기 버튼 추가 시, 입력창 추가 이벤트 */
         $(function () {
             /* +버튼 클릭 시, 경로 추가 이벤트 */
             $(document).on("click", ".cosselectadd", function () {
-                if ($("div.cosselect_main").length == 5) {
+                if ($("div.cosselect_main").length >= 5) {
                     alert("경로 추가는 최대 5개까지만 가능합니다.");
+                    btnChange();
                     return;
                 }
                 cnt++;
+                btnChange();
+                s="";
                 cosSelectAdd();
                 $("div.cos2").append(s);
                 s = "";
@@ -176,6 +256,7 @@
                 if (confirm($(this).siblings(".coscnt").text() + " 를 삭제하시겠습니까?")) {
                     $(this).parents(".cosselect_main").remove();
                     cnt--;
+                    btnChange();
                 } else {
                     return;
                 }
@@ -189,23 +270,13 @@
                 if (customArr[thiscnt - 1]) { //삭제하려는 경로가 아직 설정되어있지 않은 경우 에러 발생, 예외처리
                     customArr[thiscnt - 1].setMap(null);
                     console.log("set NULL : " + thiscnt);
-                    console.log(customArr);
                 }
-                isAdd[thiscnt - 1] = false;
-                var endpoint = 0;
-                for (var i = 0; i < isAdd.length; i++) {
-                    if (isAdd[i] && thiscnt - 1 != i) {
-                        endpoint = i - 1;
-                    }
-                }
-                console.log("endpoint : " + endpoint);
                 customArr[thiscnt - 1] = null;
                 stepArr[thiscnt - 1] = null;
-
                 //customArr 배열의 순서를 삭제한것과 동일하게 설정
-                var newCustomArr = new Array(5);
-                var newStepArr = new Array(5);
-                var n = 0;
+                let newCustomArr = new Array(5);
+                let newStepArr = new Array(5);
+                let n = 0;
                 for (var i = 0; i < newCustomArr.length; i++) {
                     if (i == (thiscnt - 1)) {
                         continue;
@@ -215,64 +286,45 @@
                         continue;
                     }
                     newStepArr[n] = stepArr[i];
-                    customArr[i].setContent('<span style="background: skyblue; cursor:pointer;" class="step">step' + (n + 1) + '</span>');
+                    customArr[i].setContent('<span style="cursor:pointer; font-size: 10px" class="step" cnt=' + (n+1) + '>step' + (n + 1) + '<br><i class="bi bi-pin-fill" style="color:#3db8fa; font-size: 30px"></i></span>');
                     newCustomArr[n++] = customArr[i];
                 }
-                // customArr = newCustomArr;
                 for (var i = 0; i < customArr.length; i++) {
                     customArr[i] = newCustomArr[i];
                 }
-
                 stepArr = newStepArr;
-                //지도범위 재설정
-                console.log(isAdd);
-                console.log("delete before mapBound");
-                console.log(mapBound);
+                //1. 위도경도 배열을 삭제한 순서에 맞게 초기화
                 n = 0;
-                var bounds = new kakao.maps.LatLngBounds();
-                for (var i = 0; i < mapBound.length; i++) {
-                    if (i == (thiscnt - 1)) {
+                for (var i = 0; i < latArr.length; i++) {
+                    if (i == thiscnt - 1) {
+                        latArr[i] = lngArr[i] = null;
                         continue;
                     }
-                    mapBound[n++] = mapBound[i];
+                    latArr[n] = latArr[i];
+                    lngArr[n++] = lngArr[i];
+                }
+                console.log(latArr);
+                latArr[4] = lngArr[4] = null;
+                n = 0;
+                //2. 수정한 위도경도 배열을 이용하여 맵바운드, 폴리라인 초기화
+                //맵바운드 초기화
+                var bounds = new kakao.maps.LatLngBounds();
+                for (var i = 0; i < mapBound.length - 1; i++) {
+                    if (!latArr[i]) {
+                        mapBound[i] = null;
+                        continue;
+                    }
+                    mapBound[i] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
                 }
                 for (var i = 0; i < mapBound.length - 1; i++) {
                     if (mapBound[i]) {
                         bounds.extend(mapBound[i]);
+                        console.log("mapBound : " + i + " is extend");
                     }
                 }
                 console.log("delete after mapBound : ")
                 console.log(mapBound);
                 map.setBounds(bounds);
-                // 삭제한 경로를 제외한 폴리라인 다시 그리기
-
-                n = 0;
-                // for (var i = 0; i < new_linePath.length; i++) {
-                //     if (i == (thiscnt - 1)) {
-                //         continue;
-                //     }
-                //     new_linePath[n++] = linePath[i];
-                // }
-                // new_linePath[4] = undefined;
-                // linePath = new_linePath;
-
-                for (var i = 0; i < linePath.length; i++) {
-                    if (i == (thiscnt - 1)) {
-                        continue;
-                    }
-                    if (isAdd[i]) {
-                        latArr[n] = latArr[i];
-                        lngArr[n] = lngArr[i];
-                        linePath[n++] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
-                    } else {
-                        n++;
-                    }
-                }
-                latArr[4] = lngArr[4] = null;
-
-                linePath[4] = new kakao.maps.LatLng(latArr[endpoint], lngArr[endpoint]);
-                polyline.setPath(linePath);
-                polyline.setMap(map);
             });
 
             /* 검색 이벤트 */
@@ -297,21 +349,21 @@
                             if (word.parent().parent().find("select.sel1").val() == "cafe") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'cafe_num': elt.cafe_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'cafe_num': elt.cafe_num})
                                     );
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "trip") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'trip_num': elt.trip_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'trip_num': elt.trip_num})
                                     );
                                 });
                             }
                             if (word.parent().parent().find("select.sel1").val() == "food") {
                                 $.each(res, function (i, elt) {
                                     word.next().append(
-                                        $('<div>').text(elt.title).attr({'food_num': elt.food_num})
+                                        $('<div>').html("<i class='bi bi-geo-alt-fill'></i>" + elt.title).attr({'food_num': elt.food_num})
                                     );
                                 });
                             }
@@ -408,11 +460,11 @@
                     success : function (res) {
                         //인포 윈도우 생성
                         var iwContent =
-                                '<div style="padding:5px; width:200px;">' + res.title + ' <br><a href="https://map.kakao.com/link/map/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">큰지도보기</a>' +
-                                '<br><a href="https://map.kakao.com/link/to/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                                '<div style="padding:5px; width:200px;">' + res.title + ' <br><a href="https://map.kakao.com/link/map/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue; font-size: 12px;" target="_blank; ">큰지도보기</a>' +
+                                '<br><a href="https://map.kakao.com/link/to/' + res.title + ',' + res.lat + ',' + res.lon + '" style="color:blue; font-size: 12px;" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
                             iwPosition = new kakao.maps.LatLng(res.lat, res.lon); //인포윈도우 표시 위치입니다
                         iwRemoveable = true;
-                        var customContent = '<span style="background: skyblue;" class="step" cnt=' + thiscnt + '>step' + thiscnt + '</span>'
+                        var customContent = '<span style="cursor:pointer; font-size: 10px;" class="step" cnt=' + thiscnt + '>step' + thiscnt + '<br><i class="bi bi-pin-fill" style="color:#3db8fa; font-size: 30px"></i></span>'
                         // 인포윈도우를 생성합니다
                         var custom = new kakao.maps.CustomOverlay({
                             position: iwPosition,
@@ -432,9 +484,6 @@
                         var bounds = new kakao.maps.LatLngBounds();
                         var latlng = new kakao.maps.LatLng(res.lat, res.lon);
                         mapBound[thiscnt - 1] = latlng;
-                        console.log(mapBound);
-                        linePath[thiscnt - 1] = latlng;
-                        polyline.setPath(linePath);
                         for (var i = 0; i < mapBound.length; i++) {
                             if (!mapBound[i]) {
                                 continue;
@@ -442,7 +491,7 @@
                             bounds.extend(mapBound[i]);
                         }
                         map.setBounds(bounds);
-                        polyline.setMap(map);
+
                         $(document).on("click", "span.step", function () {
                             if ($(this).attr("cnt") == thiscnt) {
                                 iwArr[thiscnt - 1].open(map);
@@ -452,7 +501,6 @@
                         latArr[thiscnt - 1] = res.lat;
                         lngArr[thiscnt - 1] = res.lon;
                         isAdd[thiscnt - 1] = true;
-                        console.log(isAdd);
                     }//sucess
                 });//ajax
             }); // insert_course_button end
@@ -470,17 +518,36 @@
                         for (var j = i + 1; j < stepArr.length; j++) {
                             if (stepArr[j]) {
                                 alert((i + 1) + "번째 경로가 비어있습니다. 경로삭제 혹은 경로를 추가해주세요.")
-                                $("select.sel1").eq(i + 1).focus(); // 헤더부분 검색기능 빠지면 i수정
+                                $("select.sel1").eq(i).focus(); //헤더 바뀐부분 수정완료
                                 return;
                             }
                         }
 
                     }
                 }
+                console.log($("#cos_title").val().length);
+                if ($("#cos_title").val().length > 10) {
+                    alert("코스 제목을 10글자 이하로 입력해주세요.")
+                    $("#cos_title").focus();
+                    return;
+                }
                 if (!$("#cos_title").val()) {
                     alert("코스 제목을 입력해주세요")
                     $("#cos_title").focus();
                     return;
+                }
+                for(var i = 0; i < cnt; i++) {
+                    if(!stepArr[i]) {
+                        alert("추가된 경로가 없습니다. 경로를 추가해 주세요.");
+                        return;
+                    }
+                }
+                console.log($(".call_course_button").length);
+                for(var i = 0; i < $(".call_course_button").length; i++) {
+                    if($(".call_course_button").eq(i).attr("title") ==$("#cos_title").val()) {
+                        alert("똑같은 이름의 경로는 등록할 수 없습니다.");
+                        return;
+                    }
                 }
                 if (confirm("경로를 [나만의 경로]에 추가하시겠습니까?")) {
                     //페이지 이동하는 부분
@@ -509,57 +576,122 @@
                 }
             });
 
-            $(document).on("click", ".call_course_button", function (){
+            $(document).on("click", ".call_course_button", function () {
+                if(!confirm("["+$(this).attr("title") + "]에 저장된 경로들을 불러올까요?")) {
+                    return;
+                }
+                //불러오기전 초기화
                 $(".cos2").empty();
+                cnt = 1;
+                for (var i = 0; i < customArr.length; i++) {
+                    if (customArr[i]) {
+                        customArr[i].setMap(null);
+                    }
+                    customArr[i] = stepArr[i] = latArr[i] = lngArr[i] = null;
+                }
+                //초기화 끝
                 var thiscnt = Number($(this).attr("cnt"));
-                for(var i = 1; i < $(this).attr("cnt"); i++) {
-                    s="";
+                for (var i = 1; i < $(this).attr("cnt"); i++) {
+                    s = "";
                     cosSelectAdd();
+                    cnt++;
+                    btnChange();
                     $("div.cos2").append(s);
                 }
                 $("#cos_title").val($(this).attr("title"));
-
-                for(let j = 1; j < thiscnt+1; j++) { // 헤더 부분 수정되면 변경 **************************************
-                    var course_type = $(this).attr("step" + j).substr(0, 4);
-                    var course_num = Number($(this).attr("step" + j).substr(5));
-                    var repeat = j;
+                let course_type;
+                let course_num;
+                for (let j = 1; j < thiscnt + 1; j++) { // 헤더 부분 수정되면 변경 **************************************
+                    stepArr[j-1] = $(this).attr("step"+j);
+                    course_type = $(this).attr("step" + j).substr(0, 4);
+                    course_num = Number($(this).attr("step" + j).substr(5));
                     console.log("thiscnt : " + thiscnt);
-                    console.log(j+"번째 : " + "course_type : " + course_type + " course_num : " + course_num);
-                    if(course_type == "cafe") {
-                        $("select.sel1").eq(j).val("cafe");
-                        console.log( $("select.sel1").eq(j).val());
+                    console.log(j + "번째 : " + "course_type : " + course_type + " course_num : " + course_num);
+                    if (course_type == "cafe") {
+                        $("select.sel1").eq(j - 1).val("cafe");
+                        console.log($("select.sel1").eq(j - 1).val());
                     }
-                    if(course_type == "food") {
-                        $("select.sel1").eq(j).val("food");
-                        console.log( $("select.sel1").eq(j).val());
+                    if (course_type == "food") {
+                        $("select.sel1").eq(j - 1).val("food");
+                        console.log($("select.sel1").eq(j - 1).val());
                     }
-                    if(course_type == "trip") {
-                        $("select.sel1").eq(j).val("trip");
-                        console.log( $("select.sel1").eq(j).val());
+                    if (course_type == "trip") {
+                        $("select.sel1").eq(j - 1).val("trip");
+                        console.log($("select.sel1").eq(j - 1).val());
                     }
                     $.ajax({
                         type    : "get",
                         url     : "../course/getlatlon",
                         dataType: "json",
+                        async   : false,
                         data    : {
                             "course_type": course_type,
                             "course_num" : course_num
                         },
                         success : function (res) {
-                            alert("success");
-                            $("input.in1").eq(j).val(res.title);
-                            $("input.in1").eq(j).attr("isSelect", "yes");
-                            $("input.in1").eq(j).attr("course_num", course_num);
-                            $("input.in1").eq(j).attr("cnt", j);
-                            console.log($("input.in1").eq(j).val());
-                            $("button.insert_course_button").eq(j-1).trigger("click");
+                            $(".cosselect_main").eq(j - 1).find(".coscnt").text("경로 " + j);
+                            $("input.in1").eq(j - 1).val(res.title);
+                            $("input.in1").eq(j - 1).attr("isSelect", "yes");
+                            $("input.in1").eq(j - 1).attr("course_num", course_num);
+                            $("input.in1").eq(j - 1).attr("cnt", j);
+                            console.log($("input.in1").eq(j - 1).val());
+                            $("button.insert_course_button").eq(j - 1).trigger("click");
+                            for (var i = 0; i < mapBound.length; i++) {
+                                if (!latArr[i]) {
+                                    mapBound[i] = null;
+                                    continue;
+                                }
+                                mapBound[i] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
+                            }
+                            for (var i = 0; i < mapBound.length; i++) {
+                                if (mapBound[i]) {
+                                    bounds.extend(mapBound[i]);
+                                }
+                            }
                         }//sucess
                     });//ajax
                 }
 
             });
         }); //$function end
+        $(document).on("click", "button.delete_saved_course", function (){
+            var cos_num = Number($(this).siblings(".call_course_button").attr("cos_num"));
+            if(confirm("저장되어있는 경로를 삭제하시겠습니까?")) {
+                $.ajax({
+                    type    : "post",
+                    url     : "../course/deletecourse",
+                    dataType: "text",
+                    data    : {
+                        "course_num" : cos_num
+                    },
+                    success : function (res) {
+                        alert("저장된 경로가 삭제되었습니다.");
+                        location.reload();
+                    }//sucess
+                });//ajax
+            }
+        });
+        //경로 그리기
+       $(document).on("mouseover", "button.set_line", function (){
+           var linePath = new Array(5);
+           for(var i = 0; i < lngArr.length; i++) {
+               if(lngArr[i]) {
+                   linePath[i] = new kakao.maps.LatLng(latArr[i], lngArr[i]);
+               }
+           }
+          polyline = new kakao.maps.Polyline({
+               path: linePath, // 선을 구성하는 좌표배열 입니다
+               strokeWeight: 6, // 선의 두께 입니다
+               strokeColor: '#3c9f47', // 선의 색깔입니다
+               strokeOpacity: 1.0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+               strokeStyle: 'solid' // 선의 스타일입니다
+           });
 
+           polyline.setMap(map);
+       });
+       $(document).on("mouseout", "button.set_line", function (){
+           polyline.setMap(null);
+       });
         /* 더하기 버튼 추가 시, 입력창 추가 메서드 */
         function cosSelectAdd() {
             s += "<div class='cosselect_main'>";
@@ -581,25 +713,21 @@
             s += "</div>";
             s += "</div>";
         }
+        function btnChange() {
+            let btn = $("button.cosselectadd");
+            if (cnt >=5) {
+                btn.css("background-color", "#ccc");
+            } else {
+                btn.css("background-color", "#3bd8fa");
+            }
+
+        }
 
     </script>
 </head>
 <body>
 <div class="mapandselect">
-    <div class="input-group">
-        <!-- 저장된 경로 -->
-        <div class="savehistory">
-            <c:forEach var="dto" items="${list}" varStatus="i">
-                <div style="border: 1px solid yellow">
-                    <div>제목 : ${dto.title}</div>
-                    <div>작성날짜 : ${dto.writeday}</div>
-                    <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}" user_num="${dto.user_num}"
-                    step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}" step5="${dto.step5}"
-                    writeday="${dto.writeday}">불러오기</button>
-                </div>
-            </c:forEach>
-        </div>
-
+    <div class="input-group" style="margin-top:10px;">
         <!-- map -->
         <div id="map"></div>
 
@@ -612,13 +740,10 @@
 
             var map = new kakao.maps.Map(container, options);
         </script>
-
         <!-- 경로설정 -->
         <div class="cosselect">
-
-            <%-- <form action="cosInsert" method="post">--%>
-            <h2>경로설정</h2>
-            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목 입력" name="title"
+            <h2 style="text-align: center;">경로설정</h2>
+            <input type="text" class="form-control" id="cos_title" placeholder="코스 제목을 10글자 이하로 입력해주세요" name="title"
                    required="required">
             <div class="cosselect_main">
                 <span class="coscnt">경로 1</span>
@@ -633,26 +758,37 @@
                     </select>
                 </div>
                 <div class="i" id="cossearch_insert">
-                    <input type="text" class="form-control in1" placeholder="검색어를 입력"
-                           required="required" name="searchword" cnt="1" isSelect="no">
+                    <input type="text" class="form-control in1" placeholder="검색어를 입력" required="required" name="searchword" cnt="1" isSelect="no">
                     <div class="searchlist"></div>
                     <button class="form-control insert_course_button"><i class="fas fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
             <div class="cos2"></div>
-            <button type="button" class="cosselectadd" style="margin:auto; display: block;">경로추가<i
-                    class='fas fa-angle-down'></i></button>
+            <button type="button" class="cosselectadd"><i class='fas fa-angle-down'></i></button>
 
 
             <!-- 경로설정 버튼 -->
-            <div class="toorlist"></div>
             <div class="cosselectbtn">
-                <button type="button" class="cosbtnupdate">경로수정</button>
-                <button type="button" class="cosbtndelete">경로삭제</button>
+                <button type="button" class="set_line">경로보기</button>
                 <button type="button" class="cosbtnsave">경로저장</button>
             </div>
-            <%-- </form>--%>
+        </div>
+
+        <!-- 저장된 경로 -->
+        <div class="savehistory">
+            <p style="text-align: center; font-size: 18px; margin-top:10px;">저장된 경로들이에요</p>
+            <c:forEach var="dto" items="${list}" varStatus="i">
+                <div class="save_course_list">
+                    <button class="call_course_button" cos_num="${dto.cos_num}" cnt="${dto.cnt}" title="${dto.title}"
+                            user_num="${dto.user_num}"
+                            step1="${dto.step1}" step2="${dto.step2}" step3="${dto.step3}" step4="${dto.step4}"
+                            step5="${dto.step5}"
+                            writeday="${dto.writeday}">${dto.title}
+                    </button>
+                    <button class="delete_saved_course" style="display:inline-block">X</button>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </div>

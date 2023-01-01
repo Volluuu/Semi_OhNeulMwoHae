@@ -8,7 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kotlinx.serialization.json.Json;
 import net.nurigo.sdk.message.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import util.MailUtils;
+
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -25,6 +28,8 @@ public class UserService implements UserServiceInter{
     @Autowired
     UserDaoInter userDao;
 
+    @Autowired
+    JavaMailSender mailSender;
    /* @Override
     public void findPassword(String email,String loginid){
         String memberKey = new TempKey().getKey(8,false);
@@ -51,18 +56,45 @@ public class UserService implements UserServiceInter{
     };*/
 
     @Override
+    public void findPasswordByEmail(String email,String loginid)throws Exception{
+        String password = getDataByLoginId(loginid).getPassword();
+        userDao.findPasswordByEmail(email,loginid,password);
+       // JavaMailSender mailSender = null;
+        MailUtils sendMail = new MailUtils(mailSender);
+        sendMail.setSubject("[오늘뭐해!? 커뮤니티 비밀번호 입니다.]"); //메일제목
+        sendMail.setText(
+                "<h1>비밀번호 발급</h1>" +
+                        "<br/>"+loginid+"님 "+
+                        "<br/>비밀번호 찾기를 통한 "+loginid+"님의 비밀번호입니다."+
+                        "<br/>비밀번호 :   <h2>"+password+"</h2>"+
+                        "<br/>로그인 해주세요."
+                        );
+        sendMail.setFrom("ahrl1717@naver.com", "오늘뭐해!?");
+        sendMail.setTo(email);
+        sendMail.send();
+    };
+
+
+
+    @Override
+    public int findPasswordCheckByEmail(UserDto userdto)throws Exception{
+        return userDao.findPasswordCheckByEmail(userdto);
+    }
+
+
+    @Override
     public UserDto findPasswordById(String loginid){return userDao.findPasswordById(loginid);}
 
     @Override
     public int findPasswordCheckById(String loginid){return userDao.findPasswordCheckById(loginid);}
 
     @Override
-    public List<UserDto> findIdByName(String name)throws Exception{
-        return userDao.findIdByName(name);
+    public List<UserDto> findIdByEmail(String email)throws Exception{
+        return userDao.findIdByEmail(email);
     }
     @Override
-    public int findIdCheckByName(String name)throws Exception{
-        return userDao.findIdCheckByName(name);
+    public int findIdCheckByEmail(String email)throws Exception{
+        return userDao.findIdCheckByEmail(email);
     }
 
     @Override

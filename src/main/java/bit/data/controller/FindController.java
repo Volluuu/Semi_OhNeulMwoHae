@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,7 @@ public class FindController {
             @RequestParam(value = "findword", required = false) String findword,
             Model model) {
         int totalCount = findService.selectTotalCount(findcolumn, findword); // 검색한 글의 갯수
-        int perPage = 8; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
+        int perPage = 20; // 한 페이지당 보여질 글의 갯수 1줄에 4개씩 2줄
         int perBlock = 5; // 한 블럭당 보여질 페이지의 갯수
         int startNum; // db에서 가져올 글의 시작번호 (mysql은 첫 글이 0번)
         int startPage; // 각 블럭당 보여질 시작 페이지
@@ -201,73 +200,43 @@ public class FindController {
     }
 
     @PostMapping("/findboard/insertfind")
-    public String insertfind(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
-        //업로드 경로
-        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-        System.out.println(path);
-        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
-        //업로드 안해도 upload.size가 1이 된다
-        System.out.println(findupload.size());
-
-        if (findupload.get(0).getOriginalFilename().equals("")) {
-            dto.setPhoto("noimage.png");
-        } else {
-            String photo = "";
-            int idx = 1;
-            for (MultipartFile multi : findupload) {
-                //파일명을 현재 날짜로 변경 후 ,로 연결
-                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo += newName + ",";
-
-                //업로드
-                try {
-                    multi.transferTo(new File(path + "/" + newName));
-                } catch (IOException | IllegalStateException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-            //마지막 컴마 제거
-            photo = photo.substring(0, photo.length() - 1);
-            //dto에 저장
-            dto.setPhoto(photo);
-        }
+    public String insertfind(FindDto dto, int currentPage) {
         findService.insertFindBoard(dto);
         return "redirect:../findboard/list?currentPage=" + currentPage;
     }
 
     @PostMapping("/findboard/updatefindaction")
-    public String updatefindaction(FindDto dto, int currentPage, List<MultipartFile> findupload, HttpServletRequest request) {
+    public String updatefindaction(FindDto dto, int currentPage) {
         //업로드 경로
-        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-        System.out.println(path);
-        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
-        //업로드 안해도 upload.size가 1이 된다
-        System.out.println(findupload.size());
-
-        if (findupload.get(0).getOriginalFilename().equals("")) {
-            dto.setPhoto(dto.getPhoto());
-        } else {
-            String photo = "";
-            int idx = 1;
-            for (MultipartFile multi : findupload) {
-                //파일명을 현재 날짜로 변경 후 ,로 연결
-                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
-                photo += newName + ",";
-
-                //업로드
-                try {
-                    multi.transferTo(new File(path + "/" + newName));
-                } catch (IOException | IllegalStateException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-            //마지막 컴마 제거
-            photo = photo.substring(0, photo.length() - 1);
-            //dto에 저장
-            dto.setPhoto(photo);
-        }
+//        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+//        System.out.println(path);
+//        //업로드를 안햇을 경우 0번지의 파일명이 "" (빈문자열)이 된다
+//        //업로드 안해도 upload.size가 1이 된다
+//        System.out.println(findupload.size());
+//
+//        if (findupload.get(0).getOriginalFilename().equals("")) {
+//            dto.setPhoto(dto.getPhoto());
+//        } else {
+//            String photo = "";
+//            int idx = 1;
+//            for (MultipartFile multi : findupload) {
+//                //파일명을 현재 날짜로 변경 후 ,로 연결
+//                String newName = idx++ + "_" + ChangeName.getChangeFileName(multi.getOriginalFilename());
+//                photo += newName + ",";
+//
+//                //업로드
+//                try {
+//                    multi.transferTo(new File(path + "/" + newName));
+//                } catch (IOException | IllegalStateException e) {
+//                    throw new RuntimeException(e);
+//                }
+//
+//            }
+//            //마지막 컴마 제거
+//            photo = photo.substring(0, photo.length() - 1);
+//            //dto에 저장
+//            dto.setPhoto(photo);
+//        }
         findService.updateFindBoard(dto);
         return "redirect:../findboard/list?currentPage=" + currentPage;
     }
@@ -390,7 +359,15 @@ public class FindController {
                 dto.setFind5title(fdto.getTitle());
             }
         }
+        UserDto udto=findService.selectUserByfindNum(find_num);
 
+        System.out.println("gd"+udto.getNickname());
+        dto.setNickname(udto.getNickname());
+        /*if(udto.getNickname()==null || udto.getNickname()=="" || udto.getNickname().equals(""))
+        {dto.setNickname("탈퇴한 회원입니다");
+        }else{
+            dto.setNickname(udto.getNickname());
+        }*/
         mview.addObject("dto", dto);
         mview.addObject("currentPage", currentPage);
 //        mview.addObject("memphoto", memphoto);
@@ -538,27 +515,27 @@ public class FindController {
 
     @GetMapping("/findboard/deletefind")
     public String delete(int find_num, int currentPage, HttpServletRequest request) {
-        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-        System.out.println(path);
-
-        String photo = findService.selectByNum(find_num).getPhoto();
-
-        if (photo.indexOf(",") >= 0) {
-            String sphoto[] = photo.split(",");
-            for (int i = 0; i < sphoto.length; i++) {
-                File file = new File(path + "/" + sphoto[i]);
-                if (file.exists()) {
-                    System.out.println("파일이 존재하므로 삭제합니다");
-                    file.delete();
-                }
-            }
-        } else {
-            File file = new File(path + "/" + photo);
-            if (file.exists()) {
-                System.out.println("파일이 존재하므로 삭제합니다");
-                file.delete();
-            }
-        }
+//        String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+//        System.out.println(path);
+//
+//        String photo = findService.selectByNum(find_num).getPhoto();
+//
+//        if (photo.indexOf(",") >= 0) {
+//            String sphoto[] = photo.split(",");
+//            for (int i = 0; i < sphoto.length; i++) {
+//                File file = new File(path + "/" + sphoto[i]);
+//                if (file.exists()) {
+//                    System.out.println("파일이 존재하므로 삭제합니다");
+//                    file.delete();
+//                }
+//            }
+//        } else {
+//            File file = new File(path + "/" + photo);
+//            if (file.exists()) {
+//                System.out.println("파일이 존재하므로 삭제합니다");
+//                file.delete();
+//            }
+//        }
 
         findService.deleteFindBoard(find_num);
         //삭제 후 보던 페이지로 이동

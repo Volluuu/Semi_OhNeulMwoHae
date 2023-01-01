@@ -70,6 +70,11 @@ public class QnaDao implements QnaDaoInter {
 	}
 
 	@Override
+	public void updateNotAnswer() {
+		session.update(ns+"updateQnaNotAnswer");
+	}
+
+	@Override
 	public List<QnaDto> getUserData(int user_num) {
 		return session.selectList(ns+"getUserData",user_num);
 	}

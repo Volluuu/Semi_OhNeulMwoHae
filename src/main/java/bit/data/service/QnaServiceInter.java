@@ -17,6 +17,7 @@ public interface QnaServiceInter {
 	public List<QnaDto> getUserData(int user_num);
 	public void updateQna(QnaDto dto);
 	public void updateAnswer();
+	public void updateNotAnswer();
 	public void deleteQna(int qna_num);
 
 }

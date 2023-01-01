@@ -107,5 +107,10 @@ public class CourseController {
 
 		courseService.insertCourse(map);
 	}
+	@PostMapping("/course/deletecourse")
+	@ResponseBody
+	public void deleteCourse(@RequestParam(value="course_num") int course_num){
+		courseService.deleteCourse(course_num);
+	}
 
 }

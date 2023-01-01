@@ -62,6 +62,13 @@
 	<update id="likesUpdate" parameterType="int">
 		update likes set likes=likes-1 where food_num=#{food_num}
 	</update>
+
+	<select id="selectTopList" parameterType="int" resultType="fooddto">
+		SELECT *
+		FROM food
+		ORDER BY readcount DESC
+			LIMIT 0, #{count}
+	</select>
 	
 </mapper>
 

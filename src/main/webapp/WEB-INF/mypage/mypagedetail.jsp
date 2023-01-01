@@ -15,33 +15,98 @@
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
     <style type="text/css">
-        div.mypagemain {
-            width: 300px;
+        div.mypage_main{
+            width: 1500px;
             height: 90vh;
-            /*border: 1px solid black;*/
-            float: left;
-            margin-left: 80px;
+            /*border: 2px solid black;*/
+            margin: 0 auto;
+            padding-top: 20px;
         }
-
+        /* 정보란 */
         div.mypagemain2 {
-            width: 600px;
-            margin-left: 600px;
-            /*border: 1px solid black;*/
-
+            width: 60%;
+            height: 90vh;
+            /*border: 1px solid red;*/
+            margin: 0 auto;
         }
-
-        img {
+        .form-control{
+            height: 40px;
+            font-size: 20px;
+        }
+        .form-select{
+            height: 40px;
+        }
+        .tb1{
+            font-size: 20px;
+        }
+        .tb1 th{
+            width: 200px;
+        }
+        #btnAtt{
+            margin: 0 auto;
+            width: 300px;
+        }
+        #age{
+            width: 150px;
+        }
+        .mypagemain2_interest label{
+            margin-left: 50px;
+            margin-right: 50px;
+            font-size: 20px;
+        }
+        .mypagemain2_interest label:hover{
+            text-shadow: 3px 3px 3px gray;
+            cursor: pointer;
+        }
+        #text1{
+            height: 200px;
+        }
+        #profileadd{
+            font-size: 30px;
+            color: gray;
+            margin: 0 auto;
+            text-align: right;
+            cursor: pointer;
+        }
+        /* 이미지 */
+        #showimg {
             display: block;
-            margin: auto;
+            margin: 0 auto;
             width: 200px;
             height: 200px;
             border-radius: 70%;
         }
+        /* 모달창 */
+        /*.modalclass{
+            width: 100%;
+            height: 200px;
+            margin: 0 auto;
+        }*/
+        #myModal1{
+           align-items: center;
+
+        }
+        .mypage_main_btn{
+            text-align: center;
+        }
+        .coursemovebtn{
+            text-align: center;
+            margin: 0 auto;
+        }
+        .coursemovebtn:hover{
+            text-shadow: 5px 5px 10px gray;
+        }
     </style>
     <script type="text/javascript">
         $(function () {
+
+            $(document).on("click","#profileadd",function (){
+                $("#btnAtt").trigger("click");
+            });
+
             $('#nicknameCheck').click(
                 function nicknameCheck() {
                     const regex = /^[ㄱ-ㅎ|가-힣]{2,8}$/;
@@ -57,10 +122,10 @@
                         success: function (res) {
                             let json = JSON.parse(res);
                             if (json.count == 0) {
-                                $('#nicknameSuccess').text("사용가능한 닉네임입니다");
+                                $('#nicknameSuccess').text("사용가능한 닉네임입니다.");
                             } else {
-                                $("#nicknameSuccess").text("이미 사용중인 닉네임입니다");
-                                alert("중복 닉네임");
+                                $("#nicknameSuccess").text("이미 사용중인 닉네임입니다.");
+                                alert("중복된 닉네임입니다. 다른 닉네임을 사용바랍니다.");
                             }
                         }//success
                     });
@@ -73,13 +138,13 @@
                 var p2 = $("#pass2").val();
                 const regex = /^[a-zA-Z0-9]{8,20}$/;
                 if (!regex.test(p1)) {
-                    $("#passwordSuccess").text("조건에 맞게 입력해주세요");
+                    $("#passwordSuccess").text("조건에 맞게 입력바랍니다.");
                 } else if (p2 == '') {
-                    $("#passwordSuccess").text("비밀번호 확인란을 입력해주세요.");
+                    $("#passwordSuccess").text("비밀번호 확인란을 입력바랍니다.");
                 } else if (!regex.test(p2) || p1 != p2) {
-                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
+                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다.");
                 } else {
-                    $("#passwordSuccess").text("사용가능한 비밀번호입니다");
+                    $("#passwordSuccess").text("사용가능한 비밀번호입니다.");
                 }
             });//pass2
 
@@ -89,13 +154,13 @@
                 var p2 = $("#pass2").val();
                 const regex = /^[a-zA-Z0-9]{8,20}$/;
                 if (!regex.test(p1)) {
-                    $("#passwordSuccess").text("조건에 맞게 입력해주세요");
+                    $("#passwordSuccess").text("조건에 맞게 입력바랍니다.");
                 } else if (p2 == '') {
-                    $("#passwordSuccess").text("조건에 맞게 채워주세요.");
+                    $("#passwordSuccess").text("조건에 맞게 작성바랍니다.");
                 } else if (!regex.test(p2) || p1 != p2) {
-                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다");
+                    $("#passwordSuccess").text("비밀번호가 일치하지 않습니다.");
                 } else {
-                    $("#passwordSuccess").text("사용가능한 비밀번호입니다");
+                    $("#passwordSuccess").text("사용가능한 비밀번호입니다.");
                 }
             });//pass2
 
@@ -173,7 +238,7 @@
             }
 
             //기존 비밀번호 맞는지 체크
-            if ($("#originPasswordSuccess").text() != '비밀번호 확인되었습니다.') {
+            if ($("#originPasswordSuccess").text() != '비밀번호가 확인되었습니다.') {
                 alert($("#originPasswordSuccess").text());
                 return false;
             }
@@ -181,190 +246,214 @@
             return true;
         }
 
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            };
+        }, true);
+
     </script>
 </head>
 <body>
-<div class="mypagemain">
-    <caption align="top">
-        <h1><b>마이페이지</b></h1>
-    </caption>
-    <hr>
-    <a href="${root}/help/map?user_num=${sessionScope.user_num}"><p>내 즐겨찾기</p></a>
+<div class="mypage_main">
+    <div class="mypagemain2">
+            <h1>회원정보</h1>
+        <form action="update" method="post" enctype="multipart/form-data" onsubmit="return update()">
+            <%--@declare id="zayeon"--%><%--@declare id="nocar"--%>
+            <table class="table table-bordered tb1">
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <i class='fas fa-camera' id="profileadd"><img id="showimg" src="${profilephoto}" alt="profilephoto"></i>
+                    <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control-file" hidden>
+                    <div id='att_zone' data-placeholder='파일 선택'>
 
-</div>
-
-<div class="mypagemain2">
-    <caption align="top">
-        <h1 style="text-align: center;"><b>회원정보</b></h1>
-    </caption>
-    <hr>
-    <form action="update" method="post" enctype="multipart/form-data" onsubmit="return update()">
-        <%--@declare id="zayeon"--%><%--@declare id="nocar"--%><div>
-            <img id="showimg" src="${profilephoto}" alt="profilephoto">
-        </div>
-        <input type="file" name="findupload" multiple="multiple" id="btnAtt" class="form-control">
-        <div id='att_zone' data-placeholder='파일 선택'></div>
-        <br>
-        <br>
-        <input type="hidden" id="originNickname" value="${nickname}" readonly>
-        <div>닉네임 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="nickname" name="nickname"
-                                                                                     value="${nickname}"
-        >&nbsp;&nbsp;
-            <button type="button" id="nicknameCheck" class="btn btn-danger">중복체크</button>
-            <div id="nicknameSuccess"></div>
-        </div>
-        <br>
-        <div>핸드폰 번호 &nbsp;&nbsp;&nbsp; <input id="hp" name="hp" value="${hp}">
-            <div id="hpSuccess"></div>
-        </div>
-        <br>
-        <div>연령대 &nbsp;&nbsp;&nbsp;
-            <select name="age" id="age">
-                <option value="10" <c:if test="${age eq '10'}">selected="selected"</c:if>>10대</option>
-                <option value="20" <c:if test="${age eq '20'}">selected="selected"</c:if>>20대</option>
-                <option value="30" <c:if test="${age eq '30'}">selected="selected"</c:if>>30대</option>
-                <option value="40" <c:if test="${age eq '40'}">selected="selected"</c:if>>40대</option>
-            </select>
-            <div id="ageSuccess"></div>
-        </div>
-        <br>
-        <div>관심사 &nbsp;&nbsp;&nbsp;</div>
-        <input type="hidden" id="interest" name="interest">
-        <c:set var="interest" value="${interest}"/>
-
-        <label for="gamsung">
-            감성
-        </label>
-
-        <input id="gamsung" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '감성')}">checked</c:if>>
-
-        <label for="inner">
-            실내
-        </label>
-        <input id="inner" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '실내')}">checked</c:if>>
-
-        <label for="activity">
-            액티비티
-        </label>
-        <input id="activity" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '액티비티')}">checked</c:if>>
-            <br>
-
-        <label for="matzip">
-            맛집
-        </label>
-        <input id="matzip" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '맛집')}">checked</c:if>>
-
-        <label for="zayeon">
-            자연
-        </label>
-        <input id="zayeon" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '감성')}">checked</c:if>>
-
-        <label for="healing">
-            힐링
-        </label>
-        <input id="healing" type="checkbox" onclick="interestClick(this)"
-               <c:if test="${fn:contains(interest, '감성')}">checked</c:if>>
-
-            <label for="nocar">
-                뚜벅이
-            </label>
-            <input id="nocar" type="checkbox" onclick="interestClick(this)"
-                   <c:if test="${fn:contains(interest, '감성')}">checked</c:if>>
-        <br><br>
-        <div>소개글</div>
-        <div><textarea name="profile" placeholder="소개글을 작성하세요(150자 이내)"
-                       style="height:150px; width: 600px; resize: none;">${profile}</textarea>
-        </div>
-        <br>
-        <button type="submit" class="btn btn-danger">저장</button>
-    </form>
-
-    <div class="modalclass" style="display: flex;">
-        <div class="container mt-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
-                비밀번호 변경
-            </button>
-        </div>
-
-        <!-- The Modal -->
-        <div class="modal" id="myModal1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">비밀번호 변경</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-
-                    <form action="updatePassword" method="post" enctype="multipart/form-data"
-                          onsubmit="return updatePassword()">
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <input id="originPassword" type="password" style="font-family: 'Jua'; width: 300px;"
-                                   placeholder="현재 비밀번호"><br>
-                            <button type="button" id="checkOriginPassword" class="btn btn-danger">비밀번호 확인</button>
-                            <div id="originPasswordSuccess"></div>
-                            <input id="pass" name="password" type="password" style="font-family: 'Jua'; width: 300px;"
-                                   placeholder="새 비밀번호(영문, 숫자 8-20자)">
-                            <input id="pass2" type="password" style="font-family: 'Jua'; width: 300px;"
-                                   placeholder="새 비밀번호 확인(영문, 숫자 8-20자)">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        닉네임
+                    </th>
+                    <td>
+                        <div class="input-group">
+                            <input type="hidden" id="originNickname" value="${nickname}" readonly>
+                            <input class="form-control" id="nickname" name="nickname" value="${nickname}">&nbsp;&nbsp;
+                            <button type="button" id="nicknameCheck" class="btn btn-outline-secondary">중복체크</button><br>
                         </div>
-                        <div id="passwordSuccess"></div>
+                        <div id="nicknameSuccess"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        핸드폰 번호 &nbsp;
+                    </th>
+                    <td>
+                        <input class="form-control" id="hp" name="hp" value="${hp}">
+                        <div id="hpSuccess"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        연령대
+                    </th>
+                    <td>
+                        <select class="form-select" name="age" id="age">
+                            <option value="10" <c:if test="${age eq '10'}">selected="selected"</c:if>>10대</option>
+                            <option value="20" <c:if test="${age eq '20'}">selected="selected"</c:if>>20대</option>
+                            <option value="30" <c:if test="${age eq '30'}">selected="selected"</c:if>>30대</option>
+                            <option value="40" <c:if test="${age eq '40'}">selected="selected"</c:if>>40대</option>
+                        </select>
+                        <div id="ageSuccess">
 
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">저장</button>
                         </div>
-                    </form>
+                    </td>
+                </tr>&nbsp;&nbsp;&nbsp;
+                <tr>
+                    <th>
+                        관심사
+                    </th>
+                    <td>
+                        <div class="mypagemain2_interest">
+                            <input type="hidden" id="interest" name="interest">
+                            <c:set var="interest" value="${interest}"/>
+                            <label for="gamsung">
+                                <span class="chkbox">감성</span>
+                            <input id="gamsung" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '감성')}">checked</c:if>>
+                            </label>
+                            <label for="inner">
+                                <span class="chkbox">실내</span>
+                            <input id="inner" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '실내')}">checked</c:if>>
+                            </label>
+                            <label for="activity">
+                                <span class="chkbox">액티비티</span>
+                            <input id="activity" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '액티비티')}">checked</c:if>>
+                            </label>
+                            <label for="matzip">
+                                <span class="chkbox">맛집</span>
+                            <input id="matzip" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '맛집')}">checked</c:if>>
+                            </label>
+                            <label for="zayeon">
+                                <span class="chkbox">자연</span>
+                            <input id="zayeon" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '자연')}">checked</c:if>>
+                            </label>
+                            <label for="healing">
+                                <span class="chkbox">힐링</span>
+                            <input id="healing" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '힐링')}">checked</c:if>>
+                            </label>
+                            <label for="nocar">
+                                <span class="chkbox">뚜벅이</span>
+                            <input id="nocar" type="checkbox" onclick="interestClick(this)"
+                                   <c:if test="${fn:contains(interest, '뚜벅이')}">checked</c:if>>
+                            </label>
+                        </div><!-- mypagemain2_interest -->
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        소개글
+                    </th>
+                    <td>
+                        <textarea class="form-control text1" id="text1" name="profile" placeholder="소개글을 작성하세요(150자 이내)">${profile}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="button" class="btn btn-toolbar coursemovebtn" onclick="location.href='${root}/help/map?user_num=${sessionScope.user_num}'">내가 설정한 경로 보기 Go Go!!</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="mypage_main_btn">
+                            <button type="submit" class="btn btn-outline-primary" onclick="alert('저장되었습니다.')">저장</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#myModal1">
+                                비밀번호 변경
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal2">
+                                회원 탈퇴
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div><!-- main2 -->
 
 
+<%--<div class="modalclass">--%>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">비밀번호 변경</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-            </div>
-        </div>
 
-
-        <div class="container mt-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">
-                회원 탈퇴
-            </button>
-        </div>
-
-
-        <!-- The Modal -->
-        <div class="modal" id="myModal2">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">회원 탈퇴</h4>
-                    </div>
-
+                <form action="updatePassword" method="post" enctype="multipart/form-data"
+                      onsubmit="return updatePassword()">
                     <!-- Modal body -->
                     <div class="modal-body">
-                        정말 탈퇴하시겠습니까?
+                        <h5>현재 비밀번호</h5>
+                        <div class="input-group">
+                            <input class="form-control" id="originPassword" type="password" placeholder="현재 비밀번호">
+                            <button type="button" id="checkOriginPassword" class="btn btn-outline-secondary">비밀번호 확인</button>
+                        </div>
+                        <div id="originPasswordSuccess"></div>
+                        <br>
+                        <h5>변경할 비밀번호</h5>
+                        <input class="form-control" id="pass" name="password" type="password" placeholder="새 비밀번호(영문, 숫자 8-20자)">
+                        <input class="form-control" id="pass2" type="password" placeholder="새 비밀번호 확인(영문, 숫자 8-20자)">
                     </div>
+                    <div id="passwordSuccess"></div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <form action="delete" method="post" enctype="multipart/form-data">
-                            <button type="submit" class="btn btn-danger">확인</button>
-                        </form>
+                        <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal">저장</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
                     </div>
-
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <br><br>
 
-</div>
+    <!-- The Modal -->
+    <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">회원 탈퇴</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    정말 탈퇴하시겠습니까?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <form action="delete" method="post" enctype="multipart/form-data">
+                        <button type="submit" class="btn btn-danger">확인</button>
+                    </form>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   <%-- </div>--%>
+</div><!-- main -->
+
+
 <script>
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
         imageView = function imageView(att_zone, btn) {
